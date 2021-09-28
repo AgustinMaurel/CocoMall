@@ -1,13 +1,13 @@
 const { Store } = require('../models/index')
 const ModelController = require('./index')
 
-class UserModel extends ModelController {
+class StoreModel extends ModelController {
     constructor(model) {
         super(model);
     }
     //Specific Functions for this model
 }
 
-const StoreController = new UserModel(Store)
+const StoreController = new StoreModel(Store)
 
 module.exports = StoreController

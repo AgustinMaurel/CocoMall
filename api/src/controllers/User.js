@@ -3,7 +3,7 @@ const ModelController = require('./index')
 
 class UserModel extends ModelController {
     constructor(model) {
-        super(mudel);
+        super(model);
     }
     //Specific Functions for this model
 }

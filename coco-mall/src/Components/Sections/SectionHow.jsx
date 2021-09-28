@@ -1,7 +1,7 @@
 import React from 'react';
-import create from '../../assets/images/create.png';
-import add from '../../assets/images/add-content.png';
-import launch from '../../assets/images/launch.png';
+import create from '../../Assets/images/create.png';
+import add from '../../Assets/images/add-content.png';
+import launch from '../../Assets/images/launch.png';
 
 const SectionHow = () => {
     return (

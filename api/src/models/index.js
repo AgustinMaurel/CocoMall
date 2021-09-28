@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 
-const UsersFactory = require ('./Users')
+//Factory models
+const UsersFactory = require ('./User')
 
 const sequelize = new Sequelize(
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -10,6 +11,7 @@ const sequelize = new Sequelize(
     }
 );
 
+//Conection with Sequelize
 const User = UsersFactory(sequelize)
 
 module.exports = {

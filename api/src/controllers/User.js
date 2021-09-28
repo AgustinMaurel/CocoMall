@@ -1,7 +1,6 @@
-//import al modelo
 const { User } = require('../models/index')
 const ModelController = require('./index')
-//getAllData
+
 class UserModel extends ModelController {
     constructor(model) {
         super(mudel);

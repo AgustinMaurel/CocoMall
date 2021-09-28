@@ -35,7 +35,7 @@ function Landing() {
             <div className=' col-span-1  z-10 px-5'>
                 <NavBar />
             </div>
-            <div className=' h-screen flex align-center col-span-1  z-10 px-5'>
+            <div className=' h-screen flex  col-span-1 z-10 px-5'>
                 <TitleAndDescription />
             </div>
             <div className='   fixed flex w-screen justify-evenly bottom-10 z-20  '>

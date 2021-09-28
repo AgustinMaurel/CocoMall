@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 //Factory models
 const UsersFactory = require ('./User');
-
+const OrderFactory = require ('./Order')
 
 
 const sequelize = new Sequelize(
@@ -15,10 +15,11 @@ const sequelize = new Sequelize(
 
 //Conection with Sequelize
 const User = UsersFactory(sequelize);
- 
+const Order = OrderFactory(sequelize)
 
 
 module.exports = {
     db: sequelize,
-    User
+    User,
+    Order
 }

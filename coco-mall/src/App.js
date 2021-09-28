@@ -1,11 +1,15 @@
-import "./App.css";
+import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Landing from './Views/Landing';
 
 function App() {
-  return (
-    <div className="App">
-      <h1 className="bg-red-500">BIENVENUTE A COCO mall</h1>
-    </div>
-  );
+    return (
+        <>
+            <Switch>
+                <Route path='/' exact component={Landing} />
+            </Switch>
+        </>
+    );
 }
 
 export default App;

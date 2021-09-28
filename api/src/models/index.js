@@ -6,7 +6,7 @@ const StoreFactory = require('./Store.js');
 // address
 // products
 // orders
-// review
+const ReviewFactory = require('./Review.js');
 // product type
 
 const sequelize = new Sequelize(
@@ -23,7 +23,7 @@ const Store = UsersFactory(StoreFactory);
 // address
 // products
 // orders
-// review
+const Review = UsersFactory(ReviewFactory);
 // product type
 
 module.exports = {
@@ -33,6 +33,6 @@ module.exports = {
   // address
   // products
   // orders
-  // review
+  Review,
   // product type
 };

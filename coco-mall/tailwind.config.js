@@ -13,7 +13,9 @@ module.exports = {
         backgroundColor: (theme) => ({
             ...theme('colors'),
             primary: '#38A3A5',
+            'primary-light': '#AFDABD',
             secondary: '#2EC5CE',
+            'secondary-light': '#D7EDED',
         }),
         container: {
             center: true,

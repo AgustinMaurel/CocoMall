@@ -2,7 +2,12 @@ const { Sequelize } = require("sequelize");
 
 //Factory models
 const UsersFactory = require ('./User');
-
+// store
+// address
+// products
+// orders
+// review
+// product type
 
 
 const sequelize = new Sequelize(
@@ -15,6 +20,12 @@ const sequelize = new Sequelize(
 
 //Conection with Sequelize
 const User = UsersFactory(sequelize);
+// store
+// address
+// products
+// orders
+// review
+// product type
  
 
 

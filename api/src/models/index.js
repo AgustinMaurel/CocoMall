@@ -1,13 +1,13 @@
 const { Sequelize } = require('sequelize');
 
 //Factory models
-const UsersFactory = require('./User');
+const UserFactory = require('./User.js');
 const StoreFactory = require('./Store.js');
-// address
-// products
-// orders
+const AddressFactory = require('./Address.js')
+const ProductFactory = require('./Product.js')
+const OrderFactory = require('./Order.js')
 const ReviewFactory = require('./Review.js');
-// product type
+const ProductTypeFactory = require('./Product_type.js')
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -18,21 +18,21 @@ const sequelize = new Sequelize(
 );
 
 //Conection with Sequelize
-const User = UsersFactory(sequelize);
+const User = UserFactory(sequelize);
 const Store = UsersFactory(StoreFactory);
-// address
-// products
-// orders
+const Address = UsersFactory(AddressFactory)
+const Product = UsersFactory(ProductFactory)
+const Order = UsersFactory(OrderFactory)
 const Review = UsersFactory(ReviewFactory);
-// product type
+const ProductType = UsersFactory(ProductTypeFactory)
 
 module.exports = {
   db: sequelize,
   User,
   Store,
-  // address
-  // products
-  // orders
+  Address,
+  Product,
+  Order,
   Review,
-  // product type
+  ProductType
 };

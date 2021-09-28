@@ -5,20 +5,20 @@ module.exports = (sequelize) => {
         'User', {
         id: {
             type: DataTypes.UUID,
-            allowNuull: false,
+            allowNull: false,
             primaryKey: true,
         },
         Name: {
             type: DataTypes.STRING,
-            allowNuull: false,
+            allowNull
         },
         LastName: {
             type: DataTypes.STRING,
-            allowNuull: false
+            allowNull: false
         },
         Mail: {
             type: DataTypes.STRING,
-            allowNuull: false
+            allowNull: false
         },
     },
         {

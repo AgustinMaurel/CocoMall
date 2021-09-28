@@ -28,7 +28,7 @@ class ModelController {
         this.model.deleteById(req.params.id).
             then((data) => {
                 res.status(200).json({
-                    message: `${data}deleted successfully`,
+                    message: `${data} deleted successfully`,
                     data,
                 })
             })

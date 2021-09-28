@@ -19,12 +19,12 @@ const sequelize = new Sequelize(
 
 //Conection with Sequelize
 const User = UserFactory(sequelize);
-const Store = UsersFactory(StoreFactory);
-const Address = UsersFactory(AddressFactory)
-const Product = UsersFactory(ProductFactory)
-const Order = UsersFactory(OrderFactory)
-const Review = UsersFactory(ReviewFactory);
-const ProductType = UsersFactory(ProductTypeFactory)
+const Store = StoreFactory(sequelize);
+const Address = AddressFactory(sequelize)
+const Product = ProductFactory(sequelize)
+const Order = OrderFactory(sequelize)
+const Review = ReviewFactory(sequelize);
+const ProductType = ProductTypeFactory(sequelize)
 
 module.exports = {
   db: sequelize,
@@ -36,3 +36,5 @@ module.exports = {
   Review,
   ProductType
 };
+
+// hola

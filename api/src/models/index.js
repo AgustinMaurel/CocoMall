@@ -1,19 +1,13 @@
 const { Sequelize } = require('sequelize');
 
 //Factory models
-<<<<<<< HEAD
-const UsersFactory = require ('./User');
-const OrderFactory = require ('./Order')
-
-=======
-const UsersFactory = require('./User');
+const UsersFactory = require('./User.js');
 const StoreFactory = require('./Store.js');
-// address
-// products
-// orders
+const AddressFactory = require('./Address.js')
+const ProductFactory = require('./Product.js')
+const OrderFactory = require('./Order.js')
 const ReviewFactory = require('./Review.js');
-// product type
->>>>>>> bd43748b94e7adf6e3e162ae67825c891bb13836
+const ProductTypeFactory = require('./Product_type.js')
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -25,31 +19,20 @@ const sequelize = new Sequelize(
 
 //Conection with Sequelize
 const User = UsersFactory(sequelize);
-<<<<<<< HEAD
-const Order = OrderFactory(sequelize)
-
-
-module.exports = {
-    db: sequelize,
-    User,
-    Order,
-}
-=======
 const Store = UsersFactory(StoreFactory);
-// address
-// products
-// orders
+const Address = UsersFactory(AddressFactory)
+const Product = UsersFactory(ProductFactory)
+const Order = UsersFactory(OrderFactory)
 const Review = UsersFactory(ReviewFactory);
-// product type
+const ProductType = UsersFactory(ProductTypeFactory)
 
 module.exports = {
   db: sequelize,
   User,
   Store,
-  // address
-  // products
-  // orders
+  Address,
+  Product,
+  Order,
   Review,
-  // product type
+  ProductType
 };
->>>>>>> bd43748b94e7adf6e3e162ae67825c891bb13836

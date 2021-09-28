@@ -7,22 +7,22 @@ import TitleAndDescription from '../Components/TitleAndDescription';
 function Landing() {
     return (
         <div className='grid min-h-screen px-5'>
-            
-            <div className="w-44 h-44 absolute bg-primary-light rounded-tl-full right-0  overflow-none after:w-44"></div>
-            
-            
+            <div className="absolute right-0">
+                <div className='w-52 h-52 relative  bg-primary-light rounded-tl-full  '></div>
+                <div className='w-52 h-52 absolute bg-primary-light rounded-bl-full  '></div>
+            </div>
+
             <div className=' col-span-1  z-10 '>
                 <NavBar />
             </div>
-
 
             <div className='col-span-1 z-10'>
                 <TitleAndDescription />
             </div>
 
             <div className='flex gap-x-12 col-span-1'>
-                <MainButton text='Hello' />
-                <SecondaryButton text='Bye' />
+                <MainButton text='Client' />
+                <SecondaryButton text='Shop' />
             </div>
         </div>
     );

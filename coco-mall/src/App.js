@@ -3,7 +3,7 @@ import './App.css';
 function App() {
     return (
         <div className='App'>
-            <h1 className='bg-red-500'>BIENVENUTE A COCOmall</h1>
+            <h1 className='bg-red-500'>BIENVENUTE A COCO</h1>
         </div>
     );
 }

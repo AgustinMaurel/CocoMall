@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 //Factory models
 const UsersFactory = require ('./User');
-const ProductsFactory=require('./Product')
+
 
 
 const sequelize = new Sequelize(
@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
 
 //Conection with Sequelize
 const User = UsersFactory(sequelize);
-const Product=ProductsFactory(sequelize)
+ 
 
 
 module.exports = {

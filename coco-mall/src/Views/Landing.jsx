@@ -2,23 +2,28 @@ import React from 'react';
 import MainButton from '../Components/Buttons/MainButton';
 import NavBar from '../Components/NavBar';
 import SecondaryButton from '../Components/Buttons/SecondaryButton';
+import TitleAndDescription from '../Components/TitleAndDescription';
 
 function Landing() {
     return (
-        <div className="grid grid-cols-5 bg-red-200 h-screen ">
-
-            <div className=" col-span-5 z-10">
-                <NavBar/>
+        <div className='grid min-h-screen px-5'>
+            
+            <div className="w-44 h-44 absolute bg-primary-light rounded-tl-full right-0  overflow-none after:w-44"></div>
+            
+            
+            <div className=' col-span-1  z-10 '>
+                <NavBar />
             </div>
 
-            <div className='flex items-start  justify-evenly col-span-3 container  z-10'>
+
+            <div className='col-span-1 z-10'>
+                <TitleAndDescription />
+            </div>
+
+            <div className='flex gap-x-12 col-span-1'>
                 <MainButton text='Hello' />
-                <SecondaryButton  text='Bye' />
+                <SecondaryButton text='Bye' />
             </div>
-
-            <div className="absolute w-96 h-96 bg-primary-light rounded-full -top-24 -right-24 z-0"></div>
-
-
         </div>
     );
 }

@@ -21,7 +21,7 @@ function Landing() {
     }, []);
 
     return (
-        <div className='grid grid-col-1  min-h-screen px-5 py-3'>
+        <div className=' grid grid-col-1  min-h-screen  py-3'>
             {width < breakpoint ? (
                 <div className='absolute right-0 -top-5 md:-top-10 lg:-top-28'>
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light  '></div>
@@ -32,23 +32,26 @@ function Landing() {
                     <div className='w-96 h-96 rounded-full bg-primary-light'></div>
                 </div>
             )}
-            <div className=' col-span-1 mb-52  z-10 '>
+            <div className=' col-span-1  z-10 px-5'>
                 <NavBar />
             </div>
-            <div className=' col-span-1 mb-32 z-10'>
+            <div className=' h-screen flex align-center col-span-1  z-10 px-5'>
                 <TitleAndDescription />
             </div>
-            <div className=' flex col-span-1 mb-80 '>
+            <div className='   fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
             
-            <div data-aos='fade-right' className='container col-span-1  mb-56'>
-                <SectionHow />
-            </div>
 
-            <div data-aos='fade-up' className='col-span-1 mb-56'>
-                <SectionBenefits />
+            
+            <div className="flex flex-col ">
+                <div data-aos='fade-right' className='container col-span-1 h-screen  '>
+                    <SectionHow />
+                </div>
+                <div data-aos='fade-up' className='col-span-1  px-5 h-screen '>
+                    <SectionBenefits />
+                </div>
             </div>
         </div>
     );

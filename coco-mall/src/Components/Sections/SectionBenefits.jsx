@@ -7,7 +7,7 @@ import icon07 from '../../Assets/icons/07.png';
 
 const SectionBenefits = () => {
     return (
-        <div className='flex flex-col items-center gap-4'>
+        <div className='flex flex-col items-center justify-center h-screen gap-4'>
             <h3 className='text-xl'>Benefits of working with us</h3>
             <div className='flex flex-col items-center gap-4'>
                 <div className='flex items-center gap-4'>

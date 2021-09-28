@@ -5,7 +5,7 @@ import launch from '../../Assets/images/launch.png';
 
 const SectionHow = () => {
     return (
-        <div className='flex flex-col items-center gap-8'>
+        <div className='flex flex-col items-center justify-center h-screen  gap-8'>
             <h3 className='text-xl'>How it works</h3>
             <div className='flex flex-col items-center gap-4'>
                 <div className='flex flex-col items-center'>

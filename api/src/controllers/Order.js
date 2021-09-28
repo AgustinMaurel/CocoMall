@@ -3,11 +3,11 @@ const ModelController = require('./index')
 
 class OrderModel extends ModelController {
     constructor(model) {
-        super(mudel);
+        super(model);
     }
     //Specific Functions for this model
 }
 
-const OrderController = new UserModel(Order)
+const OrderController = new OrderModel(Order)
 
 module.exports = OrderController

@@ -21,5 +21,5 @@ const Order = OrderFactory(sequelize)
 module.exports = {
     db: sequelize,
     User,
-    Order
+    Order,
 }

@@ -1,6 +1,6 @@
-import React, { useState, useEffect,  } from 'react';
-import Aos from "aos";
-import "aos/dist/aos.css";
+import React, { useState, useEffect } from 'react';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 import MainButton from '../Components/Buttons/MainButton';
 import NavBar from '../Components/NavBar';
 import SecondaryButton from '../Components/Buttons/SecondaryButton';
@@ -8,16 +8,13 @@ import TitleAndDescription from '../Components/TitleAndDescription';
 import SectionHow from '../Components/Sections/SectionHow';
 import SectionBenefits from '../Components/Sections/SectionBenefits';
 
-
-
 function Landing() {
     const [width, setWidth] = useState(window.innerWidth);
     const breakpoint = 1024;
 
- 
     useEffect(() => {
-        Aos.init({duration:2000, offset:200})
-    },[])
+        Aos.init({ duration: 2000, offset: 200, once: true });
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -35,25 +32,22 @@ function Landing() {
                     <div className='w-96 h-96 rounded-full bg-primary-light'></div>
                 </div>
             )}
-
-            <div className=' col-span-1 mb-36  z-10 '>
+            <div className=' col-span-1 mb-52  z-10 '>
                 <NavBar />
             </div>
-            
-            <div className='col-span-1 mb-20 z-10'>
+            <div className=' col-span-1 mb-32 z-10'>
                 <TitleAndDescription />
             </div>
-
-            <div  className='flex col-span-1 mb-64 '>
+            <div className=' flex col-span-1 mb-80 '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
-
-            <div data-aos="fade-right" className='col-span-1  mb-56'>
+            
+            <div data-aos='fade-right' className='container col-span-1  mb-56'>
                 <SectionHow />
             </div>
 
-            <div data-aos="fade-up" className='col-span-1 mb-56'>
+            <div data-aos='fade-up' className='col-span-1 mb-56'>
                 <SectionBenefits />
             </div>
         </div>

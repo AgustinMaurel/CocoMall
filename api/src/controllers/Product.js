@@ -2,13 +2,13 @@
 const { Product} = require('../models/index')
 const ModelController = require('./index')
 //getAllData
-class ProcuctModel extends ModelController {
+class ProductModel extends ModelController {
     constructor(model) {
         super(model);
     }
     //Specific Functions for this model
 }
 
-const ProductController = new UserModel(Product)
+const ProductController = new ProductModel(Product)
 
-module.exports = ProcuctModel
+module.exports = ProductController

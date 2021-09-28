@@ -3,7 +3,8 @@ import MainButton from '../Components/Buttons/MainButton';
 import NavBar from '../Components/NavBar';
 import SecondaryButton from '../Components/Buttons/SecondaryButton';
 import TitleAndDescription from '../Components/TitleAndDescription';
-import SectionHow from "../Components/Sections/SectionHow"
+import SectionHow from '../Components/Sections/SectionHow';
+import SectionBenefits from '../Components/Sections/SectionBenefits';
 
 function Landing() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -39,11 +40,14 @@ function Landing() {
                 <SecondaryButton text='Shop' />
             </div>
 
-            {/* <div className='col-span-1'>
-                <SectionHow/>
-            </div> */}
+            <div className='col-span-1'>
+                <SectionHow />
+            </div>
+
+            <div className='col-span-1'>
+                <SectionBenefits />
+            </div>
         </div>
-        
     );
 }
 

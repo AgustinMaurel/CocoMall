@@ -8,8 +8,12 @@ import icon07 from '../../Assets/icons/07.png';
 const SectionStats = () => {
     return (  
         <div className='flex justify-center h-screen items-center'>
-            <div className='bg-primary flex justify-center w-full h-32 relative '>
-                <div className='flex gap-10 items-center justify-center h-32 absolute top-16 md:flex-wrap sm:flex-wrap' >
+            <div className='bg-primary flex justify-center w-full h-60 relative
+                            lg:h-32'>
+                <div className='flex gap-8 items-center justify-center h-32 absolute top-10
+                                sm:flex-wrap
+                                md:flex-wrap md:mx-12
+                                lg:absolute lg:top-16' >
                     <div className='flex flex-col items-center justify-around rounded-md bg-white w-32 h-32 shadow'>
                         <img src={icon01} alt='create' />
                         <p className='font-extrabold text-center text-5xl text-primary '>40+</p>

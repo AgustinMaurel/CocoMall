@@ -49,9 +49,9 @@ function LandingDesktop() {
                     <SectionBenefits />
                 </section>
 
-                {/* <section className='container col-span-1'>
+                <section className='container col-span-1' >
                     <SectionStats />
-                </section> */}
+                </section>
             </div>
         </div>
     );

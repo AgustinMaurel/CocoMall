@@ -1,16 +1,14 @@
-const {User} = require("../models/index");
+const {User, Store, Address} = require("../models/index");
 const ModelController = require("./index");
-const {v4: uuidv4} = require("uuid");
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
     }
     createUser = (req, res) => {
         const {Name, LastName, Mail} = req.body;
-        
+
         try {
             User.create({
-                id: uuidv4(),
                 Name: Name,
                 LastName: LastName,
                 Mail: Mail,
@@ -22,6 +20,25 @@ class UserModel extends ModelController {
         }
     };
     //Specific Functions for this model
+    getAllData = async (req, res, next) => {
+        let data = await User.findAll({
+            include: [
+                {
+                    model: Store,
+                    attributes: ["store_name"],
+                    /* through: {attributes: []}, */
+                },
+                {
+                    model: Address,
+                    attributes: ["directions"],
+                    /* through: {attributes: []}, */
+                },
+            ],
+        }).catch((err) => {
+            next(err);
+        });
+        res.send(data);
+    };
 }
 
 const UserController = new UserModel(User);

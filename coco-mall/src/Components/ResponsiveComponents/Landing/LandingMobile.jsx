@@ -4,7 +4,7 @@ import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionHow from '../../Sections/SectionHow';
-import SectionStats from '../../Sections/SectionStats';
+// import SectionStats from '../../Sections/SectionStats';
 import TitleAndDescription from '../../TitleAndDescription';
 
 function LandingMobile() {
@@ -29,7 +29,7 @@ function LandingMobile() {
 
             
 
-            <div className='flex flex-col gap-10 '>
+            <div className='flex flex-col gap-10 min-h-screen'>
                 <section data-aos='fade-right' className='container col-span-1   '>
                     <SectionHow />
                 </section>

@@ -14,7 +14,14 @@ const RegisterScreen = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        if (isFormValid()){
+            console.log('Form correcto')
+        }
     };
+
+    const isFormValid = () => {
+        return true
+    }
 
     return (
         <>

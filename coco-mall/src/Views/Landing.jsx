@@ -42,10 +42,8 @@ function Landing() {
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
-            
 
-            
-            <div className="flex flex-col ">
+            <div className='flex flex-col '>
                 <div data-aos='fade-right' className='container col-span-1 h-screen  '>
                     <SectionHow />
                 </div>

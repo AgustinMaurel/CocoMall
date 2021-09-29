@@ -14,7 +14,7 @@ function Landing() {
     const breakpoint = 1024;
 
     useEffect(() => {
-        Aos.init({ duration: 2000, offset: 200, once: true });
+        Aos.init({ duration: 2000,  once: true });
     }, []);
 
     useEffect(() => {
@@ -35,13 +35,13 @@ function Landing() {
             )}
 
             <section
-                data-aos='fade-in'
+                
                 className=' container flex flex-col gap-60 col-span-1 z-10 px-5 py-5'
             >
                 <div className=' col-span-1  z-10 px-5'>
                     <NavBar />
                 </div>
-                <div>
+                <div data-aos='fade-in' >
                     <TitleAndDescription />
                 </div>
             </section>
@@ -54,8 +54,8 @@ function Landing() {
                 <section data-aos='fade-right' className='container col-span-1   '>
                     <SectionHow />
                 </section>
-                <section data-aos='fade-up' className='container col-span-1  px-5  '>
-                    <SectionBenefits />
+                <section data-aos='fade-up' data-aos-offset="0" className='container col-span-1  px-5  '>
+                    <SectionBenefits  />
                 </section>
 
                 <section className='container col-span-1'>

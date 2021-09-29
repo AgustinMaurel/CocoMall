@@ -9,7 +9,7 @@ const AddressFactory = require('./Address.js')
 const ProductFactory = require('./Product.js')
 const OrderFactory = require('./Order.js')
 const ReviewFactory = require('./Review.js');
-const ProductTypeFactory = require('./Product_type.js')
+const ProductTypeFactory = require('./ProductType.js')
 
 
 
@@ -73,8 +73,8 @@ Product.belongsTo(ProductType)
 
 // //---------------------------------
 
-Product.belongsToMany(Order, {through: "orders_product"})
-Order.belongsToMany(Product,{through: "orders_product"})
+Product.belongsToMany(Order, {through: "ordersProduct"})
+Order.belongsToMany(Product,{through: "ordersProduct"})
 
 
 

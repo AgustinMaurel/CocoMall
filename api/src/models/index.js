@@ -31,7 +31,6 @@ const Order = OrderFactory(sequelize)
 const Review = ReviewFactory(sequelize);
 const ProductType = ProductTypeFactory(sequelize)
 
-
 //Conection between tables
 
 // User.hasMany(Address, {foreignKey: {id: 'myUserid'}})

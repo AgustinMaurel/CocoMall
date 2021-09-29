@@ -19,12 +19,8 @@ class ModelController {
         return await this.model.updateData(data, id)
     }
 
-    findData = async () => {
-        return await this.model.findAll()
-    }
-
     getAllData = async (req, res, next) => {
-        let data = await this.findData().catch((err) => {
+        let data = await this.findAll().catch((err) => {
             next(err)
         })
         res.send(data)

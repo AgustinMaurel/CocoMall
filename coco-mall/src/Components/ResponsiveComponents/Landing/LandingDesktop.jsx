@@ -5,28 +5,29 @@ import NavBar from '../../NavBar';
 import TitleAndDescription from '../../TitleAndDescription';
 import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';
+import SectionBenefits from '../../Sections/SectionBenefits';
+import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
     return (
-        <div className='grid grid-col-6'>            
-            
+        <div className='grid grid-col-6 '>
             <section className='  flex flex-col gap-60  z-10 px-5 '>
                 <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <NavBar />
                 </div>
 
-                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max'>
+                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max '>
                     <div data-aos='fade-in'>
                         <TitleAndDescription />
                     </div>
                     <div className='flex flex-row  relative gap-x-5 w-full justify-start z-20  '>
-                <MainButton text='Client' />
-                <SecondaryButton text='Shop' />
-            </div>
+                        <MainButton text='Client' />
+                        <SecondaryButton text='Shop' />
+                    </div>
                 </div>
             </section>
 
-            <div className='absolute right-0  top-20 '>
+            <div className='absolute  right-0 top-20 '>
                 <div className='relative custom rounded-full bg-primary-light'>
                     <img
                         src={WebPreview}
@@ -36,17 +37,17 @@ function LandingDesktop() {
                 </div>
             </div>
 
-            <div className='flex flex-col gap-10 '>
-                <section data-aos='fade-right' className='container col-span-1   '>
+            <div className='w-full '>
+                <section data-aos='fade-right'>
                     <SectionHow />
                 </section>
-                {/* <section
+                <section
                     data-aos='fade-up'
                     data-aos-offset='0'
                     className='container col-span-1  px-5  '
                 >
                     <SectionBenefits />
-                </section> */}
+                </section>
 
                 {/* <section className='container col-span-1'>
                     <SectionStats />

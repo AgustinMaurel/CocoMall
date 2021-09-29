@@ -31,7 +31,6 @@ const Order = OrderFactory(sequelize)
 const Review = ReviewFactory(sequelize);
 const ProductType = ProductTypeFactory(sequelize)
 
-
 //Conection between tables
 
 User.hasMany(Address, {foreignKey: {id: 'myUsersid'}})
@@ -74,8 +73,8 @@ Product.belongsTo(ProductType)
 
 // //---------------------------------
 
-Product.belongsToMany(Order, {through: "orders_product"})
-Order.belongsToMany(Product,{through: "orders_product"})
+Product.belongsToMany(Order, {through: "ordersProduct"})
+Order.belongsToMany(Product,{through: "ordersProduct"})
 
 
 

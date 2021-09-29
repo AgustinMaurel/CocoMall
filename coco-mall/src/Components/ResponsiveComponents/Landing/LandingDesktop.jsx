@@ -5,6 +5,8 @@ import NavBar from '../../NavBar';
 import TitleAndDescription from '../../TitleAndDescription';
 import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';
+import SectionBenefits from '../../Sections/SectionBenefits';
+import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
     return (
@@ -14,7 +16,7 @@ function LandingDesktop() {
                     <NavBar />
                 </div>
 
-                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max px-5'>
+                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max '>
                     <div data-aos='fade-in'>
                         <TitleAndDescription />
                     </div>
@@ -25,7 +27,7 @@ function LandingDesktop() {
                 </div>
             </section>
 
-            <div className='absolute right-0  top-20 '>
+            <div className='absolute  right-0 top-20 '>
                 <div className='relative custom rounded-full bg-primary-light'>
                     <img
                         src={WebPreview}
@@ -35,17 +37,17 @@ function LandingDesktop() {
                 </div>
             </div>
 
-            <div className='w-screen '>
+            <div className='w-full '>
                 <section data-aos='fade-right'>
                     <SectionHow />
                 </section>
-                {/* <section
+                <section
                     data-aos='fade-up'
                     data-aos-offset='0'
                     className='container col-span-1  px-5  '
                 >
                     <SectionBenefits />
-                </section> */}
+                </section>
 
                 {/* <section className='container col-span-1'>
                     <SectionStats />

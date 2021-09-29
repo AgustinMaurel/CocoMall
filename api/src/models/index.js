@@ -9,7 +9,7 @@ const AddressFactory = require('./Address.js')
 const ProductFactory = require('./Product.js')
 const OrderFactory = require('./Order.js')
 const ReviewFactory = require('./Review.js');
-const ProductTypeFactory = require('./Product_type.js')
+const ProductTypeFactory = require('./ProductType.js')
 
 
 

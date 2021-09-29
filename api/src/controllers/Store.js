@@ -14,10 +14,13 @@ class StoreModel extends ModelController {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
         };
-        const tienda = await Store.create(store)
-        const idTienda = tienda.id
-        const usuario = await User.findByPk(id)
-        res.send(tienda)
+        const newStore = await Store.create(store)
+        const storeId = newStore.id
+
+        const user = await User.findByPk(id)
+        let relation = await user.addStore(storeId)
+
+        res.send({msg: "Store created succesfully!"})
 
       } catch (e) {
         res.send(e);

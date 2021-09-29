@@ -3,20 +3,62 @@ class ModelController {
         this.model = model;
     }
     //general Functions    
-    createData = async (data) => {
-        return await this.model.create(data)
+    createData = async (req, res) => {
+        if (typeof req.body === 'object') {
+            try {
+                let data = req.body
+                let updatedData = await this.model.create(data)
+                res.send(updatedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
-    findDataId = async (id) => {
+    findDataId = async (req, res) => {
+        if (req.params.id) {
+            try {
+                let id = req.params.id
+                let data = await this.model.findById(id)
+                res.send(data)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
         return await this.model.findById(id)
     }
 
-    deleteDataById = async (id) => {
-        return await this.model.deleteById(id)
+    deleteDataById = async (req, res) => {
+        if (req.params.id) {
+            try {
+                let id = req.params.id
+                let deletedData = await this.model.deleteById(id)
+                res.send(deletedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
-    updateData = async (data, id) => {
-        return await this.model.updateData(data, id)
+    updateData = async (req, res) => {
+        if (typeof req.body === 'object') {
+            try {
+                let data = req.body
+                let id = req.params.id
+                let updatedData = await this.model.updateData(data, id)
+                res.send(updatedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
     getAllData = async (req, res, next) => {

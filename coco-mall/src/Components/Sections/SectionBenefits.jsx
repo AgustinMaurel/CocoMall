@@ -7,7 +7,7 @@ import icon07 from '../../Assets/icons/07.png';
 
 const SectionBenefits = () => {
     return (
-        <div className="min-w-screen">
+        <div className='min-w-screen'>
             <div className='flex relative w-100 content-center justify-between mx-auto items-center '>
                 <div className='h-16 w-16 bg-primary-light   rounded-full absolute z-0 left-10 top-10'></div>
                 <div className='h-10 w-10 bg-primary-light rounded-full absolute z-0 left-1/3'></div>
@@ -18,7 +18,7 @@ const SectionBenefits = () => {
                 <div className='flex flex-col items-center gap-10'>
                     <div className='flex items-center gap-4'>
                         <img src={icon01} alt='icon01' />
-                        <div className="z-10">
+                        <div className='z-10'>
                             <h4 className='text-base font-semibold'>Administra todo facilmente</h4>
                             <p className='text-xs'>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis et
@@ -28,7 +28,7 @@ const SectionBenefits = () => {
                     </div>
                     <div className='flex items-center gap-4 '>
                         <img src={icon04} alt='icon04' />
-                        <div className="z-10">
+                        <div className='z-10'>
                             <h4 className='text-base font-semibold '>Administra todo facilmente</h4>
                             <p className='text-xs'>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis et
@@ -38,7 +38,7 @@ const SectionBenefits = () => {
                     </div>
                     <div className='flex items-center gap-4'>
                         <img src={icon06} alt='icon06' />
-                        <div className="z-10">
+                        <div className='z-10'>
                             <h4 className='text-base font-semibold'>
                                 Ofrece simplicidad a tus clientes
                             </h4>
@@ -50,7 +50,7 @@ const SectionBenefits = () => {
                     </div>
                     <div className='flex items-center gap-4'>
                         <img src={icon07} alt='icon07' />
-                        <div className="z-10">
+                        <div className='z-10'>
                             <h4 className='text-base font-semibold'>Otro beneficio</h4>
                             <p className='text-xs'>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis et

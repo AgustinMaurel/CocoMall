@@ -8,8 +8,7 @@ import SectionHow from '../../Sections/SectionHow';
 
 function LandingDesktop() {
     return (
-        <div className='grid grid-col-6 '>            
-            
+        <div className='grid grid-col-6 '>
             <section className='  flex flex-col gap-60  z-10 px-5 '>
                 <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <NavBar />
@@ -20,9 +19,9 @@ function LandingDesktop() {
                         <TitleAndDescription />
                     </div>
                     <div className='flex flex-row  relative gap-x-5 w-full justify-start z-20  '>
-                <MainButton text='Client' />
-                <SecondaryButton text='Shop' />
-            </div>
+                        <MainButton text='Client' />
+                        <SecondaryButton text='Shop' />
+                    </div>
                 </div>
             </section>
 

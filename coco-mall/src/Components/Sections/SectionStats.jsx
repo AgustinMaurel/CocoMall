@@ -10,9 +10,8 @@ const SectionStats = () => {
         <div className='flex justify-center h-screen items-center'>
             <div className='bg-primary flex justify-center w-full h-60 relative
                             lg:h-32'>
-                <div className='flex gap-8 items-center justify-center h-32 absolute top-10
-                                sm:flex-wrap
-                                md:flex-wrap md:mx-12
+                <div className='flex flex-wrap gap-8 items-center justify-center h-32 absolute top-10
+                                md:mx-12
                                 lg:absolute lg:top-16' >
                     <div className='flex flex-col items-center justify-around rounded-md bg-white w-32 h-32 shadow'>
                         <img src={icon01} alt='create' />

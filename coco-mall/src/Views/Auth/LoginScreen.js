@@ -38,7 +38,6 @@ const LoginScreen = () => {
                     value="email"
                     onChange={handleInputChange}
                 />
-
             </div>
                 <div className='m-1'>
                 <input
@@ -54,7 +53,6 @@ const LoginScreen = () => {
                 </div>
 
                 </div>
-
                 <div className='m-1'>
                     <p>Login with social networks</p>
 

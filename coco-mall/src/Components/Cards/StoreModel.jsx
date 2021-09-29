@@ -1,15 +1,16 @@
 import React from 'react';
 
 import logoBicycleStore from '../../Assets/images/logoBicycleStore.jpg';
-import bannerCyclits from '../../Assets/images/bannerCyclits.jpg';
 //import logoFashionStore from '../../Assets/images/logoFashionStore.jpg';
+import bannerCyclits from '../../Assets/images/bannerCyclits.jpg';
 //import logoTechStore from '../../Assets/images/logoTechStore.jpg';
 //import bannerFashion from '../../Assets/images/bannerFashion.jpg';
 //import bannerTech from '../../Assets/images/bannerTech.jpg';
 
 const StoreModel = () => {
     return (
-        <div className='border w-full bg-white shadow-lg'>
+        <div className='border w-full bg-white shadow-lg
+                        sm:'>
             <div className='overflow-hidden'>
                 <img className='w-full' src={bannerCyclits} alt='banner' />
             </div>
@@ -22,7 +23,8 @@ const StoreModel = () => {
             </div>
             <div>
                 <div className='text-center px-14'>
-                    <h2 className='text-primary text-3xl font-bold'>Bicycle Store</h2>
+                    <h2 className='text-primary text-3xl font-bold
+                                    sm:text-lg'>Bicycle Store</h2>
                     <p className='text-gray-400 mt-2'>store1@gmail.com</p>
                     <p className='mt-2 text-gray-600'>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.

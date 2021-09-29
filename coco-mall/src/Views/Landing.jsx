@@ -35,9 +35,9 @@ function Landing() {
             <div className=' col-span-1  z-10 px-5'>
                 <NavBar />
             </div>
-            <div className=' h-screen flex  col-span-1 z-10 px-5'>
+            <section data-aos="fade-in" className='container flex  col-span-1 z-10 px-5'>
                 <TitleAndDescription />
-            </div>
+            </section>
             <div className='   fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
@@ -45,13 +45,13 @@ function Landing() {
             
 
             
-            <div className="flex flex-col ">
-                <div data-aos='fade-right' className='container col-span-1 h-screen  '>
+            <div className="flex flex-col gap-10 ">
+                <section data-aos='fade-right' className='container col-span-1   '>
                     <SectionHow />
-                </div>
-                <div data-aos='fade-up' className='col-span-1  px-5 h-screen '>
+                </section>
+                <section data-aos='fade-up' className='container col-span-1  px-5  '>
                     <SectionBenefits />
-                </div>
+                </section>
             </div>
         </div>
     );

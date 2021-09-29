@@ -25,9 +25,11 @@ const LoginScreen = () => {
 
     return (
         <>
+            <div className='flex flex-col text-center bg-gray-400 '>
             <h3>Login</h3>
+                <form onSubmit={handleLogin}>
+            <div className='m-1'>
 
-            <form onSubmit={handleLogin}>
                 <input
                     type='text'
                     placeholder='Email'
@@ -37,6 +39,8 @@ const LoginScreen = () => {
                     onChange={handleInputChange}
                 />
 
+            </div>
+                <div className='m-1'>
                 <input
                     type='password'
                     placeholder='Password'
@@ -44,15 +48,20 @@ const LoginScreen = () => {
                     value={password}
                     onChange={handleInputChange}
                 />
-
-                <button type='submit'>Login</button>
-
                 <div>
+
+                <button type='submit'> Sign in</button>
+                </div>
+
+                </div>
+
+                <div className='m-1'>
                     <p>Login with social networks</p>
 
                     <div>
-                        <div onClick={handleGoogleLogin}>
+                        <div className="flex flex-col " onClick={handleGoogleLogin}>
                             <img
+                                className="w-25 h-12"
                                 src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                 alt='google button'
                             />
@@ -65,6 +74,7 @@ const LoginScreen = () => {
 
                 <Link to='/auth/register'>Create new account</Link>
             </form>
+            </div>
         </>
     );
 };

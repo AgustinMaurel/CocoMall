@@ -3,11 +3,12 @@ import { auth, googleProvider } from '../../firebase/firebaseConfig.js'
 
 export const startLoginEmailPassword = (email, password)=>{
     return (dispatch) => {
-
-        setTimeout(()=>{
-
-            dispatch(login(123, 'pedro') );
-        }, 3500)
+        auth.signInWithEmailAndPassword(email, password)
+        .then ( ({user}) => {
+            dispatch(login(user.uid, user.displayName))
+        })
+        .catch((err)=> console.log(err))
+       
     }
 }
 
@@ -29,5 +30,20 @@ export const startGoogleLogin = () => {
                 login(user.uid, user.displayName)
             )
         })
+    }
+}
+
+
+export const startRegisterWithEmailPasswordName = ( email, password, name )=>{
+    return ( dispatch ) => {
+
+        auth.createUserWithEmailAndPassword(email, password)
+        .then ( async ( {user} )=> {
+            await user.updateProfile({displayName: name})
+            dispatch( login(user.uid, user.displayName))
+            console.log(user)
+        })
+        
+        .catch((err)=> console.log(err))
     }
 }

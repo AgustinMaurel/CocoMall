@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
 
 const RegisterScreen = () => {
+
+    const dispatch = useDispatch()
+
     const [formValues, handleInputChange] = useForm({
         name: 'Hernando',
         email: 'nando@gmail.com',
@@ -15,7 +20,7 @@ const RegisterScreen = () => {
     const handleRegister = (e) => {
         e.preventDefault();
         if (isFormValid()){
-            console.log('Form correcto')
+            dispatch(startRegisterWithEmailPasswordName(email, password, name))
         }
     };
 
@@ -25,9 +30,10 @@ const RegisterScreen = () => {
 
     return (
         <>
+        <div className='flex flex-col text-center'>
             <h3>Register</h3>
 
-            <form onSubmit={handleRegister}>
+            <form  onSubmit={handleRegister}>
                 <input
                     type='text'
                     placeholder='Name'
@@ -66,6 +72,7 @@ const RegisterScreen = () => {
 
                 <Link to='/auth/login'>Already registered?</Link>
             </form>
+            </div>
         </>
     );
 };

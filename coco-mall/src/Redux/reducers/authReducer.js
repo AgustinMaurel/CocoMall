@@ -1,8 +1,8 @@
 import {LOGIN, LOGOUT} from "../actions/actionTypes"
 
 const initialState = {
-    uid: 123,
-    name: "Picante",
+    uid: 0,
+    name: "",
     dir: {
         b: 12
     }

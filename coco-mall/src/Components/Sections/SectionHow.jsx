@@ -5,9 +5,9 @@ import launch from '../../Assets/images/launch.png';
 
 const SectionHow = () => {
     return (
-        <div className='flex flex-col items-center justify-center h-screen pb-10 gap-5'>
+        <div className='flex flex-col items-center justify-center h-screen pb-10 gap-5 xl:flex'>
             <h3 className='text-3xl font-bold '>How it works</h3>
-            <div className='flex flex-col items-center gap-5'>
+            <div className='flex flex-col items-center gap-5 xl:flex xl:flex-row'>
                 <div className='flex flex-col items-center'>
                     <img className='w-24 h-24' src={create} alt='create' />
                     <p className='text-base font-semibold'>Create your store</p>

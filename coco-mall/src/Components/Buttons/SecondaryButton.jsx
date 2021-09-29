@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 function SecondaryButton({ text }) {
     return (
         <div
-            className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8 
-            md:w-32
+            className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8             
             xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
         >
             <Link className='relative w-full h-full flex items-center align-center justify-center ' to='/'>

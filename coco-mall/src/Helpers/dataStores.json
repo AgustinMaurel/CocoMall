@@ -1,0 +1,38 @@
+[
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 01",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    },
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 02",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    },
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 03",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    },
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 04",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    },
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 05",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    },
+    {
+        "srcLogo": "../../Assets/images/logoBicycleStore.jpg",
+        "srcBanner": "../../Assets/images/bannerCyclits.jpg",
+        "title": "Store 06",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    }
+]

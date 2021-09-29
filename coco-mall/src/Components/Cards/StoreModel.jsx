@@ -1,9 +1,9 @@
 import React from 'react';
 
 import logoBicycleStore from '../../Assets/images/logoBicycleStore.jpg';
+import bannerCyclits from '../../Assets/images/bannerCyclits.jpg';
 //import logoFashionStore from '../../Assets/images/logoFashionStore.jpg';
 //import logoTechStore from '../../Assets/images/logoTechStore.jpg';
-import bannerCyclits from '../../Assets/images/bannerCyclits.jpg';
 //import bannerFashion from '../../Assets/images/bannerFashion.jpg';
 //import bannerTech from '../../Assets/images/bannerTech.jpg';
 

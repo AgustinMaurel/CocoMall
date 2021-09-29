@@ -4,6 +4,7 @@ import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionHow from '../../Sections/SectionHow';
+import SectionModelStores from '../../Sections/SectionModelStores';
 import SectionStats from '../../Sections/SectionStats';
 import TitleAndDescription from '../../TitleAndDescription';
 
@@ -41,6 +42,11 @@ function LandingMobile() {
 
                 <section className='container col-span-1' >
                     <SectionStats />
+                </section>
+
+
+                <section className=' col-span-1' >
+                    <SectionModelStores />
                 </section>
             </div>
         </div>

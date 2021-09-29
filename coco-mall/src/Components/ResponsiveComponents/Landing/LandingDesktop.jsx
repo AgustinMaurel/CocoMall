@@ -8,6 +8,7 @@ import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
+import SectionModelStores from '../../Sections/SectionModelStores';
 // import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
@@ -53,6 +54,10 @@ function LandingDesktop() {
 
                 <section className=' col-span-1' >
                     <SectionStats />
+                </section>
+
+                <section className=' col-span-1' >
+                    <SectionModelStores />
                 </section>
             </div>
         </div>

@@ -1,32 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
+import { useState } from 'react';
+
 
 const RegisterScreen = () => {
 
+    const { register, errors, handleSubmit } = useForm({
+        defaultValues: {
+            name: "El Mas",
+            email: "Picante@gmail.com",
+            password: "123123",
+            password2: "123123"
+        }
+    })
+
+    const [errors, setErrors] = useState({})
+
     const dispatch = useDispatch()
 
-    const [formValues, handleInputChange] = useForm({
-        name: 'Hernando',
-        email: 'nando@gmail.com',
-        password: '123456',
-        password2: '123456',
-    });
 
-    const { name, email, password, password2 } = formValues;
+    /* const handleInputChange = (e) => {
+        setFormValues({
+            ...formValues,
+            [e.target.name ]: e.target.value
+        });
+    } */
 
     const handleRegister = (e) => {
         e.preventDefault();
         if (isFormValid()){
-            dispatch(startRegisterWithEmailPasswordName(email, password, name))
+            dispatch(startRegisterWithEmailPasswordName(formValues.email, formValues.password, formValues.name))
         }
     };
 
-    const isFormValid = () => {
+  /*   const isFormValid = () => {
         return true
-    }
+    } */
 
     return (
         <>
@@ -39,7 +51,7 @@ const RegisterScreen = () => {
                     placeholder='Name'
                     name='name'
                     autoComplete='off'
-                    value={name}
+                    value={formValues.name}
                     onChange={handleInputChange}
                 />
 
@@ -48,7 +60,7 @@ const RegisterScreen = () => {
                     placeholder='Email'
                     name='email'
                     autoComplete='off'
-                    value={email}
+                    value={formValues.email}
                     onChange={handleInputChange}
                 />
 
@@ -56,7 +68,7 @@ const RegisterScreen = () => {
                     type='password'
                     placeholder='Password'
                     name='password'
-                    value={password}
+                    value={formValues.password}
                     onChange={handleInputChange}
                 />
 
@@ -64,7 +76,7 @@ const RegisterScreen = () => {
                     type='password'
                     placeholder='Confirm password'
                     name='password2'
-                    value={password2}
+                    value={formValues.password2}
                     onChange={handleInputChange}
                 />
 

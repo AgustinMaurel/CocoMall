@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { startLoginEmailPassword, startGoogleLogin } from '../../Redux/actions/auth';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
 
-    const [formValues, handleInputChange] = useForm({
+    const [formValues, handleInputChange] = useState({
         email: 'nando@gmail.com',
         password: '123456',
     });
 
-    const { email, password } = formValues;
+   /*  const { email, password } = formValues; */
 
     const handleLogin = (e) => {
         e.preventDefault();
-        dispatch(startLoginEmailPassword(email, password));
+        dispatch(startLoginEmailPassword());
     };
 
     const handleGoogleLogin = () => {
@@ -35,7 +35,7 @@ const LoginScreen = () => {
                     placeholder='Email'
                     name='email'
                     autoComplete='off'
-                    value={email}
+                    value="email"
                     onChange={handleInputChange}
                 />
 
@@ -45,7 +45,7 @@ const LoginScreen = () => {
                     type='password'
                     placeholder='Password'
                     name='password'
-                    value={password}
+                    value="password"
                     onChange={handleInputChange}
                 />
                 <div>

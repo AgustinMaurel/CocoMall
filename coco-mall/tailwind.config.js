@@ -1,6 +1,6 @@
 module.exports = {
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-    darkMode: "class", // or 'media' or 'class'
+    darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
             colors: {
@@ -8,7 +8,7 @@ module.exports = {
                 blue: {
                     450: '#5F99F7',
                 },
-            },
+            },           
         },
         backgroundColor: (theme) => ({
             ...theme('colors'),

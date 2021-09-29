@@ -41,6 +41,7 @@ export const startRegisterWithEmailPasswordName = ( email, password, name )=>{
         .then ( async ( {user} )=> {
             await user.updateProfile({displayName: name})
             dispatch( login(user.uid, user.displayName))
+            
             //del user sacamos el user.accessToken para mandarlo al back
         })
         .catch((err)=> console.log(err))

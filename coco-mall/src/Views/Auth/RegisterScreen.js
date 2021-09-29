@@ -75,16 +75,15 @@ const RegisterScreen = () => {
                             required: { value: true, message: 'password is required' },
                             minLength: {
                                 value: 6,
-                                message: 'password must contain at least 6 characters',
+                                message: 'password must contain at least 8 characters',
                             },
                             maxLength: {
                                 value: 16,
                                 message: 'password must contain a maximum of 16 characters ',
                             },
                             pattern: {
-                               /*  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,16}/, */
-                                value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-                               message: "Your password must be at least 6 characters long, contain at least one number and have a mixture of uppercase and lowercase letters",
+                                value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
+                               message: "Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters",
                               },
                         })}
                         type='password'
@@ -96,7 +95,6 @@ const RegisterScreen = () => {
 
                     <input
                         {...register('password2', {
-                            // required: { value: true, message: 'Confirm password is required' },
                             validate: (value) => value === getValues('password') || 'Passwords do not match', 
                         })}
                         type='password'

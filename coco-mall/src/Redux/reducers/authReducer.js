@@ -3,9 +3,6 @@ import {LOGIN, LOGOUT} from "../actions/actionTypes"
 const initialState = {
     uid: 0,
     name: "",
-    dir: {
-        b: 12
-    }
 }
 
 export const authReducer = (state = initialState, action) => {

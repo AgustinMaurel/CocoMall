@@ -42,7 +42,6 @@ function Landing() {
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
-            
 
             
             <div className="flex flex-col gap-10 ">

@@ -68,8 +68,8 @@ Product.hasOne(ProductType)
 
 //---------------------------------
 
-Product.belongToMany(Order, {through: "orders_product"})
-Order.belongToMany(Product,{through: "orders_product"})
+Product.belongsToMany(Order, {through: "orders_product"})
+Order.belongsToMany(Product,{through: "orders_product"})
 
 //---------------------------------
 

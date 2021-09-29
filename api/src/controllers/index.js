@@ -3,61 +3,31 @@ class ModelController {
         this.model = model;
     }
     //general Functions    
-    createData = (req, res) => {
-        let data = req.body;
-        this.model.create(data).
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    createData = async (data) => {
+        return await this.model.create(data)
     }
 
-    findDataId = (req, res) => {
-        this.model.findById(req.params.id).
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    findDataId = async (id) => {
+        return await this.model.findById(id)
     }
 
-    deleteDataById = (req, res) => {
-        this.model.deleteById(req.params.id).
-            then((data) => {
-                res.status(200).json({
-                    message: `${data} deleted successfully`,
-                    data,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    deleteDataById = async (id) => {
+        return await this.model.deleteById(id)
     }
 
-    updateData = (req, res) => {
-        this.model.updateData(req.body, req.params.id).
-            then((data) => {
-                res.status(200).json({
-                    message: "Gig updated successfully",
-                    data,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    updateData = async (data, id) => {
+        return await this.model.updateData(data, id)
     }
 
-    findData = (req, res) => {
-        this.model.findAll().
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    findData = async () => {
+        return await this.model.findAll()
+    }
+
+    getAllData = async (req, res, next) => {
+        let data = await this.findData().catch((err) => {
+            next(err)
+        })
+        res.send(data)
     }
 }
 

@@ -74,8 +74,8 @@ Product.belongsTo(ProductType)
 
 // //---------------------------------
 
-Product.belongsToMany(Order, {through: "orders_product"})
-Order.belongsToMany(Product,{through: "orders_product"})
+Product.belongsToMany(Order, {through: "ordersProduct"})
+Order.belongsToMany(Product,{through: "ordersProduct"})
 
 
 

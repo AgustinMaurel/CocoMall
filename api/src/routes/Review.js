@@ -1,9 +1,9 @@
 const { Router } = require("express")
 const router = Router();
-const { findData } = require('../controllers/Review.js')
+const { getAllData } = require('../controllers/Review.js')
 
 
 //all func start with /review
-router.get('/', findData)
+router.get('/', getAllData)
 
 module.exports = router

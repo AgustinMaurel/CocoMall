@@ -1,9 +1,9 @@
 const { Router } = require("express")
 const router = Router();
-const { findData } = require('../controllers/ProductType.js')
+const { getAllData } = require('../controllers/ProductType.js')
 
 
 //all func start with /productType
-router.get('/', findData)
+router.get('/', getAllData)
 
 module.exports = router

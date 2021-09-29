@@ -7,6 +7,7 @@ import SecondaryButton from '../Components/Buttons/SecondaryButton';
 import TitleAndDescription from '../Components/TitleAndDescription';
 import SectionHow from '../Components/Sections/SectionHow';
 import SectionBenefits from '../Components/Sections/SectionBenefits';
+import SectionStats from '../Components/Sections/SectionStats';
 
 function Landing() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -32,24 +33,32 @@ function Landing() {
                     <div className='w-96 h-96 rounded-full bg-primary-light'></div>
                 </div>
             )}
-            <div className=' col-span-1  z-10 px-5'>
-                <NavBar />
-            </div>
-            <section data-aos="fade-in" className='container flex  col-span-1 z-10 px-5'>
-                <TitleAndDescription />
+
+            <section data-aos='fade-in' className=' container flex flex-col gap-80 col-span-1 z-10 px-5 py-5'>
+                <div className=' col-span-1  z-10 px-5'>
+                    <NavBar />
+                </div>
+                <div>
+                
+                    <TitleAndDescription />
+
+                </div>
             </section>
             <div className='   fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
 
-            
-            <div className="flex flex-col gap-10 ">
+            <div className='flex flex-col gap-10 '>
                 <section data-aos='fade-right' className='container col-span-1   '>
                     <SectionHow />
                 </section>
                 <section data-aos='fade-up' className='container col-span-1  px-5  '>
                     <SectionBenefits />
+                </section>
+
+                <section className="container col-span-1" >
+                    <SectionStats/>
                 </section>
             </div>
         </div>

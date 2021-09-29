@@ -34,14 +34,15 @@ function Landing() {
                 </div>
             )}
 
-            <section data-aos='fade-in' className=' container flex flex-col gap-80 col-span-1 z-10 px-5 py-5'>
+            <section
+                data-aos='fade-in'
+                className=' container flex flex-col gap-60 col-span-1 z-10 px-5 py-5'
+            >
                 <div className=' col-span-1  z-10 px-5'>
                     <NavBar />
                 </div>
                 <div>
-                
                     <TitleAndDescription />
-
                 </div>
             </section>
             <div className='   fixed flex w-screen justify-evenly bottom-10 z-20  '>
@@ -57,8 +58,8 @@ function Landing() {
                     <SectionBenefits />
                 </section>
 
-                <section className="container col-span-1" >
-                    <SectionStats/>
+                <section className='container col-span-1'>
+                    <SectionStats />
                 </section>
             </div>
         </div>

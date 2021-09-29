@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define('Store', {
+  return sequelize.define('Review', {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
     },
     description: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     qualification: {
         type: DataTypes.ENUM("1", "2", "3", "4", "5"),

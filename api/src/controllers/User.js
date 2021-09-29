@@ -6,6 +6,10 @@ class UserModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
+    getAllUsers = async (req,res)=> {
+        const users = await this.findData()
+        res.send(users)
+    }
 }
 
 const UserController = new UserModel(User)

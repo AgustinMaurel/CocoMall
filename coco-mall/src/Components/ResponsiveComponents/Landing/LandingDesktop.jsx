@@ -8,14 +8,14 @@ import SectionHow from '../../Sections/SectionHow';
 
 function LandingDesktop() {
     return (
-        <div className='grid grid-col-6'>            
+        <div className='grid grid-col-6 '>            
             
             <section className='  flex flex-col gap-60  z-10 px-5 '>
                 <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <NavBar />
                 </div>
 
-                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max'>
+                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max px-5'>
                     <div data-aos='fade-in'>
                         <TitleAndDescription />
                     </div>
@@ -36,8 +36,8 @@ function LandingDesktop() {
                 </div>
             </div>
 
-            <div className='flex flex-col gap-10 '>
-                <section data-aos='fade-right' className='container col-span-1   '>
+            <div className='w-screen '>
+                <section data-aos='fade-right'>
                     <SectionHow />
                 </section>
                 {/* <section

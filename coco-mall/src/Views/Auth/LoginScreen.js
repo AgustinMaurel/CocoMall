@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { startLoginEmailPassword, startGoogleLogin } from '../../Redux/actions/index';
 
 const LoginScreen = () => {
+    const dispatch = useDispatch();
+
     const [formValues, handleInputChange] = useForm({
         email: 'nando@gmail.com',
         password: '123456',
@@ -12,18 +16,22 @@ const LoginScreen = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        dispatch(startLoginEmailPassword(email, password));
+    };
+
+    const handleGoogleLogin = () => {
+        dispatch(startGoogleLogin());
     };
 
     return (
         <>
-            <h3 >Login</h3>
+            <h3>Login</h3>
 
             <form onSubmit={handleLogin}>
                 <input
                     type='text'
                     placeholder='Email'
                     name='email'
-                   
                     autoComplete='off'
                     value={email}
                     onChange={handleInputChange}
@@ -33,20 +41,17 @@ const LoginScreen = () => {
                     type='password'
                     placeholder='Password'
                     name='password'
-                   
                     value={password}
                     onChange={handleInputChange}
                 />
 
-                <button type='submit'>
-                    Login
-                </button>
+                <button type='submit'>Login</button>
 
                 <div>
                     <p>Login with social networks</p>
 
                     <div>
-                        <div>
+                        <div onClick={handleGoogleLogin}>
                             <img
                                 src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                 alt='google button'

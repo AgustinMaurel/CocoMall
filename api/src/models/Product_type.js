@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
         "Product_Type",
         {
             ProductTypeName: {
-                type: DataType.STRING,
+                type: DataTypes.STRING,
                 allowNuull: false,
                 unique: true,
             },

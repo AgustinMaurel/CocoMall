@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const {DB_USER,DB_PASSWORD,DB_HOST,DB_NAME} = require ('../utils/config/index')
 
 //Factory models
 
@@ -33,48 +34,48 @@ const ProductType = ProductTypeFactory(sequelize)
 
 //Conection between tables
 
-User.hasMany(Address, {foreignKey: {id: 'myUserid'}})
-Address.hasOne(User)
+// User.hasMany(Address, {foreignKey: {id: 'myUserid'}})
+// Address.hasOne(User)
 
-//---------------------------------
+// //---------------------------------
 
-User.hasMany(Store, {foreignKey: {id: 'myUserid'}})
-Store.hasOne(User)
+// User.hasMany(Store, {foreignKey: {id: 'myUserid'}})
+// Store.hasOne(User)
 
-//---------------------------------
+// //---------------------------------
 
-User.hasMany(Order, {foreignKey: {id: 'myUserid'}})
-Order.hasOne(User)
+// User.hasMany(Order, {foreignKey: {id: 'myUserid'}})
+// Order.hasOne(User)
 
-//---------------------------------
+// //---------------------------------
 
-Address.hasMany(Order, {foreignKey: {id: 'myAddressid'}})
-Order.hasOne(Address)
+// Address.hasMany(Order, {foreignKey: {id: 'myAddressid'}})
+// Order.hasOne(Address)
 
-//---------------------------------
+// //---------------------------------
 
-Store.hasMany(Order, {foreignKey: {id: 'myStoreid'}})
-Order.hasOne(Store)
+// Store.hasMany(Order, {foreignKey: {id: 'myStoreid'}})
+// Order.hasOne(Store)
 
-//---------------------------------
+// //---------------------------------
 
-Store.hasMany(Product, {foreignKey: {id: 'myStoreid'}})
-Product.hasOne(Store)
+// Store.hasMany(Product, {foreignKey: {id: 'myStoreid'}})
+// Product.hasOne(Store)
 
-//---------------------------------
+// //---------------------------------
 
-ProductType.hasMany(Product, {foreignKey: {id: 'myProductTypeid'}})
-Product.hasOne(ProductType)
+// ProductType.hasMany(Product, {foreignKey: {id: 'myProductTypeid'}})
+// Product.hasOne(ProductType)
 
-//---------------------------------
+// //---------------------------------
 
-Product.belongsToMany(Order, {through: "orders_product"})
-Order.belongsToMany(Product,{through: "orders_product"})
+// Product.belongsToMany(Order, {through: "orders_product"})
+// Order.belongsToMany(Product,{through: "orders_product"})
 
-//---------------------------------
+// //---------------------------------
 
-Order.hasOne(Review, {foreignKey: {id: 'myOrderid'}})
-Review.hasOne(Order)
+// Order.hasOne(Review, {foreignKey: {id: 'myOrderid'}})
+// Review.hasOne(Order)
 
 
 module.exports = {

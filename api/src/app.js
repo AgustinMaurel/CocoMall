@@ -3,8 +3,8 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require('cors')
 const routes = require("./routes/index.js");
-const errorHandler = require("./utils/middlewares/errorHandler.js");
-const setHeaders = require("./utils/middlewares/setHeaders.js");
+// const errorHandler = require("./utils/middlewares/errorHandler.js");
+// const setHeaders = require("./utils/middlewares/setHeaders.js");
 
 //Express
 const server = express();
@@ -15,8 +15,8 @@ server.use(express.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(cors());
-server.use(setHeaders());
-server.use(errorHandler());
+// server.use(setHeaders());
+// server.use(errorHandler());
 
 //Routing
 server.use("/", routes);

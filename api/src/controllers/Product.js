@@ -1,7 +1,6 @@
-//import al modelo
 const { Product} = require('../models/index')
 const ModelController = require('./index')
-//getAllData
+
 class ProductModel extends ModelController {
     constructor(model) {
         super(model);

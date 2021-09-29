@@ -22,7 +22,7 @@ module.exports=(sequelize)=>{
                 allowNull:false,
             },
             Unity:{
-                type:DataTypes.ENUM,       
+                type:DataTypes.INTEGER,       
                 allowNull:false,
             },
             Description:{

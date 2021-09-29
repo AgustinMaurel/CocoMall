@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const { all } = require('sequelize/types/lib/operators');
 
 module.exports = (sequelize) => {
     sequelize.define(
@@ -14,9 +13,9 @@ module.exports = (sequelize) => {
             // PENDIENTE
         },
         orderState: {
-            type: DataTypes.ENUM('Pending', 'Rejected', 'Shipped', 'Completed'),
+            type: DataTypes.ENUM("Pending", "Rejected", "Shipped", "Completed"),
             allowNull: false,
-            defaultValue: 'Pending'
+            defaultValue: "Pending"
         }
     },
         {

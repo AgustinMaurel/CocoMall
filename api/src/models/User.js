@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
             type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true,
+
         },
         Name: {
             type: DataTypes.STRING,
@@ -18,7 +19,13 @@ module.exports = (sequelize) => {
         },
         Mail: {
             type: DataTypes.STRING,
-            allowNull: false
+            validate: {
+                isEmail: true,
+                notEmpty: true,
+                notNull: false
+            },
+            allowNull: false,
+            unique: true
         },
     },
         {

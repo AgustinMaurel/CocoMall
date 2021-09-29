@@ -33,48 +33,50 @@ const ProductType = ProductTypeFactory(sequelize)
 
 //Conection between tables
 
-// User.hasMany(Address, {foreignKey: {id: 'myUserid'}})
-// Address.hasOne(User)
+User.hasMany(Address, {foreignKey: {id: 'myUsersid'}})
+Address.belongsTo(User)
 
 // //---------------------------------
 
-// User.hasMany(Store, {foreignKey: {id: 'myUserid'}})
-// Store.hasOne(User)
+User.hasMany(Store, {foreignKey: {id: 'myUserid'}})
+Store.belongsTo(User)
 
 // //---------------------------------
 
-// User.hasMany(Order, {foreignKey: {id: 'myUserid'}})
-// Order.hasOne(User)
+User.hasMany(Order, {foreignKey: {id: 'myUserid'}})
+Order.belongsTo(User)
 
 // //---------------------------------
 
-// Address.hasMany(Order, {foreignKey: {id: 'myAddressid'}})
-// Order.hasOne(Address)
+Address.hasMany(Order, {foreignKey: {id: 'myAddressid'}})
+Order.belongsTo(Address)
 
 // //---------------------------------
 
-// Store.hasMany(Order, {foreignKey: {id: 'myStoreid'}})
-// Order.hasOne(Store)
+Order.hasOne(Review, {foreignKey: {id: 'myOrderid'}})
+Review.belongsTo(Order)
 
 // //---------------------------------
 
-// Store.hasMany(Product, {foreignKey: {id: 'myStoreid'}})
-// Product.hasOne(Store)
+Store.hasMany(Order, {foreignKey: {id: 'myStoreid'}})
+Order.belongsTo(Store)
 
 // //---------------------------------
 
-// ProductType.hasMany(Product, {foreignKey: {id: 'myProductTypeid'}})
-// Product.hasOne(ProductType)
+Store.hasMany(Product, {foreignKey: {id: 'myStoreid'}})
+Product.belongsTo(Store)
 
 // //---------------------------------
 
-// Product.belongsToMany(Order, {through: "orders_product"})
-// Order.belongsToMany(Product,{through: "orders_product"})
+ProductType.hasMany(Product, {foreignKey: {id: 'myProductTypeid'}})
+Product.belongsTo(ProductType)
 
 // //---------------------------------
 
-// Order.hasOne(Review, {foreignKey: {id: 'myOrderid'}})
-// Review.hasOne(Order)
+Product.belongsToMany(Order, {through: "orders_product"})
+Order.belongsToMany(Product,{through: "orders_product"})
+
+
 
 
 module.exports = {

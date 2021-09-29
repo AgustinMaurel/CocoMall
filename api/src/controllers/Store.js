@@ -1,5 +1,4 @@
-const { Store } = require('../models/index');
-const { User } = require('../models/index.js');
+const { Store, User } = require('../models/index');
 const ModelController = require('./index');
 
 class StoreModel extends ModelController {
@@ -7,18 +6,19 @@ class StoreModel extends ModelController {
     super(model);
   }
   //Specific Functions for this model
-  createStore = (req, res) => {
-    if (typeof req.body.name === 'string') {
+  createStore = async (req, res) => {
+    if (req.body.storeName) {
       try {
         const id = req.body.id ? req.body.id : null;
         const store = {
-          store_name: req.body.name,
-          address:
-            typeof req.body.address === 'string' ? req.boyd.address : null,
+          storeName: req.body.storeName,
+          address: req.body.address ? req.body.address : null,
         };
-        User.findByPk(id)
-          .then((response) => response.addStore(store))
-          .then((response) => res.json(response));
+        const tienda = await Store.create(store)
+        const idTienda = tienda.id
+        const usuario = await User.findByPk(id)
+        res.send(tienda)
+
       } catch (e) {
         res.send(e);
       }
@@ -27,7 +27,6 @@ class StoreModel extends ModelController {
     }
   };
 }
-
 
 const StoreController = new StoreModel(Store);
 

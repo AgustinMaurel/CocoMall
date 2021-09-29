@@ -26,12 +26,10 @@ class UserModel extends ModelController {
                 {
                     model: Store,
                     attributes: ["store_name"],
-                    /* through: {attributes: []}, */
                 },
                 {
                     model: Address,
                     attributes: ["directions"],
-                    /* through: {attributes: []}, */
                 },
             ],
         }).catch((err) => {

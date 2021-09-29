@@ -14,6 +14,8 @@ const LoginScreen = () => {
     const handleLogin = (data) => {
         console.log(data)
         dispatch(startLoginEmailPassword(data.email, data.password)); 
+        setValue('email', '');
+        setValue('password', '');
     };
 
     const handleGoogleLogin = (data) => {

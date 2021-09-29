@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from './actionTypes.js'
+import { LOGIN } from './actionTypes.js'
 import { auth, googleProvider } from '../../firebase/firebaseConfig.js'
 
 export const startLoginEmailPassword = (email, password)=>{

@@ -52,7 +52,6 @@ const RegisterScreen = () => {
                         autoComplete='off'
                     />
                     <br />
-                    <button onClick={() => console.log(errors)}>errors</button>
                     {errors.name && <p>{errors.name.message}</p>}
 
                     <input

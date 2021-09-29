@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import './Landing.css';
+
 
 import LandingMobile from '../Components/ResponsiveComponents/Landing/LandingMobile';
 import LandingDesktop from '../Components/ResponsiveComponents/Landing/LandingDesktop';

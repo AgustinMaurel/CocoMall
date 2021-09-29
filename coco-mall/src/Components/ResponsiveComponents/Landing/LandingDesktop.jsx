@@ -1,4 +1,5 @@
 import React from 'react';
+import './Landing.css';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar';
@@ -7,6 +8,7 @@ import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
+// import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
     return (
@@ -16,7 +18,7 @@ function LandingDesktop() {
                     <NavBar />
                 </div>
 
-                <div className='flex flex-col 2xl:pl-20 gap-y-16 relative w-max '>
+                <div className='flex flex-col 2xl:pl-32 gap-y-16 relative w-max  '>
                     <div data-aos='fade-in'>
                         <TitleAndDescription />
                     </div>
@@ -27,12 +29,12 @@ function LandingDesktop() {
                 </div>
             </section>
 
-            <div className='absolute  right-0 top-20 '>
-                <div className='relative custom rounded-full bg-primary-light'>
+            <div className='absolute  right-5 top-28 2xl:top-32  '>
+                <div className='relative custom 2xl:customXl rounded-full bg-primary-light'>
                     <img
                         src={WebPreview}
                         alt=''
-                        className='absolute right-0 top-10 object-cover '
+                        className='absolute right-0 2xl:right-20  overflow top-20 object-cover '
                     />
                 </div>
             </div>
@@ -44,12 +46,12 @@ function LandingDesktop() {
                 <section
                     data-aos='fade-up'
                     data-aos-offset='0'
-                    className='container col-span-1  px-5  '
+                    className=' col-span-1  px-5  '
                 >
                     <SectionBenefits />
                 </section>
 
-                <section className='container col-span-1' >
+                <section className=' col-span-1' >
                     <SectionStats />
                 </section>
             </div>

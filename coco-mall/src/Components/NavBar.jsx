@@ -15,7 +15,7 @@ function NavBar() {
                 <nav className='flex justify-between'>
                     <p>Logo</p>
                     <div>
-                        <Link to='/'>
+                        <Link  to='/'>
                             <svg
                                 className='w-6 h-6'
                                 fill='none'
@@ -39,15 +39,15 @@ function NavBar() {
                         <p>Logo</p>
                     </div>
                     <div className='flex gap-x-5'>
-                        <div className='shadow  flex items-center justify-center align-center bg-primary h-6 w-24 p-4 rounded'>
-                            <Link className='relative w-full' to='/'>
+                        <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
+                            <Link className='relative w-full h-full flex items-center align-center justify-center' to='/'>
                                 <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
                                     Login
                                 </button>
                             </Link>
                         </div>
-                        <div className='shadow  flex items-center justify-center  align-center bg-secondary-light  h-6 w-24  p-4 rounded'>
-                            <Link className='relative w-full' to='/'>
+                        <div className='shadow  flex items-center justify-center  align-center bg-secondary-light  h-8 w-24   rounded'>
+                            <Link className='relative w-full h-full flex items-center align-center justify-center' to='/'>
                                 <button className='w-full h-full focus:outline-none text-primary text-center text-sm text-md'>
                                     Sign Up
                                 </button>

@@ -6,7 +6,7 @@ import icon06 from '../../Assets/icons/06.png';
 import icon07 from '../../Assets/icons/07.png';
 
 const SectionStats = () => {
-    return (  
+    return (
         <div className='flex justify-center h-screen items-center'>
             <div className='bg-primary flex justify-center w-full h-60 relative
                             lg:h-32'>

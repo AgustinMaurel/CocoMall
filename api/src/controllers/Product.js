@@ -6,14 +6,12 @@ class ProductModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
-    createStore = (req, res) => {
+    createProduct = (req, res) => {
         if (typeof req.body.name === 'string') {
             try {
                 const id = req.body.id ? req.body.id : null;
-                const store = {
-                    store_name: req.body.name,
-                    address:
-                        typeof req.body.address === 'string' ? req.boyd.address : null,
+                const product = {
+                    ...product
                 };
                 User.findByPk(id)
                     .then((response) => response.addStore(store))

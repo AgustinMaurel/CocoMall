@@ -62,7 +62,7 @@ class ModelController {
     }
 
     getAllData = async (req, res, next) => {
-        let data = await this.findAll().catch((err) => {
+        let data = await this.model.findAll().catch((err) => {
             next(err)
         })
         res.send(data)

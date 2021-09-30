@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function MainButton({ text }) {
+function MainButton({ text}) {
     return (
         <div
             className={`shadow  flex items-center justify-center bg-primary w-40 h-8  xl:h-12 xl:w-44   rounded-lg `}

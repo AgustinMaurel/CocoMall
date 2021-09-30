@@ -19,5 +19,10 @@ module.exports = (sequelize) => {
     // payment_account: {
     //PENDING
     // }
-  });
+  },
+    {
+      timestamps: false,
+      createdAt: false,
+    }
+  );
 };

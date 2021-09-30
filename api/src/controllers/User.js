@@ -1,11 +1,11 @@
-const {User, Store, Address} = require("../models/index");
+const { User, Store, Address } = require("../models/index");
 const ModelController = require("./index");
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
     }
     createUser = (req, res) => {
-        const {Name, LastName, Mail} = req.body;
+        const { Name, LastName, Mail } = req.body;
 
         try {
             User.create({
@@ -25,12 +25,13 @@ class UserModel extends ModelController {
             include: [
                 {
                     model: Store,
-                    attributes: ["store_name"],
+                    attributes: ["storeName"],                
                 },
                 {
                     model: Address,
                     attributes: ["directions"],
                 },
+
             ],
         }).catch((err) => {
             next(err);

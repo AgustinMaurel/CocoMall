@@ -7,8 +7,9 @@ class StoreModel extends ModelController {
   }
   //Specific Functions for this model
   createStore = async (req, res) => {
-    if (req.body.storeName) {
-      try {
+    if (req.body.id) {
+      try {  
+        //id of User
         const id = req.body.id ? req.body.id : null;
         const store = {
           storeName: req.body.storeName,
@@ -18,12 +19,12 @@ class StoreModel extends ModelController {
             ? req.body.image
             : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
         };
+        //create the new Store
         const newStore = await Store.create(store);
         const storeId = newStore.id;
-
+        //Attach the Store with the User ID
         const user = await User.findByPk(id);
         await user.addStore(storeId);
-
         res.send(newStore);
       } catch (e) {
         res.send(e);

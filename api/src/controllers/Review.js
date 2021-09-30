@@ -1,4 +1,4 @@
-const { Review, Order} = require('../models/index');
+const { Review, Order } = require('../models/index');
 const ModelController = require('./index')
 
 class ReviewModel extends ModelController {
@@ -7,7 +7,7 @@ class ReviewModel extends ModelController {
     }
     //Specific Functions for this model
     createReview = async (req, res) => {
-        if (req.body.storeName) {
+        if (req.body.id) {
             try {
                 //id of order
                 const id = req.body.id ? req.body.id : null;
@@ -21,7 +21,6 @@ class ReviewModel extends ModelController {
                 //Search the order and attach the Review
                 const order = await Order.findByPk(id);
                 await order.addReview(reviewId);
-
                 res.send(newReview);
             } catch (e) {
                 res.send(e);

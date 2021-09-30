@@ -4,6 +4,7 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 
 import Landing from './Views/Landing';
+import ShopCreate from './Views/ShopCreate';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
 import { auth } from './firebase/firebaseConfig';
@@ -32,6 +33,7 @@ function App() {
         <>
             <Switch>
                 <Route path='/' exact component={Landing} />
+                <Route path="/create/shop" exact component={ShopCreate}/>
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
             </Switch>

@@ -8,7 +8,7 @@ const SectionModelStores = () => {
     console.log(data);
 
     return (
-        <div className='h-screen flex flex-col justify-center items-center gap-10'>
+        <div className='h-screen flex flex-col justify-center items-center gap-10 '>
             {/* BACKGROUND */}
             <div className='flex relative w-100 content-center justify-between mx-auto items-center '>
                 <div
@@ -40,6 +40,7 @@ const SectionModelStores = () => {
             {/* STORES CARDS */}
             <div
                 className='flex flex-wrap justify-center h-3/4 w-full gap-2 z-10
+                           
                             md:gap-5
                             lg:w-4/5
                             2xl:w-full 2xl:h-1/2 2xl:items-center'
@@ -57,7 +58,7 @@ const SectionModelStores = () => {
             </div>
             {/* BACKGROUND */}
             <div
-                className='h-64 w-64 bg-primary-light rounded-full absolute z-0 -right-28 -top-16  
+                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 right-10 bottom-10  
                 2xl:h-80 2xl:w-80'
             ></div>
         </div>

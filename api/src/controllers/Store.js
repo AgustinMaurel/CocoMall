@@ -13,7 +13,8 @@ class StoreModel extends ModelController {
         const store = {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
-          description: req.body.description ? req.body.description : null
+          description: req.body.description ? req.body.description : null,
+          image: req.body.image ? req.body.image : "https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg"
         };
         const newStore = await Store.create(store)
         const storeId = newStore.id
@@ -30,6 +31,14 @@ class StoreModel extends ModelController {
       res.status(400).send({ message: 'Wrong parameters' });
     }
   };
+
+  getAllData = async (req, res, next) => {
+    let data = await Store.findAll()
+    res.send(data)
+    .catch((err) => {
+        next(err);
+    });
+};
 }
 
 const StoreController = new StoreModel(Store);

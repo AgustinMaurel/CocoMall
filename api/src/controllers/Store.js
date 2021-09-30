@@ -18,6 +18,9 @@ class StoreModel extends ModelController {
           image: req.body.image
             ? req.body.image
             : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
+          country: req.body.country ? req.body.country : null,
+          state: req.body.state ? req.body.state : null,
+          cp: req.body.cp ? req.body.cp : null,
         };
         //create the new Store
         const newStore = await Store.create(store);

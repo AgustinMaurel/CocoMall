@@ -17,10 +17,23 @@ module.exports = (sequelize) => {
       unique: true,
     },
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      
     },
     image: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    country: {
+      type: DataTypes.STRING,
+
+    },
+    state: {
+      type: DataTypes.STRING
+      
+    },
+    cp: {
+      type: DataTypes.INTEGER
     }
     // payment_account: {
     //PENDING

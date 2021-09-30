@@ -16,8 +16,19 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       unique: true,
     },
+    description: {
+      type: DataTypes.STRING
+    },
+    image: {
+      type: DataTypes.STRING,
+    }
     // payment_account: {
     //PENDING
     // }
-  });
+  },
+    {
+      timestamps: false,
+      createdAt: false,
+    }
+  );
 };

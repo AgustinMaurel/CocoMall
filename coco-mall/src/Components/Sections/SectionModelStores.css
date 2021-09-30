@@ -1,0 +1,10 @@
+.slider {
+    border: 1px solid red;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+}
+
+.card {
+    scroll-snap-align: center;
+}

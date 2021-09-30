@@ -5,3 +5,22 @@
 *{
     /* border: 1px solid black; */
 }
+@layer components {
+    
+    html {scroll-snap-type: y mandatory}
+    
+    section{
+       height: 100vh;
+       scroll-snap-align: start;
+       position:relative;
+    }
+
+    .container{
+        height:100vh;
+        scroll-snap-type: y mandatory;
+        
+        
+        scroll-snap-type: y mandatory;
+    }
+
+}

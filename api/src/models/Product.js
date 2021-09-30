@@ -14,7 +14,7 @@ module.exports=(sequelize)=>{
                 allowNull:false,
             },
             Price:{
-                type:DataTypes.STRING,
+                type:DataTypes.INTEGER,
                 allowNull:false,
             },
             Stock:{
@@ -32,8 +32,8 @@ module.exports=(sequelize)=>{
             Image:{
                 type:DataTypes.INTEGER,    
                 allowNull:false,
-
             }
+  
         }
     )
 

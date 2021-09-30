@@ -1,22 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios'
+// import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 
 function ShopCreate() {
-    const dispatch = useDispatch();
-
+    //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
     const {
         handleSubmit,
         formState: { errors },
         register,
         setValue,
-        getValues,
+        // getValues,
     } = useForm();
 
     const handleRegister = (data) => {
         //despacho a ruta
+        
+        axios.post('https://localhost:3001/store/create',data)
         setValue('storeName', '');
         setValue('address', '');       
 
@@ -77,29 +78,7 @@ function ShopCreate() {
                     {errors.address && <p>{errors.address.message}</p>}
 
 
-                    <input
-                        {...register('lastname', {
-                            required: { value: true, message: 'lastname is required' },
-                            minLength: {
-                                value: 4,
-                                message: 'lastname must contain at least 4 characters',
-                            },
-                            maxLength: {
-                                value: 15,
-                                message: 'lastname must contain a maximum of 15 characters ',
-                            },
-                            pattern: {
-                                value: /([A-Z]|[a-z])/g,
-                                message: 'lastname can only be letters',
-                            },
-                        })}
-                        type='text'
-                        placeholder='lastname'
-                        name='lastname'
-                        autoComplete='off'
-                    />
-                    
-                    {errors.lastname && <p>{errors.lastname.message}</p>}
+                   
                     
                     <button type='submit'>Create store</button>
                     

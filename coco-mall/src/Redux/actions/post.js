@@ -1,8 +1,10 @@
-import axios from 'axios'
-import {POST_STORE} from './actionTypes'
+import axios from 'axios';
+import { POST_STORE } from './actionTypes';
 
-export const postStore = (shop) => {
-    return async function(dispatch) {
-        const newShop = await axios.post( 'localhost3001.com/',shop)
-    }
-}
+export const postShop = (shop) => {
+    return async function (dispatch) {
+        axios
+            .post('https://localhost3001/create/shop', shop)
+            .then((response) => dispatch({ type: POST_STORE, payload: response.data }));
+    };
+};

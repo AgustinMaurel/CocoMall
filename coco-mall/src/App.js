@@ -1,5 +1,6 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+
 import Landing from './Views/Landing';
 
 function App() {

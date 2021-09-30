@@ -18,6 +18,9 @@ module.exports = (sequelize) => {
     },
     description: {
       type: DataTypes.STRING
+    },
+    image: {
+      type: DataTypes.STRING,
     }
     // payment_account: {
     //PENDING

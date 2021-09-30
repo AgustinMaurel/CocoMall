@@ -11,21 +11,28 @@ const dataStores = () => ([
         banner: bannerCyclits,
         title: "Store 01",
         mail: "store01@gmail.com",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     },
     {
         logo: logoFashionStore,
         banner: bannerFashion,
         title: "Store 02",
         mail: "store02@gmail.com",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     },
     {
         logo: logoTechStore,
         banner: bannerTech,
         title: "Store 03",
         mail: "store03@gmail.com",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+        logo: logoTechStore,
+        banner: bannerTech,
+        title: "Store 04",
+        mail: "store04@gmail.com",
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     }
 ])
 

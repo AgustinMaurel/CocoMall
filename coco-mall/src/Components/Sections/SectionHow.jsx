@@ -15,8 +15,8 @@ const SectionHow = () => {
                 xl:absolute xl:w-32 xl:h-32 xl:bg-primary-light xl:rounded-full xl:top-0
                 2xl:w-64 2xl:h-64 2xl:-top-20 2xl:-left-10'></div>
                 <h3 className='relative text-3xl font-bold 
-                sm:text-5xl
-                xl:text-6xl'>How it works</h3>
+                sm:text-4xl
+                xl:text-5xl'>How it works</h3>
             </div>
 
             <div
@@ -31,18 +31,18 @@ const SectionHow = () => {
                         src={create}
                         alt='create'
                     />
-                    <div className='flex flex-col items-center 2xl:gap-2'>
+                    <div className='flex flex-col items-center'>
                         <p
                             className='text-base font-semibold 
                         sm:text-lg
-                        2xl:text-xl '
+                        2xl:text-3xl '
                         >
                             Create your store
                         </p>
                         <p
                             className='text-xs 
                         sm:text-base
-                        2xl:text-lg 2xl:whitespace-nowrap'
+                        2xl:text-xl 2xl:whitespace-nowrap'
                         >
                             Create an account to get started.
                         </p>
@@ -60,18 +60,18 @@ const SectionHow = () => {
                         src={add}
                         alt='add-content'
                     />
-                    <div className='flex flex-col items-center  2xl:gap-2'>
+                    <div className='flex flex-col items-center'>
                         <p
                             className='text-base font-semibold
                             sm:text-lg
-                            2xl:text-xl'
+                            2xl:text-3xl'
                         >
                             Add Products
                         </p>
                         <p
                             className='text-xs 
                             sm:text-base
-                            2xl:text-lg'
+                            2xl:text-xl'
                         >
                             Add contents and pages to your site.
                         </p>
@@ -87,18 +87,18 @@ const SectionHow = () => {
                         src={launch}
                         alt='launch'
                     />
-                    <div className='flex flex-col items-center 2xl:gap-2'>
+                    <div className='flex flex-col items-center'>
                         <p
                             className='text-base font-semibold
                             sm:text-lg  
-                        2xl:text-xl'
+                            2xl:text-3xl'
                         >
                             Buy anything
                         </p>
                         <p
                             className='text-xs
                             sm:text-base
-                        2xl:text-lg'
+                        2xl:text-xl'
                         >
                             Now publish to make your site live!
                         </p>

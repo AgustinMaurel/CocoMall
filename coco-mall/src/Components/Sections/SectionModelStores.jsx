@@ -8,7 +8,7 @@ const SectionModelStores = () => {
     console.log(data);
 
     return (
-        <div className='h-screen flex flex-col justify-center items-center gap-10 pb-32 md:pb-80'>
+        <div className='h-screen flex flex-col justify-center items-center gap-10 '>
             {/* BACKGROUND */}
             <div className='flex relative w-100 content-center justify-between mx-auto items-center '>
                 <div

@@ -17,7 +17,7 @@ const RegisterScreen = () => {
 
     const handleRegister = (data) => {
         console.log('DATA', data);
-        dispatch(startRegisterWithEmailPasswordName(data.email, data.password, data.name));
+        dispatch(startRegisterWithEmailPasswordName(data.email, data.password, data.name, data.lastName));
         setValue('name', '');
         setValue('lastName', '');
         setValue('email', '');

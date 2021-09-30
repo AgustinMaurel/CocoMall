@@ -1,5 +1,6 @@
 import { LOGIN, LOGOUT } from './actionTypes.js'
 import { auth, googleProvider } from '../../firebase/firebaseConfig.js'
+import axios from 'axios'
 
 export const startLoginEmailPassword = (email, password)=>{
     return (dispatch) => {
@@ -38,14 +39,24 @@ export const startGoogleLogin = () => {
 }
 
 
-export const startRegisterWithEmailPasswordName = ( email, password, name )=>{
+export const startRegisterWithEmailPasswordName = ( email, password, name, lastName )=>{
     return ( dispatch ) => {
 
         auth.createUserWithEmailAndPassword(email, password)
         .then ( async ( {user} )=> {
             console.log(user)
             await user.updateProfile({displayName: name})
-            dispatch( login(user.uid, user.displayName))
+            let aux = {
+                id: user.uid,
+                Name: user.displayName,
+                LastName: lastName,
+                Mail: email
+            }
+            console.log(aux)
+            axios.post('http//localhost:3001/user/create', aux)
+            /* .then((boolean)=> {}
+            dispatch( login(user.uid, user.displayName)))
+            */
             
             //del user sacamos el user.accessToken para mandarlo al back
         })

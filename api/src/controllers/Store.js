@@ -18,6 +18,7 @@ class StoreModel extends ModelController {
             ? req.body.image
             : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
         };
+
         const newStore = await Store.create(store);
         const storeId = newStore.id;
 
@@ -34,13 +35,13 @@ class StoreModel extends ModelController {
   };
 
   getAllData = async (req, res, next) => {
-    try{
+    try {
       let data = await Store.findAll();
-      res.send(data)
-    }catch(e){
-      next(e)
+      res.send(data);
+    } catch (e) {
+      next(e);
     }
-  }
+  };
 }
 
 const StoreController = new StoreModel(Store);

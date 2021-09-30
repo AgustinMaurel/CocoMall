@@ -1,4 +1,8 @@
-let initialState = {}
+import { combineReducers } from "redux";
+import {authReducer} from "./authReducer"
 
+const reducers = combineReducers({
+    auth: authReducer,
+})
 
-export default function rootReducer(state = initialState, { type, payload }) {}
+export default reducers

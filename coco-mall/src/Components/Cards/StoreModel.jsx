@@ -14,6 +14,7 @@ const StoreModel = ({ banner, logo, title, mail, description }) => {
             {/* --logo-- */}
             <div className='flex justify-center px-5 -mt-6'>
                 <img className='h-14 w-14 bg-white rounded-full
+                                shadow
                                 sm:h-16 sm:w-16
                                 md:h-20 md:w-20
                                 xl:-mt-4

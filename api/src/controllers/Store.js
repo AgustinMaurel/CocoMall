@@ -20,7 +20,7 @@ class StoreModel extends ModelController {
         const user = await User.findByPk(id)
         let relation = await user.addStore(storeId)
 
-        res.send({msg: "Store created succesfully!"})
+        res.send(newStore)
 
       } catch (e) {
         res.send(e);

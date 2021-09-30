@@ -19,7 +19,7 @@ const LoginScreen = () => {
     };
 
     const handleGoogleLogin = (data) => {
-        
+         
          dispatch(startGoogleLogin());
     };
 

@@ -19,6 +19,7 @@ const RegisterScreen = () => {
         console.log('DATA', data);
         dispatch(startRegisterWithEmailPasswordName(data.email, data.password, data.name));
         setValue('name', '');
+        setValue('lastName', '');
         setValue('email', '');
         setValue('password', '');
         setValue('password2', '');
@@ -53,6 +54,30 @@ const RegisterScreen = () => {
                     />
                     <br />
                     {errors.name && <p>{errors.name.message}</p>}
+
+                    <input
+                        {...register('lastName', {
+                            required: { value: true, message: 'lastName is required' },
+                            minLength: {
+                                value: 4,
+                                message: 'lastName must contain at least 4 characters',
+                            },
+                            maxLength: {
+                                value: 15,
+                                message: 'lastName must contain a maximum of 15 characters ',
+                            },
+                            pattern: {
+                                value: /^[A-Za-z\s]+$/,
+                                message: 'lastName can only be letters',
+                            },
+                        })}
+                        type='text'
+                        placeholder='lastName'
+                        name='lastName'
+                        autoComplete='off'
+                    />
+                    <br />
+                    {errors.lasName && <p>{errors.lasName.message}</p>}
 
                     <input
                         {...register('email', {

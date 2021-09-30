@@ -13,7 +13,7 @@ import SectionModelStores from '../../Sections/SectionModelStores';
 
 function LandingDesktop() {
     return (
-        <div className='grid grid-col-6 '>
+        <div className='grid grid-col-1 '>
             <section className='  flex flex-col gap-60  z-10 px-5 '>
                 <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <NavBar />
@@ -46,8 +46,8 @@ function LandingDesktop() {
                 </section>
                 <section
                     data-aos='fade-up'
-                    data-aos-offset='0'
-                    className=' col-span-1  px-5  '
+                    data-aos-delay='250'
+                    className=' col-span-1 px-5  '
                 >
                     <SectionBenefits />
                 </section>

@@ -17,9 +17,13 @@ function ShopCreate() {
     const handleRegister = (data) => {
         //despacho a ruta
         
-        axios.post('https://localhost:3001/store/create',data)
+        axios.post('http://localhost:3001/store/create',data)
+        .then(()=>{
         setValue('storeName', '');
-        setValue('address', '');       
+        setValue('address', '');     
+        })
+        .catch(err=> console.log(err))
+          
 
     };
 

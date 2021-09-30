@@ -1,4 +1,4 @@
-import { LOGIN } from './actionTypes.js'
+import { LOGIN, LOGOUT } from './actionTypes.js'
 import { auth, googleProvider } from '../../firebase/firebaseConfig.js'
 
 export const startLoginEmailPassword = (email, password)=>{
@@ -50,5 +50,18 @@ export const startRegisterWithEmailPasswordName = ( email, password, name )=>{
             //del user sacamos el user.accessToken para mandarlo al back
         })
         .catch((err)=> console.log(err))
+    }
+}
+
+export const startLogout = () => {
+    return async (dispatch) => {
+        await auth.signOut()
+        dispatch( logout() )
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOGOUT, 
     }
 }

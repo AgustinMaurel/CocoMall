@@ -1,19 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { startLoginEmailPassword, startGoogleLogin } from '../../Redux/actions/auth';
+import { startLoginEmailPassword, startGoogleLogin, startLogout } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
 
-
-    const { handleSubmit, register, formState: { errors }, setValue } = useForm();
-
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        setValue,
+    } = useForm();
 
     const handleLogin = (data) => {
-        console.log(data)
-        dispatch(startLoginEmailPassword(data.email, data.password)); 
+        console.log(data);
+        dispatch(startLoginEmailPassword(data.email, data.password));
         setValue('email', '');
         setValue('password', '');
     };
@@ -23,10 +26,15 @@ const LoginScreen = () => {
          dispatch(startGoogleLogin());
     };
 
+    const handleLogout = () => {
+        dispatch( startLogout());
+    }
+
     return (
         <>
             <div className='flex flex-col text-center bg-gray-400 '>
                 <h3>Login</h3>
+                <button onClick={handleLogout}>LOGOUT</button>
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <div className='m-1'>
                         <input
@@ -59,7 +67,8 @@ const LoginScreen = () => {
                                 },
                                 pattern: {
                                     value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
-                                    message: "Your password must be at least 6 characters long, contain at least one number and have a mixture of uppercase and lowercase letters",
+                                    message:
+                                        'Your password must be at least 6 characters long, contain at least one number and have a mixture of uppercase and lowercase letters',
                                 },
                             })}
                             type='password'
@@ -68,10 +77,8 @@ const LoginScreen = () => {
                         />
                         {errors.password && <p>{errors.password.message}</p>}
                         <div>
-
                             <button type='submit'> Sign in</button>
                         </div>
-
                     </div>
                     <div className='m-1'>
                         <p>Login with social networks</p>
@@ -80,14 +87,13 @@ const LoginScreen = () => {
                                 <b>Sign in with google</b>
                             </p>
 
-                            <div className="flex flex-col " onClick={handleGoogleLogin}>
+                            <div className='flex flex-col ' onClick={handleGoogleLogin}>
                                 <img
-                                    className="w-25 h-12"
+                                    className='w-25 h-12'
                                     src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                     alt='google button'
                                 />
                             </div>
-
                         </div>
                     </div>
 

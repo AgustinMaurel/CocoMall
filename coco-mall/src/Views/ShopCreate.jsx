@@ -16,6 +16,7 @@ function ShopCreate() {
     } = useForm();
 
     const handleRegister = (data) => {
+        //despacho a ruta
         setValue('storeName', '');
         setValue('address', '');       
 
@@ -49,7 +50,7 @@ function ShopCreate() {
                         autoComplete='off'
                     />
                     
-                    {errors.name && <p>{errors.name.message}</p>}
+                    {errors.storeName && <p>{errors.storeName.message}</p>}
 
                     <input
                         {...register('address', {
@@ -73,8 +74,32 @@ function ShopCreate() {
                         autoComplete='off'
                     />
                     
-                    {errors.lasName && <p>{errors.lasName.message}</p>}
+                    {errors.address && <p>{errors.address.message}</p>}
 
+
+                    <input
+                        {...register('lastname', {
+                            required: { value: true, message: 'lastname is required' },
+                            minLength: {
+                                value: 4,
+                                message: 'lastname must contain at least 4 characters',
+                            },
+                            maxLength: {
+                                value: 15,
+                                message: 'lastname must contain a maximum of 15 characters ',
+                            },
+                            pattern: {
+                                value: /([A-Z]|[a-z])/g,
+                                message: 'lastname can only be letters',
+                            },
+                        })}
+                        type='text'
+                        placeholder='lastname'
+                        name='lastname'
+                        autoComplete='off'
+                    />
+                    
+                    {errors.lastname && <p>{errors.lastname.message}</p>}
                     
                     <button type='submit'>Create store</button>
                     

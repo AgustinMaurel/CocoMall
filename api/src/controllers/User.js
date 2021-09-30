@@ -4,14 +4,15 @@ class UserModel extends ModelController {
     constructor(model) {
         super(model);
     }
+    //Specific Functions for this model
+
     createUser = (req, res) => {
         const { Name, LastName, Mail } = req.body;
-
         try {
             User.create({
-                Name: Name,
-                LastName: LastName,
-                Mail: Mail,
+                Name,
+                LastName,
+                Mail,
             }).then((e) => {
                 return res.json(e);
             });
@@ -19,13 +20,14 @@ class UserModel extends ModelController {
             return res.status(400).json(err);
         }
     };
-    //Specific Functions for this model
+
     getAllData = async (req, res, next) => {
         let data = await User.findAll({
             include: [
+                //include the related tables and the specific cloumn that they have attached
                 {
                     model: Store,
-                    attributes: ["storeName"],                
+                    attributes: ["storeName"],
                 },
                 {
                     model: Address,

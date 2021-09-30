@@ -7,6 +7,7 @@ class ProductModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
+
     createProduct = async (req, res) => {
         const elemento ={
             "id":req.body.id,
@@ -17,19 +18,20 @@ class ProductModel extends ModelController {
             "Description":req.body.Description,
             "Image":req.body.Image,
         }
-        if (req.body.name) {
+        if (req.body.id) {
             try {
+                //ID of Store
                 const id = req.body.id ? req.body.id : null;
                 const product = {
                    ...elemento
                 };
+                //Create new Product
                 const newProduct=await Product.create(product)
                 const ProductId=newProduct.id
-
+                //Attach the new product with the Store
                 const store =await Store.findByPk(id)
-                let relation =await store.addProduct(ProductId)
+                await store.addProduct(ProductId)
                 res.send("funciono");
-               
             } catch (e) {
                 res.send(e);
             }

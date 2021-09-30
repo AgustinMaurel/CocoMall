@@ -13,7 +13,7 @@ class StoreModel extends ModelController {
         const store = {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
-          description: req.body.description ? req.body.descriptio : null
+          description: req.body.description ? req.body.description : null
         };
         const newStore = await Store.create(store)
         const storeId = newStore.id

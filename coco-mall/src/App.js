@@ -9,6 +9,7 @@ import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
+import ProductsCreate from './Views/ProductsCreate';
 
 function App() {
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
             <Switch>
                 <Route path='/' exact component={Landing} />
                 <Route path="/create/shop" exact component={ShopCreate}/>
+                <Route path="/create/products" exact component={ProductsCreate}/>
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
             </Switch>

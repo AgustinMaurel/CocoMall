@@ -14,16 +14,17 @@ class StoreModel extends ModelController {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
           description: req.body.description ? req.body.description : null,
-          image: req.body.image ? req.body.image : "https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg"
+          image: req.body.image
+            ? req.body.image
+            : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
         };
-        const newStore = await Store.create(store)
-        const storeId = newStore.id
+        const newStore = await Store.create(store);
+        const storeId = newStore.id;
 
-        const user = await User.findByPk(id)
-        let relation = await user.addStore(storeId)
+        const user = await User.findByPk(id);
+        await user.addStore(storeId);
 
-        res.send(newStore)
-
+        res.send(newStore);
       } catch (e) {
         res.send(e);
       }
@@ -33,12 +34,13 @@ class StoreModel extends ModelController {
   };
 
   getAllData = async (req, res, next) => {
-    let data = await Store.findAll()
-    res.send(data)
-    .catch((err) => {
-        next(err);
-    });
-};
+    try{
+      let data = await Store.findAll();
+      res.send(data)
+    }catch(e){
+      next(e)
+    }
+  }
 }
 
 const StoreController = new StoreModel(Store);

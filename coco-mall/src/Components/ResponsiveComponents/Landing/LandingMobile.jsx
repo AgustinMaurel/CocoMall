@@ -19,8 +19,8 @@ function LandingMobile() {
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light  '></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light  '></div>
             </div>
-            <section className=' container flex flex-col gap-60 col-span-1 z-10 px-5 py-5'>
-                <div className=' col-span-1  z-10 px-5'>
+            <section className='container flex flex-col gap-60 col-span-1 z-10 px-5 py-5'>
+                <div className='col-span-1  z-10 px-5'>
                     <NavBar />
                 </div>
                 <div data-aos='fade-in'>

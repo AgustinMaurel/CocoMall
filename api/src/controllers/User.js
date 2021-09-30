@@ -1,4 +1,4 @@
-const { User, Store, Address } = require("../models/index");
+const {User, Store, Address} = require("../models/index");
 const ModelController = require("./index");
 class UserModel extends ModelController {
     constructor(model) {
@@ -7,9 +7,10 @@ class UserModel extends ModelController {
     //Specific Functions for this model
 
     createUser = (req, res) => {
-        const { Name, LastName, Mail } = req.body;
+        const {id, Name, LastName, Mail} = req.body;
         try {
             User.create({
+                id,
                 Name,
                 LastName,
                 Mail,
@@ -33,13 +34,23 @@ class UserModel extends ModelController {
                     model: Address,
                     attributes: ["directions"],
                 },
-
             ],
         }).catch((err) => {
             next(err);
         });
         res.send(data);
     };
+    getFindId = async (req, res, next) => {
+        const {id} = req.body;
+        let data = await User.findByPk(id);
+        //cambiar a futuro &&
+        if (data) {
+            return res.status(302).json(true);
+        } else {
+            return res.status(404).json(false);
+        }
+    };
+    
 }
 
 const UserController = new UserModel(User);

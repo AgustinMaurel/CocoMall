@@ -1,14 +1,16 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('Store', {
+  return sequelize.define('Review', {
     id: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
     description: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     qualification: {
         type: DataTypes.ENUM("1", "2", "3", "4", "5"),

@@ -1,6 +1,6 @@
 module.exports = {
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-    darkMode: "class", // or 'media' or 'class'
+    darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
             colors: {
@@ -8,28 +8,28 @@ module.exports = {
                 blue: {
                     450: '#5F99F7',
                 },
-            },
+            },           
         },
         backgroundColor: (theme) => ({
             ...theme('colors'),
             primary: '#38A3A5',
-            'primary-light': 'RGB(175, 218, 219)',
+            'primary-light': '#AFDADB',
             secondary: '#2EC5CE',
-            'secondary-light': 'RGB(175, 218, 189)',
+            'secondary-light': '#D7EDED',
         }),
         textColor: (theme) => ({
             ...theme('colors'),
             primary: '#38A3A5',
-            'primary-light': 'RGB(175, 218, 219)',
+            'primary-light': '#AFDADB',
             secondary: '#2EC5CE',
-            'secondary-light': 'RGB(175, 218, 189)',
+            'secondary-light': '#D7EDED',
         }),
         borderColor: (theme) => ({
             ...theme('colors'),
             primary: '#38A3A5',
-            'primary-light': 'RGB(175, 218, 219)',
+            'primary-light': '#AFDADB',
             secondary: '#2EC5CE',
-            'secondary-light': 'RGB(175, 218, 189)',
+            'secondary-light': '#D7EDED',
         }),
         container: {
             center: true,

@@ -3,61 +3,69 @@ class ModelController {
         this.model = model;
     }
     //general Functions    
-    createData = (req, res) => {
-        let data = req.body;
-        this.model.create(data).
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    createData = async (req, res) => {
+        if (typeof req.body === 'object') {
+            try {
+                let data = req.body
+                let updatedData = await this.model.create(data)
+                res.send(updatedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
-    findDataId = (req, res) => {
-        this.model.findById(req.params.id).
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    findDataId = async (req, res) => {
+        if (req.params.id) {
+            try {
+                let id = req.params.id
+                let data = await this.model.findById(id)
+                res.send(data)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+        return await this.model.findById(id)
     }
 
-    deleteDataById = (req, res) => {
-        this.model.deleteById(req.params.id).
-            then((data) => {
-                res.status(200).json({
-                    message: `${data} deleted successfully`,
-                    data,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    deleteDataById = async (req, res) => {
+        if (req.params.id) {
+            try {
+                let id = req.params.id
+                let deletedData = await this.model.deleteById(id)
+                res.send(deletedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
-    updateData = (req, res) => {
-        this.model.updateData(req.body, req.params.id).
-            then((data) => {
-                res.status(200).json({
-                    message: "Gig updated successfully",
-                    data,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    updateData = async (req, res) => {
+        if (typeof req.body === 'object') {
+            try {
+                let data = req.body
+                let id = req.params.id
+                let updatedData = await this.model.updateData(data, id)
+                res.send(updatedData)
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
     }
 
-    findData = (req, res) => {
-        this.model.findAll().
-            then((data) => {
-                res.send(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    getAllData = async (req, res, next) => {
+        let data = await this.model.findAll().catch((err) => {
+            next(err)
+        })
+        res.send(data)
     }
 }
 

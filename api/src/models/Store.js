@@ -1,13 +1,14 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('Store', {
+  return sequelize.define('Store', {
     id: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
-    store_name: {
+    storeName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -18,5 +19,10 @@ module.exports = (sequelize) => {
     // payment_account: {
     //PENDING
     // }
-  });
+  },
+    {
+      timestamps: false,
+      createdAt: false,
+    }
+  );
 };

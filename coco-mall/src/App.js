@@ -9,7 +9,6 @@ import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
-import NavBar from './Components/NavBar'
 
 function App() {
     const dispatch = useDispatch();
@@ -32,7 +31,6 @@ function App() {
 
     return (
         <>
-            <Route path="/" component={NavBar} />
             <Switch>
                 <Route path='/' exact component={Landing} />
                 <Route path="/create/shop" exact component={ShopCreate}/>

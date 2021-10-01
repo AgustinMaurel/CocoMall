@@ -18,7 +18,6 @@ function LandingDesktop() {
                 <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <NavBar />
                 </div>
-
                 <div className='flex flex-col 2xl:pl-32 gap-y-16 relative w-max  '>
                     <div data-aos='fade-in'>
                         <TitleAndDescription />

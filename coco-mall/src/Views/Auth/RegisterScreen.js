@@ -26,11 +26,13 @@ const RegisterScreen = () => {
 
     return (
         <>
-            <div className='flex flex-col text-center bg-gray-300'>
-                <h3>Register</h3>
+            <div className='flex flex-col items-center justify-center'
+            >
+                <h3 className='flex flex-col items-center justify-start pt-16 pb-7'>Register</h3>
 
-                <form onSubmit={handleSubmit(handleRegister)}>
+                <form onSubmit={handleSubmit(handleRegister)} className='flex flex-col items-center justify-center '>
                     <input
+                    className='outline-none'
                         {...register('name', {
                             required: { value: true, message: 'name is required' },
                             minLength: {
@@ -51,8 +53,7 @@ const RegisterScreen = () => {
                         name='name'
                         autoComplete='off'
                     />
-                    <br />
-                    {errors.name && <p>{errors.name.message}</p>}
+                    {errors.name && <span>{errors.name.message}</span>}
 
                     <input
                         {...register('lastName', {
@@ -75,8 +76,7 @@ const RegisterScreen = () => {
                         name='lastName'
                         autoComplete='off'
                     />
-                    <br />
-                    {errors.lasName && <p>{errors.lasName.message}</p>}
+                    {errors.lastName && <p>{errors.lastName.message}</p>}
 
                     <input
                         {...register('email', {
@@ -91,7 +91,6 @@ const RegisterScreen = () => {
                         name='email'
                         autoComplete='off'
                     />
-                    <br />
                     {errors.email && <span>{errors.email.message}</span>}
                     <input
                         {...register('password', {
@@ -114,7 +113,6 @@ const RegisterScreen = () => {
                         name='password'
                     />
                     {errors.password && <p>{errors.password.message}</p>}
-                    <br />
 
                     <input
                         {...register('password2', {

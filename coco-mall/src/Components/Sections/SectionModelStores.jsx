@@ -26,6 +26,7 @@ const SectionModelStores = () => {
             {/* TITLE */}
             <div className='text-center z-10'>
                 <h3
+                    
                     className='text-3xl font-bold
                                 sm:text-4xl
                                 xl:text-5xl'
@@ -39,10 +40,12 @@ const SectionModelStores = () => {
 
             {/* STORES CARDS */}
             <div
-                className='flex flex-wrap justify-center h-3/4 w-full gap-2 z-10
+                
+                className='flex flex-wrap justify-center h-3/4 w-full gap-2 z-10                          
                            
                             md:gap-5
                             lg:w-4/5
+                            
                             2xl:w-full 2xl:h-1/2 2xl:items-center'
             >
                 {data?.map((e, i) => (

@@ -5,6 +5,7 @@ const StoreModel = ({ banner, logo, title, mail, description }) => {
         <div className='w-2/5 h-60 bg-white shadow-xl
                         sm:h-64
                         md:h-72
+                        
                         2xl:w-1/5 2xl:h-full'>
             {/* --banner-- */}
             <div className='overflow-hidden max-h-24

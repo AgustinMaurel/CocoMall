@@ -10,7 +10,7 @@ import TitleAndDescription from '../../TitleAndDescription';
 
 function LandingMobile() {
     return (
-        <div className='grid grid-col-1  min-h-screen  py-3'>
+        <div className='grid grid-col-1  min-h-screen  overflow-x-hidden  py-3'>
             <div className='fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
@@ -33,19 +33,19 @@ function LandingMobile() {
                     <SectionHow />
                 </section>
                 <section
-                    data-aos='fade-up'
-                    data-aos-offset='0'
+                    data-aos='fade-left'
+                    data-aos-delay='250'
                     className='container col-span-1  px-5  '
                 >
                     <SectionBenefits />
                 </section>
 
-                <section className='container col-span-1' >
+                <section data-aos='fade' data-aos-delay="250" className='container col-span-1' >
                     <SectionStats />
                 </section>
 
 
-                <section className=' col-span-1' >
+                <section data-aos='fade-right' className=' col-span-1' >
                     <SectionModelStores />
                 </section>
             </div>

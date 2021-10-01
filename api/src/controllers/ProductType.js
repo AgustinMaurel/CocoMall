@@ -6,6 +6,16 @@ class ProducTypeModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
+    postBulkCreate = async (req,res) => {
+        const allTypes = req.body.types;
+        try {
+            let data = await this.model.bulkCreate(allTypes)
+            res.send({message: 'successfully created', data})
+        } catch (error) {
+            res.send(error);
+            // console.log(error)
+        }
+    }
 }
 
 const ProductTypeController = new ProducTypeModel(ProductType)

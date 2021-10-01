@@ -13,7 +13,7 @@ function NavBar() {
         <>
             {width < breakpoint ? (
                 <nav className='flex justify-between'>
-                    <div>
+                    <div className='flex align-center items-center gap-5'>
                         <p>Logo</p>
                         <Link to='/'>
                             <p>Home</p>

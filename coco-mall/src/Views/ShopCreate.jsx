@@ -54,10 +54,24 @@ function ShopCreate() {
     };
 
     return (
-        <div className='flex flex-col text-center bg-primary-light h-screen py-3'>
-            <div className='px-5'>
+        <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
+            <div className='px-5 z-10'>
                 <NavBar />
             </div>
+
+            <div
+                className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+            <div
+                className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+            <div
+                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+
             <form
                 className='flex flex-col w-80 h-3/4 my-auto relative mx-auto '
                 onSubmit={handleSubmit(handleRegister)}
@@ -269,8 +283,8 @@ function ShopCreate() {
                             onClick={() => document.getElementById('selectedFile').click()}
                             className={
                                 errors.image
-                                    ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded'
-                                    : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded'
+                                    ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
+                                    : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                             }
                             // onChange={handleImageChange}
                         />
@@ -307,10 +321,7 @@ function ShopCreate() {
                         )}
                     </div>
 
-                    <button
-                        type='submit'                        
-                        className='bg-secondary w-32 rounded h-8 text-white'
-                    >
+                    <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
                         Create store
                     </button>
                 </div>

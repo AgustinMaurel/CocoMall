@@ -28,15 +28,25 @@ const RegisterScreen = () => {
 
     return (
         <>
-            <div className='flex flex-col mt-20 md:mt-28 md:w-2/3 xl:w-2/4 items-center '>
-                <div className='flex-col text-left m-10 font-bold'>
+            <div className='flex flex-col mt-20 md:mt-28 md:w-2/3 xl:w-2/4 items-center z-10'>
+                <div className='flex-col m-8 font-bold'>
                     <h1>Register</h1>
                 </div>
-
-                <form onSubmit={handleSubmit(handleRegister)} className='grid grid-col-1 m-10'>
+                <div className='flex relative w-100 content-center justify-between mx-auto items-center '>
+                <div
+                    className='h-16 w-16 bg-primary-light   rounded-full absolute z-0 left-10 top-10
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+                ></div>
+                <div
+                    className='h-10 w-10 bg-primary-light rounded-full absolute z-0 left-1/3
+                                 xl:h-14 xl:w-14'
+                ></div>
+                <div className='h-24 w-24 bg-primary-light rounded-full absolute z-0 left-2/3 top-60 xl:h-60 xl:w-60'></div>
+            </div>
+                <form onSubmit={handleSubmit(handleRegister)} className='grid grid-col-1 m-10 z-10'>
                     <div className='flex flex-col text-left'>
                         <input
-                            className='m-1 border border-gray-200 shadow-md rounded outline-none'
+                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
                             {...register('name', {
                                 required: { value: true, message: 'name is required' },
                                 minLength: {
@@ -65,7 +75,7 @@ const RegisterScreen = () => {
                     </div>
                     <div className='flex flex-col text-left'>
                         <input
-                            className='m-1 border border-gray-200 shadow-md rounded outline-none'
+                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
                             {...register('lastName', {
                                 required: { value: true, message: 'lastName is required' },
                                 minLength: {
@@ -94,7 +104,7 @@ const RegisterScreen = () => {
                     </div>
                     <div className='flex flex-col text-left'>
                         <input
-                            className='m-1 border border-gray-200 shadow-md rounded outline-none'
+                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
                             {...register('email', {
                                 required: { value: true, message: 'email is required' },
                                 pattern: {
@@ -115,7 +125,7 @@ const RegisterScreen = () => {
                     </div>
                     <div className='flex flex-col text-left'>
                         <input
-                            className='m-1 border border-gray-200 shadow-md rounded outline-none'
+                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
                             {...register('password', {
                                 required: { value: true, message: 'password is required' },
                                 minLength: {
@@ -144,7 +154,7 @@ const RegisterScreen = () => {
                     </div>
                     <div className='flex flex-col text-left'>
                         <input
-                            className='m-1 border border-gray-200 shadow-md rounded outline-none'
+                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
                             {...register('password2', {
                                 validate: (value) =>
                                     value === getValues('password') || 'Passwords do not match',
@@ -161,12 +171,12 @@ const RegisterScreen = () => {
                         )}
                     </div>
 
-                    <div className='bg-secondary rounded text-white text-center'>
+                    <div className='bg-secondary rounded text-white text-center mt-5'>
                                 <button className="text-sm cursor-pointer" type="submit">Register</button>
                             </div>
 
-                    <Link className="text-secondary ml-2" to='/auth/login'>Already registered?</Link>
                 </form>
+                    <Link className="text-secondary -mt-5 z-10" to='/auth/login'>Already registered?</Link>
             </div>
         </>
     );

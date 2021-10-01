@@ -12,13 +12,11 @@ import 'firebase/compat/auth';
     measurementId: "G-NZK5LL6S5E"
   }) ;
   
-
-
+    
 export const auth = firebase.auth()
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider()
 export const facebookProvider = new firebase.auth.FacebookAuthProvider()
-
 
 export default firebaseConfig;
  

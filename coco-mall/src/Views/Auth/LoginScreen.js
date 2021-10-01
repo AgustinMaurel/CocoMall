@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux';
 import { startLoginEmailPassword, startGoogleLogin, startLogout } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import MainButton from '../../Components/Buttons/MainButton';
-import SecondaryButton from '../../Components/Buttons/SecondaryButton';
+
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -72,7 +71,7 @@ const LoginScreen = () => {
                             />
                             {errors.password && <p>{errors.password.message}</p>}
                             <div>
-                            <MainButton text="Sign In"/>
+                            <button type="submit">Sign In</button>
                             </div>
                         </div>
                         <div className='m-1'>

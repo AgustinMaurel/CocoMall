@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, FIREBASE_ERR } from './actionTypes.js';
+import { LOGIN, LOGOUT } from './actionTypes.js';
 import { auth, googleProvider } from '../../firebase/firebaseConfig.js';
 
 import Swal from 'sweetalert2';
@@ -16,15 +16,12 @@ export const startLoginEmailPassword = (email, password) => {
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
-                dispatch({ type: FIREBASE_ERR, payload: err.code });
                 Swal.fire({
                     title: 'Error!',
                     text: err.code,
                     icon: 'error',
                     confirmButtonText: 'Close'
                   })
-
-                //Usar el err.code para validar!!
             });
     };
 };
@@ -70,8 +67,6 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 icon: 'error',
                 confirmButtonText: 'Close'
               })
-            dispatch({ type: FIREBASE_ERR, payload: err.code });
-            //Usar el err.code para validar!!
         }
     };
 };

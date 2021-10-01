@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ register, errors, name, msg, type, validate, onChange }) => {
+const InputFile = ({ register, errors, name, type, validate, onChange }) => {
     return (
         <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label>
@@ -11,9 +11,11 @@ const Input = ({ register, errors, name, msg, type, validate, onChange }) => {
                 {...register(name, validate)}
                 onChange={onChange}
             />
-            {errors.name && <span className='text-red-500 text-xs italic'>{errors.name.message}</span>}
+            {errors[name] && (
+                <span className='text-red-500 text-xs italic'>{errors[name].message}</span>
+            )}
         </div>
     );
 };
 
-export default Input;
+export default InputFile;

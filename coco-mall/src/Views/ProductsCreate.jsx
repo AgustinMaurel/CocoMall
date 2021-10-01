@@ -1,49 +1,16 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '../Components/Inputs/Input';
+import InputDefault from '../Components/Inputs/InputDefault';
+import InputFile from '../Components/Inputs/InputFile';
+import validate from '../Scripts/validate';
 
 const IMG_DEFAULT =
     'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
 
-const validate = {
-    product: {
-        required: { value: true, message: 'product is required' },
-        minLength: {
-            value: 2,
-            message: 'product must contain at least 2 characters',
-        },
-        maxLength: {
-            value: 16,
-            message: 'product must contain a maximum of 16 characters ',
-        },
-    },
-    description: {
-        required: { value: true, message: 'description is required' },
-        minLength: {
-            value: 2,
-            message: 'description must contain at least 2 characters',
-        },
-        maxLength: {
-            value: 40,
-            message: 'description must contain a maximum of 40 characters ',
-        },
-    },
-    price: {
-        required: { value: true, message: 'description is required' },
-        min: {
-            value: 1,
-            message: 'price min',
-        },
-        max: {
-            value: 9999999999,
-            message: 'price maximum',
-        },
-    },
-    image: { required: true },
-};
+
 
 const ProductsCreate = () => {
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     //const [typeFile, setTypeFile] = useState("");
 
@@ -68,9 +35,10 @@ const ProductsCreate = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        console.log(data)
 
-    console.log(watch('image'));
+    };
 
     return (
         <div className='flex flex-col justify-center items-center w-screen h-screen '>
@@ -80,33 +48,29 @@ const ProductsCreate = () => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <h3 className='text-3xl text-center'>Create Products</h3>
-                    <Input
+                    <InputDefault
                         register={register}
                         errors={errors}
-                        name='name'
-                        msg='This field is required'
+                        name='product'
                         validate={validate.product}
                     />
-                    <Input
+                    <InputDefault
                         register={register}
                         errors={errors}
                         name='description'
-                        msg='This field is required'
                         validate={validate.description}
                     />
-                    <Input
+                    <InputDefault
                         register={register}
                         errors={errors}
                         name='price'
-                        msg='This field is required'
                         type='number'
                         validate={validate.price}
                     />
-                    <Input
+                    <InputFile
                         register={register}
                         errors={errors}
                         name='image'
-                        msg='This field is required'
                         type='file'
                         validate={validate.image}
                         onChange={handleImageChange}
@@ -121,7 +85,7 @@ const ProductsCreate = () => {
                 <div className='border bg-white shadow-md rounded p-8 m-4 w-1/3 text-center'>
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
-                        {watch('name') ? watch('name').toUpperCase() : 'NAME'}
+                        {watch('product') ? watch('product').toUpperCase() : 'PRODUCT'}
                     </p>
                     <p className='mt-1'>
                         {watch('description') ? watch('description') : 'description'}

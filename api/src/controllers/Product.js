@@ -1,4 +1,5 @@
 const { Product, Store, ProductType } = require('../models/index');
+const { prototype } = require('./index');
 
 const ModelController = require('./index')
 
@@ -28,9 +29,10 @@ class ProductModel extends ModelController {
                 const store = await Store.findByPk(storeId)
                 await store.addProduct(ProductId)
                 //Attach the new product with his Type
-                await newProduct.addProductType(typeId)
-                //Final Product
+                const productType = await ProductType.findByPk(typeId)
+                await productType.addProduct(ProductId)
                 const finalProduct = await this.model.findByPk(ProductId)
+                console.log(finalProduct)
                 res.send(finalProduct);
             } catch (e) {
                 res.send(e);

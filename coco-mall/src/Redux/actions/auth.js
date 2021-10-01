@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOGIN, LOGOUT } from './actionTypes.js';
-import { auth, googleProvider } from '../../firebase/firebaseConfig.js';
+import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 
 import Swal from 'sweetalert2';
 
@@ -38,15 +38,39 @@ export const login = (uid, displayName) => {
 
 export const startGoogleLogin = () => {
     return (dispatch) => {
-        auth.signInWithPopup(googleProvider).then(({ user }) => {
+        auth.signInWithPopup(googleProvider)
+        .then(({ user }) => {
             console.log(user);
             dispatch(
                 login(user.uid, user.displayName),
                 //mandar el accessToken al back
             );
-        });
+        })
+        .catch(err=> Swal.fire({
+            title: 'Error!',
+            text: err.code,
+            icon: 'error',
+            confirmButtonText: 'Close'
+          }))
     };
 };
+
+
+export const startFacebookLogin = () => {
+    return (dispatch) => {
+        auth.signInWithPopup(facebookProvider)
+        .then(( {user} ) => {
+            console.log(user)
+            dispatch(login(user.uid, user.displayName))
+        })
+        .catch(err=> Swal.fire({
+            title: 'Error!',
+            text: err.code,
+            icon: 'error',
+            confirmButtonText: 'Close'
+          }))
+    } 
+}
 
 export const startRegisterWithEmailPasswordName = (email, password, name, lastName) => {
     return async (dispatch) => {

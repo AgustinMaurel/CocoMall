@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { startLoginEmailPassword, startGoogleLogin, startLogout } from '../../Redux/actions/auth';
+import { startLoginEmailPassword, startGoogleLogin, startLogout, startFacebookLogin } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -31,6 +31,10 @@ const LoginScreen = () => {
         dispatch(startGoogleLogin());
     };
 
+    const handleFacebookLogin = () => {
+        dispatch(startFacebookLogin())
+    }
+
     const handleLogout = () => {
         dispatch(startLogout());
     }
@@ -39,10 +43,12 @@ const LoginScreen = () => {
         <>
             {!renderCond.uid && !renderCond.name ?
 
-                <div>
-                    <h3>Login</h3>
-                    <div></div>
-                    <form onSubmit={handleSubmit(handleLogin)}>
+                <div className='grid grid-col-1'>
+                    <div className='flex-col text-left m-10'>
+                    <h1>Login in to your account</h1>
+                    </div>
+
+                    <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
                         <div className='m-1'>
                             <input
                                 {...register('email', {
@@ -86,6 +92,14 @@ const LoginScreen = () => {
                                         alt='google button'
                                     />
                                 </div>
+                                <div className='flex flex-col ' onClick={handleFacebookLogin}>
+                                    <img
+                                        className='w-20 h-9 justify-self-center'
+                                        src='https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
+                                        alt='facebook button'
+                                    />
+                                </div>
+                
                             </div>
                         </div>
 

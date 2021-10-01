@@ -10,15 +10,15 @@ class AddressModel extends ModelController {
         if (req.body.id) {
             try {
                 //id of User
-                const id = req.body.id ? req.body.id : null;
+                const userId = req.body.id ? req.body.id : null;
                 const address = {
                     directions: req.body.directions,
                 };
                 //Create the Address
-                const newAddress = await Address.create(address);
+                const newAddress = await this.model.create(address);
                 const addressId = newAddress.id;
                 //Search the User and attach the Address
-                const user = await User.findByPk(id);
+                const user = await User.findByPk(userId);
                 await user.addReview(addressId);
                 res.send(newAddress);
             } catch (e) {

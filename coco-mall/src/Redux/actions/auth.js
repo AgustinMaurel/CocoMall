@@ -2,17 +2,27 @@ import axios from 'axios';
 import { LOGIN, LOGOUT, FIREBASE_ERR } from './actionTypes.js';
 import { auth, googleProvider } from '../../firebase/firebaseConfig.js';
 
+import Swal from 'sweetalert2';
+
+
+
+
 export const startLoginEmailPassword = (email, password) => {
+    
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 console.log(user);
                 dispatch(login(user.uid, user.displayName));
-                //mandar el acces token al back
             })
             .catch((err) => {
-                console.log(err.code)
                 dispatch({ type: FIREBASE_ERR, payload: err.code });
+                Swal.fire({
+                    title: 'Error!',
+                    text: err.code,
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                  })
 
                 //Usar el err.code para validar!!
             });
@@ -54,6 +64,12 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
 
             return axios.post('http://localhost:3001/user/create', userF);
         } catch (err) {
+            Swal.fire({
+                title: 'Error!',
+                text: err.code,
+                icon: 'error',
+                confirmButtonText: 'Close'
+              })
             dispatch({ type: FIREBASE_ERR, payload: err.code });
             //Usar el err.code para validar!!
         }

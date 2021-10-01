@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT, FIREBASE_ERR } from '../actions/actionTypes';
 
 const initialState = {
-    uid: 0,
+    uid: "",
     name: '',
     err: '',
 };
@@ -19,6 +19,7 @@ export const authReducer = (state = initialState, action) => {
                 name: '',
                 err: '',
             };
+           
         case FIREBASE_ERR:
             if (action.payload === 'auth/email-already-in-use'){
                 return {
@@ -35,9 +36,10 @@ export const authReducer = (state = initialState, action) => {
             if(action.payload === 'auth/wrong-password'){
                 return {
                     ...state,
-                    err: 'The password is wrong'
+                    err: 'The z| is wrong'
                 }
             }
+            break;
         default:
             return state;
     }

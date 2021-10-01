@@ -89,7 +89,7 @@ const LoginScreen = () => {
                                 />
                                   <div
                                    onClick={()=> viewPass=== "text" ? setViewPass("password"): setViewPass("text")}
-                                    className="flex flex-col justify-center text-center ml-16 cursor-pointer md:ml-28 ">
+                                    className="flex flex-col justify-center text-center cursor-pointer  md:ml-28 ">
                                         <FiEye className="text-gray-500"/>
                                         </div>   
                             </div>

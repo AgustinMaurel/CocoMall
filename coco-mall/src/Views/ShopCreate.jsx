@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -9,16 +9,21 @@ function ShopCreate() {
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
 
+    // useEffect(() => {
+    //     if (image.length > 0) setIsUploaded(true);
+    //     else setIsUploaded(false);
+    // }, [image,isUploaded]);
+
     const {
         handleSubmit,
         formState: { errors },
         register,
         setValue,
+        watch,
         // getValues,
     } = useForm();
-
+    console.log(watch('image')?.length);
     const handleImageChange = (e) => {
-    
         if (e.target.files && e.target.files[0]) {
             let reader = new FileReader();
 
@@ -27,12 +32,13 @@ function ShopCreate() {
                 setIsUploaded(true);
             };
             reader.readAsDataURL(e.target.files[0]);
+        } else {
+            setIsUploaded(false);
         }
     };
 
     const handleRegister = (data) => {
-        console.log(setImage);
-        
+        console.log(JSON.stringify(data));
         //despacho a ruta
         axios
             .post('http://localhost:3001/store/create', data)
@@ -75,13 +81,25 @@ function ShopCreate() {
                                     message: 'Store can only be letters',
                                 },
                             })}
+                            placeholder='Eg: ChiliKing'
                             type='text'
-                            placeholder='Name'
                             name='storeName'
                             autoComplete='off'
-                            className='outline-none p-2 w-full rounded text-sm'
+                            className={
+                                errors.storeName
+                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200 font-medium'
+                            }
                         />
-                        {errors.storeName && <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.storeName.message}</p>}
+                        {errors.storeName ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.storeName.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Store Name
+                            </p>
+                        )}
                     </div>
 
                     <div className='relative'>
@@ -102,12 +120,24 @@ function ShopCreate() {
                                 },
                             })}
                             type='text'
-                            placeholder='Country'
+                            placeholder='Eg: Argentina'
                             name='country'
                             autoComplete='off'
-                            className='outline-none p-2 w-full rounded text-sm'
+                            className={
+                                errors.country
+                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
                         />
-                        {errors.country && <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.country.message}</p>}
+                        {errors.country ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.country.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Country
+                            </p>
+                        )}
                     </div>
 
                     <div className='relative'>
@@ -128,12 +158,24 @@ function ShopCreate() {
                                 },
                             })}
                             type='text'
-                            placeholder='Address (Eg: Nuñez 3805)'
+                            placeholder='Eg: Nuñez 3805'
                             name='address'
                             autoComplete='off'
-                            className='outline-none p-2 w-full rounded text-sm'
+                            className={
+                                errors.address
+                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
                         />
-                        {errors.address && <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.address.message}</p>}
+                        {errors.address ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.address.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Adress
+                            </p>
+                        )}
                     </div>
 
                     <div className='relative'>
@@ -154,12 +196,24 @@ function ShopCreate() {
                                 },
                             })}
                             type='text'
-                            placeholder='Area Code (Eg: 1430)'
+                            placeholder='Eg: 1430'
                             name='cp'
                             autoComplete='off'
-                            className='outline-none p-2 w-full rounded text-sm'
+                            className={
+                                errors.cp
+                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
                         />
-                        {errors.cp && <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.cp.message}</p>}
+                        {errors.cp ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.cp.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Area Code
+                            </p>
+                        )}
                     </div>
 
                     <div className='relative'>
@@ -172,16 +226,27 @@ function ShopCreate() {
                                 },
                                 maxLength: {
                                     value: 255,
-                                    message: 'Description must contain a maximum of 255 characters ',
+                                    message:
+                                        'Description must contain a maximum of 255 characters ',
                                 },
                             })}
-                            placeholder='Description'
+                            placeholder='Vegan food shop...'
                             name='description'
                             autoComplete='off'
-                            className='resize-none outline-none p-2 w-full rounded text-sm'
+                            className={
+                                errors.description
+                                    ? 'border border-red-200 resize-none outline-none p-2 w-full rounded text-sm'
+                                    : 'resize-none outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
                         />
-                        {errors.description && (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.description.message}</p>
+                        {errors.description ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.description.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Description
+                            </p>
                         )}
                     </div>
 
@@ -196,19 +261,56 @@ function ShopCreate() {
                             id='selectedFile'
                             accept='.png'
                             style={{ display: 'none' }}
-                            onChange={handleImageChange}
+                            // onChange={handleImageChange}
                         />
                         <input
                             type='button'
-                            value='Select Image'
+                            value='Select Logo'
                             onClick={() => document.getElementById('selectedFile').click()}
-                            className='bg-white text-gray-400 outline-none p-2 w-full rounded'
-                            onChange={handleImageChange}
+                            className={
+                                errors.image
+                                    ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded'
+                                    : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded'
+                            }
+                            // onChange={handleImageChange}
                         />
-                        {errors.image && <p className='absolute text-xs text-red-500 -top-4 left-0'>{errors.image.message}</p>}
+                        {errors.image ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.image.message}
+                            </p>
+                        ) : watch('image')?.length > 0 ? (
+                            <div>
+                                <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
+                                    <p className=' text-xs  min-w-max  font-semibold '>Logo</p>
+                                    <div>
+                                        <svg
+                                            className='w-3 h-3 rounded-full bg-green-400'
+                                            fill='none'
+                                            stroke='currentColor'
+                                            viewBox='0 0 24 24'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                strokeWidth='2'
+                                                d='M5 13l4 4L19 7'
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                Logo
+                            </p>
+                        )}
                     </div>
 
-                    <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
+                    <button
+                        type='submit'                        
+                        className='bg-secondary w-32 rounded h-8 text-white'
+                    >
                         Create store
                     </button>
                 </div>

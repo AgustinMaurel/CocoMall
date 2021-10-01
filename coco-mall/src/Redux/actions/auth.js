@@ -1,4 +1,3 @@
-import { getAuth, sendSignInLinkToEmail, signInWithEmailLink } from "firebase/auth";
 import axios from 'axios';
 import { LOGIN, LOGOUT } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider, actionCodeSettings } from '../../firebase/firebaseConfig.js';
@@ -72,12 +71,6 @@ export const startFacebookLogin = () => {
     };
 };
 
-// const auth2 = getAuth();
-// sendSignInLinkToEmail(auth2, email, actionCodeSettings)
-// .then((prueba) => {
-//     console.log(prueba);
-//     window.localStorage.setItem('emailForSignIn', email)
-// })
 export const startRegisterWithEmailPasswordName = (email, password, name, lastName) => {
     return async (dispatch) => {
         try {

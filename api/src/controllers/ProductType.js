@@ -11,7 +11,7 @@ class ProducTypeModel extends ModelController {
         if (typeof allTypes === 'object'){
             try {
                 let data = await this.model.bulkCreate(allTypes)
-                res.send({ message: 'successfully created', data })
+                res.send(data)
             } catch (error) {
                 res.send(error);
                 // console.log(error)

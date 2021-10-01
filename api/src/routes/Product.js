@@ -5,6 +5,7 @@ const { getAllData,createProduct} = require('../controllers/Product.js')
 
 //all routes start with /product
 router.get('/', getAllData)
-router.post('/',createProduct)
+
+router.post('/create',createProduct)
 
 module.exports = router

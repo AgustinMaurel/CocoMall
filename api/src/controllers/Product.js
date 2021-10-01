@@ -1,4 +1,4 @@
-const { Product, Store } = require('../models/index');
+const { Product, Store, ProductType } = require('../models/index');
 
 const ModelController = require('./index')
 
@@ -7,31 +7,31 @@ class ProductModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
-
     createProduct = async (req, res) => {
-        const elemento = {
-            "id": req.body.id,
-            "ProductName": req.body.name,
-            "Price": req.body.Price,
-            "Stock": req.body.Stock,
-            "Unity": req.body.Unity,
-            "Description": req.body.Description,
-            "Image": req.body.Image,
-        }
-        if (req.body.id) {
+        //ID of Store
+        const storeId = req.body.storeId
+        const typeId = req.body.typeId
+        if (storeId && typeId) {
             try {
-                //ID of Store
-                const id = req.body.id ? req.body.id : null;
                 const product = {
-                    ...elemento
-                };
+                    ProductName: req.body.name,
+                    Price: req.body.price,
+                    Stock: req.body.stock,
+                    SellBy: req.body.sellBy,
+                    Description: req.body.description,
+                    Image: req.body.image,
+                }
                 //Create new Product
-                const newProduct = await Product.create(product)
+                const newProduct = await this.model.create(product)
                 const ProductId = newProduct.id
                 //Attach the new product with the Store
-                const store = await Store.findByPk(id)
+                const store = await Store.findByPk(storeId)
                 await store.addProduct(ProductId)
-                res.send("funciono");
+                //Attach the new product with his Type
+                await newProduct.addProductType(typeId)
+                //Final Product
+                const finalProduct = await this.model.findByPk(ProductId)
+                res.send(finalProduct);
             } catch (e) {
                 res.send(e);
             }

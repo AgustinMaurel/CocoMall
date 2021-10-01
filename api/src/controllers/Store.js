@@ -10,7 +10,7 @@ class StoreModel extends ModelController {
     if (req.body.id) {
       try {  
         //id of User
-        const id = req.body.id ? req.body.id : null;
+        const id = req.body.id;
         const store = {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
@@ -25,6 +25,7 @@ class StoreModel extends ModelController {
         //Attach the Store with the User ID
         const user = await User.findByPk(id);
         await user.addStore(storeId);
+        
         res.send(newStore);
       } catch (e) {
         res.send(e);

@@ -91,7 +91,7 @@ function ShopCreate() {
                                     message: 'Store must contain a maximum of 15 characters ',
                                 },
                                 pattern: {
-                                    value: /([A-Z]|[a-z])/g,
+                                    value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
                                     message: 'Store can only be letters',
                                 },
                             })}

@@ -24,15 +24,15 @@ class ProductModel extends ModelController {
                 }
                 //Create new Product
                 const newProduct = await this.model.create(product)
-                const ProductId = newProduct.id
+                const productId = newProduct.id
                 //Attach the new product with the Store
                 const store = await Store.findByPk(storeId)
-                await store.addProduct(ProductId)
+                await store.addProduct(productId)
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId)
-                await productType.addProduct(ProductId)
-                const finalProduct = await this.model.findByPk(ProductId)
-                console.log(finalProduct)
+                await productType.addProduct(productId)
+                //Get the updeted product
+                const finalProduct = await this.model.findByPk(productId)
                 res.send(finalProduct);
             } catch (e) {
                 res.send(e);
@@ -41,6 +41,35 @@ class ProductModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
+    bulkCreateProducts = async (req, res) => {
+        const allProducts = req.body.products;
+        const allIds = req.body.ids
+        if (typeof allProducts === 'object') {
+            try {
+                const products = await this.model.bulkCreate(allProducts)
+                products.forEach((product, i) => {
+                    //Each Product we need the id
+                    let productId = product.id
+                    let storeId = allIds[i].storeId
+                    let typeId = allIds[i].typeId
+                    //Attach the new product with the Store
+                    const store = await Store.findByPk(storeId)
+                    await store.addProduct(productId)
+                    //Attach the new product with his Type
+                    const productType = await ProductType.findByPk(typeId)
+                    await productType.addProduct(productId)
+                });
+                //Get all products updeted
+                const finalProducts = await this.model.findAll()
+                res.send(finalProducts)
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    }
 }
 
 const ProductController = new ProductModel(Product)

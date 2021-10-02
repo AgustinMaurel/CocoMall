@@ -1,5 +1,6 @@
-const { Store, User } = require('../models/index');
+const { Store, User ,Product} = require('../models/index');
 const ModelController = require('./index');
+const { Op } = require("sequelize");
 
 class StoreModel extends ModelController {
   constructor(model) {
@@ -66,6 +67,27 @@ class StoreModel extends ModelController {
       res.status(400).send({ message: 'Wrong parameters' })
     }
   }
+  getFilter=async(req,res)=>{
+    const Filtro = req.body.Filtro
+    const Result =await this.model.findAll({
+      include:{
+        model:Product,
+        through:{
+          Products:[]
+        }
+      } ,
+      where:{
+        Products:{
+          ProductTypeId:{
+            [Op.or]:Filtro
+          }
+        }
+      }
+    })
+    res.send(Result)
+  }
+
+
 }
 
 

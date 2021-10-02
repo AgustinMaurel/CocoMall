@@ -39,9 +39,7 @@ class UserModel extends ModelController {
             next(err);
         });
         res.send(data);
-    };
-
-    
+    }; 
 }
 
 const UserController = new UserModel(User);

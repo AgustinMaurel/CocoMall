@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const router = Router();
-const { getAllData, createProduct, bulkCreateProducts, findAllProductsOfStore, filterProductsByType } = require('../controllers/Product.js')
+const { getAllData, createProduct, bulkCreateProducts, findAllProductsOfStore, filterProductsByTypeAndName } = require('../controllers/Product.js')
 
 
 //all routes start with /product
@@ -10,7 +10,7 @@ router.get('/', getAllData)
 
 router.get('/:id', findAllProductsOfStore)
 
-router.get('/filter/:id', filterProductsByType)
+router.get('/filter/:id', filterProductsByTypeAndName)
 
 //POST's
 router.post('/bulkCreate', bulkCreateProducts)

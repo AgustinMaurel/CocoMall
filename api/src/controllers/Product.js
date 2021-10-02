@@ -70,18 +70,22 @@ class ProductModel extends ModelController {
         }
     }
 
-    filterProductsByType = async (req, res) => {
+    filterProductsByTypeAndName = async (req, res) => {
         //Id of the store from which i need products
         const storeId = req.params.id
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
                 const allTypes = req.body.types || []
+                const nameToFilter = req.body.name || ""
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                         ProductTypeId: {
                             [Op.or]: allTypes
+                        },
+                        ProductName: {
+                            [Op.iLike]: `%${nameToFilter}%`
                         }
                     }
                 })

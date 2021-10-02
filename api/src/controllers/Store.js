@@ -70,14 +70,18 @@ class StoreModel extends ModelController {
 
   filterStoresByProductTypes = async (req, res) => {
     const typesId = req.body.types || []
+    const nameToFilter = req.body.name || ""
     try {
       const filteredStores = await this.model.findAll({
         include: {
           model: Product,
-          attributes: ["ProductTypeId"],
+          attributes: ["ProductTypeId", "ProductName"],
           where: {
             ProductTypeId: {
               [Op.or]: typesId
+            },
+            ProductName: {
+              [Op.iLike]: `%${nameToFilter}%`
             }
           }
         },
@@ -88,11 +92,6 @@ class StoreModel extends ModelController {
     }
   }
 }
-
-
-
-
-
 
 const StoreController = new StoreModel(Store);
 

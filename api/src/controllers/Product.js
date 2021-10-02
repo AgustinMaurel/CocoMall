@@ -48,7 +48,7 @@ class ProductModel extends ModelController {
         if (typeof allProducts === 'object') {
             try {
                 const products = await this.model.bulkCreate(allProducts)
-                products.forEach((product, i) => {
+                products.forEach(async (product, i) => {
                     //Each Product we need the id
                     let productId = product.id
                     let storeId = allIds[i].storeId

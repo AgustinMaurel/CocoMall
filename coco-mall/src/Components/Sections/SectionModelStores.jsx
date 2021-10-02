@@ -5,7 +5,6 @@ import dataStores from '../../Helpers/dataStores';
 
 const SectionModelStores = () => {
     const data = dataStores();
-    console.log(data);
 
     return (
         <div className='h-screen flex flex-col justify-center items-center gap-10 '>

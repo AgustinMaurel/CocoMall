@@ -1,5 +1,6 @@
 const { Store, User } = require('../models/index');
 const ModelController = require('./index');
+const {cloudinary} = require('../utils/cloudinary/index')
 
 class StoreModel extends ModelController {
   constructor(model) {
@@ -8,19 +9,29 @@ class StoreModel extends ModelController {
   //Specific Functions for this model
   createStore = async (req, res) => {
     if (req.body.id) {
-      try {  
-        //id of User
+      try {
+
+        //Cloudinary
+
+        const fileString = req.body.data ? req.body.data : null;
+        const uploadedResponse = await cloudinary.uploader.upload(fileString, {
+          upload_preset: 'dev_setups'
+        });
+        public_id = uploadedResponse.public_id
+
+        //Our DataBase
+
         const id = req.body.id ? req.body.id : null;
         const store = {
           storeName: req.body.storeName,
           address: req.body.address ? req.body.address : null,
           description: req.body.description ? req.body.description : null,
-          image: req.body.image
-            ? req.body.image
-            : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
-          country: req.body.country ? req.body.country : null,
-          state: req.body.state ? req.body.state : null,
-          cp: req.body.cp ? req.body.cp : null,
+          country: req.body.country,
+          cp: req.body.cp,
+          // img: req.body.image[0]
+          //   ? req.body.image[0]
+          //   : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
+          cloudImage: public_id ? public_id : null
         };
         //create the new Store
         const newStore = await Store.create(store);
@@ -28,7 +39,11 @@ class StoreModel extends ModelController {
         //Attach the Store with the User ID
         const user = await User.findByPk(id);
         await user.addStore(storeId);
-        res.send(newStore);
+
+        const finalStore = await Store.findByPk(storeId);
+        finalStore.img.data = finalStore.img.data.toString('base64')
+
+        res.send(finalStore);
       } catch (e) {
         res.send(e);
       }
@@ -38,13 +53,23 @@ class StoreModel extends ModelController {
   };
 
   getAllData = async (req, res, next) => {
-    try{
+    try {
+
+      //Cloudinary
+      const {resources} = await cloudinary.search.expression('folder:dev_setups')
+      .sort_by('public_id', 'desc').execute()
+      // .max_results(...)
+      const {publicIds} = resources.map(file => file.public_id) // array con todas las public ids
+      // res.send(publicIds)
+
+      // Our DataBase
+
       let data = await Store.findAll();
-      res.send(data)
-    }catch(e){
-      next(e)
+      res.send(data);
+    } catch (e) {
+      next(e);
     }
-  }
+  };
 }
 
 const StoreController = new StoreModel(Store);

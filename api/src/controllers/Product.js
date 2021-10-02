@@ -1,5 +1,5 @@
 const { Product, Store, ProductType } = require('../models/index');
-const { prototype } = require('./index');
+const { Op } = require("sequelize");
 
 const ModelController = require('./index')
 
@@ -34,8 +34,8 @@ class ProductModel extends ModelController {
                 //Get the updeted product
                 const finalProduct = await this.model.findByPk(productId)
                 res.send(finalProduct);
-            } catch (e) {
-                res.send(e);
+            } catch (error) {
+                res.send(error);
             }
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
@@ -60,9 +60,50 @@ class ProductModel extends ModelController {
                     const productType = await ProductType.findByPk(typeId)
                     await productType.addProduct(productId)
                 });
-                //Get all products updeted
-                const finalProducts = await this.model.findAll()
-                res.send(finalProducts)
+                //lindo msj
+                res.send('Successfully Created')
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    }
+
+    filterProductsByType = async (req, res) => {
+        //Id of the store from which i need products
+        const storeId = req.params.id
+        if (storeId) {
+            try {
+                //Array of the Types of products (on ID forms) that i need
+                const allTypes = req.body.types || []
+                const filteredProducts = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                        ProductTypeId: {
+                            [Op.or]: allTypes
+                        }
+                    }
+                })
+                res.send(filteredProducts)
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    }
+
+    findAllProductsOfStore = async (req, res) => {
+        const storeId = req.params.id
+        if (storeId) {
+            try {
+                const allProductOfStore = await this.model.findAll({
+                    where: {
+                        StoreId: storeId
+                    }
+                })
+                res.send(allProductOfStore)
             } catch (error) {
                 res.send(error);
             }

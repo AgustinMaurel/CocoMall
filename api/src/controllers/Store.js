@@ -1,5 +1,6 @@
-const { Store, User } = require('../models/index');
+const { Store, User ,Product} = require('../models/index');
 const ModelController = require('./index');
+const { Op } = require("sequelize");
 
 class StoreModel extends ModelController {
   constructor(model) {
@@ -49,12 +50,16 @@ class StoreModel extends ModelController {
     const allId = req.body.Ids;
     if (typeof allStore === 'object') {
       try {
-        let data = await this.model.bulkCreate(allStore);
-        data.forEach(async (element, index) => {
-          const user = await User.findByPk(allId[index]);
-          await user.addStore(element.id)
+        let stores = await this.model.bulkCreate(allStore);
+        stores.forEach(async (store, i) => {
+          //Get the id of each store
+          const storeId = store.id
+          //Attach the Store with the User ID
+          const user = await User.findByPk(allId[i]);
+          await user.addStore(storeId);
         });
-        res.send(data);
+        //lindo msj
+        res.send('Successfully Created');
       } catch (error) {
         res.send(error);
       }
@@ -62,6 +67,27 @@ class StoreModel extends ModelController {
       res.status(400).send({ message: 'Wrong parameters' })
     }
   }
+  getFilter=async(req,res)=>{
+    const Filtro = req.body.Filtro
+    const Result =await this.model.findAll({
+      include:{
+        model:Product,
+        through:{
+          Products:[]
+        }
+      } ,
+      where:{
+        Products:{
+          ProductTypeId:{
+            [Op.or]:Filtro
+          }
+        }
+      }
+    })
+    res.send(Result)
+  }
+
+
 }
 
 

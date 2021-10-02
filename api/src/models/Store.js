@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.STRING,
-      unique: true,
+      // unique: true,
     },
     description: {
       type: DataTypes.STRING

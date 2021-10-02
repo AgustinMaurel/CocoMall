@@ -6,6 +6,7 @@ const { getAllData, createStore,postBulkCreate} = require('../controllers/Store.
 router.get('/', getAllData)
 
 router.post('/create', createStore)
+
 router.post('/bulkCreate', postBulkCreate)
 
 module.exports = router

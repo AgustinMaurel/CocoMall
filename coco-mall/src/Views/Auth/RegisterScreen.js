@@ -38,7 +38,7 @@ const RegisterScreen = () => {
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
                 </div>
                 <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 top-3/4
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
                     ></div>
                 <div

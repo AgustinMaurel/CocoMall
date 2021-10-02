@@ -56,7 +56,7 @@ const LoginScreen = () => {
                                 xl:flex xl: xl:h-16 xl:w-16'
                     ></div>
                     <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 top-3/4
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
                     ></div>
 
@@ -143,7 +143,7 @@ const LoginScreen = () => {
 
                             </div>
                         </div>
-                        <div className='flex mt-10 text-sm z-10'>
+                        <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className="ml-1">Not a member ? </label>
                             <Link className="text-secondary ml-2" to='/auth/register'>  Sign up</Link>
 

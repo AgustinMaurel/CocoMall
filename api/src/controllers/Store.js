@@ -54,7 +54,7 @@ class StoreModel extends ModelController {
           //Get the id of each store
           const storeId = store.id
           //Attach the Store with the User ID
-          const user = await User.findByPk(allId[i].id);
+          const user = await User.findByPk(allId[i]);
           await user.addStore(storeId);
         });
         //lindo msj

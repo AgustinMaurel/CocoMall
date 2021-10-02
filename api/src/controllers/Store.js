@@ -51,7 +51,7 @@ class StoreModel extends ModelController {
     if (typeof allStore === 'object'){
         try {
             let data = await this.model.bulkCreate(allStore);
-            data.forEach((element,index) => {
+            data.forEach(async (element,index) => {
               const user= await User.findByPk(allId[index]);
               await user.addStore(element.id)         
             });

@@ -43,7 +43,36 @@ class StoreModel extends ModelController {
       next(e)
     }
   }
+
+
+  postBulkCreate = async (req, res) => {
+    const allStore= req.body.Store;
+    const allId=req.body.Ids;
+    if (typeof allStore === 'object'){
+        try {
+            let data = await this.model.bulkCreate(allStore);
+            data.forEach((element,index) => {
+              const user= await User.findByPk(allId[index]);
+              await user.addStore(element.id)         
+            });
+            res.send(data);
+        } catch (error) {
+            res.send(error);
+        }
+    } else {
+        res.status(400).send({ message: 'Wrong parameters' })
+    }
 }
+
+
+
+
+}
+
+
+
+
+
 
 const StoreController = new StoreModel(Store);
 

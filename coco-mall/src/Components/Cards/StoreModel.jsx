@@ -2,7 +2,7 @@ import React from 'react';
 
 const StoreModel = ({ banner, logo, title, mail, description }) => {
     return (
-        <div className='w-2/5 h-60 bg-white shadow-xl
+        <article className='w-2/5 h-60 bg-white shadow-xl
                         sm:h-64
                         md:h-72
                         
@@ -39,7 +39,7 @@ const StoreModel = ({ banner, logo, title, mail, description }) => {
                                     2xl:text-lg'>{description}</p>
                 </div>
             </div>
-        </div>
+        </article>
     );
 };
 

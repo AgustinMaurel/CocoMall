@@ -10,7 +10,7 @@ import TitleAndDescription from '../../TitleAndDescription';
 
 function LandingMobile() {
     return (
-        <div className='grid grid-col-1  min-h-screen  overflow-x-hidden  py-3'>
+        <div className='grid grid-col-1  min-h-screen  overflow-x-hidden '>
             <div className='fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />

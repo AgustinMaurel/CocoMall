@@ -125,8 +125,8 @@ function ShopCreate() {
                                     message: 'Country must contain at least 4 characters',
                                 },
                                 maxLength: {
-                                    value: 15,
-                                    message: 'Country must contain a maximum of 15 characters ',
+                                    value: 20,
+                                    message: 'Country must contain a maximum of 20 characters ',
                                 },
                                 pattern: {
                                     value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
@@ -322,7 +322,7 @@ function ShopCreate() {
                     </div>
 
                     <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
-                        Create store
+                        Next
                     </button>
                 </div>
             </form>

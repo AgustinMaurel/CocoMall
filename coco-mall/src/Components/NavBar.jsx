@@ -14,8 +14,10 @@ function NavBar() {
             {width < breakpoint ? (
                 <nav className='flex justify-between'>
                     <div className='flex align-center items-center gap-5'>
-                        <p>Logo</p>
                         <Link to='/'>
+                            <p>Logo</p>
+                        </Link>
+                        <Link to='/home'>
                             <p>Home</p>
                         </Link>
                     </div>
@@ -40,9 +42,11 @@ function NavBar() {
                 </nav>
             ) : (
                 <nav className='flex align-center items-center h-auto justify-between  w-full'>
-                    <div className='flex align-center items-center gap-5'>
-                        <p>Logo</p>
+                    <div className='flex align-center items-center  gap-5'>
                         <Link to='/'>
+                            <p>Logo</p>
+                        </Link>
+                        <Link to='/home'>
                             <p>Home</p>
                         </Link>
                     </div>

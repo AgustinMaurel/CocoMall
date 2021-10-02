@@ -1,5 +1,4 @@
 const { Product, Store, ProductType } = require('../models/index');
-const { prototype } = require('./index');
 
 const ModelController = require('./index')
 
@@ -60,9 +59,8 @@ class ProductModel extends ModelController {
                     const productType = await ProductType.findByPk(typeId)
                     await productType.addProduct(productId)
                 });
-                //Get all products updeted
-                const finalProducts = await this.model.findAll()
-                res.send(finalProducts)
+                //lindo msj
+                res.send('Successfully Created')
             } catch (error) {
                 res.send(error);
             }

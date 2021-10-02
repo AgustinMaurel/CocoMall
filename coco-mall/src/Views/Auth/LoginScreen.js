@@ -41,16 +41,24 @@ const LoginScreen = () => {
 
     return (
         <div className="overflow-hidden">
-            <div className='absolute right-0 -top-72 md:-top-10 lg:-top-28 '>
+            <div className='absolute right-0 -top-72 md:-top-10 lg:-top-10  '>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
             </div>
             {!renderCond.uid && !renderCond.name ?
 
-                <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center  '>
-                    <div className='flex-col text-xl text-left m-10 font-bold z-10'>
-                        <h1 >Login in to your account</h1>
+                <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                    <div className='flex-col text-xl text-left m-10 font-bold z-50 relative'>
+                        <h1 className="relative z-50">Login in to your account</h1>
                     </div>
+                    <div
+                        className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
+                                xl:flex xl: xl:h-16 xl:w-16'
+                    ></div>
+                    <div
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 top-3/4
+                                                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+                    ></div>
 
                     <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
 
@@ -138,8 +146,11 @@ const LoginScreen = () => {
                         <div className='flex mt-10 text-sm z-10'>
                             <label className="ml-1">Not a member ? </label>
                             <Link className="text-secondary ml-2" to='/auth/register'>  Sign up</Link>
+
                         </div>
+
                     </form>
+
                 </div> : <button onClick={handleLogout}>LOGOUT</button>}
         </div>
     );

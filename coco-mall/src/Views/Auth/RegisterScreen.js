@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
+import { useState } from 'react';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
+
+    const [viewPass, setViewPass] = useState("password")
+    const [viewPassConfirm, setViewPassConfirm] = useState("")
 
     const {
         handleSubmit,
@@ -27,26 +31,34 @@ const RegisterScreen = () => {
     };
 
     return (
-        <>
-            <div className='flex flex-col mt-20 md:mt-28 md:w-2/3 xl:w-2/4 items-center z-10'>
-                <div className='flex-col m-8 font-bold'>
+        <div className="overflow-hidden">
+            <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10'>
+                <div className='absolute right-0 -top-72 md:-top-10 lg:-top-10  '>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+                </div>
+                <div
+                    className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-12 top-3/4
+                                                xl:h-28 xl:w-28 xl:left-28 xl:top-32'
+                ></div>
+                <div
+                        className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
+                                xl:flex xl: xl:h-16 xl:w-16'
+                    ></div>
+                <div className='flex-col text-xl text-left m-5 font-bold z-50'>
                     <h1>Register</h1>
                 </div>
-                <div className='flex relative w-100 content-center justify-between mx-auto items-center '>
-                <div
-                    className='h-16 w-16 bg-primary-light   rounded-full absolute z-0 left-10 top-10
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-                ></div>
-                <div
-                    className='h-10 w-10 bg-primary-light rounded-full absolute z-0 left-1/3
-                                 xl:h-14 xl:w-14'
-                ></div>
-                <div className='h-24 w-24 bg-primary-light rounded-full absolute z-0 left-2/3 top-60 xl:h-60 xl:w-60'></div>
-            </div>
-                <form onSubmit={handleSubmit(handleRegister)} className='grid grid-col-1 m-10 z-10'>
+
+                <form className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-4/12' onSubmit={handleSubmit(handleRegister)} >
+
                     <div className='flex flex-col text-left'>
+
+                        <label className='text-gray-500 text-xs ml-1 '>Name</label>
+
+                        <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+
                         <input
-                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
+                            className='outline-none text-xs z-10 p-1.5'
                             {...register('name', {
                                 required: { value: true, message: 'name is required' },
                                 minLength: {
@@ -63,19 +75,27 @@ const RegisterScreen = () => {
                                 },
                             })}
                             type='text'
-                            placeholder='Name'
+
                             name='name'
                             autoComplete='off'
                         />
+                        </div>
+
                         {errors.name && (
                             <span className=' m-1 text-red-600 text-xs bg-red-100 rounded p-0.5'>
                                 {errors.name.message}
                             </span>
                         )}
                     </div>
+
                     <div className='flex flex-col text-left'>
+
+                        <label className='text-gray-500 text-xs ml-1 '>LastName</label>
+
+                        <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+
                         <input
-                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
+                            className="outline-none text-xs z-10 p-1.5"
                             {...register('lastName', {
                                 required: { value: true, message: 'lastName is required' },
                                 minLength: {
@@ -92,19 +112,26 @@ const RegisterScreen = () => {
                                 },
                             })}
                             type='text'
-                            placeholder='lastName'
+
                             name='lastName'
                             autoComplete='off'
                         />
+                        </div>
                         {errors.lastName && (
                             <span className=' m-1 text-red-600 text-xs bg-red-100 rounded p-0.5'>
                                 {errors.lastName.message}
                             </span>
                         )}
                     </div>
+
                     <div className='flex flex-col text-left'>
+
+                        <label className='text-gray-500 text-xs ml-1 '>Email Address</label>
+
+                        <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+
                         <input
-                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
+                            className="outline-none text-xs z-10 p-1.5"
                             {...register('email', {
                                 required: { value: true, message: 'email is required' },
                                 pattern: {
@@ -113,10 +140,11 @@ const RegisterScreen = () => {
                                 },
                             })}
                             type='text'
-                            placeholder='Email'
+
                             name='email'
                             autoComplete='off'
                         />
+                        </div>
                         {errors.email && (
                             <span className=' m-1 text-red-600 text-xs bg-red-100 rounded p-0.5'>
                                 {errors.email.message}
@@ -124,45 +152,68 @@ const RegisterScreen = () => {
                         )}
                     </div>
                     <div className='flex flex-col text-left'>
-                        <input
-                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
-                            {...register('password', {
-                                required: { value: true, message: 'password is required' },
-                                minLength: {
-                                    value: 6,
-                                    message: 'password must contain at least 8 characters',
-                                },
-                                maxLength: {
-                                    value: 16,
-                                    message: 'password must contain a maximum of 16 characters ',
-                                },
-                                pattern: {
-                                    value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
-                                    message:
-                                        'Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters',
-                                },
-                            })}
-                            type='password'
-                            placeholder='Password'
-                            name='password'
-                        />
+                        <label className='text-gray-500 text-xs ml-1 '>Password</label>
+
+                        <div className="flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10">
+                            <input
+                                className='outline-none text-xs z-10 p-1.5'
+                                {...register('password', {
+                                    required: { value: true, message: 'password is required' },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'password must contain at least 8 characters',
+                                    },
+                                    maxLength: {
+                                        value: 16,
+                                        message: 'password must contain a maximum of 16 characters ',
+                                    },
+                                    pattern: {
+                                        value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
+                                        message:
+                                            'Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters',
+                                    },
+                                })}
+                                type={viewPass}
+                                name='password'
+                            />
+                            <div
+                                onClick={() => viewPass === "text" ? setViewPass("password") : setViewPass("text")}
+                                className="flex flex-col justify-center text-center cursor-pointer z-10 pr-2">
+                                {viewPass === "text" ? <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> : <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>}
+                            </div>
+
+                        </div>
+
                         {errors.password && (
                             <span className=' m-1 text-red-600 text-xs bg-red-100 rounded p-0.5'>
                                 {errors.password.message}
                             </span>
                         )}
                     </div>
+
                     <div className='flex flex-col text-left'>
-                        <input
-                            className='m-2 border border-gray-200 shadow-md rounded outline-none'
-                            {...register('password2', {
-                                validate: (value) =>
-                                    value === getValues('password') || 'Passwords do not match',
-                            })}
-                            type='password'
-                            placeholder='Confirm password'
-                            name='password2'
-                        />
+                        <label className='text-gray-500 text-xs ml-1 '>Confirm Password</label>
+
+                        <div className="flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10" >
+
+                            <input
+                                className='outline-none text-xs z-10 p-1.5'
+                                {...register('password2', {
+                                    validate: (value) =>
+                                        value === getValues('password') || 'Passwords do not match',
+                                })}
+                                type={viewPassConfirm}
+
+                                name='password2'
+                            />
+                            <div
+                                onClick={() => viewPassConfirm === "text" ? setViewPassConfirm("password") : setViewPassConfirm("text")}
+                                className="flex flex-col justify-center text-center cursor-pointer z-10 pr-2">
+                                {viewPassConfirm === "text" ? <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> : <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>}
+                            </div>
+
+
+                        </div>
 
                         {errors.password2 && (
                             <span className=' m-1 text-red-600 text-xs bg-red-100 rounded p-0.5'>
@@ -171,14 +222,16 @@ const RegisterScreen = () => {
                         )}
                     </div>
 
-                    <div className='bg-secondary rounded text-white text-center mt-5'>
-                                <button className="text-sm cursor-pointer" type="submit">Register</button>
-                            </div>
-
+                    <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
+                        <button className="text-sm cursor-pointer" type="submit">Register</button>
+                    </div>
+                    <div className="flex flex-col mt-10 text-sm z-10 text-center items-center">
+                        <Link className="text-secondary -mt-5 z-10" to='/auth/login'>Already registered?</Link>
+                    </div>
                 </form>
-                    <Link className="text-secondary -mt-5 z-10" to='/auth/login'>Already registered?</Link>
+
             </div>
-        </>
+        </div>
     );
 };
 

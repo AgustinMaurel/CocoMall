@@ -29,23 +29,26 @@
 
     /* width */
     ::-webkit-scrollbar {
-        width: 30px;
+        width: 20px;
+        border-radius:10px;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #888;
+        background: #AFDADB;
     }
     
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #38a3a5;
+        background: #2EC5CE;
+        border-radius:10px;
+        
     }
 
     /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
+    /* ::-webkit-scrollbar-thumb:hover {
         background: #afdadb;
-    }
+    } */
 
     section {
         height: 100vh;

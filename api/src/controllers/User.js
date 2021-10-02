@@ -42,7 +42,6 @@ class UserModel extends ModelController {
 
     bulkCreateUser = async (req, res, next) => {
         try {
-
             let allUsers = req.body;
             let users = await this.model.bulkCreate(allUsers);
             res.send(users);

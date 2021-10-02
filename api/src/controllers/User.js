@@ -1,4 +1,4 @@
-const { User, Store, Address } = require("../models/index");
+const {User, Store, Address} = require("../models/index");
 const ModelController = require("./index");
 class UserModel extends ModelController {
     constructor(model) {
@@ -7,7 +7,7 @@ class UserModel extends ModelController {
     //Specific Functions for this model
 
     createUser = (req, res) => {
-        const { Name, LastName, Mail } = req.body;
+        const {Name, LastName, Mail} = req.body;
         try {
             User.create({
                 Name,
@@ -33,12 +33,22 @@ class UserModel extends ModelController {
                     model: Address,
                     attributes: ["directions"],
                 },
-
             ],
         }).catch((err) => {
             next(err);
         });
         res.send(data);
+    };
+
+    bulkCreateUser = async (req, res, next) => {
+        try {
+
+            let allUsers = req.body;
+            let users = await this.model.bulkCreate(allUsers);
+            res.send(users);
+        } catch (err) {
+            res.send(err);
+        }
     };
 }
 

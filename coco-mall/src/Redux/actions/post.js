@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { POST_STORE, POST_PRODUCT } from './actionTypes';
+import { PRODUCT_URL } from '../../Scripts/constants';
+import { POST_STORE } from './actionTypes';
 
 export const postShop = (shop) => {
     return async function (dispatch) {
@@ -10,10 +11,14 @@ export const postShop = (shop) => {
 };
 
 //create product data
-export const postProduct = (product) => {
-    return async function (dispatch) {
-        axios
-            .post('https://localhost3001/product', product)
-            .then((response) => dispatch({ type: POST_PRODUCT, payload: response.data }));
+export function postProduct(payload) {
+    return () => {
+      axios
+        .post(`${PRODUCT_URL}`, payload)
+        .then((res) => res.data)
+        .then((product) => {
+          return product;
+        })
+        .catch((error) => console.log(error));
     };
-};
+}

@@ -7,6 +7,7 @@ import Landing from './Views/Landing';
 import ShopCreate from './Views/ShopCreate';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
+import Home from './Views/Home'
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 
@@ -32,6 +33,7 @@ function App() {
     return (
         <>
             <Switch>
+                <Route path="/home" exact component={Home}/>
                 <Route path='/' exact component={Landing} />
                 <Route path="/create/shop" exact component={ShopCreate}/>
                 <Route path='/auth/login' exact component={LoginScreen} />

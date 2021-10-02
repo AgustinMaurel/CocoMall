@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOGIN, LOGOUT } from './actionTypes.js';
-import { auth, googleProvider, facebookProvider, actionCodeSettings } from '../../firebase/firebaseConfig.js';
+import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 
 import Swal from 'sweetalert2';
 
@@ -31,6 +31,8 @@ export const login = (uid, displayName) => {
         },
     };
 };
+
+
 
 export const startGoogleLogin = () => {
     return (dispatch) => {
@@ -96,8 +98,8 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
 
 export const startLogout = () => {
     return async (dispatch) => {
-        await auth.signOut();
-        dispatch(logout());
+        await auth.signOut()
+        .then(dispatch(logout()));
     };
 };
 

@@ -32,15 +32,15 @@ const RegisterScreen = () => {
 
     return (
         <div className="overflow-hidden">
-            <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10'>
+            <div className='flex flex-col mt-20 z-1 items-center z-10 md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
                 <div className='absolute right-0 -top-72 md:-top-10 lg:-top-10  '>
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
                 </div>
                 <div
-                    className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-12 top-3/4
-                                                xl:h-28 xl:w-28 xl:left-28 xl:top-32'
-                ></div>
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 top-3/4
+                                                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+                    ></div>
                 <div
                         className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
@@ -49,7 +49,7 @@ const RegisterScreen = () => {
                     <h1>Register</h1>
                 </div>
 
-                <form className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-4/12' onSubmit={handleSubmit(handleRegister)} >
+                <form className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-3/12' onSubmit={handleSubmit(handleRegister)} >
 
                     <div className='flex flex-col text-left'>
 

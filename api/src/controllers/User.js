@@ -1,5 +1,5 @@
-const { User, Store, Address } = require("../models/index");
-const ModelController = require("./index");
+const { User, Store, Address } = require('../models/index');
+const ModelController = require('./index');
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
@@ -8,15 +8,15 @@ class UserModel extends ModelController {
 
     createUser = async (req, res) => {
         const user = req.body;
-        if (typeof user === "object") {
+        if (typeof user === 'object') {
             try {
-                let newUser = await this.model.create(user)
-                res.send(newUser)
+                let newUser = await this.model.create(user);
+                res.send(newUser);
             } catch (error) {
                 res.json(error);
             }
         } else {
-            res.status(400).send("Wrong parameters")
+            res.status(400).send('Wrong parameters');
         }
     };
 
@@ -27,45 +27,43 @@ class UserModel extends ModelController {
                     //include the related tables and the specific cloumn that they have attached
                     {
                         model: Store,
-                        attributes: ["storeName"],
+                        attributes: ['storeName'],
                     },
                     {
                         model: Address,
-                        attributes: ["directions"],
+                        attributes: ['directions'],
                     },
                 ],
-            })
+            });
             res.send(user);
         } catch (error) {
-            res.send(error)
+            res.send(error);
         }
-
     };
 
     getUserById = async (req, res) => {
-        const id = req.params.id
+        const id = req.params.id;
         try {
             let user = await this.model.findAll({
                 where: {
-                    id: id
+                    id: id,
                 },
                 include: [
                     //include the related tables and the specific cloumn that they have attached
                     {
                         model: Store,
-                        attributes: ["storeName"],
+                        attributes: ['storeName'],
                     },
                     {
                         model: Address,
-                        attributes: ["directions"],
+                        attributes: ['directions'],
                     },
                 ],
-            })
+            });
             res.send(user);
         } catch (error) {
             res.json(error);
         }
-
     };
 
     bulkCreateUser = async (req, res, next) => {
@@ -77,7 +75,7 @@ class UserModel extends ModelController {
             res.send(err);
         }
     };
-    
+
     getFindId = async (req, res, next) => {
         const { id } = req.body;
         let data = await User.findByPk(id);
@@ -88,7 +86,6 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
-
 }
 
 const UserController = new UserModel(User);

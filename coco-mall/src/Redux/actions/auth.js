@@ -32,8 +32,6 @@ export const login = (uid, displayName) => {
     };
 };
 
-
-
 export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
@@ -84,7 +82,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Mail: email,
             };
             axios.post('http://localhost:3001/user/create', userF);
-            await aux.user.sendEmailVerification()
+            await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({
                 title: 'Error!',
@@ -98,8 +96,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
 
 export const startLogout = () => {
     return async (dispatch) => {
-        await auth.signOut()
-        .then(dispatch(logout()));
+        await auth.signOut().then(dispatch(logout()));
     };
 };
 

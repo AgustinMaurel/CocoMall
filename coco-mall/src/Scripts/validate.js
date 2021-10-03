@@ -94,9 +94,6 @@ const validate = {
             message: 'Wrong adress type',
         },
     },
-
-    
-
 };
 
 export default validate;

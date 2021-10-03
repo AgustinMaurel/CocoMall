@@ -11,6 +11,8 @@ function ShopCreate({ isTrue, setIsTrue }) {
     const auth = useSelector(state => state.auth)
     const userId = auth.uid
 
+    console.log(userId)
+
     const {
         handleSubmit,
         formState: { errors },
@@ -58,6 +60,8 @@ function ShopCreate({ isTrue, setIsTrue }) {
             store: info,
             idUser: userId
         };
+
+        
 
         console.log(data);
         try {

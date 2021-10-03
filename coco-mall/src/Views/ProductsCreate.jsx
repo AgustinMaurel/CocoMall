@@ -1,63 +1,91 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
 import InputDefault from '../Components/Inputs/InputDefault';
 import InputFile from '../Components/Inputs/InputFile';
+import { postProduct } from '../Redux/actions/post';
+import { IMG_DEFAULT } from '../Scripts/constants';
 import validate from '../Scripts/validate';
-
-const IMG_DEFAULT =
-    'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
-
-
+import NavBar from '../Components/NavBar';
 
 const ProductsCreate = () => {
-    const [image, setImage] = useState('');
-    const [isUploaded, setIsUploaded] = useState(false);
-    //const [typeFile, setTypeFile] = useState("");
-
-    const handleImageChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-          //setTypeFile(e.target.files[0].type);
-          let reader = new FileReader();
-    
-          reader.onload = (e) => {
-            setImage(e.target.result);
-            setIsUploaded(true);
-          };
-    
-          reader.readAsDataURL(e.target.files[0]);
-        }
-      }
-
+    //--HOOKS--
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm();
+    const [image, setImage] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
+    //const [typeFile, setTypeFile] = useState("");
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const handleImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
 
+            reader.onload = (e) => {
+                setImage(e.target.result);
+                setIsUploaded(true);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        } else {
+            setIsUploaded(false);
+        }
     };
 
+    //Obtener el id de la STORE que crea el producto
+    let idStore = 100;
+
+    const onSubmit = (data) => {
+        let productCreated = { ...data, id: idStore };
+        alert('Product Created!')
+        dispatch(postProduct(productCreated));
+    };
+
+    //get de categorias -> hacer input SELECT
+
     return (
-        <div className='flex flex-col justify-center items-center w-screen h-screen '>
-            <div className='flex w-1/2 h-1/2'>
+        <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
+            <div className='px-5 z-10'>
+                <NavBar />
+            </div>
+
+            {/* --BACKGROUND-- */}
+            <div
+                className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+            <div
+                className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+            <div
+                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
+                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
+
+            {/* --CONTAINER-- */}
+            <div className='flex justify-center items-center m-auto p-8 z-10'>
                 <form
-                    className='border bg-white shadow-md rounded p-8 m-4 w-1/2'
+                    className='bg-gray-200  flex flex-col w-80 p-8 focus-within:relative'
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <h3 className='text-3xl text-center'>Create Products</h3>
+                    <h3 className='text-xl text-center mb-4'>Create Product</h3>
                     <InputDefault
                         register={register}
                         errors={errors}
                         name='product'
+                        placeholder='Eg: T-Shirt'
                         validate={validate.product}
                     />
                     <InputDefault
                         register={register}
                         errors={errors}
                         name='description'
+                        placeholder='Eg: Description of T-Shirt'
                         validate={validate.description}
                     />
                     <InputDefault
@@ -67,12 +95,20 @@ const ProductsCreate = () => {
                         type='number'
                         validate={validate.price}
                     />
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='stock'
+                        type='number'
+                        validate={validate.price}
+                    />
                     <InputFile
                         register={register}
                         errors={errors}
                         name='image'
                         type='file'
                         validate={validate.image}
+                        watch={watch}
                         onChange={handleImageChange}
                     />
                     <div className='flex items-center justify-between'>
@@ -82,7 +118,9 @@ const ProductsCreate = () => {
                         />
                     </div>
                 </form>
-                <div className='border bg-white shadow-md rounded p-8 m-4 w-1/3 text-center'>
+                {/* --PREVIEW-- */}
+                <div className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
+                                lg:block'>
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('product') ? watch('product').toUpperCase() : 'PRODUCT'}

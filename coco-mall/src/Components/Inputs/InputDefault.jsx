@@ -1,17 +1,28 @@
 import React from 'react';
 
-const InputDefault = ({ register, errors, name, type, validate }) => {
+const InputDefault = ({ register, errors, name, placeholder, type, validate }) => {
     return (
-        <div className='mb-4'>
-            <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label>
+        <div className='mb-4 relative'>
+            {/* <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label> */}
             <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className={
+                    errors[name]
+                        ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                        : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                }
                 type={type}
-                placeholder={name}
+                placeholder={placeholder}
                 {...register(name, validate)}
             />
-            {errors[name] && (
+            {/* {errors[name] && (
                 <span className='text-red-500 text-xs italic'>{errors[name].message}</span>
+            )} */}
+            {errors[name] ? (
+                <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                    {errors[name].message}
+                </p>
+            ) : (
+                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>{name}</p>
             )}
         </div>
     );

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { startLoginEmailPassword, startGoogleLogin, startLogout, startFacebookLogin } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import NavBar from '../../Components/NavBar';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -40,11 +41,16 @@ const LoginScreen = () => {
     }
 
     return (
-        <div className="overflow-hidden">
-            <div className='absolute right-0 -top-72 md:-top-10 lg:-top-10  '>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+        <div className="overflow-hidden ">
+            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'
+            >
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
+            <div className='flex h-14 pt-4  border-b-2 border-gray-100 px-20 pb-3 z-50 overflow-hidden'>
+                <NavBar/>
+            </div>
+            
             {!renderCond.uid && !renderCond.name ?
 
                 <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>

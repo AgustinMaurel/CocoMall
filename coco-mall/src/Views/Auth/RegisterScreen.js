@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
 import { useState } from 'react';
+import NavBar from '../../Components/NavBar';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
@@ -31,9 +32,12 @@ const RegisterScreen = () => {
     };
 
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden ">
+            <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 '>
+                    <NavBar />
+                </div>
             <div className='flex flex-col mt-20 z-1 items-center z-10 md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-                <div className='absolute right-0 -top-72 md:-top-10 lg:-top-10  '>
+                <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
                     <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
                 </div>

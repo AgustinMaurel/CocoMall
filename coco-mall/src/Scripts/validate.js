@@ -1,38 +1,38 @@
 const validate = {
     product: {
-        required: { value: true, message: 'product is required' },
+        required: { value: true, message: 'Product is required' },
         minLength: {
             value: 2,
-            message: 'product must contain at least 2 characters',
+            message: 'Product must contain at least 2 characters',
         },
         maxLength: {
             value: 16,
-            message: 'product must contain a maximum of 16 characters ',
+            message: 'Product must contain a maximum of 16 characters ',
         },
     },
     description: {
-        required: { value: true, message: 'description is required' },
+        required: { value: true, message: 'Description is required' },
         minLength: {
             value: 2,
-            message: 'description must contain at least 2 characters',
+            message: 'Description must contain at least 2 characters',
         },
         maxLength: {
             value: 40,
-            message: 'description must contain a maximum of 40 characters ',
+            message: 'Description must contain a maximum of 40 characters ',
         },
     },
     price: {
-        required: { value: true, message: 'price is required' },
+        required: { value: true, message: 'Price is required' },
         min: {
             value: 1,
-            message: 'price min',
+            message: 'Price min',
         },
         max: {
             value: 9999999999,
-            message: 'price maximum',
+            message: 'Price maximum',
         },
     },
-    image: { required: true, message: 'image is required' },
+    image: { required: true, message: 'Image is required' },
 };
 
 export default validate;

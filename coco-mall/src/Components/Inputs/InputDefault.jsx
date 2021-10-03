@@ -18,11 +18,11 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                 <span className='text-red-500 text-xs italic'>{errors[name].message}</span>
             )} */}
             {errors[name] ? (
-                <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                <p className='absolute text-xs text-red-500 -top-4 left-0 whitespace-nowrap font-semibold'>
                     {errors[name].message}
                 </p>
             ) : (
-                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>{name}</p>
+                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
             )}
         </div>
     );

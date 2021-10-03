@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import NavBar from '../Components/NavBar';
+import NavBar from '../NavBar';
 
-function ShopCreate() {
+function ShopCreate({isTrue, setIsTrue}) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+
 
     // useEffect(() => {
     //     if (image.length > 0) setIsUploaded(true);
@@ -37,6 +38,10 @@ function ShopCreate() {
         }
     };
 
+
+//enviar un objeto {id:cloudify , objeto: tienda}
+
+
     const handleRegister = (data) => {
         console.log(JSON.stringify(data));
         //despacho a ruta
@@ -51,13 +56,15 @@ function ShopCreate() {
                 setValue('image', '');
             })
             .catch((err) => console.log(err));
+        setIsTrue(false)
+        
     };
 
     return (
         <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
-            <div className='px-5 z-10'>
+            {/* <div className='px-5 z-10'>
                 <NavBar />
-            </div>
+            </div> */}
 
             <div
                 className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
@@ -76,7 +83,7 @@ function ShopCreate() {
                 className='flex flex-col w-80 h-3/4 my-auto relative mx-auto '
                 onSubmit={handleSubmit(handleRegister)}
             >
-                <div className='relaitve bg-gray-200 rounded  shadow flex flex-col h-full justify-evenly px-8 '>
+                <div className='relaitve    flex flex-col h-full justify-evenly px-8 '>
                     <i>Create Store</i>
                     <div className='relative'>
                         <input
@@ -150,6 +157,43 @@ function ShopCreate() {
                         ) : (
                             <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
                                 Country
+                            </p>
+                        )}
+                    </div>
+                    <div className='relative'>
+                        <input
+                            {...register('state', {
+                                required: { value: true, message: 'State is required' },
+                                minLength: {
+                                    value: 4,
+                                    message: 'State must contain at least 4 characters',
+                                },
+                                maxLength: {
+                                    value: 20,
+                                    message: 'State must contain a maximum of 20 characters ',
+                                },
+                                pattern: {
+                                    value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
+                                    message: 'State can only be letters',
+                                },
+                            })}
+                            type='text'
+                            placeholder='Eg: Buenos Aires'
+                            name='state'
+                            autoComplete='off'
+                            className={
+                                errors.state
+                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
+                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
+                        />
+                        {errors.state ? (
+                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                {errors.state.message}
+                            </p>
+                        ) : (
+                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                State
                             </p>
                         )}
                     </div>

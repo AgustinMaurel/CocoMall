@@ -109,7 +109,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
                     <InputDefault
                         register={register}
                         errors={errors}
-                        name='adress'
+                        name='address'
                         placeholder='Eg: Nuñez 3800'
                         validate={validate.address}
                         watch={watch}

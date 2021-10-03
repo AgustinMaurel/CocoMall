@@ -9,7 +9,7 @@ function Landing() {
     const breakpoint = 1024;
 
     useEffect(() => {
-        Aos.init({ duration: 2500, offset:0, once: true });
+        Aos.init({ duration: 2500, offset: 0, once: true });
     }, []);
 
     useEffect(() => {

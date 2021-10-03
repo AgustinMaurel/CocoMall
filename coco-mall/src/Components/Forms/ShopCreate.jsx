@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import NavBar from '../NavBar';
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
 
@@ -38,9 +37,9 @@ function ShopCreate({ isTrue, setIsTrue }) {
     };
 
     const handleRegister = (data) => {
-        console.log(data);
+     
         if (!selectedFile) return;
-        setIsTrue(false)
+        setIsTrue(false);
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
@@ -50,15 +49,15 @@ function ShopCreate({ isTrue, setIsTrue }) {
             console.error('AHHHHHHHH!!');
         };
     };
-   
 
-    const sendData =  async (base64EncodedImage, info) => {
+    const sendData = async (base64EncodedImage, info) => {
         let data = {
-            id: base64EncodedImage,
+            idImage: base64EncodedImage,
             store: info,
+            // idUser:
         };
-        
-        console.log(data.id);
+
+        console.log(data);
         try {
             await axios.post('http://localhost:3001/store/create', data).then(() => {
                 setValue('storeName', '');
@@ -66,7 +65,6 @@ function ShopCreate({ isTrue, setIsTrue }) {
                 setValue('country', '');
                 setValue('cp', '');
                 setValue('description', '');
-              
             });
         } catch (error) {
             console.error(error);

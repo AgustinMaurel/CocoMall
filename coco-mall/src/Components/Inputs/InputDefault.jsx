@@ -15,14 +15,12 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate, wat
                 placeholder={placeholder}
                 {...register(name, validate)}
             />
-            {/* {errors[name] && (
-                <span className='text-red-500 text-xs italic'>{errors[name].message}</span>
-            )} */}
-            {/* {errors[name] ? (
+           
+            {errors[name] ? (
                 <p className='absolute text-xs text-red-500 -top-4 left-0 whitespace-nowrap font-semibold'>
                     {errors[name].message}
                 </p>
-            ) : watch(name)?.length > 0 ? ( 
+            ) :  ( 
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
                         <p className=' text-xs  min-w-max  font-semibold '> {name.charAt(0).toUpperCase() + name.slice(1)}</p>
@@ -44,11 +42,9 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate, wat
                         </div>
                     </div>
                 </div>
-            ) : (
-            )} */}
-                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                    {name.charAt(0).toUpperCase() + name.slice(1)}*
-                </p>
+            ) 
+        }
+                
         </div>
     );
 };

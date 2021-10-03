@@ -68,7 +68,7 @@ Product.belongsTo(Store)
 
 // //---------------------------------
 
-ProductType.hasMany(Product, {foreignKey: {id: 'myProductTypeid'}})
+ProductType.hasMany(Product, {foreignKey: {id: 'myTypeid'}})
 Product.belongsTo(ProductType)
 
 // //---------------------------------

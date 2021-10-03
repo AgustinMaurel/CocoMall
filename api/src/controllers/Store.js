@@ -23,15 +23,16 @@ class StoreModel extends ModelController {
 
         const id = req.body.id ? req.body.id : null;
         const store = {
-          storeName: req.body.storeName,
-          address: req.body.address ? req.body.address : null,
-          description: req.body.description ? req.body.description : null,
-          country: req.body.country,
-          cp: req.body.cp,
+          storeName: req.body.store.storeName ? req.body.store.storeName : null,
+          address: req.body.store.address ? req.body.store.address : null,
+          description: req.body.store.description ? req.body.store.description : null,
+          country: req.body.store.country ? req.body.store.country : null,
+          cp: req.body.store.cp ? req.body.store.cp : null,
+          state: req.body.store.state ? req.body.store.state : null,
+          cloudImage: public_id ? public_id : "No funciona fijate el ternario",
           // img: req.body.image[0]
           //   ? req.body.image[0]
           //   : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
-          cloudImage: public_id ? public_id : "No funciona fijate el ternario"
         };
         //create the new Store
         const newStore = await Store.create(store);

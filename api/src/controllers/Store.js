@@ -13,7 +13,7 @@ class StoreModel extends ModelController {
 
         //Cloudinary
 
-        const fileString = req.body.data ? req.body.data : null;
+        const fileString = req.body.idImage ? req.body.idImage : null;
         const uploadedResponse = await cloudinary.uploader.upload(fileString, {
           upload_preset: 'dev_setups'
         });
@@ -31,7 +31,7 @@ class StoreModel extends ModelController {
           // img: req.body.image[0]
           //   ? req.body.image[0]
           //   : 'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg',
-          cloudImage: public_id ? public_id : null
+          cloudImage: public_id ? public_id : "No funciona fijate el ternario"
         };
         //create the new Store
         const newStore = await Store.create(store);
@@ -41,7 +41,7 @@ class StoreModel extends ModelController {
         await user.addStore(storeId);
 
         const finalStore = await Store.findByPk(storeId);
-        finalStore.img.data = finalStore.img.data.toString('base64')
+        // finalStore.img.data = finalStore.img.data.toString('base64')
 
         res.send(finalStore);
       } catch (e) {

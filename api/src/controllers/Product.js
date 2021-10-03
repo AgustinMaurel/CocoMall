@@ -14,14 +14,8 @@ class ProductModel extends ModelController {
         const typeId = req.body.typeId
         if (storeId && typeId) {
             try {
-                const product = {
-                    ProductName: req.body.name,
-                    Price: req.body.price,
-                    Stock: req.body.stock,
-                    SellBy: req.body.sellBy,
-                    Description: req.body.description,
-                    Image: req.body.image,
-                }
+                //Get the Product from body
+                const product = req.body.product
                 //Create new Product
                 const newProduct = await this.model.create(product)
                 const productId = newProduct.id

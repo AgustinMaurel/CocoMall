@@ -22,9 +22,13 @@ const SectionBenefits = () => {
                 ></div>
                 <div className='h-24 w-24 bg-primary-light rounded-full absolute z-0 left-2/3 top-60  xl:h-60 xl:w-60'></div>
             </div>
+            <div
+                        className='h-64 w-64 bg-primary-light rounded-full absolute z-0 -left-20 -bottom-32  
+                2xl:h-80 2xl:w-80'
+                    ></div>
 
             {/* SECTION */}
-            <div className='flex flex-col items-center justify-center h-screen pb-10 xl:pb-32 xl:gap-28 '>
+            <div className='flex flex-col items-center justify-center h-screen pb-10  xl:gap-28 '>
                 <h3 className='text-xl font-bold pb-10 after z-10 xl:text-5xl'>
                     Benefits of working with us
                 </h3>
@@ -54,12 +58,7 @@ const SectionBenefits = () => {
                                 />
                             ))}
                         </div>
-                    </div>
-
-                    <div
-                        className='h-64 w-64 bg-primary-light rounded-full absolute z-0 -left-20 -bottom-32  
-                2xl:h-80 2xl:w-80'
-                    ></div>
+                    </div>                   
                 </div>
             </div>
         </div>

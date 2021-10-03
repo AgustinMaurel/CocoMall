@@ -4,9 +4,12 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
+import {useSelector} from 'react-redux'
 
 function ShopCreate({ isTrue, setIsTrue }) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
+    const auth = useSelector(state => state.auth)
+    const userId = auth.uid
 
     const {
         handleSubmit,
@@ -14,7 +17,6 @@ function ShopCreate({ isTrue, setIsTrue }) {
         register,
         setValue,
         watch,
-        // getValues,
     } = useForm();
 
     const [fileInputState, setFileInputState] = useState('');
@@ -54,7 +56,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
         let data = {
             idImage: base64EncodedImage,
             store: info,
-            // idUser:
+            idUser: userId
         };
 
         console.log(data);

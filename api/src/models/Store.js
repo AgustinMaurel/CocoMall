@@ -26,14 +26,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // img: {
-      //   type: DataTypes.BLOB,
-      //   allowNull: false,
-      //   // defino el getter que lo obtenga y me lo retorne en UTF8
-      //   // get() {
-      //   //   return this.getDataValue('img').toString('base64');
-      //   // },
-      // },
       country: {
         type: DataTypes.STRING,
       },

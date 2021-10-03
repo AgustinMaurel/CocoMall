@@ -19,7 +19,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
         register,
         setValue,
         watch,
-    } = useForm();
+    } = useForm({ mode: 'onTouched' });
 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');

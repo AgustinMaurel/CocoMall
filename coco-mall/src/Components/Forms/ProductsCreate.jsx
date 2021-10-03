@@ -4,10 +4,9 @@ import { useDispatch } from 'react-redux';
 
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
-import { postProduct } from '../../Redux/actions/post';
+import { postProduct } from '../../Scripts/post';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
-import NavBar from '../NavBar';
 
 const ProductsCreate = () => {
     //--HOOKS--
@@ -17,41 +16,37 @@ const ProductsCreate = () => {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm();
-    
+    } = useForm({ mode: 'onTouched' });
+
+    //STATES
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
-    //const [typeFile, setTypeFile] = useState("");
 
+    //LOAD IMAGE
     const handleImageChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            let reader = new FileReader();
+        const reader = new FileReader();
+        const file = e.target.files[0];
 
-            reader.onload = (e) => {
-                setImage(e.target.result);
-                setIsUploaded(true);
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        } else {
-            setIsUploaded(false);
-        }
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImage(reader.result);
+            setIsUploaded(true);
+        };
     };
+
+
 
     //Obtener el id de la STORE que crea el producto
     let idStore = 100;
 
-    console.log(watch('product'));
-    console.log(watch('description'));
-    console.log(watch("example"));
-
+    //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { ...data, id: idStore };
-        alert('Product Created!')
+        let productCreated = { product: data, id: idStore, image: image };
+        alert('Product Created!');
         dispatch(postProduct(productCreated));
-        //estado -> true | false
     };
 
-    //get de categorias -> hacer input SELECT
+    //TODO get de categorias -> hacer input SELECT
 
     return (
         <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
@@ -127,9 +122,12 @@ const ProductsCreate = () => {
                         />
                     </div>
                 </form>
+
                 {/* --PREVIEW-- */}
-                <div className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
-                                lg:block overflow-hidden'>
+                <div
+                    className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
+                                lg:block overflow-hidden'
+                >
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('product') ? watch('product').toUpperCase() : 'PRODUCT'}

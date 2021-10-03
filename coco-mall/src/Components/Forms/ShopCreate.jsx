@@ -3,12 +3,13 @@ import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import NavBar from '../NavBar';
+import InputDefault from '../Inputs/InputDefault';
+import validate from '../../Scripts/validate';
 
-function ShopCreate({isTrue, setIsTrue}) {
+function ShopCreate({ isTrue, setIsTrue }) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
-
 
     // useEffect(() => {
     //     if (image.length > 0) setIsUploaded(true);
@@ -23,7 +24,8 @@ function ShopCreate({isTrue, setIsTrue}) {
         watch,
         // getValues,
     } = useForm();
-    console.log(watch('image')?.length);
+
+
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             let reader = new FileReader();
@@ -38,9 +40,7 @@ function ShopCreate({isTrue, setIsTrue}) {
         }
     };
 
-
-//enviar un objeto {id:cloudify , objeto: tienda}
-
+    //enviar un objeto {id:cloudify , objeto: tienda}
 
     const handleRegister = (data) => {
         console.log(JSON.stringify(data));
@@ -56,17 +56,12 @@ function ShopCreate({isTrue, setIsTrue}) {
                 setValue('image', '');
             })
             .catch((err) => console.log(err));
-        setIsTrue(false)
-        
+        setIsTrue(false);
     };
 
     return (
         <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
-            {/* <div className='px-5 z-10'>
-                <NavBar />
-            </div> */}
-
-            <div
+            {/* <div
                 className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
             ></div>
@@ -77,164 +72,49 @@ function ShopCreate({isTrue, setIsTrue}) {
             <div
                 className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
+            ></div> */}
 
             <form
-                className='flex flex-col w-80 h-3/4 my-auto relative mx-auto '
+                className='flex flex-col w-96  h-3/4 my-auto relative mx-auto '
                 onSubmit={handleSubmit(handleRegister)}
             >
-                <div className='relaitve    flex flex-col h-full justify-evenly px-8 '>
+                <div className='relaitve    flex flex-col h-full justify-evenly bg-red-200  '>
                     <i>Create Store</i>
-                    <div className='relative'>
-                        <input
-                            {...register('storeName', {
-                                required: { value: true, message: 'Store name is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Store must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 15,
-                                    message: 'Store must contain a maximum of 15 characters ',
-                                },
-                                pattern: {
-                                    value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
-                                    message: 'Store can only be letters',
-                                },
-                            })}
-                            placeholder='Eg: ChiliKing'
-                            type='text'
-                            name='storeName'
-                            autoComplete='off'
-                            className={
-                                errors.storeName
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200 font-medium'
-                            }
-                        />
-                        {errors.storeName ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.storeName.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Store Name
-                            </p>
-                        )}
-                    </div>
 
-                    <div className='relative'>
-                        <input
-                            {...register('country', {
-                                required: { value: true, message: 'Country is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Country must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 20,
-                                    message: 'Country must contain a maximum of 20 characters ',
-                                },
-                                pattern: {
-                                    value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
-                                    message: 'Country can only be letters',
-                                },
-                            })}
-                            type='text'
-                            placeholder='Eg: Argentina'
-                            name='country'
-                            autoComplete='off'
-                            className={
-                                errors.country
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.country ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.country.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Country
-                            </p>
-                        )}
-                    </div>
-                    <div className='relative'>
-                        <input
-                            {...register('state', {
-                                required: { value: true, message: 'State is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'State must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 20,
-                                    message: 'State must contain a maximum of 20 characters ',
-                                },
-                                pattern: {
-                                    value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
-                                    message: 'State can only be letters',
-                                },
-                            })}
-                            type='text'
-                            placeholder='Eg: Buenos Aires'
-                            name='state'
-                            autoComplete='off'
-                            className={
-                                errors.state
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.state ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.state.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                State
-                            </p>
-                        )}
-                    </div>
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='store Name'
+                        placeholder='Eg: Chilli King'
+                        validate={validate.storeName}
+                        watch={watch}
+                    />
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='country'
+                        placeholder='Eg: Argentina'
+                        validate={validate.country}
+                        watch={watch}
+                    />
 
-                    <div className='relative'>
-                        <input
-                            {...register('address', {
-                                required: { value: true, message: 'Address is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Address must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 15,
-                                    message: 'Address must contain a maximum of 15 characters ',
-                                },
-                                pattern: {
-                                    value: /[A-Za-zÀ-ÖØ-öø-ÿ]+[ ][0-9]+/i,
-                                    message: 'Wrong adress type',
-                                },
-                            })}
-                            type='text'
-                            placeholder='Eg: Nuñez 3805'
-                            name='address'
-                            autoComplete='off'
-                            className={
-                                errors.address
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.address ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.address.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Adress
-                            </p>
-                        )}
-                    </div>
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='state'
+                        placeholder='Eg: Buenos Aires'
+                        validate={validate.state}
+                        watch={watch}
+                    />
+
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='adress'
+                        placeholder='Eg: Nuñez 3800'
+                        validate={validate.address}
+                        watch={watch}
+                    />
 
                     <div className='relative'>
                         <input
@@ -269,7 +149,7 @@ function ShopCreate({isTrue, setIsTrue}) {
                             </p>
                         ) : (
                             <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Area Code
+                                Area Code*
                             </p>
                         )}
                     </div>
@@ -303,7 +183,7 @@ function ShopCreate({isTrue, setIsTrue}) {
                             </p>
                         ) : (
                             <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Description
+                                Description*
                             </p>
                         )}
                     </div>
@@ -319,7 +199,6 @@ function ShopCreate({isTrue, setIsTrue}) {
                             id='selectedFile'
                             accept='.png'
                             style={{ display: 'none' }}
-                            // onChange={handleImageChange}
                         />
                         <input
                             type='button'
@@ -330,7 +209,6 @@ function ShopCreate({isTrue, setIsTrue}) {
                                     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                                     : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                             }
-                            // onChange={handleImageChange}
                         />
                         {errors.image ? (
                             <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
@@ -360,7 +238,7 @@ function ShopCreate({isTrue, setIsTrue}) {
                             </div>
                         ) : (
                             <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Logo
+                                Logo*
                             </p>
                         )}
                     </div>

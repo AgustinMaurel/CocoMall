@@ -76,7 +76,7 @@ const ProductsCreate = () => {
             {/* --CONTAINER-- */}
             <div className=' flex justify-center items-center m-auto p-8 z-10 '>
                 <form
-                    className='  flex flex-col w-80 p-8 focus-within:relative'
+                    className='  flex flex-col w-80 h-full gap-10 p-8 focus-within:relative'
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <h3 className='text-xl text-center mb-4'>Create Product</h3>
@@ -98,6 +98,7 @@ const ProductsCreate = () => {
                         register={register}
                         errors={errors}
                         name='price'
+                        placeholder='Eg: 1500'
                         type='number'
                         validate={validate.price}
                         className=''
@@ -106,6 +107,7 @@ const ProductsCreate = () => {
                         register={register}
                         errors={errors}
                         name='stock'
+                        placeholder='Eg: 15'
                         type='number'
                         validate={validate.price}
                     />
@@ -114,7 +116,6 @@ const ProductsCreate = () => {
                         errors={errors}
                         name='image'
                         type='file'
-                        
                         validate={validate.image}
                         watch={watch}
                         onChange={handleImageChange}

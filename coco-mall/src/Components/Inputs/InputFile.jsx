@@ -24,14 +24,14 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch }) 
                         : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                 }
             />
-            {errors.image ? (
+            {errors[name]? (
                 <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                    {errors.image.message}
+                    {errors[name].message}
                 </p>
-            ) : watch('image')?.length > 0 ? (
+            ) : watch(name)?.length > 0 ? (
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                        <p className=' text-xs  min-w-max  font-semibold '>Image</p>
+                        <p className=' text-xs  min-w-max  font-semibold '>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
                         <div>
                             <svg
                                 className='w-3 h-3 rounded-full bg-green-400'
@@ -51,7 +51,7 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch }) 
                     </div>
                 </div>
             ) : (
-                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>Image</p>
+                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
             )}
         </div>
     );

@@ -8,13 +8,6 @@ import validate from '../../Scripts/validate';
 
 function ShopCreate({ isTrue, setIsTrue }) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
-    const [image, setImage] = useState('');
-    const [isUploaded, setIsUploaded] = useState(false);
-
-    // useEffect(() => {
-    //     if (image.length > 0) setIsUploaded(true);
-    //     else setIsUploaded(false);
-    // }, [image,isUploaded]);
 
     const {
         handleSubmit,
@@ -26,59 +19,67 @@ function ShopCreate({ isTrue, setIsTrue }) {
     } = useForm();
 
 
-    const handleImageChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            let reader = new FileReader();
+    const [fileInputState, setFileInputState] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
+    const [selectedFile, setSelectedFile] = useState();
 
-            reader.onload = (e) => {
-                setImage(e.target.result);
-                setIsUploaded(true);
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        } else {
-            setIsUploaded(false);
-        }
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+        setSelectedFile(file);
+        setFileInputState(e.target.value);
     };
 
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        };
+    };
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        if (!selectedFile) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = () => {
+            sendData(reader.result);
+        };
+        reader.onerror = () => {
+            console.error('AHHHHHHHH!!');
+        };
+    };
     //enviar un objeto {id:cloudify , objeto: tienda}
 
-    const handleRegister = (data) => {
-        console.log(JSON.stringify(data));
-        //despacho a ruta
-        axios
-            .post('http://localhost:3001/store/create', data)
-            .then(() => {
-                setValue('storeName', '');
-                setValue('address', '');
-                setValue('country', '');
-                setValue('cp', '');
-                setValue('description', '');
-                setValue('image', '');
-            })
-            .catch((err) => console.log(err));
-        setIsTrue(false);
+    // const handleRegister = (data) => {
+       
+    //     //despacho a ruta
+    //     // axios
+    //     //     .post('http://localhost:3001/store/create', data)
+    //     //     .then(() => {
+    //     //         setValue('storeName', '');
+    //     //         setValue('address', '');
+    //     //         setValue('country', '');
+    //     //         setValue('cp', '');
+    //     //         setValue('description', '');
+    //     //         setValue('image', '');
+    //     //     })
+    //     //     .catch((err) => console.log(err));
+    //     // setIsTrue(false);
+    // };
+
+    const sendData = (base64EncodedImage) => {
+        console.log(base64EncodedImage);
     };
 
     return (
         <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
-            {/* <div
-                className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div> */}
-
             <form
                 className='flex flex-col w-96  h-3/4 my-auto relative mx-auto '
-                onSubmit={handleSubmit(handleRegister)}
+                onSubmit={handleRegister}
             >
-                <div className='relaitve    flex flex-col h-full justify-evenly bg-red-200  '>
+                <div className='relaitve    flex flex-col h-full justify-evenly   '>
                     <i>Create Store</i>
 
                     <InputDefault
@@ -89,7 +90,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
                         validate={validate.storeName}
                         watch={watch}
                     />
-                    <InputDefault
+                    {/* <InputDefault
                         register={register}
                         errors={errors}
                         name='country'
@@ -186,15 +187,15 @@ function ShopCreate({ isTrue, setIsTrue }) {
                                 Description*
                             </p>
                         )}
-                    </div>
+                    </div> */}
 
                     <div className='relative'>
                         <input
-                            {...register('image', {
-                                required: { value: true, message: 'Image is required' },
-                            })}
+                            // {...register('image')}
                             type='file'
                             name='image'
+                            value={fileInputState}
+                            onChange={handleFileInputChange}
                             className='outline-none p-2 w-full rounded'
                             id='selectedFile'
                             accept='.png'
@@ -205,12 +206,12 @@ function ShopCreate({ isTrue, setIsTrue }) {
                             value='Select Logo'
                             onClick={() => document.getElementById('selectedFile').click()}
                             className={
-                                errors.image
-                                    ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
-                                    : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
+                                // errors.image
+                                //     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer' : 
+                                    'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                             }
                         />
-                        {errors.image ? (
+                        {/* {errors.image ? (
                             <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
                                 {errors.image.message}
                             </p>
@@ -240,7 +241,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
                             <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
                                 Logo*
                             </p>
-                        )}
+                        )} */}
                     </div>
 
                     <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
@@ -248,8 +249,21 @@ function ShopCreate({ isTrue, setIsTrue }) {
                     </button>
                 </div>
             </form>
+            {previewSource && <img src={previewSource} alt='chosen' style={{ height: '300px' }} />}
         </div>
     );
 }
 
 export default ShopCreate;
+// {/* <div
+//             className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
+//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+//         ></div>
+//         <div
+//             className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
+//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+//         ></div>
+//         <div
+//             className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
+//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+//         ></div> */}

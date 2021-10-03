@@ -18,7 +18,6 @@ function ShopCreate({ isTrue, setIsTrue }) {
         // getValues,
     } = useForm();
 
-
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
@@ -38,46 +37,47 @@ function ShopCreate({ isTrue, setIsTrue }) {
         };
     };
 
-    const handleRegister = (e) => {
-        e.preventDefault();
+    const handleRegister = (data) => {
+        console.log(data);
         if (!selectedFile) return;
+        setIsTrue(false)
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
-            sendData(reader.result);
+            sendData(reader.result, data);
         };
         reader.onerror = () => {
             console.error('AHHHHHHHH!!');
         };
     };
-    //enviar un objeto {id:cloudify , objeto: tienda}
+   
 
-    // const handleRegister = (data) => {
-       
-    //     //despacho a ruta
-    //     // axios
-    //     //     .post('http://localhost:3001/store/create', data)
-    //     //     .then(() => {
-    //     //         setValue('storeName', '');
-    //     //         setValue('address', '');
-    //     //         setValue('country', '');
-    //     //         setValue('cp', '');
-    //     //         setValue('description', '');
-    //     //         setValue('image', '');
-    //     //     })
-    //     //     .catch((err) => console.log(err));
-    //     // setIsTrue(false);
-    // };
-
-    const sendData = (base64EncodedImage) => {
-        console.log(base64EncodedImage);
+    const sendData =  async (base64EncodedImage, info) => {
+        let data = {
+            id: base64EncodedImage,
+            store: info,
+        };
+        
+        console.log(data.id);
+        try {
+            await axios.post('http://localhost:3001/store/create', data).then(() => {
+                setValue('storeName', '');
+                setValue('address', '');
+                setValue('country', '');
+                setValue('cp', '');
+                setValue('description', '');
+              
+            });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
         <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
             <form
                 className='flex flex-col w-96  h-3/4 my-auto relative mx-auto '
-                onSubmit={handleRegister}
+                onSubmit={handleSubmit(handleRegister)}
             >
                 <div className='relaitve    flex flex-col h-full justify-evenly   '>
                     <i>Create Store</i>
@@ -85,12 +85,12 @@ function ShopCreate({ isTrue, setIsTrue }) {
                     <InputDefault
                         register={register}
                         errors={errors}
-                        name='store Name'
+                        name='storeName'
                         placeholder='Eg: Chilli King'
                         validate={validate.storeName}
                         watch={watch}
                     />
-                    {/* <InputDefault
+                    <InputDefault
                         register={register}
                         errors={errors}
                         name='country'
@@ -187,7 +187,7 @@ function ShopCreate({ isTrue, setIsTrue }) {
                                 Description*
                             </p>
                         )}
-                    </div> */}
+                    </div>
 
                     <div className='relative'>
                         <input
@@ -207,8 +207,8 @@ function ShopCreate({ isTrue, setIsTrue }) {
                             onClick={() => document.getElementById('selectedFile').click()}
                             className={
                                 // errors.image
-                                //     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer' : 
-                                    'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
+                                //     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer' :
+                                'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
                             }
                         />
                         {/* {errors.image ? (

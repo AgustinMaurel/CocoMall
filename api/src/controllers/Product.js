@@ -78,6 +78,8 @@ class ProductModel extends ModelController {
                 //Array of the Types of products (on ID forms) that i need
                 const allTypes = req.body.types || []
                 const nameToFilter = req.body.name || ""
+                const min = req.body.min || 0
+                const max = req.body.max || 99^9999
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
@@ -86,6 +88,12 @@ class ProductModel extends ModelController {
                         },
                         ProductName: {
                             [Op.iLike]: `%${nameToFilter}%`
+                        },
+                        Price: {
+                            [Op.and]: {
+                                [Op.gte]: min,
+                                [Op.lte]: max,
+                            }
                         }
                     }
                 })

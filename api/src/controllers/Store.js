@@ -71,17 +71,24 @@ class StoreModel extends ModelController {
   filterStoresByProductTypes = async (req, res) => {
     const typesId = req.body.types || []
     const nameToFilter = req.body.name || ""
+    const min = req.body.min || 0
+    const max = req.body.max || 99^9999
     try {
       const filteredStores = await this.model.findAll({
         include: {
           model: Product,
-          attributes: ["ProductTypeId", "ProductName"],
+          attributes: ["ProductTypeId", "ProductName", "Price"],
           where: {
             ProductTypeId: {
               [Op.or]: typesId
             },
             ProductName: {
               [Op.iLike]: `%${nameToFilter}%`
+            }, Price: {
+              [Op.and]: {
+                [Op.gte]: min,
+                [Op.lte]: max,
+              }
             }
           }
         },

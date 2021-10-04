@@ -24,16 +24,18 @@ function Home() {
 
             {/* SIDEBAR */}
 
-            <div className='flex flex-col col-start-1 col-end-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
-                <div>
+            <div className='flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
+                <div className='flex flex-col '>
+                    <label>Search</label>
                     <input
                         type='search'
+                        placeholder='Shops/Products...'
                         name=''
                         id=''
-                        className='relative w-full border border-blue-200'
+                        className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
                     />
                 </div>
-                <div>WASUP</div>
+                <div></div>
             </div>
 
             {/* CARDS */}

@@ -68,7 +68,7 @@ const RegisterScreen = () => {
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5'
+                                className='outline-none text-xs z-10 p-1.5 w-full'
                                 {...register('name', {
                                     required: { value: true, message: 'name is required' },
                                     minLength: {
@@ -102,7 +102,7 @@ const RegisterScreen = () => {
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5'
+                                className='outline-none text-xs z-10 p-1.5 w-full'
                                 {...register('lastName', {
                                     required: { value: true, message: 'lastName is required' },
                                     minLength: {
@@ -136,7 +136,7 @@ const RegisterScreen = () => {
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5'
+                                className='outline-none text-xs z-10 p-1.5 w-full'
                                 {...register('email', {
                                     required: { value: true, message: 'email is required' },
                                     pattern: {
@@ -160,7 +160,7 @@ const RegisterScreen = () => {
 
                         <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5'
+                                className='outline-none text-xs z-10 p-1.5 w-full'
                                 {...register('password', {
                                     required: { value: true, message: 'password is required' },
                                     minLength: {
@@ -241,7 +241,7 @@ const RegisterScreen = () => {
 
                         <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5'
+                                className='outline-none text-xs z-10 p-1.5 w-full'
                                 {...register('password2', {
                                     validate: (value) =>
                                         value === getValues('password') || 'Passwords do not match',

@@ -74,7 +74,7 @@ const LoginScreen = () => {
 
                             <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
-                                    className='outline-none text-xs z-10 p-2'
+                                    className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('email', {
                                         required: { value: true, message: 'Email is required' },
                                     })}
@@ -95,7 +95,7 @@ const LoginScreen = () => {
 
                             <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
-                                    className='outline-none text-xs z-10 p-2'
+                                    className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('password', {
                                         required: { value: true, message: 'Password is required' },
                                     })}

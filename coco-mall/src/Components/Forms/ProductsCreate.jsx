@@ -18,6 +18,7 @@ const ProductsCreate = () => {
         formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
+
     //STATES
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -34,27 +35,38 @@ const ProductsCreate = () => {
         };
     };
 
-   /*  {
-        "product": {
-            "ProductName": "REASM",
-            "Price": 2500,
-            "Stock": 5,
-            "Description": "Jeancito piola pa levanta minita",
-            "cloudImage": "",
-        },
-        "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
-        "typeId": 1
-    } */
+
+
+    /*  {
+         "product": {
+             "ProductName": "REASM",
+             "Price": 2500,
+             "Stock": 5,
+             "Description": "Jeancito piola pa levanta minita",
+             "cloudImage": "",
+         },
+         "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
+         "typeId": 1
+ 
+ 
+             product: 'segq',
+             description: 'olkoklk',
+            price: '100',
+            stock: '10',
+             image: { '0': {} },
+             cloudImage: 'uip6ia95r1oepjujzcqe'
+     } */
 
 
     //Obtener el id de la STORE que crea el producto
-    let idStore = 100;
+    let idStore = "5038c6e8-ac4a-4e5b-a374-dd9192084719" ;
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { product: data, storeId: idStore, idImage: image, typeId:1 };
+        let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
+
         alert('Product Created!');
-        console.log(productCreated) 
+        console.log(productCreated)
         dispatch(postProduct(productCreated));
     };
 
@@ -90,7 +102,7 @@ const ProductsCreate = () => {
                     <InputDefault
                         register={register}
                         errors={errors}
-                        name='product'
+                        name='productName'
                         placeholder='Eg: T-Shirt'
                         validate={validate.product}
                     />

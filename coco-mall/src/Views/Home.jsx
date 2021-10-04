@@ -1,11 +1,22 @@
 import React from 'react';
 import HomeCards from '../Components/Cards/HomeCards';
 import NavBar from '../Components/NavBar';
-import homeStores from '../Helpers/homeStores';
+
+import { useSelector } from 'react-redux';
 
 function Home() {
-    const data = homeStores();
+
+    const allStores = useSelector ((state)=> state.stores)
+
+    
+    console.log(allStores)
+
+   
+
     return (
+        
+       
+        
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
             <div className=' col-span-6 row-span-1 row-end-1 flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10  '>
                 <NavBar />
@@ -29,8 +40,13 @@ function Home() {
 
             <div className='relative w-full  col-span-5 row-span-full  p-6 overflow-y-scroll'>
                 <div className='cards p-3  '>
-                    {data?.map((_e, i) => (
-                        <HomeCards key={i} />
+                    {allStores.allStores?.map((e, i) => (
+                        <HomeCards 
+                        storeName={e.storeName}
+                        description={e.description}
+                        cloudImage={e.cloudImage}
+
+                        key={i} />
                     ))}
                 </div>
             </div>

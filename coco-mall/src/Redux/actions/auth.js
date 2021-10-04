@@ -8,7 +8,6 @@ export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
-                console.log(user);
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
@@ -36,7 +35,6 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                console.log(user);
                 dispatch(
                     login(user.uid, user.displayName),
                     //mandar el accessToken al back
@@ -57,7 +55,7 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
-                console.log(user);
+                
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>

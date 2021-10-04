@@ -27,6 +27,7 @@ const RegisterScreen = () => {
         dispatch(
             startRegisterWithEmailPasswordName(data.email, data.password, data.name, data.lastName),
         )
+
         history.push('/home') 
 
         setValue('name', '');

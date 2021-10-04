@@ -86,7 +86,7 @@ class ProductModel extends ModelController {
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
-                        productTypeId: {
+                        ProductTypeId: {
                             [Op.or]: allTypes,
                         },
                         productName: {

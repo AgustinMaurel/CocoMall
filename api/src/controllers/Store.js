@@ -12,7 +12,6 @@ class StoreModel extends ModelController {
         if (req.body.idUser) {
             try {
                 //Cloudinary
-
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';
@@ -23,7 +22,7 @@ class StoreModel extends ModelController {
 
                 //Our DataBase
 
-                const id = req.body.idUser ? req.body.idUser : null;
+                const id = req.body.idUser
                 const store = {
                     storeName: req.body.store.storeName
                         ? req.body.store.storeName

@@ -8,14 +8,17 @@ module.exports = (sequelize) => {
            /*  defaultValue: DataTypes.UUIDV4, */
             allowNull: false,
             primaryKey: true,
+            unique: true
         },
         Name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: false
         },
         LastName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: false
         },
         Mail: {
             type: DataTypes.STRING,

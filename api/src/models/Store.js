@@ -13,10 +13,11 @@ module.exports = (sequelize) => {
       storeName: {
         type: DataTypes.STRING,
         allowNull: false,
+        // unique: false,
       },
       address: {
         type: DataTypes.STRING,
-        unique: true,
+        // unique: true,
       },
       description: {
         type: DataTypes.STRING,

@@ -30,10 +30,9 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            Image: {
-                // type:DataTypes.BLOB,
+            cloudImage: {
                 type: DataTypes.STRING,
-                // allowNull:false,
+                allowNull: false,
             },
         },
         {

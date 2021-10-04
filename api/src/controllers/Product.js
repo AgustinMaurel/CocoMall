@@ -1,6 +1,6 @@
 const { Product, Store, ProductType } = require('../models/index');
+const { cloudinary } = require('../utils/cloudinary/index');
 const { Op } = require('sequelize');
-
 const ModelController = require('./index');
 
 class ProductModel extends ModelController {
@@ -14,8 +14,16 @@ class ProductModel extends ModelController {
         const typeId = req.body.typeId;
         if (storeId && typeId) {
             try {
+                //Cloudinary
+                const fileString = req.body.cloudImage
+                    ? req.body.cloudImage
+                    : 'No image base64 string';
+                const uploadedResponse = await cloudinary.uploader.upload(
+                    fileString
+                );
+                let publicId = uploadedResponse.public_id;
                 //Get the Product from body
-                const product = req.body.product;
+                const product = {...req.body.product, cloudImage: publicId};
                 //Create new Product
                 const newProduct = await this.model.create(product);
                 const productId = newProduct.id;

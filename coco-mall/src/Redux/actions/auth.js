@@ -8,7 +8,6 @@ export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
-                
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
@@ -36,15 +35,15 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                dispatch(
-                    login(user.uid, user.displayName),
-                    //mandar el accessToken al back
-                );
+                console.log(user)
+                dispatch(login( user.uid, user.displayName))
+                axios.get(`http://localhost:3001/user/${user.uid}`)
+                
             })
             .catch((err) =>
                 Swal.fire({
                     title: 'Error!',
-                    text: err.code,
+                    text: err.code ,
                     icon: 'error',
                     confirmButtonText: 'Close',
                 }),
@@ -81,7 +80,6 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Mail: email,
             };
             axios.post('http://localhost:3001/user/create', userF);
-            dispatch(login(userF.id, userF.Name));
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({

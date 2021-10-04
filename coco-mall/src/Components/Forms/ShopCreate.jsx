@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 function ShopCreate({ setIsTrue }) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
     const auth = useSelector((state) => state.auth);
+
     const userId = auth.uid;
 
     const {
@@ -53,9 +54,10 @@ function ShopCreate({ setIsTrue }) {
     const sendData = async (base64EncodedImage, info) => {
         let data = {
             idImage: base64EncodedImage,
-            store: info,
+            store: info, 
             idUser: userId,
         };
+        console.log(data)
         try {
             await axios.post('http://localhost:3001/store/create', data).then(() => {
                 setValue('storeName', '');

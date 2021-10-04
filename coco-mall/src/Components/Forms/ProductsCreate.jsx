@@ -43,6 +43,7 @@ const ProductsCreate = () => {
     const onSubmit = (data) => {
         let productCreated = { product: data, id: idStore, image: image };
         alert('Product Created!');
+        console.log(productCreated)
         dispatch(postProduct(productCreated));
     };
 

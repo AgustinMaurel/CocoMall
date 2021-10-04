@@ -9,6 +9,7 @@ class StoreModel extends ModelController {
     }
     //Specific Functions for this model
     createStore = async (req, res) => {
+        
         if (req.body.idUser) {
             try {
                 //Cloudinary
@@ -23,6 +24,7 @@ class StoreModel extends ModelController {
                 //Our DataBase
 
                 const id = req.body.idUser
+                console.log(id)
                 const store = {
                     storeName: req.body.store.storeName
                         ? req.body.store.storeName
@@ -40,18 +42,20 @@ class StoreModel extends ModelController {
                     state: req.body.store.state ? req.body.store.state : null,
                     cloudImage: public_id ? public_id : 'No image id',
                 };
-
+                console.log(store)
                 //create the new Store
-                const newStore = await Store.create(store);
+                const newStore = await this.model.create(store);
                 const storeId = newStore.id;
 
                 //Attach the Store with the User ID
+                
                 const user = await User.findByPk(id);
+                
                 await user.addStore(storeId);
 
                 // Final Store
-                const finalStore = await Store.findByPk(storeId);
-
+                const finalStore = await this.model.findByPk(storeId);
+                
                 res.send(finalStore);
             } catch (e) {
                 res.send(e);

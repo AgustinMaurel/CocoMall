@@ -5,12 +5,15 @@ import { useDispatch } from 'react-redux';
 import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
 import { useState } from 'react';
 import NavBar from '../../Components/NavBar';
+import { useHistory } from 'react-router';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
 
+    const history = useHistory()
+
     const [viewPass, setViewPass] = useState('password');
-    const [viewPassConfirm, setViewPassConfirm] = useState('');
+    const [viewPassConfirm, setViewPassConfirm] = useState('password');
 
     const {
         handleSubmit,
@@ -23,7 +26,9 @@ const RegisterScreen = () => {
     const handleRegister = (data) => {
         dispatch(
             startRegisterWithEmailPasswordName(data.email, data.password, data.name, data.lastName),
-        );
+        )
+        history.push('/home') 
+
         setValue('name', '');
         setValue('lastName', '');
         setValue('email', '');

@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import {
     startLoginEmailPassword,
     startGoogleLogin,
-    startLogout,
     startFacebookLogin,
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import NavBar from '../../Components/NavBar';
+import { useHistory } from 'react-router';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -25,23 +25,24 @@ const LoginScreen = () => {
 
     const renderCond = useSelector((state) => state.auth);
 
+    const history = useHistory()
+
     const handleLogin = (data) => {
         console.log(data);
         dispatch(startLoginEmailPassword(data.email, data.password));
+        history.push('/home')
         setValue('email', '');
         setValue('password', '');
     };
 
     const handleGoogleLogin = () => {
         dispatch(startGoogleLogin());
+       
     };
 
     const handleFacebookLogin = () => {
         dispatch(startFacebookLogin());
-    };
-
-    const handleLogout = () => {
-        dispatch(startLogout());
+        
     };
 
     return (
@@ -205,9 +206,7 @@ const LoginScreen = () => {
                         </div>
                     </form>
                 </div>
-            ) : (
-                <button onClick={handleLogout}>LOGOUT</button>
-            )}
+            ) : history.push('/home')}
         </div>
     );
 };

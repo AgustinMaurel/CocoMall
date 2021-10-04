@@ -9,31 +9,30 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 primaryKey: true,
             },
-            ProductName: {
+            productName: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            Price: {
+            price: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            Stock: {
+            stock: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            SellBy: {
+            sellBy: {
                 type: DataTypes.ENUM('Cuantity', 'Weight', 'Volume', 'Length'),
                 allowNull: false,
                 defaultValue: 'Cuantity',
             },
-            Description: {
+            description: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            Image: {
-                // type:DataTypes.BLOB,
+            cloudImage: {
                 type: DataTypes.STRING,
-                // allowNull:false,
+                allowNull: false,
             },
         },
         {

@@ -9,6 +9,7 @@ import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
 import SectionModelStores from '../../Sections/SectionModelStores';
+
 // import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
@@ -24,7 +25,9 @@ function LandingDesktop() {
                         <TitleAndDescription />
                     </div>
                     <div className='flex flex-row  relative gap-x-5 w-full justify-start z-20  '>
-                        <MainButton text='Client' />
+                        
+                            <MainButton text='Client' />
+                        
                         <SecondaryButton text='Shop' />
                     </div>
                 </div>

@@ -23,7 +23,8 @@ class ProductModel extends ModelController {
                 );
                 let public_id = uploadedResponse.public_id;
                 //Get the Product from body
-                const product = { ...req.body.product, cloudImage: public_id };
+                const product = { ...req.body.product, cloudImage: public_id ? public_id : 'No image id' };
+                console.log(product)
                 //Create new Product
                 const newProduct = await this.model.create(product);
                 const productId = newProduct.id;
@@ -85,13 +86,13 @@ class ProductModel extends ModelController {
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
-                        ProductTypeId: {
+                        productTypeId: {
                             [Op.or]: allTypes,
                         },
-                        ProductName: {
+                        productName: {
                             [Op.iLike]: `%${nameToFilter}%`,
                         },
-                        Price: {
+                        price: {
                             [Op.and]: {
                                 [Op.gte]: min,
                                 [Op.lte]: max,

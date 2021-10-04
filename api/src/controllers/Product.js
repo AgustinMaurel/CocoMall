@@ -15,15 +15,15 @@ class ProductModel extends ModelController {
         if (storeId && typeId) {
             try {
                 //Cloudinary
-                const fileString = req.body.cloudImage
-                    ? req.body.cloudImage
+                const fileString = req.body.idImage
+                    ? req.body.idImage
                     : 'No image base64 string';
                 const uploadedResponse = await cloudinary.uploader.upload(
                     fileString
                 );
-                let publicId = uploadedResponse.public_id;
+                let public_id = uploadedResponse.public_id;
                 //Get the Product from body
-                const product = {...req.body.product, cloudImage: publicId};
+                const product = { ...req.body.product, cloudImage: public_id };
                 //Create new Product
                 const newProduct = await this.model.create(product);
                 const productId = newProduct.id;

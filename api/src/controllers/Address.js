@@ -1,5 +1,5 @@
-const { Address, User } = require('../models/index')
-const ModelController = require('./index')
+const { Address, User } = require('../models/index');
+const ModelController = require('./index');
 
 class AddressModel extends ModelController {
     constructor(model) {
@@ -30,6 +30,6 @@ class AddressModel extends ModelController {
     };
 }
 
-const AddressController = new AddressModel(Address)
+const AddressController = new AddressModel(Address);
 
-module.exports = AddressController
+module.exports = AddressController;

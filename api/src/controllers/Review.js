@@ -1,5 +1,5 @@
 const { Review, Order } = require('../models/index');
-const ModelController = require('./index')
+const ModelController = require('./index');
 
 class ReviewModel extends ModelController {
     constructor(model) {
@@ -13,7 +13,7 @@ class ReviewModel extends ModelController {
                 const id = req.body.id ? req.body.id : null;
                 const review = {
                     description: req.body.description,
-                    qualification: req.body.qualification
+                    qualification: req.body.qualification,
                 };
                 //Create the review
                 const newReview = await Review.create(review);
@@ -31,6 +31,6 @@ class ReviewModel extends ModelController {
     };
 }
 
-const ReviewController = new ReviewModel(Review)
+const ReviewController = new ReviewModel(Review);
 
-module.exports = ReviewController
+module.exports = ReviewController;

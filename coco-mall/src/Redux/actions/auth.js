@@ -8,6 +8,7 @@ export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
+                
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
@@ -80,6 +81,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Mail: email,
             };
             axios.post('http://localhost:3001/user/create', userF);
+            dispatch(login(userF.id, userF.Name));
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({

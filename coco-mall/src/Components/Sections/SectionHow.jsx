@@ -11,7 +11,8 @@ const SectionHow = () => {
         xl:flex xl:justify-evenly xl:gap-10
         2xl:mx-44'>
             <div className='xl:relative '>
-                <div className=' sm:absolute sm:w-24 sm:h-24 sm:bg-primary-light sm:rounded-full sm:top-8 
+                <div className=' 
+                sm:absolute sm:w-24 sm:h-24 sm:bg-primary-light sm:rounded-full sm:top-8 
                 xl:absolute xl:w-32 xl:h-32 xl:bg-primary-light xl:rounded-full xl:top-0
                 2xl:w-64 2xl:h-64 2xl:-top-20 2xl:-left-10'></div>
                 <h3 className='relative text-3xl font-bold 

@@ -2,25 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     /* border: 1px solid black; */
 }
 @layer components {
-    
-    html {scroll-snap-type: y mandatory}
-    
-    section{
-       height: 100vh;
-       scroll-snap-align: start;
-       position:relative;
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-gap: 20px;
+        align-items: baseline;
     }
 
-    .container{
-        height:100vh;
-        scroll-snap-type: y mandatory;
-        
-        
-        scroll-snap-type: y mandatory;
+    .cards > article {
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
     }
 
+    .cards > article img {
+        max-width: 100%;
+    }
+
+    .cards .text {
+        padding: 20px;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 20px;
+        border-radius: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #afdadb;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #2ec5ce;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    /* ::-webkit-scrollbar-thumb:hover {
+        background: #afdadb;
+    } */
+
+    section {
+        height: 100vh;
+        scroll-snap-align: start;
+        position: relative;
+    }
+
+    .container {
+        height: 100vh;
+        scroll-snap-type: y mandatory;
+
+        scroll-snap-type: y mandatory;
+    }
 }

@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT } from '../actions/actionTypes';
 
 const initialState = {
-    uid: 0,
+    uid: '',
     name: '',
 };
 
@@ -16,7 +16,9 @@ export const authReducer = (state = initialState, action) => {
             return {
                 uid: 0,
                 name: '',
+                err: '',
             };
+
         default:
             return state;
     }

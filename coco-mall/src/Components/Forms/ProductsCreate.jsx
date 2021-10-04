@@ -34,6 +34,17 @@ const ProductsCreate = () => {
         };
     };
 
+   /*  {
+        "product": {
+            "ProductName": "REASM",
+            "Price": 2500,
+            "Stock": 5,
+            "Description": "Jeancito piola pa levanta minita",
+            "cloudImage": "",
+        },
+        "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
+        "typeId": 1
+    } */
 
 
     //Obtener el id de la STORE que crea el producto
@@ -41,9 +52,9 @@ const ProductsCreate = () => {
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { product: data, id: idStore, image: image };
+        let productCreated = { product: data, storeId: idStore, idImage: image, typeId:1 };
         alert('Product Created!');
-        console.log(productCreated)
+        console.log(productCreated) 
         dispatch(postProduct(productCreated));
     };
 

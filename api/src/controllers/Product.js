@@ -86,13 +86,13 @@ class ProductModel extends ModelController {
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
-                        ProductTypeId: {
+                        productTypeId: {
                             [Op.or]: allTypes,
                         },
-                        ProductName: {
+                        productName: {
                             [Op.iLike]: `%${nameToFilter}%`,
                         },
-                        Price: {
+                        price: {
                             [Op.and]: {
                                 [Op.gte]: min,
                                 [Op.lte]: max,

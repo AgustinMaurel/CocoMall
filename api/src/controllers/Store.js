@@ -114,7 +114,7 @@ class StoreModel extends ModelController {
             const filteredStores = await this.model.findAll({
                 include: {
                     model: Product,
-                    attributes: ['ProductTypeId', 'ProductName', 'Price'],
+                    attributes: ['productTypeId', 'productName', 'price'],
                     where: {
                         ProductTypeId: {
                             [Op.or]: typesId,

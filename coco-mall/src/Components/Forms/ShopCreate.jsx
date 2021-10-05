@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-//import Autocomplete from 'react-google-autocomplete';
 
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
 import { postStore } from '../../Scripts/post';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
+import Textarea from '../Inputs/Textarea';
 
-//const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
+import Autocomplete from 'react-google-autocomplete';
+const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
 
-function ShopCreate({setIsTrue}) {
-    //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
+function ShopCreate({ setIsTrue }) {
+    //STATES
     const auth = useSelector((state) => state.auth);
     const userId = auth.uid;
+    const [image, setImage] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
 
     //--HOOKS--
     const dispatch = useDispatch();
@@ -24,10 +27,6 @@ function ShopCreate({setIsTrue}) {
         watch,
         formState: { errors },
     } = useForm({ mode: 'onTouched' });
-
-    //STATES
-    const [image, setImage] = useState('');
-    const [isUploaded, setIsUploaded] = useState(false);
 
     //LOAD IMAGE
     const handleImageChange = (e) => {
@@ -41,7 +40,7 @@ function ShopCreate({setIsTrue}) {
         };
     };
 
-    //POST DATA PRODUCT & ID STORE
+    //POST DATA STORE & ID USER
     const handleRegister = (data) => {
         let storeCreated = { store: data, idUser: userId, idImage: image };
         setIsTrue(false);
@@ -59,14 +58,30 @@ function ShopCreate({setIsTrue}) {
                 >
                     <div className='relative flex flex-col h-full justify-evenly   '>
                         <i>Create Store</i>
-
+                        <Autocomplete
+                            className={
+                                'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                            }
+                            apiKey={GOOGLE_MAPS_API_KEY}
+                            onPlaceSelected={(place) => {
+                                console.log('name: ', place.name);
+                                console.log('adress: ', place.formatted_address);
+                                console.log('lat: ', place.geometry.location.lat());
+                                console.log('lon: ', place.geometry.location.lng());
+                            }}
+                            options={{
+                                fields: ['formatted_address', 'geometry', 'name'],
+                                types: ['establishment'],
+                                componentRestrictions: { country: 'ar' },
+                            }}
+                            placeholder='Eg: Av. Belgrano 3200'
+                        />
                         <InputDefault
                             register={register}
                             errors={errors}
                             name='storeName'
                             placeholder='Eg: Chilli King'
                             validate={validate.storeName}
-                            watch={watch}
                         />
                         <InputDefault
                             register={register}
@@ -74,7 +89,6 @@ function ShopCreate({setIsTrue}) {
                             name='country'
                             placeholder='Eg: Argentina'
                             validate={validate.country}
-                            watch={watch}
                         />
 
                         <InputDefault
@@ -83,7 +97,6 @@ function ShopCreate({setIsTrue}) {
                             name='state'
                             placeholder='Eg: Buenos Aires'
                             validate={validate.state}
-                            watch={watch}
                         />
 
                         <InputDefault
@@ -92,7 +105,6 @@ function ShopCreate({setIsTrue}) {
                             name='address'
                             placeholder='Eg: Nuñez 3800'
                             validate={validate.address}
-                            watch={watch}
                         />
 
                         <InputDefault
@@ -101,31 +113,15 @@ function ShopCreate({setIsTrue}) {
                             name='cp'
                             placeholder='Eg: 1430'
                             validate={validate.cp}
-                            watch={watch}
                         />
 
-                        <div className='relative'>
-                            <textarea
-                                {...register('description', validate.descriptionStore)}
-                                placeholder='Vegan food shop...'
-                                name='description'
-                                autoComplete='off'
-                                className={
-                                    errors.description
-                                        ? 'border border-red-200 resize-none outline-none p-2 w-full rounded text-sm'
-                                        : 'resize-none outline-none p-2 w-full rounded text-sm border border-gray-200'
-                                }
-                            />
-                            {errors.description ? (
-                                <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                    {errors.description.message}
-                                </p>
-                            ) : (
-                                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                    Description*
-                                </p>
-                            )}
-                        </div>
+                        <Textarea
+                            register={register}
+                            errors={errors}
+                            name='description'
+                            placeholder='Vegan food shop...'
+                            validate={validate.descriptionStore}
+                        />
 
                         <InputFile
                             register={register}
@@ -142,6 +138,7 @@ function ShopCreate({setIsTrue}) {
                         </button>
                     </div>
                 </form>
+
                 {/* --PREVIEW-- */}
                 <div
                     className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
@@ -168,20 +165,3 @@ export default ShopCreate;
 //             className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
 //             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
 //         ></div> */}
-
-/*
-
-                    <Autocomplete
-                        apiKey={GOOGLE_MAPS_API_KEY}
-                        style={{ width: '90%' }}
-                        onPlaceSelected={(place) => {
-                            console.log(place);
-                        }}
-                        options={{
-                            types: ['(regions)'],
-                            componentRestrictions: { country: 'ar' },
-                        }}
-                        defaultValue='Paraná'
-                    />
-
-*/

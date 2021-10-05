@@ -16,10 +16,10 @@ function LandingDesktop() {
     return (<>
         <div className='grid grid-col-1 '>
                     <NavBar className='z-10 '/>
-            <section className=' flex flex-col justify-center gap-60  z-1  '>
+            <section className=' flex  justify-between items-center  z-1  '>
                 
 
-                <div data-aos='fade-in' className=' overflow-hidden flex flex-col 2xl:pl-32 gap-y-16 relative w-max   '>
+                <div data-aos='fade-in' className=' overflow-hidden flex flex-col pl-12 2xl:pl-32 gap-y-16 relative w-max   '>
                     <div >
                         <TitleAndDescription />
                     </div>
@@ -30,9 +30,8 @@ function LandingDesktop() {
                         <SecondaryButton text='Shop' />
                     </div>
                 </div>
-            </section>
 
-            <div className='absolute  right-5 top-28 2xl:top-32  '>
+                <div className='  right-5 top-28 2xl:top-32  '>
                 <div className='relative custom 2xl:customXl rounded-full bg-primary-light'>
                     <img
                         src={WebPreview}
@@ -41,6 +40,10 @@ function LandingDesktop() {
                     />
                 </div>
             </div>
+
+            </section>
+
+          
 
             <div className='w-full '>
             

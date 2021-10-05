@@ -18,7 +18,6 @@ const ProductsCreate = () => {
         formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
-
     //STATES
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -35,38 +34,15 @@ const ProductsCreate = () => {
         };
     };
 
-
-
-    /*  {
-         "product": {
-             "ProductName": "REASM",
-             "Price": 2500,
-             "Stock": 5,
-             "Description": "Jeancito piola pa levanta minita",
-             "cloudImage": "",
-         },
-         "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
-         "typeId": 1
- 
- 
-             product: 'segq',
-             description: 'olkoklk',
-            price: '100',
-            stock: '10',
-             image: { '0': {} },
-             cloudImage: 'uip6ia95r1oepjujzcqe'
-     } */
-
-
     //Obtener el id de la STORE que crea el producto
-    let idStore = "5038c6e8-ac4a-4e5b-a374-dd9192084719" ;
+    let idStore = '5038c6e8-ac4a-4e5b-a374-dd9192084719';
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
 
         alert('Product Created!');
-        console.log(productCreated)
+        console.log(productCreated);
         dispatch(postProduct(productCreated));
     };
 
@@ -74,28 +50,10 @@ const ProductsCreate = () => {
 
     return (
         <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
-            {/* <div className='px-5 z-10'>
-                <NavBar />
-            </div> */}
-
-            {/* --BACKGROUND-- */}
-            {/* <div
-                className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div> */}
-
             {/* --CONTAINER-- */}
             <div className=' flex justify-center items-center m-auto p-8 z-10 '>
                 <form
-                    className='  flex flex-col w-80 h-full gap-10 p-8 focus-within:relative'
+                    className='flex flex-col w-80 h-full gap-10 p-8 focus-within:relative'
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <h3 className='text-xl text-center mb-4'>Create Product</h3>
@@ -139,6 +97,7 @@ const ProductsCreate = () => {
                         watch={watch}
                         onChange={handleImageChange}
                     />
+
                     <div className='flex items-center justify-between'>
                         <input
                             className='bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'

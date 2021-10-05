@@ -10,9 +10,7 @@ function ShopCreation() {
 
     return (
         <div className='flex flex-col overflow- '>
-            <div className='flex h-14 pt-4 border-b-2  border-gray-100 px-20 pb-3 z-10 '>
-                <NavBar />
-            </div>
+            <NavBar />
 
             <div className='flex items-center gap-10'>
                 <div className='flex  relative px-20 w-3/5 shadow bg-gray-200 items-center  '>

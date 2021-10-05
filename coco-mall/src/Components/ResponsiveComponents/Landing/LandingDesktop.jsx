@@ -16,7 +16,7 @@ function LandingDesktop() {
     return (<>
         <div className='grid grid-col-1 '>
                     <NavBar className='z-10 '/>
-            <section className=' flex  justify-between items-center  z-1  '>
+            <section className=' flex  justify-between items-center gap-5 pr-8 z-1  '>
                 
 
                 <div data-aos='fade-in' className=' overflow-hidden flex flex-col pl-12 2xl:pl-32 gap-y-16 relative w-max   '>

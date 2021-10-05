@@ -13,12 +13,11 @@ import SectionModelStores from '../../Sections/SectionModelStores';
 // import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
-    return (
-        <div className='grid grid-col-1 overflow-x-hidden'>
-            <section className='  flex flex-col gap-60  z-10  '>
-                <div className='flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
-                    <NavBar />
-                </div>
+    return (<>
+        <div className='grid grid-col-1 '>
+                    <NavBar className='z-10 '/>
+            <section className=' flex flex-col justify-center gap-60  z-1  '>
+                
 
                 <div data-aos='fade-in' className=' overflow-hidden flex flex-col 2xl:pl-32 gap-y-16 relative w-max   '>
                     <div >
@@ -44,12 +43,13 @@ function LandingDesktop() {
             </div>
 
             <div className='w-full '>
+            
                 <section data-aos='fade-right'>
                     <SectionHow />
                 </section>
                 <section
                 
-                    data-aos='fade-left'
+                    data-aos='fade'
                     data-aos-delay='250'
                     className=' col-span-1 px-5  '
                 >
@@ -65,6 +65,7 @@ function LandingDesktop() {
                 </section>
             </div>
         </div>
+        </>
     );
 }
 

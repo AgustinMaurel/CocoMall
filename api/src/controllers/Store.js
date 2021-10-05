@@ -142,7 +142,8 @@ class StoreModel extends ModelController {
 
     
     findStoresOfUser = async (req, res) => {
-        const id = req.params.userId ? req.params.userId : null ;
+        const id = req.body.id ? req.body.id : null ;
+        // return res.send(id)
         if (id) {
             try {
                 let userStores = await this.model.findAll({

@@ -1,6 +1,11 @@
 import React from 'react';
 
 const InputDefault = ({ register, errors, name, placeholder, type, validate, watch }) => {
+    
+    let text = name;
+    let result = text.replace(/([A-Z])/g, " $1")
+    let finalResult = result.charAt(0).toUpperCase() + result.slice(1)
+    
     return (
         <div className='relative'>
             {/* <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label> */}
@@ -23,7 +28,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate, wat
             ) :  ( 
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                        <p className=' text-xs  min-w-max  font-semibold '> {name.charAt(0).toUpperCase() + name.slice(1)}</p>
+                        <p className=' text-xs  min-w-max  font-semibold '> {finalResult}</p>
                         <div>
                             <svg
                                 className='w-3 h-3 rounded-full bg-green-400'

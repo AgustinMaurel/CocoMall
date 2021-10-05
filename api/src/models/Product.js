@@ -1,40 +1,43 @@
-const { DataTypes } = require("sequelize");
-module.exports=(sequelize)=>{   
+const { DataTypes } = require('sequelize');
+module.exports = (sequelize) => {
     return sequelize.define(
-        'Product',{
-            id:{
-                type:DataTypes.UUID,
+        'Product',
+        {
+            id: {
+                type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
-                allowNull:false,
-                primaryKey:true      
+                allowNull: false,
+                primaryKey: true,
             },
-     
-            ProductName:{
-                type:DataTypes.STRING,   
-                allowNull:false,
+            productName: {
+                type: DataTypes.STRING,
+                allowNull: false,
             },
-            Price:{
-                type:DataTypes.STRING,
-                allowNull:false,
+            price: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             },
-            Stock:{
-                type:DataTypes.INTEGER,
-                allowNull:false,
+            stock: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             },
-            Unity:{
-                type:DataTypes.INTEGER,       
-                allowNull:false,
+            sellBy: {
+                type: DataTypes.ENUM('Cuantity', 'Weight', 'Volume', 'Length'),
+                allowNull: false,
+                defaultValue: 'Cuantity',
             },
-            Description:{
-                type:DataTypes.STRING,
-                allowNull:false,
+            description: {
+                type: DataTypes.STRING,
+                allowNull: false,
             },
-            Image:{
-                type:DataTypes.INTEGER,    
-                allowNull:false,
-
-            }
+            cloudImage: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+        },
+        {
+            timestamps: false,
+            createdAt: false,
         }
-    )
-
-}
+    );
+};

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import { getStores } from './Redux/actions/stores';
 
 import Landing from './Views/Landing';
 // import ShopCreate from './Views/ShopCreate';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
-import Home from './Views/Home'
+import Home from './Views/Home';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 // import ProductsCreate from './Views/ProductsCreate';
@@ -25,19 +26,23 @@ function App() {
                 dispatch(login(user.uid, user.displayName));
                 setIsLoggedIn(true);
             } else {
-                setIsLoggedIn(false);
+                setIsLoggedIn(false)
             }
-
             setChecking(false);
+            
         });
-    }, [dispatch, setChecking, setIsLoggedIn]);
+    }, [ dispatch, setChecking, setIsLoggedIn]);
+
+    useEffect(() => {
+        dispatch(getStores())       
+    }, [dispatch])
 
     return (
         <>
             <Switch>
-                <Route path="/home" exact component={Home}/>
+                <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
-                <Route path="/create/shop" exact component={ShopCreation}/>
+                <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
             </Switch>

@@ -20,7 +20,6 @@
 
     .cards > article img {
         max-width: 100%;
-       
     }
 
     .cards .text {
@@ -29,20 +28,19 @@
 
     /* width */
     ::-webkit-scrollbar {
-        width: 20px;
-        border-radius:10px;
+        width: 15px;
+        border-radius: 10px;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-        background: #AFDADB;
+        background: #afdadb;
     }
-    
+
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background: #2EC5CE;
-        border-radius:10px;
-        
+        background: #2ec5ce;
+        border-radius: 10px;
     }
 
     /* Handle on hover */

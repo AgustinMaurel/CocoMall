@@ -1,10 +1,26 @@
-const { Router } = require("express")
+const { Router } = require('express');
 const router = Router();
-const { getAllData, createStore } = require('../controllers/Store.js')
+const {
+    getAllData,
+    createStore,
+    postBulkCreate,
+    filterStoresByProductTypes,
+    deleteDeep,
+    updateDataStore
+} = require('../controllers/Store.js');
 
 //all routes start with /store
-router.get('/', getAllData)
+//GET's
+router.get('/', getAllData);
 
-router.post('/create', createStore)
+router.get('/filter', filterStoresByProductTypes);
 
-module.exports = router
+//POST's
+router.post('/create', createStore);
+
+router.post('/bulkCreate', postBulkCreate);
+//delete store
+router.delete('/delete/:id',deleteDeep)
+//update store 
+router.put('/update/:id',updateDataStore)
+module.exports = router;

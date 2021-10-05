@@ -51,7 +51,9 @@ class ModelController {
             try {
                 let {id,...data} = req.body;
                 let id2 = req.params.id;
-                let updatedData = await this.model.updateData(data, id2);
+                const updatedData = await this.model.update({...data},{where:{
+                    id:id2   
+                }})
                 res.send(updatedData);
             } catch (e) {
                 res.send(e);

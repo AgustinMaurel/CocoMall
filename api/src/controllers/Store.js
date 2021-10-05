@@ -160,10 +160,13 @@ class StoreModel extends ModelController {
             })
         }
     }
+
+
+    
     updateDataStore=async(req,res)=>{
 
         const id1 = req.params.id;
-        const {id,UserId,...Store} = req.body;
+        const {id,UserId,Store} = req.body;
 
         const oldStore = await this.model.findByPk(id1)
         const deleted = await cloudinary.v2.api.delete_resources(oldStore.cloudImage);
@@ -174,7 +177,7 @@ class StoreModel extends ModelController {
             Store.cloudImage = public_id
         }
 
-        const StoreActualizado = await this.model.update({...Store},{where:{
+        const StoreActualizado = await this.model.update({Store},{where:{
             id:id1    
         }})
         res.json({

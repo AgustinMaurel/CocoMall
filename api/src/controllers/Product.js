@@ -138,7 +138,9 @@ class ProductModel extends ModelController {
             product.cloudImage = public_id;
         }
 
-        const ProductoActualizado = await this.model.findByIdAndUpdate(id1,product)
+        const ProductoActualizado = await this.model.update({...product},{where:{
+            id:id1    
+        }})
         res.json({
             msg:"Updated product ok",
             ProductoActualizado

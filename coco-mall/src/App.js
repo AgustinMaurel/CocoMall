@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { getStores } from './Redux/actions/stores';
-
+import StorePanel from './Views/StorePanel';
 import Landing from './Views/Landing';
 // import ShopCreate from './Views/ShopCreate';
 import LoginScreen from './Views/Auth/LoginScreen';
@@ -40,6 +40,7 @@ function App() {
     return (
         <>
             <Switch>
+                <Route exact path='/storePanel' component={StorePanel}/> 
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
                 <Route path='/create/shop' exact component={ShopCreation} />

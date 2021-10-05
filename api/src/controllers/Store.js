@@ -160,9 +160,15 @@ class StoreModel extends ModelController {
     updateDataStore=async(req,res)=>{
 
         const id1 = req.params.id;
-        const {id,UserId,Store} = req.body;
+        const {id,UserId,...Store} = req.body;
 
-        const StoreActualizado = await this.model.findByIdAndUpdate(id1, Store)
+        if(Store.cloudImage){
+            const uploadedResponse = await cloudinary.uploader.upload(Store.cloudImage)
+            let public_id = uploadedResponse.public_id;
+            Store.img = public_id
+        }
+
+        const StoreActualizado = await this.model.findByIdAndUpdate(id1,Store)
         res.json({
             msg:"producto actualizado",
             StoreActualizado

@@ -3,3 +3,4 @@ export const IMG_DEFAULT =
     'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
 export const STORES_URL = 'http://localhost:3001/store'
 export const SEARCH_URL = `${STORES_URL}/filter`
+export const CREATE_USER_URL = 'http://localhost:3001/user/create'

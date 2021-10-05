@@ -165,7 +165,7 @@ class StoreModel extends ModelController {
         if(Store.cloudImage){
             const uploadedResponse = await cloudinary.uploader.upload(Store.cloudImage)
             let public_id = uploadedResponse.public_id;
-            Store.img = public_id
+            Store.cloudImage = public_id
         }
 
         const StoreActualizado = await this.model.findByIdAndUpdate(id1,Store)

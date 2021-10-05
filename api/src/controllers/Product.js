@@ -127,12 +127,20 @@ class ProductModel extends ModelController {
         }
     };
 
-    updateDataProduct=async (req,res)=>{
+    updateDataProduct = async (req,res)=>{
+
         const id1 = req.params.id;
         const {id,StoreId,...product} = req.body;
+
+        if(product.cloudImage){
+            const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
+            let public_id = uploadedResponse.public_id;
+            product.cloudImage = public_id;
+        }
+
         const ProductoActualizado = await this.model.findByIdAndUpdate(id1,product)
         res.json({
-            msg:"producto actualizado",
+            msg:"Updated product ok",
             ProductoActualizado
         })
     }

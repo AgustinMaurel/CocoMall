@@ -140,6 +140,9 @@ class StoreModel extends ModelController {
     deleteDeep=async(req,res)=>{
         let id = req.params.id;
         if(id){
+
+
+
             try{
                 const[ProductDelte,StoreDelte]=await Promise.all([
                     Product.destroy({where:{StoreId:id}}),
@@ -162,6 +165,9 @@ class StoreModel extends ModelController {
         const id1 = req.params.id;
         const {id,UserId,...Store} = req.body;
 
+        const oldStore = await this.model.findByPk(id1)
+        const deleted = await cloudinary.v2.api.delete_resources(oldStore.cloudImage);
+        
         if(Store.cloudImage){
             const uploadedResponse = await cloudinary.uploader.upload(Store.cloudImage)
             let public_id = uploadedResponse.public_id;

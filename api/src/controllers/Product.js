@@ -126,6 +126,18 @@ class ProductModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
+    updateDataProduct=async (req,res)=>{
+        const id1 = req.params.id;
+        const {id,StoreId,...product} = req.body;
+        const ProductoActualizado = await this.model.findByIdAndUpdate(id1,product)
+        res.json({
+            msg:"producto actualizado",
+            ProductoActualizado
+        })
+    }
+
+    
 }
 
 const ProductController = new ProductModel(Product);

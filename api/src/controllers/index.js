@@ -36,7 +36,7 @@ class ModelController {
         if (req.params.id) {
             try {
                 let id = req.params.id;
-                let deletedData = await this.model.deleteById(id);
+                let deletedData = await this.model.destroy({where:{id}});
                 res.send(deletedData);
             } catch (e) {
                 res.send(e);
@@ -49,9 +49,9 @@ class ModelController {
     updateData = async (req, res) => {
         if (typeof req.body === 'object') {
             try {
-                let data = req.body;
-                let id = req.params.id;
-                let updatedData = await this.model.updateData(data, id);
+                let {id,...data} = req.body;
+                let id2 = req.params.id;
+                let updatedData = await this.model.updateData(data, id2);
                 res.send(updatedData);
             } catch (e) {
                 res.send(e);

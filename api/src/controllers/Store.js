@@ -136,6 +136,35 @@ class StoreModel extends ModelController {
             res.send(error);
         }
     };
+    deleteDeep=async(req,res)=>{
+        let id = req.params.id;
+        if(id){
+            try{
+                const[ProductDelte,StoreDelte]=await Promise.all([
+                    Product.destroy({where:{StoreId:id}}),
+                    this.model.destroy({where:{id:id}}),
+                ])
+                res.json({ProductDelte,
+                        StoreDelte})
+
+            }catch(error){
+                res.status(400).json(error)
+            }
+        }else{
+            res.status(400).json({
+                msg:"faltan datos"
+            })
+        }
+    }
+    updateDataStore=async(req,res)=>{
+        const id1 = req.params.id;
+        const {id,UserId,...Store} = req.body;
+        const StoreActualizado = await this.model.findByIdAndUpdate(id1,Store)
+        res.json({
+            msg:"producto actualizado",
+            StoreActualizado
+        })
+    }
 }
 
 const StoreController = new StoreModel(Store);

@@ -68,7 +68,7 @@ function NavBar() {
                             {user.uid ? (
                                 <>
                                     <div>
-                                        <Link to='/home'>
+                                        <Link to='/cart'>
                                             <svg
                                                 className='w-6 h-6'
                                                 fill='none'

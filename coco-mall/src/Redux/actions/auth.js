@@ -35,15 +35,15 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                dispatch(
-                    login(user.uid, user.displayName),
-                    //mandar el accessToken al back
-                );
+                console.log(user)
+                dispatch(login( user.uid, user.displayName))
+                axios.get(`http://localhost:3001/user/${user.uid}`)
+                
             })
             .catch((err) =>
                 Swal.fire({
                     title: 'Error!',
-                    text: err.code,
+                    text: err.code ,
                     icon: 'error',
                     confirmButtonText: 'Close',
                 }),

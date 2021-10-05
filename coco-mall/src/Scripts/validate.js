@@ -38,14 +38,14 @@ const validate = {
         required: { value: true, message: 'Store name is required' },
         minLength: {
             value: 4,
-            message: 'Store must contain at least 4 characters',
+            message: 'Store must contain at least 2 characters',
         },
         maxLength: {
             value: 15,
-            message: 'Store must contain a maximum of 15 characters ',
+            message: 'Store must contain a maximum of 20 characters ',
         },
         pattern: {
-            value: /^[a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/gm,
+            value: /^[\w\s]+([a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1])$/gm,
             message: 'Store can only be letters',
         },
     },

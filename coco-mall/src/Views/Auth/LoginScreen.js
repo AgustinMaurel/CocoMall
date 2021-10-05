@@ -28,7 +28,6 @@ const LoginScreen = () => {
     const history = useHistory()
 
     const handleLogin = (data) => {
-        console.log(data);
         dispatch(startLoginEmailPassword(data.email, data.password));
         history.push('/home')
         setValue('email', '');

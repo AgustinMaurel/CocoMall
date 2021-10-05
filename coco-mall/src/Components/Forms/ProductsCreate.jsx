@@ -154,7 +154,7 @@ const ProductsCreate = () => {
                 >
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
-                        {watch('product') ? watch('product').toUpperCase() : 'PRODUCT'}
+                        {watch('productName') ? watch('productName').toUpperCase() : 'PRODUCT'}
                     </p>
                     <p className='mt-1'>
                         {watch('description') ? watch('description') : 'description'}

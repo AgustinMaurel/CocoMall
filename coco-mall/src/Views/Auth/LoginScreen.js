@@ -160,7 +160,7 @@ const LoginScreen = () => {
 
                         <div className='m-1 mt-10 z-10'>
                             <div className='flex justify-center items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
-                                <button className='text-sm cursor-pointer' type='submit'>
+                                <button className='text-sm cursor-pointer  relative w-full' type='submit'>
                                     Log In
                                 </button>
                             </div>

@@ -15,6 +15,7 @@ class ProductModel extends ModelController {
         if (storeId && typeId) {
             try {
                 //Cloudinary
+
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';

@@ -7,7 +7,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate, wat
     let finalResult = result.charAt(0).toUpperCase() + result.slice(1)
     
     return (
-        <div className='relative'>
+        <div className='relative my-4'>
             {/* <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label> */}
             <input
             autoComplete='off'

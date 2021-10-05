@@ -1,262 +1,161 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+//import Autocomplete from 'react-google-autocomplete';
+
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
-import { useSelector, useDispatch } from 'react-redux';
-import {getStores} from '../../Redux/actions/stores'
+import { postStore } from '../../Scripts/post';
+import InputFile from '../Inputs/InputFile';
+import { IMG_DEFAULT } from '../../Scripts/constants';
 
-function ShopCreate({ setIsTrue }) {
+//const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
+
+function ShopCreate({setIsTrue}) {
     //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
     const auth = useSelector((state) => state.auth);
-    const dispatch = useDispatch()
-
     const userId = auth.uid;
 
+    //--HOOKS--
+    const dispatch = useDispatch();
     const {
-        handleSubmit,
-        formState: { errors },
         register,
-        setValue,
+        handleSubmit,
         watch,
+        formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
-    const [fileInputState, setFileInputState] = useState('');
-    const [previewSource, setPreviewSource] = useState('');
-    const [selectedFile, setSelectedFile] = useState();
+    //STATES
+    const [image, setImage] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
 
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        previewFile(file);
-        setSelectedFile(file);
-        setFileInputState(e.target.value);
-    };
-
-    const previewFile = (file) => {
+    //LOAD IMAGE
+    const handleImageChange = (e) => {
         const reader = new FileReader();
+        const file = e.target.files[0];
+
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewSource(reader.result);
+            setImage(reader.result);
+            setIsUploaded(true);
         };
     };
 
+    //POST DATA PRODUCT & ID STORE
     const handleRegister = (data) => {
-        if (!selectedFile) return;
+        let storeCreated = { store: data, idUser: userId, idImage: image };
         setIsTrue(false);
-        
-        const reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = () => {
-            sendData(reader.result, data);
-        };
-        reader.onerror = () => {
-            console.error('AHHHHHHHH!!');
-        };
-    };
-
-    const sendData = async (base64EncodedImage, info) => {
-        let data = {
-            idImage: base64EncodedImage,
-            store: info, 
-            idUser: userId,
-        };
-        console.log(data)
-        try {
-            await axios.post('http://localhost:3001/store/create', data).then(() => {
-                setValue('storeName', '');
-                setValue('address', '');
-                setValue('country', '');
-                setValue('cp', '');
-                setValue('description', '');
-                dispatch(getStores())
-            });
-        } catch (error) {
-            console.error(error);
-        }
+        alert('Store Created!');
+        console.log(storeCreated);
+        dispatch(postStore(storeCreated));
     };
 
     return (
-        <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
-            <form
-                className='flex flex-col w-96  h-3/4 my-auto relative mx-auto '
-                onSubmit={handleSubmit(handleRegister)}
-            >
-                <div className='relaitve    flex flex-col h-full justify-evenly   '>
-                    <i>Create Store</i>
+        <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
+            <div className=' flex justify-center items-center m-auto p-8 z-10 '>
+                <form
+                    className='flex flex-col w-80 h-full p-8 focus-within:relative'
+                    onSubmit={handleSubmit(handleRegister)}
+                >
+                    <div className='relative flex flex-col h-full justify-evenly   '>
+                        <i>Create Store</i>
 
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='storeName'
-                        placeholder='Eg: Chilli King'
-                        validate={validate.storeName}
-                        watch={watch}
-                    />
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='country'
-                        placeholder='Eg: Argentina'
-                        validate={validate.country}
-                        watch={watch}
-                    />
+                        <InputDefault
+                            register={register}
+                            errors={errors}
+                            name='storeName'
+                            placeholder='Eg: Chilli King'
+                            validate={validate.storeName}
+                            watch={watch}
+                        />
+                        <InputDefault
+                            register={register}
+                            errors={errors}
+                            name='country'
+                            placeholder='Eg: Argentina'
+                            validate={validate.country}
+                            watch={watch}
+                        />
 
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='state'
-                        placeholder='Eg: Buenos Aires'
-                        validate={validate.state}
-                        watch={watch}
-                    />
+                        <InputDefault
+                            register={register}
+                            errors={errors}
+                            name='state'
+                            placeholder='Eg: Buenos Aires'
+                            validate={validate.state}
+                            watch={watch}
+                        />
 
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='address'
-                        placeholder='Eg: Nuñez 3800'
-                        validate={validate.address}
-                        watch={watch}
-                    />
+                        <InputDefault
+                            register={register}
+                            errors={errors}
+                            name='address'
+                            placeholder='Eg: Nuñez 3800'
+                            validate={validate.address}
+                            watch={watch}
+                        />
 
-                    <div className='relative'>
-                        <input
-                            {...register('cp', {
-                                required: { value: true, message: 'Area Code is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Area Code must contain at least 4 numbers',
-                                },
-                                maxLength: {
-                                    value: 15,
-                                    message: 'Area Code must contain a maximum of 15 numbers ',
-                                },
-                                pattern: {
-                                    value: /^\d+$/gm,
-                                    message: 'Wrong postal code',
-                                },
-                            })}
-                            type='text'
-                            placeholder='Eg: 1430'
+                        <InputDefault
+                            register={register}
+                            errors={errors}
                             name='cp'
-                            autoComplete='off'
-                            className={
-                                errors.cp
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
+                            placeholder='Eg: 1430'
+                            validate={validate.cp}
+                            watch={watch}
                         />
-                        {errors.cp ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.cp.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Area Code*
-                            </p>
-                        )}
-                    </div>
 
-                    <div className='relative'>
-                        <textarea
-                            {...register('description', {
-                                required: { value: true, message: 'Description is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Description must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 255,
-                                    message:
-                                        'Description must contain a maximum of 255 characters ',
-                                },
-                            })}
-                            placeholder='Vegan food shop...'
-                            name='description'
-                            autoComplete='off'
-                            className={
-                                errors.description
-                                    ? 'border border-red-200 resize-none outline-none p-2 w-full rounded text-sm'
-                                    : 'resize-none outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.description ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.description.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Description*
-                            </p>
-                        )}
-                    </div>
+                        <div className='relative'>
+                            <textarea
+                                {...register('description', validate.descriptionStore)}
+                                placeholder='Vegan food shop...'
+                                name='description'
+                                autoComplete='off'
+                                className={
+                                    errors.description
+                                        ? 'border border-red-200 resize-none outline-none p-2 w-full rounded text-sm'
+                                        : 'resize-none outline-none p-2 w-full rounded text-sm border border-gray-200'
+                                }
+                            />
+                            {errors.description ? (
+                                <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                                    {errors.description.message}
+                                </p>
+                            ) : (
+                                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
+                                    Description*
+                                </p>
+                            )}
+                        </div>
 
-                    <div className='relative'>
-                        <input
-                            // {...register('image')}
-                            type='file'
+                        <InputFile
+                            register={register}
+                            errors={errors}
                             name='image'
-                            value={fileInputState}
-                            onChange={handleFileInputChange}
-                            className='outline-none p-2 w-full rounded'
-                            id='selectedFile'
-                            accept='.png'
-                            style={{ display: 'none' }}
+                            type='file'
+                            validate={validate.image}
+                            watch={watch}
+                            onChange={handleImageChange}
                         />
-                        <input
-                            type='button'
-                            value='Select Logo'
-                            onClick={() => document.getElementById('selectedFile').click()}
-                            className={
-                                // errors.image
-                                //     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer' :
-                                'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
-                            }
-                        />
-                        {/* {errors.image ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.image.message}
-                            </p>
-                        ) : watch('image')?.length > 0 ? (
-                            <div>
-                                <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                                    <p className=' text-xs  min-w-max  font-semibold '>Logo</p>
-                                    <div>
-                                        <svg
-                                            className='w-3 h-3 rounded-full bg-green-400'
-                                            fill='none'
-                                            stroke='currentColor'
-                                            viewBox='0 0 24 24'
-                                            xmlns='http://www.w3.org/2000/svg'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                strokeWidth='2'
-                                                d='M5 13l4 4L19 7'
-                                            ></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Logo*
-                            </p>
-                        )} */}
-                    </div>
 
-                    <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
-                        Next
-                    </button>
+                        <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
+                            Next
+                        </button>
+                    </div>
+                </form>
+                {/* --PREVIEW-- */}
+                <div
+                    className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
+                                lg:block overflow-hidden'
+                >
+                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                 </div>
-            </form>
-            {previewSource && <img src={previewSource} alt='chosen' style={{ height: '300px' }} />}
+            </div>
         </div>
     );
 }
 
 export default ShopCreate;
+
 // {/* <div
 //             className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
 //             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
@@ -269,3 +168,20 @@ export default ShopCreate;
 //             className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
 //             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
 //         ></div> */}
+
+/*
+
+                    <Autocomplete
+                        apiKey={GOOGLE_MAPS_API_KEY}
+                        style={{ width: '90%' }}
+                        onPlaceSelected={(place) => {
+                            console.log(place);
+                        }}
+                        options={{
+                            types: ['(regions)'],
+                            componentRestrictions: { country: 'ar' },
+                        }}
+                        defaultValue='Paraná'
+                    />
+
+*/

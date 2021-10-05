@@ -25,23 +25,21 @@ const LoginScreen = () => {
 
     const renderCond = useSelector((state) => state.auth);
 
-    const history = useHistory()
+    const history = useHistory();
 
     const handleLogin = (data) => {
         dispatch(startLoginEmailPassword(data.email, data.password));
-        history.push('/home')
+        history.push('/home');
         setValue('email', '');
         setValue('password', '');
     };
 
     const handleGoogleLogin = () => {
         dispatch(startGoogleLogin());
-       
     };
 
     const handleFacebookLogin = () => {
         dispatch(startFacebookLogin());
-        
     };
 
     return (
@@ -50,9 +48,7 @@ const LoginScreen = () => {
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
-            <div className='flex h-14 pt-4  border-b-2 border-gray-100 px-20 pb-3 z-50 overflow-hidden'>
                 <NavBar />
-            </div>
 
             {!renderCond.uid && !renderCond.name ? (
                 <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
@@ -160,7 +156,10 @@ const LoginScreen = () => {
 
                         <div className='m-1 mt-10 z-10'>
                             <div className='flex justify-center items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
-                                <button className='text-sm cursor-pointer  relative w-full' type='submit'>
+                                <button
+                                    className='text-sm cursor-pointer  relative w-full'
+                                    type='submit'
+                                >
                                     Log In
                                 </button>
                             </div>
@@ -205,7 +204,9 @@ const LoginScreen = () => {
                         </div>
                     </form>
                 </div>
-            ) : history.push('/home')}
+            ) : (
+                history.push('/home')
+            )}
         </div>
     );
 };

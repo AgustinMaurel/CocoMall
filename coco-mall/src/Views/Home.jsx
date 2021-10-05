@@ -16,7 +16,7 @@ function Home() {
 
             {/* SIDEBAR */}
 
-            <div className='flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
+            <div className='hidden lg:flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col '>
                     <label>Search</label>
                     <input

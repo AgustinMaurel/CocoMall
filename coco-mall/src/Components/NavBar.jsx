@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../Redux/actions/auth';
 import { useHistory } from 'react-router';
+import MenuDropDown from './MenuDropDown';
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
+    const [displayMenu, setDisplayMenu] = useState(false);
     const breakpoint = 1024;
 
     const history = useHistory();
@@ -22,37 +24,50 @@ function NavBar() {
         history.push('/');
     }
 
+    function handleDisplay(e) {
+        e.preventDefault();
+        if (displayMenu) setDisplayMenu(false);
+        else setDisplayMenu(true);
+    }
+
     return (
         <>
             {width < breakpoint ? (
-                <nav className='flex justify-between'>
-                    <div className='flex align-center items-center gap-5'>
-                        <Link to='/'>
-                            <p>Logo</p>
-                        </Link>
-                        <Link to='/home'>
-                            <p>Home</p>
-                        </Link>
-                    </div>
-                    <div>
-                        <Link to='/'>
-                            <svg
-                                className='w-6 h-6'
-                                fill='none'
-                                stroke='currentColor'
-                                viewBox='0 0 24 24'
-                                xmlns='http://www.w3.org/2000/svg'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='2'
-                                    d='M4 6h16M4 12h16M4 18h16'
-                                ></path>
-                            </svg>
-                        </Link>
-                    </div>
-                </nav>
+                <div className='p-5'>
+                    <nav className='flex  justify-between'>
+                        <div className='flex align-center items-center gap-5'>
+                            <Link to='/'>
+                                <p>Logo</p>
+                            </Link>
+                            <Link  to='/home'>
+                                <p>Home</p>
+                            </Link>
+                        </div>
+                        <div onClick={handleDisplay} className='fixed right-5 top-3'>
+                            <div className=' relative inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                                <svg
+                                    className='w-6 h-6'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    viewBox='0 0 24 24'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
+                                        d='M4 6h16M4 12h16M4 18h16'
+                                    ></path>
+                                </svg>
+                                {displayMenu && (
+                                    <div className='absolute bottom-0 right-0'>
+                                        <MenuDropDown />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </nav>
+                </div>
             ) : (
                 <div className='flex top-0 shadow-lg sticky  w-full bg-gray-100 h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
                     <nav className=' flex align-center items-center h-auto justify-between  w-full'>

@@ -5,6 +5,7 @@ const {
     createStore,
     postBulkCreate,
     filterStoresByProductTypes,
+    deleteDeep
 } = require('../controllers/Store.js');
 
 //all routes start with /store
@@ -18,4 +19,5 @@ router.post('/create', createStore);
 
 router.post('/bulkCreate', postBulkCreate);
 
+router.delete('/delete/:id',deleteDeep)
 module.exports = router;

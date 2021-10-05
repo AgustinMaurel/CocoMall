@@ -1,4 +1,4 @@
-import { GET_STORES , SEARCH_BY_NAME } from "./actionTypes";
+import { GET_STORES , SEARCH_BY_NAME, SEARCH_BY_ID } from "./actionTypes";
 import { STORES_URL , SEARCH_URL } from "../../Scripts/constants";
 import axios from 'axios'
 
@@ -13,6 +13,12 @@ export const getStoresByName = () => {
     return async (dispatch) => {
         const response = await axios.get(SEARCH_URL);
         dispatch({type: SEARCH_BY_NAME , payload: response.data})
+    }
+}
+
+export const getStoreDetail = (id) => {
+    return async (dispatch) => {
+        dispatch({type: SEARCH_BY_ID , payload: id})
     }
 }
 

@@ -1,8 +1,9 @@
-import { GET_STORES, SEARCH_BY_NAME } from "../actions/actionTypes"
+import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID } from "../actions/actionTypes"
 
 const initialState = {
     allStores: [],
-    storesByName : {}
+    storesByName : {},
+    storeDetail: {}
 }
 
 export const storeReducer = (state = initialState, {type, payload}) => {
@@ -17,6 +18,15 @@ export const storeReducer = (state = initialState, {type, payload}) => {
         return{
             ...state,
             storesByName: payload
+        }
+    }
+
+    if(type === SEARCH_BY_ID){
+        return {
+            ...state,
+            storeDetail: state.allStores.find((store) => {
+                return store.id === payload 
+            })
         }
     }
     return state

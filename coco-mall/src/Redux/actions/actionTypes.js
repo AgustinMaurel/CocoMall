@@ -5,3 +5,4 @@ export const LOGOUT = 'LOGOUT';
 export const FIREBASE_ERR = 'FIREBASE_ERR';
 export const GET_STORES = "GET_STORES"
 export const SEARCH_BY_NAME = 'SEARCH_BY_NAME'
+export const SEARCH_BY_ID = 'SEARCH_BY_ID'

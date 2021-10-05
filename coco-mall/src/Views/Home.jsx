@@ -1,12 +1,15 @@
 import React from 'react';
 import HomeCards from '../Components/Cards/HomeCards';
 import NavBar from '../Components/NavBar';
-import cocoIcon from '../Assets/icons/coco_png.png'
+import cocoIcon from '../Assets/icons/coco_png.png';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getStoreDetail } from '../Redux/actions/stores';
 
 function Home() {
     const allStores = useSelector((state) => state.stores);
+    const dispatch = useDispatch();
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
@@ -35,12 +38,17 @@ function Home() {
             <div className='relative w-full  col-span-5 row-span-full  p-6 overflow-y-scroll'>
                 <div className='cards p-3  '>
                     {allStores.allStores?.map((e, i) => (
-                        <HomeCards
-                            storeName={e.storeName}
-                            description={e.description}
-                            cloudImage={cocoIcon}
-                            key={i}
-                        />
+                        <Link
+                            to={`/home/store/${e.id}`}
+                            onClick={() => dispatch(getStoreDetail(e.id))}
+                        >
+                            <HomeCards
+                                storeName={e.storeName}
+                                description={e.description}
+                                cloudImage={cocoIcon}
+                                key={i}
+                            />
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -87,8 +87,6 @@ class UserModel extends ModelController {
         }
     };
 
-
-
 }
 
 const UserController = new UserModel(User);

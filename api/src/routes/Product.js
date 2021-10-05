@@ -26,7 +26,7 @@ router.post('/bulkCreate', bulkCreateProducts);
 router.post('/create', createProduct);
 
 //Delete Product
-router.delete('/delete',deleteDataById) 
+router.delete('/delete/:id',deleteDataById) 
 
 //Update Product
 router.put('/update/:id',updateDataProduct) 

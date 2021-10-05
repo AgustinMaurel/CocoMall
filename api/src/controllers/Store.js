@@ -156,6 +156,15 @@ class StoreModel extends ModelController {
             })
         }
     }
+    updateDataStore=async(req,res)=>{
+        const id1 = req.params.id;
+        const {id,UserId,Store} = req.body;
+        const StoreActualizado = await this.model.findByIdAndUpdate(id1,Store)
+        res.json({
+            msg:"producto actualizado",
+            StoreActualizado
+        })
+    }
 }
 
 const StoreController = new StoreModel(Store);

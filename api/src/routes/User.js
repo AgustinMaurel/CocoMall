@@ -5,6 +5,7 @@ const {
     createUser,
     bulkCreateUser,
     getUserById,
+    updateData
 } = require('../controllers/User.js');
 
 //all routes start with /user
@@ -18,5 +19,8 @@ router.get('/:id', getUserById);
 router.post('/create', createUser);
 
 router.post('/bulkCreate', bulkCreateUser);
+
+//
+router.put('/update/:id',updateData);
 
 module.exports = router;

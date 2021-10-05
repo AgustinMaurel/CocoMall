@@ -10,7 +10,7 @@ function Home() {
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
-            <div className=' col-span-6 row-span-1 row-end-1 2xl:pr-3.5  '>
+            <div className=' col-span-6 row-span-1 row-end-1  bg-gray-200 shadow '>
                 <NavBar />
             </div>
 

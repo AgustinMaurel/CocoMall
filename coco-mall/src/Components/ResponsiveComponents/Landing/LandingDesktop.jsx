@@ -14,7 +14,7 @@ import SectionModelStores from '../../Sections/SectionModelStores';
 
 function LandingDesktop() {
     return (<>
-        <div className='grid grid-col-1 '>
+        <div className=' '>
                     <NavBar className='z-10 '/>
             <section className=' flex  justify-between items-center gap-5 pr-8 z-1  '>
                 

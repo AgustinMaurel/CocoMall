@@ -2,7 +2,7 @@ import React from 'react';
 import './Landing.css';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
-import NavBar from '../../NavBar';
+import NavBar from '../../NavBar/NavBar';
 import TitleAndDescription from '../../TitleAndDescription';
 import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';

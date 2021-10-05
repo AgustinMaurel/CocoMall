@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { startLogout } from '../Redux/actions/auth';
+import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
 

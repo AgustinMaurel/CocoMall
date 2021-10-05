@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {  useHistory } from 'react-router-dom';
-import { startLogout } from '../Redux/actions/auth';
+import { startLogout } from '../../Redux/actions/auth'
 
 export default function MenuDropDown() {
     const dispatch = useDispatch();

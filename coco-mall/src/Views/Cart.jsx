@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
-import NavBar from '../Components/NavBar';
-import { ProductItem } from '../Components/ProductItem';
+import NavBar from '../Components/NavBar/NavBar';
+import { ProductItem } from '../Components/ShoppingCart/ProductItem';
 import { shoppingReducer, shoppingInitialState } from '../Redux/reducers/shoppingReducer';
 
 function Cart() {

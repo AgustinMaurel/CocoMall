@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeCards from '../Components/Cards/HomeCards';
-import NavBar from '../Components/NavBar';
+import NavBar from '../Components/NavBar/NavBar';
 import cocoIcon from '../Assets/icons/coco_png.png'
 
 import { useSelector } from 'react-redux';

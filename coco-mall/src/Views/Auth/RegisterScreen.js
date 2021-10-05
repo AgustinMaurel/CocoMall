@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
 import { useState } from 'react';
-import NavBar from '../../Components/NavBar';
+import NavBar from '../../Components/NavBar/NavBar';
 import { useHistory } from 'react-router';
 
 const RegisterScreen = () => {

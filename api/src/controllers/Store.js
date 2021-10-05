@@ -42,7 +42,7 @@ class StoreModel extends ModelController {
                     state: req.body.store.state ? req.body.store.state : null,
                     cloudImage: public_id ? public_id : 'No image id',
                 };
-                console.log(store)
+                // console.log(store)
                 //create the new Store
                 const newStore = await this.model.create(store);
                 const storeId = newStore.id;
@@ -136,6 +136,7 @@ class StoreModel extends ModelController {
             res.send(error);
         }
     };
+
     deleteDeep=async(req,res)=>{
         let id = req.params.id;
         if(id){
@@ -157,9 +158,11 @@ class StoreModel extends ModelController {
         }
     }
     updateDataStore=async(req,res)=>{
+
         const id1 = req.params.id;
         const {id,UserId,Store} = req.body;
-        const StoreActualizado = await this.model.findByIdAndUpdate(id1,Store)
+
+        const StoreActualizado = await this.model.findByIdAndUpdate(id1, Store)
         res.json({
             msg:"producto actualizado",
             StoreActualizado

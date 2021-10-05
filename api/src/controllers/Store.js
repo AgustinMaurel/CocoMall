@@ -167,7 +167,7 @@ class StoreModel extends ModelController {
 
         const oldStore = await this.model.findByPk(id1)
         const deleted = await cloudinary.v2.api.delete_resources(oldStore.cloudImage);
-        
+
         if(Store.cloudImage){
             const uploadedResponse = await cloudinary.uploader.upload(Store.cloudImage)
             let public_id = uploadedResponse.public_id;
@@ -181,6 +181,7 @@ class StoreModel extends ModelController {
         })
     }
 }
+//c
 
 const StoreController = new StoreModel(Store);
 

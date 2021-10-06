@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
             },
             cords: {
-                type: DataTypes.JSON,
+                type: DataTypes.STRING,
             },
             // payment_account: {
             //PENDING

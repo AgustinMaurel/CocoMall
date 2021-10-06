@@ -24,19 +24,19 @@ class ProductModel extends ModelController {
         const fileString = req.body.idImage ? req.body.idImage : null;
         let images = []
 
-        if(fileString[0]){
-          fileString.forEach(img => {
+        if(fileString){
+          fileString.forEach(async (img) => {
             const uploadedResponse = await cloudinary.uploader.upload(img);
             images.push(uploadedResponse.public_id)
+            return res.send(images)
           })
         }
+        return
         // Get the Product from body
-        const product = {
-          ...req.body.product,
-          cloudImage: images ? images : 'No image ids',
-        };
+        const product = req.body.product
+        product.cloudImage = images
 
-        console.log(product)
+        // console.log(product)
 
         //Create new Product
         const newProduct = await this.model.create(product);

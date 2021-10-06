@@ -10,10 +10,10 @@ export default function ModelTable( {info , title, filters, column_title} ) {
             <h1 className='text-center items-center '>{title}</h1>
             <ul className=' flex text-center justify-evenly items-center h-32 '>
             {filters.map((el)=>(
-                   <li className='border  border-gray-400 rounded-md px-5'>{el}</li>
+                   <li className='border bg-secondary-light border-gray-200 rounded-md px-5'>{el}</li>
                    ))}
             </ul>
-            <table className='items-center text-center justify-center w-full'>
+            <table className='items-center border-separate text-center justify-center w-full'>
                 
                 
                 <thead>

@@ -15,20 +15,24 @@ class ProductModel extends ModelController {
     if (storeId && typeId) {
       try {
         //Cloudinary
-        // const fileString = req.body.idImage
-        //     ? req.body.idImage
-        //     : 'No image base64 string';
-        // const uploadedResponse = await cloudinary.uploader.upload(
-        //     fileString
-        // );
-        // let public_id = uploadedResponse.public_id;
-        //Get the Product from body
-        // const product = {
-        //   ...req.body.product,
-        //   cloudImage: public_id ? public_id : 'No image id',
-        // };
 
-        const { product } = req.body
+        // Ver si el upload funciona pasandole arreglo.
+        // si el producto tiene mas de 1 imagen, subir todas a Cloudinary (forEach)
+        // tambien fijarse el public id para que sea un arreglo de strings en ese caso
+        // to do
+
+        const fileString = req.body.idImage
+          ? req.body.idImage
+          : 'No image base64 string';
+        const uploadedResponse = await cloudinary.uploader.upload(fileString);
+        let public_id = uploadedResponse.public_id;
+        // Get the Product from body
+        const product = {
+          ...req.body.product,
+          cloudImage: public_id ? public_id : 'No image id',
+        };
+
+        const { product } = req.body;
 
         //Create new Product
         const newProduct = await this.model.create(product);
@@ -160,6 +164,10 @@ class ProductModel extends ModelController {
       ProductoActualizado,
     });
   };
+
+  // to do
+  // se hace personalizado por las imagenes que hay que borrar de Cloudinary
+  deleteProduct = async (req, res) => {};
 }
 
 const ProductController = new ProductModel(Product);

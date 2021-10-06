@@ -42,7 +42,6 @@ class StoreModel extends ModelController {
                     state: req.body.store.state ? req.body.store.state : null,
                     cloudImage: public_id ? public_id : 'No image id',
                 };
-                // console.log(store)
                 //create the new Store
                 const newStore = await this.model.create(store);
                 const storeId = newStore.id;
@@ -68,10 +67,6 @@ class StoreModel extends ModelController {
   getAllData = async (req, res, next) => {
     try {
       //Cloudinary
-      // const {resources} = await cloudinary.search.expression('folder:dev_setups')
-      // .sort_by('public_id', 'desc').execute()
-      // // .max_results(...)
-      // const {publicIds} = resources.map(file => file.public_id) // array con todas las public ids
 
       // Our DataBase
 
@@ -141,7 +136,8 @@ class StoreModel extends ModelController {
         let id = req.params.id;
         if(id){
 
-
+            // Borrar fotos de productos y de la tienda de Cloudinary
+            // to do
 
             try{
                 const[ProductDelte,StoreDelte]=await Promise.all([

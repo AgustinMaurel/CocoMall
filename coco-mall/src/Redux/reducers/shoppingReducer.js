@@ -1,43 +1,21 @@
-import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT , SHOPPING_CART_TYPES } from '../actions/actionTypes';
+import { SHOPPING_CART_TYPES } from '../actions/actionTypes';
 
-const initialState = {
-    allStores: [],
-    storesByName: {},
-    storeDetail: {},
-    storeProducts: [],
+export const shoppingInitialState = {
+    // products: [
+    //     { id: 1, name: 'Remerita Piola', price: 2000 },
+    //     { id: 2, name: 'Remerita Piola 1', price: 6000 },
+    //     { id: 3, name: 'Remerita Piola 2', price: 600 },
+    //     { id: 4, name: 'Remerita Piola 3', price: 750 },
+    //     { id: 5, name: 'Remerita Piola 4', price: 100 },
+    //     { id: 6, name: 'Remerita Piola 5', price: 500 },
+    // ],
     cart: [],
 };
 
-export const storeReducer = (state = initialState, { type, payload }) => {
+export function shoppingReducer(state = shoppingInitialState, { type, payload }) {
     switch (type) {
-        case GET_STORES:
-            return {
-                ...state,
-                allStores: payload,
-            };
-
-        case SEARCH_BY_NAME:
-            return {
-                ...state,
-                storesByName: payload,
-            };
-
-        case SEARCH_BY_ID:
-            return {
-                ...state,
-                storeDetail: state.allStores.find((store) => {
-                    return store.id === payload;
-                }),
-            };
-
-        case GET_PRODUCT:
-            return {
-                ...state,
-                storeProducts: payload,
-            };
-            
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            let newItem = state.storeProducts?.find((item) => item.id === payload);
+            let newItem = state.products?.find((item) => item.id === payload);
             let repeatedItem = state.cart?.find((item) => item.id === newItem.id);
 
             return repeatedItem
@@ -70,13 +48,10 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         }
 
         case SHOPPING_CART_TYPES.CLEAR_CART: {
-            return {
-                ...state,
-                cart: []
-            };
+            return shoppingInitialState;
         }
 
         default:
             return state;
     }
-};
+}

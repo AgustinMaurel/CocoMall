@@ -1,38 +1,39 @@
 import React from 'react'
+import { GrSettingsOption } from 'react-icons/gr'
 
-
-export default function ModelTable({ data }) {
-
+export default function ModelTable( {info , title, filters, column_title} ) {
+    console.log(info)
     return (
+        
         <div className='items-center text-center justify-center w-full' >
 
-            <h1>Products</h1>
-            <table>
+            <h1 className='text-center items-center '>{title}</h1>
+            <ul className=' flex text-center justify-evenly items-center h-32 '>
+            {filters.map((el)=>(
+                   <li className='border  border-gray-400 rounded-md px-5'>{el}</li>
+                   ))}
+            </ul>
+            <table className='items-center text-center justify-center w-full'>
+                
                 
                 <thead>
-                <th>A-Z/Z-A</th>
-                        <th>Price</th>
-                        <th>ProductType</th>
-                        <th>Stock </th>
-                        <th>More sell</th>
-                </thead>
-                <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                        <th>Stock</th>
+                    {column_title.map((el)=>(
+                          <th className='border  border-gray-400 text-gray-800 py-2'>{el}</th>
+                          ))}
                     </tr>
                 </thead>
-                <tbody>
-                    {data?.map((el) => (
+                <tbody> 
+                    {info?.map((el) => (
                         <tr>
-                            <td>{el.productName}</td>
-                            <td>{el.price}</td>
-                            <td>{el.description}</td>
-                            <td>{el.cloudImage}</td>
-                            <td>{el.stock}</td>
+                            <td className='border text-center justify-center items-center border-gray-400 py-2'><div className='flex justify-center'>
+                            <GrSettingsOption className="place-self-center"/>
+                                </div></td>
+                            <td className='border  border-gray-400 py-2'>{el.productName}</td>
+                            <td className='border  border-gray-400 py-2'>{el.price}</td>
+                            <td className='border  border-gray-400 py-2'>{el.description}</td>
+                            <td className='border   border-gray-400 py-2'>{el.cloudImage}</td>
+                            <td className='border   border-gray-400 py-2'>{el.stock}</td>
                         </tr>
                     ))}
                 </tbody>

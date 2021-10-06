@@ -59,7 +59,7 @@ const ProductsCreate = () => {
 
 
     //Obtener el id de la STORE que crea el producto
-    let idStore = "c61732f7-c586-4166-94d0-f5e9c9a7f97d" ;
+    let idStore = "452f77bd-c765-434a-b596-6958d421c490" ;
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {

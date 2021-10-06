@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
-import { postProduct } from '../../Scripts/post';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
+import { postProduct } from '../../Redux/actions/post';
 
-const ProductsCreate = () => {
+const ProductsCreate = ({ idStore }) => {
     //--HOOKS--
     const dispatch = useDispatch();
     const {
@@ -35,7 +35,7 @@ const ProductsCreate = () => {
     };
 
     //Obtener el id de la STORE que crea el producto REDUX
-    let idStore = '5038c6e8-ac4a-4e5b-a374-dd9192084719';
+    idStore = '5038c6e8-ac4a-4e5b-a374-dd9192084719';
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {

@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
-import { postStore } from '../../Scripts/post';
 import InputFile from '../Inputs/InputFile';
 import Textarea from '../Inputs/Textarea';
 
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
+import { postStore } from '../../Redux/actions/post';
 //import InputMaps from '../Inputs/InputMaps';
 
 function ShopCreate({ setIsTrue }) {
@@ -19,6 +19,7 @@ function ShopCreate({ setIsTrue }) {
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     const [placeSelected, setPlaceSelected] = useState('');
+    //useSelector para traerme el idStore Creado "storeCreated"
 
     //--HOOKS--
     const dispatch = useDispatch();

@@ -7,6 +7,7 @@ import productCreate from '../Assets/images/web_shopping.svg';
 
 function ShopCreation() {
     const [isTrue, setIsTrue] = useState(true);
+    let idStore = ''
 
     return (
         <div className='h-screen flex flex-col items-center'>
@@ -16,7 +17,7 @@ function ShopCreation() {
                     {isTrue ? (
                         <ShopCreate isTrue={isTrue} setIsTrue={setIsTrue} />
                     ) : (
-                        <ProductsCreate />
+                        <ProductsCreate idStore={idStore}/>
                     )}
 
                     {isTrue ? (

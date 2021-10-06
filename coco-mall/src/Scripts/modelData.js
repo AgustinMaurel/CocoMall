@@ -1,0 +1,4 @@
+let data = {
+    title: String,
+    
+}

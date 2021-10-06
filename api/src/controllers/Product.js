@@ -36,7 +36,7 @@ class ProductModel extends ModelController {
           cloudImage: images ? images : 'No image ids',
         };
 
-        const { product } = req.body;
+        console.log(product)
 
         //Create new Product
         const newProduct = await this.model.create(product);

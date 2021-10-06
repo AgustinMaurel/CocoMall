@@ -9,10 +9,13 @@ import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
 import SectionModelStores from '../../Sections/SectionModelStores';
+import { useSelector } from 'react-redux';
 
 // import SectionStats from '../../Sections/SectionStats';
 
 function LandingDesktop() {
+    const userStore = useSelector((state) => state.stores);
+    const user = useSelector((state) => state.auth);
     return (<>
         <div className=' '>
                     <NavBar className='z-10 '/>
@@ -25,9 +28,10 @@ function LandingDesktop() {
                     </div>
                     <div className='flex flex-row  relative gap-x-5 w-full justify-start z-20  '>
                         
-                            <MainButton text='Client' />
-                        
-                        <SecondaryButton text='Shop' />
+                    <MainButton text='Go Shopping' />
+                
+                {userStore.allStores.find(store => store.id === user.uid) && <SecondaryButton text='My shop' /> }
+                <SecondaryButton text='Create Shop' />
                     </div>
                 </div>
 

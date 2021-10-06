@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar/NavBar';
@@ -9,12 +10,12 @@ import SectionStats from '../../Sections/SectionStats';
 import TitleAndDescription from '../../TitleAndDescription';
 
 function LandingMobile() {
-    
+    const userStore = useSelector((state) => state.stores);
+    const user = useSelector((state) => state.auth);
 
-  
     return (
-        <div  className='grid grid-col-1  min-h-screen  '>
-            <div  className='absolute right-0 -top-5 md:-top-10 lg:-top-28'>
+        <div className='grid grid-col-1  min-h-screen  '>
+            <div className='absolute right-0 -top-5 md:-top-10 lg:-top-28'>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light  '></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light  '></div>
             </div>
@@ -23,8 +24,10 @@ function LandingMobile() {
                 <NavBar />
             </div>
             <div className='fixed flex w-screen justify-evenly bottom-5 z-20  '>
-                <MainButton text='Client' />
-                <SecondaryButton text='Shop' />
+                <MainButton text='Go Shopping' />
+                
+                {userStore.allStores.find(store => store.id === user.uid) && <SecondaryButton text='My shop' /> }
+                <SecondaryButton text='Create Shop' />
             </div>
 
             <section className='container flex flex-col gap-60 col-span-1 z-10 px-5 pt-40'>
@@ -45,7 +48,11 @@ function LandingMobile() {
                     <SectionBenefits />
                 </section>
 
-                <section data-aos='fade-right' data-aos-delay='250' className='container col-span-1'>
+                <section
+                    data-aos='fade-right'
+                    data-aos-delay='250'
+                    className='container col-span-1'
+                >
                     <SectionStats />
                 </section>
 

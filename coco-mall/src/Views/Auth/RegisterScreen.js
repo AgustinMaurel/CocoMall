@@ -58,7 +58,7 @@ const RegisterScreen = () => {
 
             {/* CONTENT */}
             <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-                <div className='flex-col text-xl text-left m-5 font-bold z-50'>
+                <div className='flex-col text-xl text-left m-5 font-bold z-10'>
                     <h1>Register</h1>
                 </div>
 

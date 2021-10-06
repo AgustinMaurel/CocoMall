@@ -28,10 +28,10 @@ class ProductModel extends ModelController {
           fileString.forEach(async (img) => {
             const uploadedResponse = await cloudinary.uploader.upload(img);
             images.push(uploadedResponse.public_id)
-            return res.send(images)
+          /*   return res.send(images) */
           })
         }
-        return
+        /* return */
         // Get the Product from body
         const product = req.body.product
         product.cloudImage = images

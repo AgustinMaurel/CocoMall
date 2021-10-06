@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import ShopCreate from '../Components/Forms/ShopCreate';
-import NavBar from '../Components/NavBar';
+import NavBar from '../Components/NavBar/NavBar';
 import shopImg from '../Assets/images/website_builder.svg';
 import productCreate from '../Assets/images/web_shopping.svg';
 

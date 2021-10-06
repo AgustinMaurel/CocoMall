@@ -16,7 +16,7 @@ export default function StoreDetail() {
     const { id } = useParams();
 
     const dispatch = useDispatch();
-    const storeDetail = useSelector((state) => state.stores.storeDetail);
+    //const storeDetail = useSelector((state) => state.stores.storeDetail);
     const storeProducts = useSelector((state) => state.stores.storeProducts);
     const shoppingCart = useSelector((state) => state.stores.cart);
 
@@ -24,7 +24,7 @@ export default function StoreDetail() {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => dispatch(getProductsStore());
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     return (
         <div className='grid grid-cols-12  w-screen  grid-rows-8   h-screen '>

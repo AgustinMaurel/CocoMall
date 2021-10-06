@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function HomeCards({storeName, description, cloudImage}) {
     return (

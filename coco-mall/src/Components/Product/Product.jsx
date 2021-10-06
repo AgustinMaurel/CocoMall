@@ -1,5 +1,4 @@
 import React from 'react'
-import { addToCart } from '../../Redux/actions/shoppingActions'
 import { useDispatch } from 'react-redux'
 
 export default function Product(props) {

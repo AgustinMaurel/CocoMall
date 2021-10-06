@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';

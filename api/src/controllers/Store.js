@@ -26,23 +26,7 @@ class StoreModel extends ModelController {
                 const id = req.body.idUser
                 const {store} = req.body
                 store.cloudImage = public_id ? public_id : null
-                // const store = {
-                //     storeName: req.body.store.storeName
-                //         ? req.body.store.storeName
-                //         : null,
-                //     address: req.body.store.address
-                //         ? req.body.store.address
-                //         : null,
-                //     description: req.body.store.description
-                //         ? req.body.store.description
-                //         : null,
-                //     country: req.body.store.country
-                //         ? req.body.store.country
-                //         : null,
-                //     cp: req.body.store.cp ? req.body.store.cp : null,
-                //     state: req.body.store.state ? req.body.store.state : null,
-                //     cloudImage: public_id ? public_id : 'No image id',
-                // };
+
 
                 //create the new Store
                 const newStore = await this.model.create(store);

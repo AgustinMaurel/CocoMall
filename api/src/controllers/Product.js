@@ -12,44 +12,44 @@ class ProductModel extends ModelController {
     //ID of Store
     const storeId = req.body.storeId;
     const typeId = req.body.typeId;
-    if (storeId && typeId) {
+    if (storeId && typeId && req.body.idImage) {
       try {
         //Cloudinary
 
-        // Ver si el upload funciona pasandole arreglo.
-        // si el producto tiene mas de 1 imagen, subir todas a Cloudinary (forEach)
-        // tambien fijarse el public id para que sea un arreglo de strings en ese caso
-        // to do
+        const fileString = req.body.idImage 
+        if (fileString) {
+          let imgs = []
+          const product = req.body.product;
+          product.cloudImage = imgs;
 
-        const fileString = req.body.idImage ? req.body.idImage : null;
-        let images = []
+         await fileString.forEach( async img => {
+          const uploadedImage = await cloudinary.uploader.upload(img)
+          let token = uploadedImage.public_id;
+          imgs.push(token)
+          console.log(token, product.cloudImage);
+         })
+          
+          // Get the Product from body
 
-        if(fileString){
-          fileString.forEach(async (img) => {
-            const uploadedResponse = await cloudinary.uploader.upload(img);
-            images.push(uploadedResponse.public_id)
-            return res.send(images)
-          })
+          console.log(product.cloudImage);
+        
+          return res.send(product);
+
+          //Create new Product
+          const newProduct = await this.model.create(product);
+          const productId = newProduct.id;
+          //Attach the new product with the Store
+          const store = await Store.findByPk(storeId);
+          await store.addProduct(productId);
+          //Attach the new product with his Type
+          const productType = await ProductType.findByPk(typeId);
+          await productType.addProduct(productId);
+          //Get the updeted product
+          const finalProduct = await this.model.findByPk(productId);
+          res.send(finalProduct);
+        } else {
+          res.send({ message: 'Should have at least one product image' });
         }
-        return
-        // Get the Product from body
-        const product = req.body.product
-        product.cloudImage = images
-
-        // console.log(product)
-
-        //Create new Product
-        const newProduct = await this.model.create(product);
-        const productId = newProduct.id;
-        //Attach the new product with the Store
-        const store = await Store.findByPk(storeId);
-        await store.addProduct(productId);
-        //Attach the new product with his Type
-        const productType = await ProductType.findByPk(typeId);
-        await productType.addProduct(productId);
-        //Get the updeted product
-        const finalProduct = await this.model.findByPk(productId);
-        res.send(finalProduct);
       } catch (error) {
         res.send(error);
       }

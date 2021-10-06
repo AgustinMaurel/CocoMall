@@ -1,22 +1,22 @@
 import { SHOPPING_CART_TYPES } from '../actions/actionTypes';
 
 export const shoppingInitialState = {
-    products: [
-        { id: 1, name: 'Remerita Piola', price: 2000 },
-        { id: 2, name: 'Remerita Piola 1', price: 6000 },
-        { id: 3, name: 'Remerita Piola 2', price: 600 },
-        { id: 4, name: 'Remerita Piola 3', price: 750 },
-        { id: 5, name: 'Remerita Piola 4', price: 100 },
-        { id: 6, name: 'Remerita Piola 5', price: 500 },
-    ],
+    // products: [
+    //     { id: 1, name: 'Remerita Piola', price: 2000 },
+    //     { id: 2, name: 'Remerita Piola 1', price: 6000 },
+    //     { id: 3, name: 'Remerita Piola 2', price: 600 },
+    //     { id: 4, name: 'Remerita Piola 3', price: 750 },
+    //     { id: 5, name: 'Remerita Piola 4', price: 100 },
+    //     { id: 6, name: 'Remerita Piola 5', price: 500 },
+    // ],
     cart: [],
 };
 
 export function shoppingReducer(state = shoppingInitialState, { type, payload }) {
     switch (type) {
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            let newItem = state.products.find((item) => item.id === payload);
-            let repeatedItem = state.cart.find((item) => item.id === newItem.id);
+            let newItem = state.products?.find((item) => item.id === payload);
+            let repeatedItem = state.cart?.find((item) => item.id === newItem.id);
 
             return repeatedItem
                 ? {

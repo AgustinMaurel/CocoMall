@@ -6,7 +6,7 @@ import { storeReducer } from './shopReducer';
 const reducers = combineReducers({
     auth: authReducer,
     stores: storeReducer,
-    shoppingCart: shoppingReducer,
+    
 });
 
 export default reducers;

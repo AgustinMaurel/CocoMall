@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function HomeCards({storeName, description, cloudImage, }) {
+function HomeCards({storeName, description, cloudImage}) {
     return (
-        <article className='h-22'>
-        <Link to="/">
+        <article className='h-22  shadow-lg'>
             <img className='object-cover h-40 w-full' src='https://picsum.photos/600/400?image=1083' alt='banner' />
 
             <div className='flex justify-center px-5 -mt-6'>
@@ -37,7 +36,6 @@ function HomeCards({storeName, description, cloudImage, }) {
                     </p>
                 </div>
             </div>
-        </Link>
         </article>
     );
 }

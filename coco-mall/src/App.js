@@ -11,6 +11,7 @@ import Home from './Views/Home';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 import ShopCreation from './Views/ShopCreation';
+import StoreDetail from './Views/StoreDetail'
 import Cart from './Components/ShoppingCart/Cart';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
                 <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
+                <Route path='/home/store/:id' exact component={StoreDetail} />
             </Switch>
         </>
     );

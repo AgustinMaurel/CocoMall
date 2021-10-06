@@ -1,6 +1,7 @@
 import { SHOPPING_CART_TYPES } from './actionTypes';
 
 export function addToCart(id) {
+    console.log(id)
     return { type: SHOPPING_CART_TYPES.ADD_TO_CART, payload: id };
 }
 

@@ -164,15 +164,21 @@ class StoreModel extends ModelController {
 
     
     updateDataStore=async(req,res)=>{
-
         const id1 = req.params.id;
-        const {id,UserId,Store} = req.body;
-
-        // const oldStore = await this.model.findByPk(id1)
-        // const deleted = await cloudinary.v2.api.delete_resources(oldStore.cloudImage);
+        const { Store } = req.body;
 
         if(Store.cloudImage){
+            
+            // Borro la imagen en Cloudinary
+            let arr = []
+            const oldStore = await this.model.findByPk(id1)
+            arr.push(oldStore.cloudImage)
+            const deletedImage = await cloudinary.api.delete_resources(arr);
+            
+            // Subo la imagen nueva a Cloudinary
             const uploadedResponse = await cloudinary.uploader.upload(Store.cloudImage)
+            
+            // Guardo el token de la imagen, asi tambien se actualiza
             let public_id = uploadedResponse.public_id;
             Store.cloudImage = public_id
         }
@@ -180,6 +186,7 @@ class StoreModel extends ModelController {
         const StoreActualizado = await this.model.update({Store},{where:{
             id:id1    
         }})
+
 
         res.json({
             msg:"producto actualizado",

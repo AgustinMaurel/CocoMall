@@ -5,11 +5,16 @@ import cocoIcon from '../Assets/icons/coco_png.png';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getStoreDetail } from '../Redux/actions/stores';
+import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
 
 function Home() {
     const allStores = useSelector((state) => state.stores);
     const dispatch = useDispatch();
+
+    const storeDetail = (id) => {
+        dispatch(getStoreDetail(id))
+        dispatch(getProductsStore(id))
+    }
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
@@ -40,7 +45,7 @@ function Home() {
                     {allStores.allStores?.map((e, i) => (
                         <Link
                             to={`/home/store/${e.id}`}
-                            onClick={() => dispatch(getStoreDetail(e.id))}
+                            onClick={() => storeDetail(e.id)}
                         >
                             <HomeCards
                                 storeName={e.storeName}

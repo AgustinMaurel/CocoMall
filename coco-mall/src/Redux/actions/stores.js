@@ -1,5 +1,5 @@
-import { GET_STORES , SEARCH_BY_NAME, SEARCH_BY_ID } from "./actionTypes";
-import { STORES_URL , SEARCH_URL } from "../../Scripts/constants";
+import { GET_STORES , SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT } from "./actionTypes";
+import { STORES_URL , SEARCH_URL, BASE_URL } from "../../Scripts/constants";
 import axios from 'axios'
 
 export const getStores = () => {
@@ -19,6 +19,13 @@ export const getStoresByName = () => {
 export const getStoreDetail = (id) => {
     return async (dispatch) => {
         dispatch({type: SEARCH_BY_ID , payload: id})
+    }
+}
+
+export const getProductsStore = (id) => {
+    return async (dispatch) => {
+        const response = await axios.get(`${BASE_URL}/product/${id}`)
+        dispatch({type: GET_PRODUCT, payload: response.data})
     }
 }
 

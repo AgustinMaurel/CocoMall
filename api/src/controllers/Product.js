@@ -21,15 +21,19 @@ class ProductModel extends ModelController {
         // tambien fijarse el public id para que sea un arreglo de strings en ese caso
         // to do
 
-        const fileString = req.body.idImage
-          ? req.body.idImage
-          : 'No image base64 string';
-        const uploadedResponse = await cloudinary.uploader.upload(fileString);
-        let public_id = uploadedResponse.public_id;
+        const fileString = req.body.idImage ? req.body.idImage : null;
+        let images = []
+
+        if(fileString[0]){
+          fileString.forEach(img => {
+            const uploadedResponse = await cloudinary.uploader.upload(img);
+            images.push(uploadedResponse.public_id)
+          })
+        }
         // Get the Product from body
         const product = {
           ...req.body.product,
-          cloudImage: public_id ? public_id : 'No image id',
+          cloudImage: images ? images : 'No image ids',
         };
 
         const { product } = req.body;

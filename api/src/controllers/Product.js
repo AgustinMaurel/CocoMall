@@ -18,10 +18,14 @@ class ProductModel extends ModelController {
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';
-                const uploadedResponse = await cloudinary.uploader.upload(
-                    fileString
-                );
-                let public_id = uploadedResponse.public_id;
+                let img=[]
+                for(let x=0;x<fileString.length;x++){
+                    img[x]=await cloudinary.uploader.upload(
+                        fileString[x]
+                    );
+                }
+                let public_id = img.map(el=>el.public_id);
+                console.log(public_id);
                 //Get the Product from body
                 const product = { ...req.body.product, cloudImage: public_id ? public_id : 'No image id' };
                 

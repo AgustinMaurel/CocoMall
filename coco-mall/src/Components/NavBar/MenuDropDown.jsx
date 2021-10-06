@@ -18,9 +18,9 @@ export default function MenuDropDown() {
 
     return (
         <Menu as='div' className='relative inline-block text-left '>
-            <Menu.Button className=' relative inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+            <Menu.Button className=' relative inline-flex justify-center  px-2 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
                 <svg
-                    className='w-6 h-6'
+                    className='w-4 h-4'
                     fill='none'
                     stroke='currentColor'
                     viewBox='0 0 24 24'

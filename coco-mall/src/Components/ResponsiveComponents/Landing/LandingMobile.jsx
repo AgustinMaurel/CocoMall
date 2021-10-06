@@ -22,7 +22,7 @@ function LandingMobile() {
             <div className=' col-span-1  z-20'>
                 <NavBar />
             </div>
-            <div className='fixed flex w-screen justify-evenly bottom-10 z-30  '>
+            <div className='fixed flex w-screen justify-evenly bottom-10 z-20  '>
                 <MainButton text='Client' />
                 <SecondaryButton text='Shop' />
             </div>
@@ -38,7 +38,7 @@ function LandingMobile() {
                     <SectionHow />
                 </section>
                 <section
-                    data-aos='fade'
+                    data-aos='fade-in'
                     data-aos-delay='250'
                     className='container col-span-1  px-5  '
                 >

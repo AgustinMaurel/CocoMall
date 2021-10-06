@@ -39,15 +39,12 @@ function NavBar() {
                             <Link to='/'>
                                 <p>Logo</p>
                             </Link>
-                            <Link  to='/home'>
+                            <Link to='/home'>
                                 <p>Home</p>
                             </Link>
                         </div>
                         <div onClick={handleDisplay} className='fixed right-5 top-3'>
-                            
-                                    
-                                        <MenuDropDown />
-                                  
+                            <MenuDropDown />
                         </div>
                     </nav>
                 </div>

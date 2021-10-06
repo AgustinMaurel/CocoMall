@@ -1,8 +1,10 @@
 import React from 'react'
+import { addToCart } from '../../Redux/actions/shoppingActions'
+import { useDispatch } from 'react-redux'
 
 export default function Product(props) {
+    const dispatch = useDispatch()
     const { product } = props
-    console.log(product)
     return (
         <div key={product.id}>
             <h3>{product.productName}</h3>
@@ -10,6 +12,9 @@ export default function Product(props) {
             <li>{product.price}</li>
             <li>{product.stock}</li>
             <img src={product.cloudImage} alt={product.productName} />
+            <button class='border '  onClick={() =>dispatch(props.addToCart(product.id))}>
+                    Add to cart
+                </button>
         </div>
     )
 }

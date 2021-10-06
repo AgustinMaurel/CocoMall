@@ -24,8 +24,9 @@ class ProductModel extends ModelController {
                         fileString[x]
                     );
                 }
+                console.log(img);
                 let public_id = img.map(el=>el.public_id);
-                console.log(public_id);
+            
                 //Get the Product from body
                 const product = { ...req.body.product, cloudImage: public_id ? public_id : 'No image id' };
                 

@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 import StoreModel from '../Components/Cards/StoreModel';
 import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
-import modelData from '../Scripts/modelData';
+import modelData from '../Scripts/modelTable';
+import ModelTable from '../Scripts/modelTable';
+import { data } from '../Scripts/jsonPrueba';
 
 export default function StorePanel() {
 
@@ -35,7 +37,7 @@ export default function StorePanel() {
             <div className=' col-span-6 row-span-1 row-end-1 flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10  '>
                 <NavBar />
             </div>
-            <div className='flex w-1/4 flex-col col-start-1 col-end-1  row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
+            <div className='flex w-1/4 flex-col col-start-1 col-end-1   row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
                     <select name="selectStore" onClick={handleStore}>
                         <option value="All">All</option>
@@ -62,17 +64,12 @@ export default function StorePanel() {
 
             </div>
 
-            <div className='relative w-full  col-span-5 row-span-full  overflow-y-hidden p-4 '>
-                        {productStore ? productStore.map(e=>{
-                            return <div className="bg-gray-500 w-1/5 h-1/5" key={e.id}>
-                                <span>{e.productName}</span>
-                                <span>{e.price}</span>
-                                <span>{e.stock}</span>
-                                <span>{e.description}</span>
+            <div className='relative w-full   col-start-2 col-end-6 row-span-full  overflow-y-hidden p-4 '>
+                    <div className='text-center justify-center items-center'> 
 
-                            </div>
-                        }):false}
-                        <modelData/>
+                        <ModelTable data={data}/>
+
+                    </div>
             </div>
         </div>
     );

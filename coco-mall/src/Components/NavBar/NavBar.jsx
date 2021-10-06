@@ -43,7 +43,7 @@ function NavBar() {
                                 <p>Home</p>
                             </Link>
                         </div>
-                        <div onClick={handleDisplay} className='fixed right-5 top-3 z-20'>
+                        <div onClick={handleDisplay} className='fixed right-5 top-4 z-20'>
                             <MenuDropDown />
                         </div>
                     </nav>

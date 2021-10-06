@@ -43,24 +43,24 @@ const LoginScreen = () => {
     };
 
     return (
-        <div className='overflow-hidden '>
+        <div className='h-screen overflow-hidden '>
             <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
-                <NavBar />
+            <NavBar />
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
-                    <div className='flex-col text-xl text-left m-10 font-bold z-50 relative'>
-                        <h1 className='relative z-50'>Login in to your account</h1>
+                <div className='flex flex-col gap-10 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                    <div className='flex-col text-xl text-left  font-bold z-50 relative'>
+                        <h1 className='relative z-50 pt-10'>Login in to your account</h1>
                     </div>
                     <div
                         className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
                     ></div>
                     <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
                     ></div>
 
@@ -164,17 +164,17 @@ const LoginScreen = () => {
                                 </button>
                             </div>
                             <div>
-                                <div className='flex mt-1 z-10 justify-center content-center items-center'>
+                                <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
                                     <div
                                         className='flex cursor-pointer text-xs text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
                                         onClick={handleGoogleLogin}
                                     >
                                         <img
-                                            className='w-12 h-6 justify-self-center mt-0.5 '
+                                            className='w-12 h-6 justify-self-center mt-0.5 bg-white '
                                             src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                             alt='google button'
                                         />
-                                        <label className='flex flex-col pointer-events-none justify-center p-1 mr-0.5'>
+                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-1 mr-0.5'>
                                             Log in with Google
                                         </label>
                                     </div>
@@ -196,7 +196,7 @@ const LoginScreen = () => {
                             </div>
                         </div>
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
-                            <label className='ml-1'>Not a member ? </label>
+                            <label className='ml-1 font-medium'>Not a member ? </label>
                             <Link className='text-secondary ml-2' to='/auth/register'>
                                 {' '}
                                 Sign up

@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
             },
             cp: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
             },
             // payment_account: {
             //PENDING

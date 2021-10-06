@@ -11,8 +11,8 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                 autoComplete='off'
                 className={
                     errors[name]
-                        ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                        : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
+                        ? 'outline-none p-2 w-full rounded text-gray-500  text-sm border border-red-200'
+                        : 'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
                 }
                 type={type}
                 placeholder={placeholder}
@@ -20,14 +20,14 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
             />
 
             {errors[name] ? (
-                <p className='absolute text-xs text-red-500 -top-4 left-0 whitespace-nowrap font-semibold'>
+                <p className='absolute text-red-500 -top-6 left-0 whitespace-nowrap'>
                     {errors[name].message}
                 </p>
             ) : (
                 <div>
-                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                        <p className=' text-xs  min-w-max  font-semibold '> {finalResult}</p>
-                        <div>
+                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
+                        <p className='min-w-max'> {finalResult}</p>
+                        {/* <div>
                             <svg
                                 className='w-3 h-3 rounded-full bg-green-400'
                                 fill='none'
@@ -42,7 +42,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                                     d='M5 13l4 4L19 7'
                                 ></path>
                             </svg>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             )}

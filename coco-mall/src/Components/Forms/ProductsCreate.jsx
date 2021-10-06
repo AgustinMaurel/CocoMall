@@ -34,7 +34,7 @@ const ProductsCreate = () => {
         };
     };
 
-    //Obtener el id de la STORE que crea el producto
+    //Obtener el id de la STORE que crea el producto REDUX
     let idStore = '5038c6e8-ac4a-4e5b-a374-dd9192084719';
 
     //POST DATA PRODUCT & ID STORE
@@ -49,14 +49,16 @@ const ProductsCreate = () => {
     //TODO get de categorias -> hacer input SELECT
 
     return (
-        <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
+        <div
+            className='w-full flex justify-center items-center m-auto'
+        >
             {/* --CONTAINER-- */}
-            <div className=' flex justify-center items-center m-auto p-8 z-10 '>
+            <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
                 <form
-                    className='flex flex-col w-80 h-full gap-10 p-8 focus-within:relative'
+                    className='w-full xl:w-1/3 flex flex-col'
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <h3 className='text-xl text-center mb-4'>Create Product</h3>
+                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>Create your Product</h3>
                     <InputDefault
                         register={register}
                         errors={errors}
@@ -78,7 +80,6 @@ const ProductsCreate = () => {
                         placeholder='Eg: 1500'
                         type='number'
                         validate={validate.price}
-                        className=''
                     />
                     <InputDefault
                         register={register}
@@ -98,18 +99,18 @@ const ProductsCreate = () => {
                         onChange={handleImageChange}
                     />
 
-                    <div className='flex items-center justify-between'>
-                        <input
-                            className='bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                            type='submit'
-                        />
-                    </div>
+                    <button
+                        type='submit'
+                        className='w-full bg-secondary rounded my-4 p-2 text-white'
+                    >
+                        Send
+                    </button>
                 </form>
 
                 {/* --PREVIEW-- */}
                 <div
-                    className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
-                                lg:block overflow-hidden'
+                    className='hidden bg-white shadow-md rounded py-8 ml-4 w-80 text-center
+                                xl:block overflow-hidden'
                 >
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>

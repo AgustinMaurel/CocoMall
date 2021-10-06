@@ -20,8 +20,8 @@ export function postStore(payload) {
         axios
             .post(`${STORE_CREATE_URL}`, payload)
             .then((res) => res.data)
-            .then((product) => {
-                return product;
+            .then((store) => {
+                console.log('ID store created: ', store);
             })
             .catch((error) => console.log(error));
     };

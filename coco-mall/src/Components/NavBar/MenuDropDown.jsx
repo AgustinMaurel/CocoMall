@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {  useHistory } from 'react-router-dom';
-import { startLogout } from '../../Redux/actions/auth'
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
+import { startLogout } from '../../Redux/actions/auth';
 
 export default function MenuDropDown() {
     const dispatch = useDispatch();
@@ -15,41 +17,62 @@ export default function MenuDropDown() {
     }
 
     return (
-        <div className='relative inline-block text-left'>
-            
-
-            <div className='absolute right-0 w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+        <Menu as='div' className='relative inline-block text-left '>
+            <Menu.Button className=' relative inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                <svg
+                    className='w-6 h-6'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    xmlns='http://www.w3.org/2000/svg'
+                >
+                    <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M4 6h16M4 12h16M4 18h16'
+                    ></path>
+                </svg>
+            </Menu.Button>
+            <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+            <Menu.Items className='absolute right-0 w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 {!userId ? (
                     <div className='px-1 py-1 '>
-                        
-                            <div>
-                                <button onClick={() => history.push('/auth/login')}
-                                    className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                >
-                                    <LoginIcon
-                                        className='w-5 h-5 mr-2 pointer-events-none'
-                                        aria-hidden='true'
-                                    />
-                                    Login
-                                </button>
-                            </div>
-                        
+                        <Menu.Item>
+                            <button
+                                onClick={() => history.push('/auth/login')}
+                                className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                            >
+                                <LoginIcon
+                                    className='w-5 h-5 mr-2 pointer-events-none'
+                                    aria-hidden='true'
+                                />
+                                Login
+                            </button>
+                        </Menu.Item>
 
-                        
-                          <div>
-                              <button  onClick={() => history.push('/auth/register')}
-                                  className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                              >
-                                  <SignUpIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                  Sign Up
-                              </button>
-                          </div>
-                        
+                        <Menu.Item>
+                            <button
+                                onClick={() => history.push('/auth/register')}
+                                className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                            >
+                                <SignUpIcon className='w-5 h-5 mr-2' aria-hidden='true' />
+                                Sign Up
+                            </button>
+                        </Menu.Item>
                     </div>
                 ) : (
                     <>
                         <div className='px-1 py-1'>
-                            <div>
+                            <Menu.Item>
                                 <button
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
@@ -59,32 +82,32 @@ export default function MenuDropDown() {
                                     />
                                     {user.name}
                                 </button>
-                            </div>
+                            </Menu.Item>
                         </div>
 
                         <div className='px-1 py-1'>
-                            <div>
+                            <Menu.Item>
                                 <button
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
                                     <WishListIcon className='w-5 h-5 mr-2' aria-hidden='true' />
                                     My Wishlist
                                 </button>
-                            </div>
-                            <div>
+                            </Menu.Item>
+                            <Menu.Item>
                                 <button
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
                                     <MyShopIcon className='w-5 h-5 mr-2' aria-hidden='true' />
                                     My Shop
                                 </button>
-                            </div>
+                            </Menu.Item>
                         </div>
 
                         <div className='px-1 py-1'>
-                            <div>
+                            <Menu.Item>
                                 <button
-                                    onClick={ handleLogout}
+                                    onClick={handleLogout}
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
                                     <LogOutIcon
@@ -93,12 +116,13 @@ export default function MenuDropDown() {
                                     />
                                     Log Out
                                 </button>
-                            </div>
+                            </Menu.Item>
                         </div>
                     </>
                 )}
-            </div>
-        </div>
+            </Menu.Items>
+            </Transition>
+        </Menu>
     );
 }
 

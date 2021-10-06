@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import StoreModel from '../Components/Cards/StoreModel';
 import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
+import modelData from '../Scripts/modelData';
 
 export default function StorePanel() {
 
@@ -71,6 +72,7 @@ export default function StorePanel() {
 
                             </div>
                         }):false}
+                        <modelData/>
             </div>
         </div>
     );

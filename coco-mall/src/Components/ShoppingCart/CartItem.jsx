@@ -17,7 +17,7 @@ const CartItem = ({ data, deleteFromCart, deleteAllFromCart }) => {
    //
   
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col relative  justify-between bg-red-500'>
             <div className='border-b-2 '>
                 <h3>{name}</h3>
                 <p className='font-semibold'>

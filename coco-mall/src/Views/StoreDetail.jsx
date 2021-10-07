@@ -61,8 +61,8 @@ export default function StoreDetail() {
                         : false}
                 </div>
             </div>
-            <div className='bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
-                <div className=' '>
+            <div className='bg-green-300 flex row-span-14  col-span-2  relative   border-r border-gray-200   '>
+                <div className='relative '>
                     <h3>Carrito</h3>
                     {shoppingCart.length ? (
                         <button
@@ -74,6 +74,7 @@ export default function StoreDetail() {
                     ) : (
                         false
                     )}
+                    <div className='relative bg-red-600'>
                     {shoppingCart?.map((item, index) => (
                         <CartItem
                             key={index}
@@ -82,6 +83,7 @@ export default function StoreDetail() {
                             deleteAllFromCart={() => dispatch(deleteAllFromCart(item.id))}
                         />
                     ))}
+                    </div>
                 </div>
             </div>
         </div>

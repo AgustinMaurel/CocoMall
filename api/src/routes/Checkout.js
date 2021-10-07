@@ -30,8 +30,8 @@ router.post("/mercadopago", async (req, res) => {
     let preference = {
         items: [
             {
-                title: req.body.xxxx,
-                unit_price: xxxx,
+                title: req.body.title,
+                unit_price: req.body.total,
                 quantity: 1,
             },
         ],
@@ -47,5 +47,7 @@ router.post("/mercadopago", async (req, res) => {
     const init_points = answer.body.init_point;
     res.send(response, init_points);
 });
+
+
 
 module.exports = router;

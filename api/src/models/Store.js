@@ -35,9 +35,9 @@ module.exports = (sequelize) => {
             cp: {
                 type: DataTypes.STRING,
             },
-            /* cords: {
-                type: DataTypes.STRING,
-            }, */
+            coord: {
+                type: DataTypes.ARRAY(DataTypes.STRING),
+            },
             // payment_account: {
             //PENDING
             // }

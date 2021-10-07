@@ -1,12 +1,19 @@
 import React from 'react';
 import HomeCards from '../Components/Cards/HomeCards';
-import NavBar from '../Components/NavBar';
+import NavBar from '../Components/NavBar/NavBar';
 import cocoIcon from '../Assets/icons/coco_png.png'
-
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
 
 function Home() {
     const allStores = useSelector((state) => state.stores);
+    const dispatch = useDispatch();
+
+    const storeDetail = (id) => {
+        dispatch(getStoreDetail(id))
+        dispatch(getProductsStore(id))
+    }
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
@@ -16,7 +23,7 @@ function Home() {
 
             {/* SIDEBAR */}
 
-            <div className='hidden lg:flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
+            <div className='hidden lg:flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative  border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col '>
                     <label>Search</label>
                     <input
@@ -35,12 +42,17 @@ function Home() {
             <div className='relative w-full  col-span-5 row-span-full  p-6 overflow-y-scroll'>
                 <div className='cards p-3  '>
                     {allStores.allStores?.map((e, i) => (
-                        <HomeCards
-                            storeName={e.storeName}
-                            description={e.description}
-                            cloudImage={cocoIcon}
-                            key={i}
-                        />
+                        <Link
+                            to={`/home/store/${e.id}`}
+                            onClick={() => storeDetail(e.id)}
+                        >
+                            <HomeCards
+                                storeName={e.storeName}
+                                description={e.description}
+                                cloudImage={cocoIcon}
+                                key={i}
+                            />
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -12,15 +12,29 @@ module.exports = {
             gridTemplateRows: {
                 // Simple 8 row grid  
                8: 'repeat(8, minmax(0, 1fr))',  
+               14: 'repeat(14, minmax(0, 1fr))',  
                 // Complex site-specific row configuration  
                'layout': '200px minmax(900px, 1fr) 100px',
               }, 
+           
             outline:{
             primary: ['2px solid #38A3A5, 1px'],
             'primary-light': ['2px solid #AFDADB, 1px'],
             secondary: ['2px solid #2EC5CE, 1px'],
             'secondary-light': ['2px solid #D7EDED, 1px'],
-            }          
+            },
+            gridRow: {
+                'span-7': 'span 7 / span 7',
+                'span-8': 'span 8 / span 8',
+                'span-9': 'span 9 / span 9',
+                'span-10': 'span 10 / span 10',
+                'span-11': 'span 11 / span 11',
+                'span-12': 'span 12 / span 12',           
+                'span-13': 'span 13 / span 13',           
+                'span-14': 'span 14 / span 14',           
+                'span-15': 'span 15 / span 15',           
+                
+               }  ,   
         },
        
         backgroundColor: (theme) => ({

@@ -2,19 +2,22 @@ import React from 'react';
 import './Landing.css';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
-import NavBar from '../../NavBar';
+import NavBar from '../../NavBar/NavBar';
 import TitleAndDescription from '../../TitleAndDescription';
 import WebPreview from '../../../Assets/images/WebPreview.png';
 import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
 import SectionModelStores from '../../Sections/SectionModelStores';
-
-// import SectionStats from '../../Sections/SectionStats';
+import { useSelector } from 'react-redux';
 
 function LandingDesktop() {
-    return (<>
-        <div className=' '>
+const userStore = useSelector((state) => state.stores);
+const user = useSelector((state) => state.auth);
+
+return (
+    <>
+        <div >
                     <NavBar className='z-10 '/>
             <section className=' flex  justify-between items-center gap-5 pr-8 z-1  '>
                 
@@ -25,9 +28,10 @@ function LandingDesktop() {
                     </div>
                     <div className='flex flex-row  relative gap-x-5 w-full justify-start z-20  '>
                         
-                            <MainButton text='Client' />
-                        
-                        <SecondaryButton text='Shop' />
+                    <MainButton text='Go Shopping' />
+                
+                {userStore.allStores.find(store => store.id === user.uid) && <SecondaryButton text='My shop' /> }
+                <SecondaryButton text='Create Shop' />
                     </div>
                 </div>
 

@@ -5,6 +5,7 @@ const {
     createStore,
     postBulkCreate,
     filterStoresByProductTypes,
+    findStoresOfUser,
 } = require('../controllers/Store.js');
 
 //all routes start with /store
@@ -12,6 +13,8 @@ const {
 router.get('/', getAllData);
 
 router.get('/filter', filterStoresByProductTypes);
+
+router.get('/user', findStoresOfUser)
 
 //POST's
 router.post('/create', createStore);

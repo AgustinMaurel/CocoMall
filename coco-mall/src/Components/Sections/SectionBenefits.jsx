@@ -48,7 +48,7 @@ const SectionBenefits = () => {
                     </div>
 
                     <div className='xl:flex xl:flex-col  xl:h-96 xl:justify-evenly xl:w-full xl:align-center xl:items-center'>
-                        <div className='flex flex-col items-center gap-10'>
+                        <div className='flex flex-col items-center gap-10 z-20'>
                             {data2?.map((e, i) => (
                                 <Benefits
                                     key={i}

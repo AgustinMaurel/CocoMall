@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { startLogout } from '../Redux/actions/auth';
+import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
 
@@ -39,32 +39,12 @@ function NavBar() {
                             <Link to='/'>
                                 <p>Logo</p>
                             </Link>
-                            <Link  to='/home'>
+                            <Link to='/home'>
                                 <p>Home</p>
                             </Link>
                         </div>
-                        <div onClick={handleDisplay} className='fixed right-5 top-3'>
-                            <div className=' relative inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
-                                <svg
-                                    className='w-6 h-6'
-                                    fill='none'
-                                    stroke='currentColor'
-                                    viewBox='0 0 24 24'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        strokeWidth='2'
-                                        d='M4 6h16M4 12h16M4 18h16'
-                                    ></path>
-                                </svg>
-                                {displayMenu && (
-                                    <div className='absolute bottom-0 right-0'>
-                                        <MenuDropDown />
-                                    </div>
-                                )}
-                            </div>
+                        <div onClick={handleDisplay} className='fixed right-5 top-4 z-20'>
+                            <MenuDropDown />
                         </div>
                     </nav>
                 </div>

@@ -75,7 +75,9 @@ class StoreModel extends ModelController {
 
             // Our DataBase
 
-            let data = await Store.findAll();
+            let data = await Store.findAll({
+                include: [{model: Product}]
+            });
             res.send(data);
         } catch (e) {
             next(e);
@@ -136,6 +138,28 @@ class StoreModel extends ModelController {
             res.send(error);
         }
     };
+
+
+    
+    findStoresOfUser = async (req, res) => {
+        const id = req.body.id ? req.body.id : null ;
+        // return res.send(id)
+        if (id) {
+            try {
+                let userStores = await this.model.findAll({
+                    where: {
+                        UserId: id,
+                    },
+                });
+                res.send(userStores);
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Must have an User Id' });
+        }
+    };
+
 }
 
 const StoreController = new StoreModel(Store);

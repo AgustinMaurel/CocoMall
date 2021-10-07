@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { getStores } from './Redux/actions/stores';
+import { auth } from './firebase/firebaseConfig';
+import { login } from './Redux/actions/auth';
+import './App.css';
 
 import Landing from './Views/Landing';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
 import Home from './Views/Home';
-import { auth } from './firebase/firebaseConfig';
-import { login } from './Redux/actions/auth';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
 

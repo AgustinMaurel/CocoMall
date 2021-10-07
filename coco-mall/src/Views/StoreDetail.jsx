@@ -36,13 +36,14 @@ export default function StoreDetail() {
     }, [dispatch, id]);
 
     const handleCheckout = () => {
-        // console.log('compre');
+        console.log('compre');
         let data = {
             title: shoppingCart.map(el => el.productName).join(", "),
             total: total,
         };
        
-        // axios.post('http://localhost:3001/checkout/mercadopago', data);
+        axios.post('http://localhost:3001/checkout/mercadopago', data)
+        //hacer un redirect a init points
     };
 
     return (

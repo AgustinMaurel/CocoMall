@@ -9,7 +9,7 @@ const {
     templateFailure,
 } = require("../utils/Templates/emailTemplates");
 
-//all this rputes strart with checkout
+//all this routes strart with checkout
 router.post("/stripe", async (req, res) => {
     try {
         const {amount, id, currency, description} = req.body;

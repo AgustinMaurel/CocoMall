@@ -1,10 +1,17 @@
 const { Sequelize } = require('sequelize');
+const Stripe = require('stripe')
 const {
     DB_USER,
     DB_PASSWORD,
     DB_HOST,
     DB_NAME,
+    PUBLIC_KEY,
+    SECRET_KEY
 } = require('../utils/config/index');
+
+//Stripe
+const stripe = new Stripe(SECRET_KEY)
+
 
 //Factory models
 
@@ -15,6 +22,8 @@ const ProductFactory = require('./Product.js');
 const OrderFactory = require('./Order.js');
 const ReviewFactory = require('./Review.js');
 const ProductTypeFactory = require('./ProductType.js');
+
+//Sequalize
 
 const sequelize = new Sequelize(
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -88,4 +97,5 @@ module.exports = {
     Order,
     Review,
     ProductType,
+    stripe
 };

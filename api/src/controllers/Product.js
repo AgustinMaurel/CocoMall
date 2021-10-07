@@ -4,10 +4,9 @@ const { Op } = require('sequelize');
 const ModelController = require('./index');
 
 class ProductModel extends ModelController {
-  constructor(model) {
-    super(model);
-  }
-  //Specific Functions for this model
+    constructor(model) {
+        super(model);
+    }
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
@@ -81,88 +80,85 @@ class ProductModel extends ModelController {
 
 
       filterProductsByTypeAndName = async (req, res) => {
-        //Id of the store from which i need products
-        const storeId = req.params.id;
-        if (storeId) {
-            try {
-                //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.body.types || [];
-                const nameToFilter = req.body.name || '';
-                const min = req.body.min || 0;
-                const max = req.body.max || 99 ^ 9999;
-                const filteredProducts = await this.model.findAll({
-                    where: {
-                        StoreId: storeId,
-                        ProductTypeId: {
-                            [Op.or]: allTypes,
-                        },
-                        productName: {
-                            [Op.iLike]: `%${nameToFilter}%`,
-                        },
-                        price: {
-                            [Op.and]: {
-                                [Op.gte]: min,
-                                [Op.lte]: max,
-                            },
-                        },
-                    },
-                });
-                res.send(filteredProducts);
-            } catch (error) {
-                res.send(error);
-            }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
-        }
-    };
+          //Id of the store from which i need products
+          const storeId = req.params.id;
+          if (storeId) {
+              try {
+                  //Array of the Types of products (on ID forms) that i need
+                  const allTypes = req.body.types || [];
+                  const nameToFilter = req.body.name || '';
+                  const min = req.body.min || 0;
+                  const max = req.body.max || 99 ^ 9999;
+                  const filteredProducts = await this.model.findAll({
+                      where: {
+                          StoreId: storeId,
+                          ProductTypeId: {
+                              [Op.or]: allTypes,
+                          },
+                          productName: {
+                              [Op.iLike]: `%${nameToFilter}%`,
+                          },
+                          price: {
+                              [Op.and]: {
+                                  [Op.gte]: min,
+                                  [Op.lte]: max,
+                              },
+                          },
+                      },
+                  });
+                  res.send(filteredProducts);
+              } catch (error) {
+                  res.send(error);
+              }
+          } else {
+              res.status(400).send({ message: 'Wrong parameters' });
+          }
+      };
+      
+      findAllProductsOfStore = async (req, res) => {
+          const storeId = req.params.id;
+          if (storeId) {
+              try {
+                  const allProductOfStore = await this.model.findAll({
+                      where: {
+                          StoreId: storeId,
+                      },
+                  });
+                  res.send(allProductOfStore);
+              } catch (error) {
+                  res.send(error);
+              }
+          } else {
+              res.status(400).send({ message: 'Wrong parameters' });
+          }
+      };
+  
+      updateDataProduct = async (req,res)=>{
+  
+          const id1 = req.params.id;
+          const {id,StoreId,...product} = req.body;
+  
+          if(product.cloudImage){
+  
+              // Corregir para hacerlo con muchas imagenes
+  
+              const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
+              let public_id = uploadedResponse.public_id;
+              product.cloudImage = public_id;
+          }
+  
+          const ProductoActualizado = await this.model.update({...product},{where:{
+              id:id1    
+          }})
+          res.json({
+              msg:"Updated product ok",
+              ProductoActualizado
+          })
+      }
 
-    findAllProductsOfStore = async (req, res) => {
-        const storeId = req.params.id;
-        if (storeId) {
-            try {
-                const allProductOfStore = await this.model.findAll({
-                    where: {
-                        StoreId: storeId,
-                    },
-                });
-                res.send(allProductOfStore);
-            } catch (error) {
-                res.send(error);
-            }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
-        }
-    };
-
-    updateDataProduct = async (req,res)=>{
-
-        const id1 = req.params.id;
-        const {id,StoreId,...product} = req.body;
-
-        if(product.cloudImage){
-
-            // Corregir para hacerlo con muchas imagenes
-
-            const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
-            let public_id = uploadedResponse.public_id;
-            product.cloudImage = public_id;
-        }
-
-        const ProductoActualizado = await this.model.update({...product},{where:{
-            id:id1    
-        }})
-        res.json({
-            msg:"Updated product ok",
-            ProductoActualizado
-        })
-    }
+};
 
 
+const ProductController = new ProductModel(Product);
 
-
-    };
-
-   
-const ProductController = new ProductModel(Product)
-
-module.exports = ProductController
+module.exports = ProductController;

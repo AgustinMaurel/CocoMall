@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-function HomeCards({storeName, description, cloudImage, }) {
+function HomeCards({storeName, description, cloudImage}) {
     return (
-        <article className='h-22'>
-        <Link to="/">
-            <img className='object-cover h-40 w-full' src='https://picsum.photos/600/400?image=1083' alt='banner' />
+        <article className='h-full shadow-lg m-4 rounded-md'>
+            <img className='rounded-md h-40 w-full' src='https://picsum.photos/600/400?image=1083' alt='banner' />
 
             <div className='flex justify-center px-5 -mt-6'>
                 <img
@@ -21,7 +19,7 @@ function HomeCards({storeName, description, cloudImage, }) {
                 />
             </div>
             <div>
-                <div className='text text-md'>
+                <div className='text text-md text-center'>
                     <h3
                         className='text-primary font-bold
                                     md:text-lg
@@ -32,13 +30,12 @@ function HomeCards({storeName, description, cloudImage, }) {
                         {storeName}
                     </h3>
 
-                    <p className='text-sm'>
+                    <p className='text-sm p-6'>
                         {description}
                     </p>
                 </div>
             </div>
-        </Link>
-        </article>
+            </article>
     );
 }
 

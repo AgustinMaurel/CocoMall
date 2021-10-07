@@ -56,7 +56,9 @@ class StoreModel extends ModelController {
 
       // Our DataBase
 
-            let data = await Store.findAll();
+            let data = await Store.findAll({
+                include: [{model: Product}]
+            });
             res.send(data);
         } catch (e) {
             next(e);

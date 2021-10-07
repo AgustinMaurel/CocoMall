@@ -1,8 +1,8 @@
 import React from 'react';
 
-const InputFile = ({ register, errors, name, type, validate, onChange, watch }) => {
+const InputFile = ({ register, errors, name, type, validate, onChange, watch, isUploaded }) => {
     return (
-        <div className='mb-4 relative'>
+        <div className='relative my-2'>
             {/* <label className='block text-gray-700 text-sm font-bold mb-1'>{name}</label> */}
             <input
                 id='selectedFile'
@@ -16,22 +16,22 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch }) 
             />
             <input
                 type='button'
-                value='Select Image'
+                value={isUploaded ? 'Selection OK' :'Select Image'}
                 onClick={() => document.getElementById('selectedFile').click()}
                 className={
                     errors[name]
-                        ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
-                        : 'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
+                        ? 'border border-red-200 bg-white text-gray-400 text-left text-sm outline-none p-2 w-full rounded cursor-pointer'
+                        : 'border border-gray-200 bg-white text-gray-400 text-left text-sm outline-none p-2 w-full rounded cursor-pointer'
                 }
             />
             {errors[name]? (
-                <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
+                <p className='absolute text-red-500 -top-6 left-0'>
                     {errors[name].message}
                 </p>
-            ) : watch(name)?.length > 0 ? (
+            ) : isUploaded ? (
                 <div>
-                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                        <p className=' text-xs  min-w-max  font-semibold '>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
+                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
+                        <p className='min-w-max'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
                         <div>
                             <svg
                                 className='w-3 h-3 rounded-full bg-green-400'
@@ -51,7 +51,7 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch }) 
                     </div>
                 </div>
             ) : (
-                <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
+                <p className='absolute min-w-max -top-6 left-0'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
             )}
         </div>
     );

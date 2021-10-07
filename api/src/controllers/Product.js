@@ -4,10 +4,9 @@ const { Op } = require('sequelize');
 const ModelController = require('./index');
 
 class ProductModel extends ModelController {
-  constructor(model) {
-    super(model);
-  }
-  //Specific Functions for this model
+    constructor(model) {
+        super(model);
+    }
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
@@ -158,6 +157,8 @@ class ProductModel extends ModelController {
       }
 
 };
-const ProductController = new ProductModel(Product)
 
-module.exports = ProductController
+
+const ProductController = new ProductModel(Product);
+
+module.exports = ProductController;

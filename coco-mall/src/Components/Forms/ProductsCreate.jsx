@@ -8,7 +8,7 @@ import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
 import { postProduct } from '../../Redux/actions/post';
 
-const ProductsCreate = ({idStore}) => {
+const ProductsCreate = ({ idStore }) => {
     
     console.log(idStore)
     //--HOOKS--
@@ -34,37 +34,18 @@ const ProductsCreate = ({idStore}) => {
             setImage(reader.result);
             setIsUploaded(true);
         };
-    };
-
-
-
-    /*  {
-         "product": {
-             "ProductName": "REASM",
-             "Price": 2500,
-             "Stock": 5,
-             "Description": "Jeancito piola pa levanta minita",
-             "cloudImage": "",
-         },
-         "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
-         "typeId": 1
- 
- 
-             product: 'segq',
-             description: 'olkoklk',
-            price: '100',
-            stock: '10',
-             image: { '0': {} },
-             cloudImage: 'uip6ia95r1oepjujzcqe'
-     } */
-
-
-    //Obtener el id de la STORE que crea el producto
-    
+    };    
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
+        let product = {
+            productName: data.productName,
+            description: data.description,
+            price: Number(data.price),
+            stock: Number(data.stock),
+            sellBy: data.sellBy || 'Cuantity',
+        }
+        let productCreated = { product: product, storeId: idStore, idImage: [image], typeId: '1' };
         alert('Product Created!');
         console.log(productCreated);
         dispatch(postProduct(productCreated));

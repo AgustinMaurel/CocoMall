@@ -44,7 +44,6 @@ function ShopCreate({ setIsTrue }) {
 
     //POST DATA STORE & ID USER
     const handleRegister = (data) => {
-        console.log(placeSelected.place);
         let store = {
             storeName: data.storeName,
             description: data.description,
@@ -92,10 +91,10 @@ function ShopCreate({ setIsTrue }) {
                                 state: place.address_components[4]?.long_name,
                                 country: place.address_components[5]?.long_name,
                                 cp: place.address_components[6]?.long_name || 'C3100',
-                                coord: {
-                                    lat: place.geometry.location.lat(),
-                                    lng: place.geometry.location.lng(),
-                                },
+                                coord: [
+                                    place.geometry.location.lat(),
+                                    place.geometry.location.lng(),
+                                ],
                             });
                         }}
                         options={{

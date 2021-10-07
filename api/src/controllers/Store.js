@@ -21,28 +21,13 @@ class StoreModel extends ModelController {
                 );
                 let public_id = uploadedResponse.public_id;
 
-                //Our DataBase
+        //Our DataBase
 
                 const id = req.body.idUser
-                console.log(id)
-                const store = {
-                    storeName: req.body.store.storeName
-                        ? req.body.store.storeName
-                        : null,
-                    address: req.body.store.address
-                        ? req.body.store.address
-                        : null,
-                    description: req.body.store.description
-                        ? req.body.store.description
-                        : null,
-                    country: req.body.store.country
-                        ? req.body.store.country
-                        : null,
-                    cp: req.body.store.cp ? req.body.store.cp : null,
-                    state: req.body.store.state ? req.body.store.state : null,
-                    cloudImage: public_id ? public_id : 'No image id',
-                };
-                console.log(store)
+                const {store} = req.body
+                store.cloudImage = public_id ? public_id : null
+
+
                 //create the new Store
                 const newStore = await this.model.create(store);
                 const storeId = newStore.id;
@@ -65,15 +50,11 @@ class StoreModel extends ModelController {
         }
     };
 
-    getAllData = async (req, res, next) => {
-        try {
-            //Cloudinary
-            // const {resources} = await cloudinary.search.expression('folder:dev_setups')
-            // .sort_by('public_id', 'desc').execute()
-            // // .max_results(...)
-            // const {publicIds} = resources.map(file => file.public_id) // array con todas las public ids
+  getAllData = async (req, res, next) => {
+    try {
+      //Cloudinary
 
-            // Our DataBase
+      // Our DataBase
 
             let data = await Store.findAll({
                 include: [{model: Product}]
@@ -139,28 +120,67 @@ class StoreModel extends ModelController {
         }
     };
 
+    deleteDeep=async(req,res)=>{
+        let id = req.params.id;
+        if(id){
 
-    
-    findStoresOfUser = async (req, res) => {
-        const id = req.body.id ? req.body.id : null ;
-        // return res.send(id)
-        if (id) {
-            try {
-                let userStores = await this.model.findAll({
-                    where: {
-                        UserId: id,
-                    },
-                });
-                res.send(userStores);
-            } catch (error) {
-                res.send(error);
+            // Borrar fotos de productos y de la tienda de Cloudinary
+            // to do
+
+            try{
+                const[ProductDelte,StoreDelte]=await Promise.all([
+                    Product.destroy({where:{StoreId:id}}),
+                    this.model.destroy({where:{id:id}}),
+                ])
+                res.json({ProductDelte,
+                        StoreDelte})
+
+            }catch(error){
+                res.status(400).json(error)
             }
-        } else {
-            res.status(400).send({ message: 'Must have an User Id' });
+        }else{
+            res.status(400).json({
+                msg:"faltan datos"
+            })
         }
-    };
+    }
 
+
+    // UPDATE FUNCIONA PERFECTO --  NO TOCAR MUCHO !
+    updateDataStore=async(req,res)=>{
+        const id1 = req.params.id;
+        const { store } = req.body;
+
+        if(store.cloudImage){
+            
+            // Borro la imagen en Cloudinary
+            let arr = []
+            const oldStore = await this.model.findByPk(id1)
+            arr.push(oldStore.cloudImage)
+            const deletedImage = await cloudinary.api.delete_resources(arr);
+            
+            // Subo la imagen nueva a Cloudinary
+            const uploadedResponse = await cloudinary.uploader.upload(store.cloudImage)
+            
+            // Guardo el token de la imagen, asi tambien se actualiza
+            let public_id = uploadedResponse.public_id;
+            store.cloudImage = public_id
+        }
+
+        await this.model.update({...store},{where:{
+            id:id1    
+        }})
+
+        const StoreActualizado = await this.model.findByPk(id1)
+
+
+        res.json({
+            msg:"Store updated",
+            StoreActualizado
+        })
+    }
 }
+//c
 
 const StoreController = new StoreModel(Store);
 

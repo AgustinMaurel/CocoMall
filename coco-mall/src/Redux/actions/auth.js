@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LOGIN, LOGOUT } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
+import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
 import Swal from 'sweetalert2';
 
@@ -36,8 +37,15 @@ export const startGoogleLogin = () => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
                 console.log(user)
+                let aux = {
+                    Name: user.displayName,
+                    id: user.uid,
+                    Mail: user.email
+                }
+                console.log(aux)
+                axios.post(CREATE_USER_URL, aux)
                 dispatch(login( user.uid, user.displayName))
-                axios.get(`http://localhost:3001/user/${user.uid}`)
+                
                 
             })
             .catch((err) =>
@@ -55,7 +63,7 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
-                
+                console.log(user)
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -79,7 +87,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 LastName: lastName,
                 Mail: email,
             };
-            axios.post('http://localhost:3001/user/create', userF);
+            axios.post(CREATE_USER_URL, userF);
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({

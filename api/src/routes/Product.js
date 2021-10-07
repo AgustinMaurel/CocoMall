@@ -6,7 +6,10 @@ const {
     bulkCreateProducts,
     findAllProductsOfStore,
     filterProductsByTypeAndName,
+    updateDataProduct,
+    deleteDataById
 } = require('../controllers/Product.js');
+const { route } = require('./Store.js');
 
 //all routes start with /product
 
@@ -21,5 +24,11 @@ router.get('/filter/:id', filterProductsByTypeAndName);
 router.post('/bulkCreate', bulkCreateProducts);
 
 router.post('/create', createProduct);
+
+//Delete Product
+router.delete('/delete/:id',deleteDataById) 
+
+//Update Product
+router.put('/update/:id',updateDataProduct) 
 
 module.exports = router;

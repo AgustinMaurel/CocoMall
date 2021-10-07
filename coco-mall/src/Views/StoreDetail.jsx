@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link, useLocation } from 'react-router-dom';
+import Slider from 'react-slick';
+
+import Arrow from '../Components/Slides/Arrow';
+import HeroCard from '../Components/Cards/HeroCard';
+import homeStores from '../Helpers/homeStores';
+import HomeCards from '../Components/Cards/HomeCards';
+
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
 import {
@@ -34,6 +41,29 @@ export default function StoreDetail() {
     const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
     const shoppingCart = useSelector((state) => state.stores.cart);
     const productDetail = useSelector((state) => state.stores.productDetail);
+
+    //SLIDER HERO configuraciones
+    const settingsHero = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: true,
+    };
+
+    const settingsCards = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        nextArrow: <Arrow />,
+        prevArrow: <Arrow />,
+    };
+    //by Chris
+
 
     useEffect(() => {
         dispatch(getStoreDetail(id));
@@ -73,7 +103,7 @@ export default function StoreDetail() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (filters.searchProduct) {
-            dispatch(filterProducts(filters));
+            dispatch(filterProducts(id, filters));
             setFilters(() => ({
                 searchProduct: '',
                 type: [],
@@ -81,22 +111,29 @@ export default function StoreDetail() {
                 max: '',
             }));
         } else {
-            dispatch(filterProducts(filters));
+            dispatch(filterProducts(id, filters));
         }
     };
 
     return (
-        <div className='grid grid-cols-12  w-screen  grid-rows-8   h-screen '>
-            <div className='  col-span-12 row-span-1 row-end-1  bg-gray-200 shadow  '>
+        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen'>
+            <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow  '>
                 <NavBar />
             </div>
-            <div className='  bg-red-200 col-span-12  border-b-2 mx-auto flex justifi-center relative w-3/4 border-gray-100 '>
-                Banner
+            <div className='col-span-12 content-center mx-auto w-full'>
+
+                <Slider {...settingsHero}>
+                    <HeroCard color={'bg-gray-500'} />
+                    <HeroCard color={'bg-green-500'} />
+                    <HeroCard color={'bg-blue-500'} />
+                    <HeroCard color={'bg-red-500'} />
+                </Slider>
+
             </div>
 
             {/* SIDEBAR */}
             <div
-                className=' col-span-2  row-span-14
+                className=' col-span-2  row-span-8
                 bg-gray-100 border-gray-200 border-r  p-5   '
             >
                 <div className='  '>
@@ -147,6 +184,25 @@ export default function StoreDetail() {
 
             {/* CARDS */}
             <div className='flex flex-col  col-span-8 row-span-14 pl-5 py-2 '>
+
+
+                <div className='w-3/4 m-auto mt-16'>
+                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
+                    <Slider {...settingsCards}>
+                        {homeStores()?.map((e, i) => (
+                            <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
+                                <HomeCards
+                                    storeName={e.storeName}
+                                    description={e.description}
+                                    cloudImage={e.logo}
+                                    key={i}
+                                />
+                            </Link>
+                        ))}
+                    </Slider>
+                </div>
+
+
                 <div className='cards   overflow-y-scroll '>
                     {storeProducts.length
                         ? storeProducts?.map((product) => (

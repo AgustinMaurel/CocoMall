@@ -19,6 +19,9 @@ const CheckoutForm = () => {
 
         })
 
+
+
+
         if (!error) {
             const { id } = paymentMethod
             const { data } = await axios.post("http://localhost:3001/checkout", {
@@ -28,6 +31,7 @@ const CheckoutForm = () => {
                 description: "remerita, jean, pistola, chaleco" // productos comprados
             })
             console.log(data)
+            
         }
     }
 

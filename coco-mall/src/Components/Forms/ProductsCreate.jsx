@@ -8,7 +8,9 @@ import { postProduct } from '../../Scripts/post';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
 
-const ProductsCreate = () => {
+const ProductsCreate = ({idStore}) => {
+    
+    console.log(idStore)
     //--HOOKS--
     const dispatch = useDispatch();
     const {
@@ -20,7 +22,7 @@ const ProductsCreate = () => {
 
 
     //STATES
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
 
     //LOAD IMAGE
@@ -59,12 +61,11 @@ const ProductsCreate = () => {
 
 
     //Obtener el id de la STORE que crea el producto
-    let idStore = "db5d56bd-1a43-439a-85d0-912e736c8725" ;
+    
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
-
         alert('Product Created!');
         console.log(productCreated)
         dispatch(postProduct(productCreated));

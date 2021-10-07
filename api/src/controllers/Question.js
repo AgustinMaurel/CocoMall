@@ -21,7 +21,7 @@ class QuestionModel extends ModelController {
                 const product = await Product.findByPk(id);
                 await product.addReview(questionId);
                 //final question
-                const finalQuestion = this.model.findByPk(questionId)
+                const finalQuestion = await this.model.findByPk(questionId)
                 res.send(finalQuestion);
             } catch (e) {
                 res.send(e);

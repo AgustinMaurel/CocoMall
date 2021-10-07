@@ -10,6 +10,7 @@ import validate from '../../Scripts/validate';
 
 const ProductsCreate = ({idStore}) => {
     
+    console.log(idStore)
     //--HOOKS--
     const dispatch = useDispatch();
     const {
@@ -21,7 +22,7 @@ const ProductsCreate = ({idStore}) => {
 
 
     //STATES
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
 
     //LOAD IMAGE

@@ -1,5 +1,6 @@
 import React from 'react'
 import { GrSettingsOption } from 'react-icons/gr'
+import Swal from 'sweetalert2'
 
 export default function ModelTable( {info , title, filters, column_title} ) {
     console.log(info)
@@ -27,7 +28,9 @@ export default function ModelTable( {info , title, filters, column_title} ) {
                     {info?.map((el) => (
                         <tr key={el}>
                             <td className='border text-center justify-center items-center border-gray-400 py-2'><div className='flex justify-center'>
-                            <GrSettingsOption className="place-self-center"/>
+                            <button onClick={()=>Swal.fire({
+                                title:'what would you want to do'
+                            })}><GrSettingsOption/></button>
                                 </div></td>
                             <td className='border  border-gray-400 py-2'>{el.productName}</td>
                             <td className='border  border-gray-400 py-2'>{el.price}</td>

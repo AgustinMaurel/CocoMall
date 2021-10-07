@@ -79,10 +79,9 @@ export default function StorePanel() {
                     <div className='text-center justify-center items-center'> 
                         {selectStore === "All" ? <span>Select a Store</span>
                         : 
-                         form ? <ProductsCreate idStore={idState.id} /> :  viewTable ? <ModelTable info={productStore} title={"Products"}
+                         form ? <ProductsCreate idStore={idState?.id} /> :  viewTable ? <ModelTable info={productStore} title={"Products"}
                             filters={["A-Z", "Z-A", "Price", "Type", "Stock", ]} column_title={["Action","Name", "Price", "Id", "Image", "Stock", "Type"]} />
                             :
-
                         viewOrders ? <ModelTable info={data} title={"Orders"}
                             filters={[ "All", "Shipped", "Rejected", "Pending", "Completed"]} column_title={["Action","State", "Payment", "Description",]} />
                             :false}

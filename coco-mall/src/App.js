@@ -12,6 +12,10 @@ import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
+import Cart from './Components/ShoppingCart/Cart';
+import ProductDetail from './Components/Product/ProductDetail'
+
+
 
 function App() {
     const dispatch = useDispatch();
@@ -46,6 +50,7 @@ function App() {
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
                 <Route path='/home/store/:id' exact component={StoreDetail} />
+                <Route path='/home/store/:id/products/:id' exact component={ProductDetail} />
             </Switch>
         </>
     );

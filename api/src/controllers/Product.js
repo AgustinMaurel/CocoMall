@@ -4,10 +4,9 @@ const { Op } = require('sequelize');
 const ModelController = require('./index');
 
 class ProductModel extends ModelController {
-  constructor(model) {
-    super(model);
-  }
-  //Specific Functions for this model
+    constructor(model) {
+        super(model);
+    }
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
@@ -77,7 +76,6 @@ class ProductModel extends ModelController {
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
         }
-      }
     };
 
     filterProductsByTypeAndName = async (req, res) => {
@@ -140,9 +138,6 @@ class ProductModel extends ModelController {
         const {id,StoreId,...product} = req.body;
 
         if(product.cloudImage){
-
-            // Corregir para hacerlo con muchas imagenes
-
             const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
             let public_id = uploadedResponse.public_id;
             product.cloudImage = public_id;
@@ -156,6 +151,10 @@ class ProductModel extends ModelController {
             ProductoActualizado
         })
     }
-const ProductController = new ProductModel(Product)
 
-module.exports = ProductController
+    
+}
+
+const ProductController = new ProductModel(Product);
+
+module.exports = ProductController;

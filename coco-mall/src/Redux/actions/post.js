@@ -9,7 +9,7 @@ export function postProduct(payload) {
             .post(`${PRODUCT_CREATE_URL}`, payload)
             .then((res) => res.data)
             .then((product) => {
-                return product;
+                console.log('Producto creado: ', product);
             })
             .catch((error) => console.log(error));
     };
@@ -22,7 +22,8 @@ export function postStore(payload) {
             .post(`${STORE_CREATE_URL}`, payload)
             .then((res) => res.data)
             .then((store) => {
-                dispatch({ type: POST_STORE, payload: store });
+                console.log(store)
+                return dispatch({ type: POST_STORE, payload: store });
             })
             .catch((error) => console.log(error));
     };

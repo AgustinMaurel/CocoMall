@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const router = Router();
-const { getAllData } = require('../controllers/Question.js');
+const { getAllData, createQuestion} = require('../controllers/Question.js');
 
 //all routes start with /question
 
 router.get('/', getAllData);
 
-router.get('/create', () => { });
+router.get('/create', createQuestion);
 
 module.exports = router;

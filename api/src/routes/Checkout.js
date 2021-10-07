@@ -2,7 +2,8 @@ const { Router } = require('express');
 const router = Router();
 const { stripe } = require("../models/index")
 
-router.post("/checkout", (req, res) => {
+//all this rputes strart with checkout
+router.post("/stripe", (req, res) => {
     try {
         const { amount, id, currency, description } = req.body
         const payment = await stripe.paymentIntents.create({

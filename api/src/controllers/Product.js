@@ -80,27 +80,31 @@ class ProductModel extends ModelController {
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.params.types || [];
-                const nameToFilter = req.params.name || '';
-                const min = req.params.min || 0;
-                const max = req.params.max || 99 ^ 9999;
+                const allTypes = req.body.types || [];
+                const nameToFilter = req.body.name || '';
+                const min = req.body.min || 0;
+                const max = req.body.max || 99 ^ 9999;
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
-                        ProductTypeId: {
-                            [Op.or]: allTypes,
-                        },
-                        productName: {
-                            [Op.iLike]: `%${nameToFilter}%`,
-                        },
-                        price: {
-                            [Op.and]: {
-                                [Op.gte]: min,
-                                [Op.lte]: max,
+                        [Op.and]: {
+                            ProductTypeId: {
+                                [Op.or]: allTypes,
                             },
-                        },
+                            productName: {
+                                [Op.iLike]: `%${nameToFilter}%`,
+                            },
+                            price: {
+                                [Op.and]: {
+                                    [Op.gte]: min,
+                                    [Op.lte]: max,
+                                },
+                            },
+                        }
                     },
                 });
+                console.log(allTypes)
+                console.log(typeof allTypes)
                 res.send(filteredProducts);
             } catch (error) {
                 res.send(error);

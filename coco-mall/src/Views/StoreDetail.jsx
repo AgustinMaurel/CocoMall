@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import NavBar from '../Components/NavBar/NavBar';
@@ -20,11 +21,29 @@ export default function StoreDetail() {
     const storeProducts = useSelector((state) => state.stores.storeProducts);
     const shoppingCart = useSelector((state) => state.stores.cart);
 
+    let total = Object.values(shoppingCart).reduce(
+        (previous, key) => previous + key.price * key.quantity,
+        0,
+    );
+   
+   
+    
+
     useEffect(() => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => dispatch(getProductsStore());
-    }, [dispatch,id]);
+    }, [dispatch, id]);
+
+    const handleCheckout = () => {
+        // console.log('compre');
+        let data = {
+            title: shoppingCart.map(el => el.productName).join(", "),
+            total: total,
+        };
+       
+        // axios.post('http://localhost:3001/checkout/mercadopago', data);
+    };
 
     return (
         <div className='grid grid-cols-12  w-screen  grid-rows-8   h-screen '>
@@ -61,7 +80,7 @@ export default function StoreDetail() {
                         : false}
                 </div>
             </div>
-            <div className='bg-green-300 flex row-span-14  col-span-2  relative   border-r border-gray-200   '>
+            <div className='bg-green-300  row-span-14  col-span-2  relative h-full  border-r border-gray-200   '>
                 <div className='relative '>
                     <h3>Carrito</h3>
                     {shoppingCart.length ? (
@@ -74,18 +93,35 @@ export default function StoreDetail() {
                     ) : (
                         false
                     )}
-                    <div className='relative bg-red-600'>
-                    {shoppingCart?.map((item, index) => (
-                        <CartItem
-                            key={index}
-                            data={item}
-                            deleteFromCart={() => dispatch(deleteFromCart(item.id))}
-                            deleteAllFromCart={() => dispatch(deleteAllFromCart(item.id))}
-                        />
-                    ))}
+                    <div className='relative flex flex-col justify-between bg-yellow-400 h-full'>
+                        {shoppingCart?.map((item, index) => (
+                            <CartItem
+                                key={index}
+                                data={item}
+                                deleteFromCart={() => dispatch(deleteFromCart(item.id))}
+                                deleteAllFromCart={() => dispatch(deleteAllFromCart(item.id))}
+                            />
+                        ))}
+                        <div>
+                            <h1>Total : {total}</h1>
+                        </div>
+                        <button onClick={handleCheckout} className='border'>
+                            Comprar
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+//post a
+//http://localhost:3001/checkout/mercadopago
+/*
+    let objetct = {
+        title: "coco remera",
+        unit_price: 100,
+        quantity: 1,
+    }
+    */
+//back devuelve un json con la url a redireccionar
+//

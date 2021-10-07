@@ -5,8 +5,7 @@ import { storeReducer } from './shopReducer';
 
 const reducers = combineReducers({
     auth: authReducer,
-    stores: storeReducer,
-    
+    stores: storeReducer, 
 });
 
 export default reducers;

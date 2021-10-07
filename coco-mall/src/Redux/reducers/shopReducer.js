@@ -1,10 +1,20 @@
-import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT , SHOPPING_CART_TYPES } from '../actions/actionTypes';
+import {
+    GET_STORES,
+    SEARCH_BY_NAME,
+    SEARCH_BY_ID,
+    GET_PRODUCT,
+    SHOPPING_CART_TYPES,
+    GET_PRODUCT_DETAIL,
+    FILTER_PRODUCTS
+} from '../actions/actionTypes';
 
 const initialState = {
     allStores: [],
     storesByName: {},
     storeDetail: {},
     storeProducts: [],
+    storeProductsFilter: [],
+    productDetail: {},
     cart: [],
 };
 
@@ -34,8 +44,24 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 storeProducts: payload,
+                storeProductsFilter: payload
             };
-            
+
+        case GET_PRODUCT_DETAIL:
+            return {
+                ...state,
+                productDetail: state.storeProducts.find((product) => {
+                    return product.id === payload;
+                }),
+            };
+
+        case FILTER_PRODUCTS: 
+        console.log(payload)
+        return { 
+            ...state,
+            storeProductsFilter: payload
+        }
+
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
             let newItem = state.storeProducts?.find((item) => item.id === payload);
             let repeatedItem = state.cart?.find((item) => item.id === newItem.id);
@@ -72,7 +98,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case SHOPPING_CART_TYPES.CLEAR_CART: {
             return {
                 ...state,
-                cart: []
+                cart: [],
             };
         }
 

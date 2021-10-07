@@ -1,4 +1,4 @@
-import { GET_STORES , SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT } from "./actionTypes";
+import { GET_STORES , SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT, GET_PRODUCT_DETAIL, FILTER_PRODUCTS } from "./actionTypes";
 import { STORES_URL , SEARCH_URL, BASE_URL } from "../../Scripts/constants";
 import axios from 'axios'
 
@@ -29,3 +29,15 @@ export const getProductsStore = (id) => {
     }
 }
 
+export const getProductDetail = (id) => {
+    return async (dispatch) => {
+        dispatch({type: GET_PRODUCT_DETAIL, payload: id})
+    }
+}
+
+export const filterProducts = (payload) => {
+    return async (dispatch) => {
+        const resposne = await axios.get(`${BASE_URL}/product/filter`)
+        dispatch({type: FILTER_PRODUCTS, payload})
+    }
+}

@@ -3,7 +3,7 @@ const router = Router();
 const { stripe } = require("../models/index")
 
 //all this rputes strart with checkout
-router.post("/stripe", (req, res) => {
+router.post("/stripe", async (req, res) => {
     try {
         const { amount, id, currency, description } = req.body
         const payment = await stripe.paymentIntents.create({

@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
                 defaultValue: 'Cuantity',
             },
             discount : {
-                tpye: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 defaultValue: 0
             },

@@ -43,20 +43,16 @@ export const getProductDetail = (id) => {
 };
 
 export const filterProducts = (id, payload) => {
-    console.log(id);
-    console.log(payload);
     const obj = {
         types: payload.type,
         name: payload.searchProduct,
         min: payload.min,
         max: payload.max,
     };
-
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/product/filter/${id}`, {
-            params : obj
-        });
-        console.log(response.data);
+        const response = await axios.post(`${BASE_URL}/product/filter/${id}`, 
+         obj
+        );
         dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };

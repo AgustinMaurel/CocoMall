@@ -56,7 +56,6 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             };
 
         case FILTER_PRODUCTS: 
-        console.log(payload)
         return { 
             ...state,
             storeProductsFilter: payload

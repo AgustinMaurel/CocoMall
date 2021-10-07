@@ -65,7 +65,6 @@ export default function StoreDetail() {
     };
     //by Chris
 
-
     useEffect(() => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
@@ -95,7 +94,7 @@ export default function StoreDetail() {
         setFilters((prevData) => {
             const state = {
                 ...prevData,
-                [e.target.name]: [parseInt(e.target.value)]
+                [e.target.name]: [parseInt(e.target.value)],
             };
             return state;
         });
@@ -183,9 +182,7 @@ export default function StoreDetail() {
 
             {/* CARDS */}
             <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>
-
-
-            <div className='w-3/4 m-auto mt-16'>
+                <div className='w-3/4 m-auto mt-16'>
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
 
                     <Slider {...settingsCards}>
@@ -201,11 +198,9 @@ export default function StoreDetail() {
                         ))}
                     </Slider>
                 </div>
-
-
                 <div className='cards   overflow-y-scroll '>
-                    {dataProducts().length
-                        ? dataProducts()?.map((product) => (
+                    {storeProducts.length
+                        ? storeProducts?.map((product) => (
                               //   <Link
                               //       to={`${location.pathname}/products/${product.id}`}
                               //       onClick={() => dispatch(getProductDetail(product.id))}
@@ -220,23 +215,30 @@ export default function StoreDetail() {
                           ))
                         : false}
 
-                    <ReactModal
-                        style={{
-                            overlay: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                            },
-                        }}
-                        isOpen={modalIsOpen}
-                        onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
-                    >
-                        {productDetail ? <ProductDetail product={productDetail} /> : false}
-                    </ReactModal>
+                    {productDetail ? (
+                        <ReactModal
+                            style={{
+                                overlay: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                                },
+                            }}
+                            isOpen={modalIsOpen}
+                            onRequestClose={() => setModalIsOpen(false)}
+                            className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
+                        >
+                            <ProductDetail
+                                product={productDetail}
+                                addToCart={() => addToCart(productDetail.id)}
+                            />
+                        </ReactModal>
+                    ) : (
+                        false
+                    )}
                 </div>
             </div>
 
             {/* CART */}
-            <div className='hidden bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
+            <div className=' bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
                 <div className=' '>
                     <h3>Carrito</h3>
                     {shoppingCart.length ? (

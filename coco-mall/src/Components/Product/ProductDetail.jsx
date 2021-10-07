@@ -15,6 +15,7 @@ function ProductDetail(props) {
             <p>{product.description}</p>
             <span>{product.price}</span>
             <span>{product.stock}</span>
+            <button onClick={props.addToCart}>Add Cart</button>
         </div>
     );
 }

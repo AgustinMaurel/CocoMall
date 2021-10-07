@@ -33,7 +33,9 @@ class ModelController {
   };
 
   deleteDataById = async (req, res) => {
+    console.log(req.params.id)
     if (req.params.id) {
+      
       try {
         let id = req.params.id;
         let deletedData = await this.model.destroy({ where: { id: id } });

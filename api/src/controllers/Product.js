@@ -78,9 +78,9 @@ class ProductModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
       }
-    };
 
-    filterProductsByTypeAndName = async (req, res) => {
+
+      filterProductsByTypeAndName = async (req, res) => {
         //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {
@@ -156,6 +156,13 @@ class ProductModel extends ModelController {
             ProductoActualizado
         })
     }
+
+
+
+
+    };
+
+   
 const ProductController = new ProductModel(Product)
 
 module.exports = ProductController

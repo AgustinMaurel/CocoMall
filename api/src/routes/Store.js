@@ -1,3 +1,5 @@
+
+  
 const { Router } = require('express');
 const router = Router();
 const {
@@ -14,8 +16,6 @@ const {
 router.get('/', getAllData);
 
 router.get('/filter', filterStoresByProductTypes);
-
-router.get('/user', findStoresOfUser)
 
 //POST's
 router.post('/create', createStore);

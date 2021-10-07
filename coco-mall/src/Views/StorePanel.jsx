@@ -1,5 +1,3 @@
-
-import NavBar from '../Components/NavBar'
 import { useEffect, useState } from 'react';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { useSelector } from 'react-redux';
@@ -7,6 +5,7 @@ import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
 import { data } from '../Scripts/jsonPrueba';
+import NavBar from '../Components/NavBar/NavBar';
 
 
 export default function StorePanel() {

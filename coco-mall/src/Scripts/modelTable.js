@@ -1,9 +1,11 @@
 import React from 'react'
-import { GrSettingsOption } from 'react-icons/gr'
+import { GrSettingsOption, GrAdd } from 'react-icons/gr'
 import { modalOptions } from './swalFunction'
+import { useState } from 'react'
+import ProductsCreate from '../Components/Forms/ProductsCreate'
 
-export default function ModelTable({ info, title, filters, column_title, types }) {
-
+export default function ModelTable({ info, title, filters, column_title, types, idStore }) {
+    const [render, setRender ]= useState(false)
 
     return (
 
@@ -14,8 +16,9 @@ export default function ModelTable({ info, title, filters, column_title, types }
                 {filters.map((el) => (
                     <li key={el} className='border bg-secondary-light border-gray-200 rounded-md px-5'>{el}</li>
                 ))}
+                <li onClick={()=> !render ? setRender(true): setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd/></li>
             </ul>
-            <table className='items-center border-separate text-center justify-center w-full'>
+            { render ? <ProductsCreate idStore={idStore}/> : <table className='items-center border-separate text-center justify-center w-full'>
 
 
                 <thead>
@@ -43,7 +46,7 @@ export default function ModelTable({ info, title, filters, column_title, types }
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table>}
         </div>
     )
 

@@ -1,0 +1,37 @@
+const { Question, Product } = require('../models/index');
+const ModelController = require('./index');
+
+class QuestionModel extends ModelController {
+    constructor(model) {
+        super(model);
+    }
+    //Specific Functions for this model
+    createQuestion = async (req, res) => {
+        if (req.body.id) {
+            try {
+                //id of Product
+                const id = req.body.id
+                const question = {
+                    question: req.body.question,
+                };
+                //Create the review
+                const newQuestion = await this.model.create(question);
+                const questionId = newQuestion.id;
+                //Search the order and attach the Review
+                const product = await Product.findByPk(id);
+                await product.addReview(questionId);
+                //final question
+                const finalQuestion = this.model.findByPk(questionId)
+                res.send(finalQuestion);
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+}
+
+const QuestionController = new QuestionModel(Question);
+
+module.exports = QuestionController;

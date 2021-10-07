@@ -12,7 +12,6 @@ const {
 //Stripe
 const stripe = new Stripe(SECRET_KEY)
 
-
 //Factory models
 
 const UserFactory = require('./User.js');
@@ -22,6 +21,7 @@ const ProductFactory = require('./Product.js');
 const OrderFactory = require('./Order.js');
 const ReviewFactory = require('./Review.js');
 const ProductTypeFactory = require('./ProductType.js');
+const QuestionFactory = require('./Question.js')
 
 //Sequalize
 
@@ -42,6 +42,7 @@ const Product = ProductFactory(sequelize);
 const Order = OrderFactory(sequelize);
 const Review = ReviewFactory(sequelize);
 const ProductType = ProductTypeFactory(sequelize);
+const Question = QuestionFactory(sequelize)
 
 //Conection between tables
 
@@ -88,6 +89,11 @@ Product.belongsTo(ProductType);
 Product.belongsToMany(Order, { through: 'ordersProduct' });
 Order.belongsToMany(Product, { through: 'ordersProduct' });
 
+// //---------------------------------
+
+Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
+Question.belongsTo(Product);
+
 module.exports = {
     db: sequelize,
     User,
@@ -97,5 +103,6 @@ module.exports = {
     Order,
     Review,
     ProductType,
+    Question,
     stripe
 };

@@ -79,10 +79,10 @@ class ProductModel extends ModelController {
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.body.types || [];
-                const nameToFilter = req.body.name || '';
-                const min = req.body.min || 0;
-                const max = req.body.max || 99 ^ 9999;
+                const allTypes = req.params.types || [];
+                const nameToFilter = req.params.name || '';
+                const min = req.params.min || 0;
+                const max = req.params.max || 99 ^ 9999;
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,

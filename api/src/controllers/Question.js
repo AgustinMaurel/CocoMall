@@ -30,6 +30,21 @@ class QuestionModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+    UpdateQuestion= async (req,res)=>{
+         if(req.body.id){
+            try{
+                const finalQuestion=this.model.update({answer:req.body.answer},{where:{
+                    id:req.body.id
+                }})
+            }catch(e){
+                res.send(`error producido:${e}`)
+            }
+         }else{
+             res.send("error falta de argumentos")
+         }
+    }
+
+
 }
 
 const QuestionController = new QuestionModel(Question);

@@ -6,7 +6,8 @@ import Slider from 'react-slick';
 import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 import homeStores from '../Helpers/homeStores';
-import HomeCards from '../Components/Cards/HomeCards';
+import dataProducts from '../Helpers/dataProducts';
+import ProductCard from '../Components/Cards/ProductCard';
 
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
@@ -54,7 +55,7 @@ export default function StoreDetail() {
     };
 
     const settingsCards = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 4,
@@ -116,25 +117,23 @@ export default function StoreDetail() {
     };
 
     return (
-        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen'>
+        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow  '>
                 <NavBar />
             </div>
             <div className='col-span-12 content-center mx-auto w-full'>
-
                 <Slider {...settingsHero}>
                     <HeroCard color={'bg-gray-500'} />
                     <HeroCard color={'bg-green-500'} />
                     <HeroCard color={'bg-blue-500'} />
                     <HeroCard color={'bg-red-500'} />
                 </Slider>
-
             </div>
 
             {/* SIDEBAR */}
             <div
-                className=' col-span-2  row-span-8
-                bg-gray-100 border-gray-200 border-r  p-5   '
+                className='col-span-2  row-span-8
+                bg-gray-100 border-gray-200 border-r'
             >
                 <div className='  '>
                     <label>Search</label>
@@ -183,16 +182,17 @@ export default function StoreDetail() {
             </div>
 
             {/* CARDS */}
-            <div className='flex flex-col  col-span-8 row-span-14 pl-5 py-2 '>
+            <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>
 
 
-                <div className='w-3/4 m-auto mt-16'>
+            <div className='w-3/4 m-auto mt-16'>
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
+
                     <Slider {...settingsCards}>
                         {homeStores()?.map((e, i) => (
                             <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
-                                <HomeCards
-                                    storeName={e.storeName}
+                                <ProductCard
+                                    productName={e.storeName}
                                     description={e.description}
                                     cloudImage={e.logo}
                                     key={i}
@@ -204,8 +204,8 @@ export default function StoreDetail() {
 
 
                 <div className='cards   overflow-y-scroll '>
-                    {storeProducts.length
-                        ? storeProducts?.map((product) => (
+                    {dataProducts().length
+                        ? dataProducts()?.map((product) => (
                               //   <Link
                               //       to={`${location.pathname}/products/${product.id}`}
                               //       onClick={() => dispatch(getProductDetail(product.id))}
@@ -236,7 +236,7 @@ export default function StoreDetail() {
             </div>
 
             {/* CART */}
-            <div className='bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
+            <div className='hidden bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
                 <div className=' '>
                     <h3>Carrito</h3>
                     {shoppingCart.length ? (

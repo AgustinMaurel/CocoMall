@@ -75,7 +75,6 @@ class ProductModel extends ModelController {
 
     filterProductsByTypeAndName = async (req, res) => {
         //Id of the store from which i need products
-        console.log(req.params)
         const storeId = req.params.id;
         if (storeId) {
             try {

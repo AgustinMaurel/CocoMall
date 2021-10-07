@@ -6,7 +6,6 @@ import Slider from 'react-slick';
 
 import HomeCards from '../Components/Cards/HomeCards';
 import NavBar from '../Components/NavBar/NavBar';
-import cocoIcon from '../Assets/icons/coco_png.png';
 import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 import homeStores from '../Helpers/homeStores';

@@ -5,7 +5,7 @@ const {
     createProduct,
     bulkCreateProducts,
     findAllProductsOfStore,
-    filterProductsByTypeAndName,
+    filterProductsByStore,
 } = require('../controllers/Product.js');
 
 //all routes start with /product
@@ -15,7 +15,7 @@ router.get('/', getAllData);
 
 router.get('/:id', findAllProductsOfStore);
 
-router.post('/filter/:id', filterProductsByTypeAndName);//este es pra obtener datos filtrados en realidad no para crear
+router.post('/filter/:id', filterProductsByStore);//este es pra obtener datos filtrados en realidad no para crear
 
 //POST's
 router.post('/bulkCreate', bulkCreateProducts);

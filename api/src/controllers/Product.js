@@ -73,7 +73,7 @@ class ProductModel extends ModelController {
         }
     };
 
-    filterProductsByTypeAndName = async (req, res) => {
+    filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {
@@ -82,7 +82,8 @@ class ProductModel extends ModelController {
                 const allTypes = req.body.types || [];
                 const nameToFilter = req.body.name || '';
                 const min = req.body.min || 0;
-                const max = req.body.max || 99 ^ 9999;
+                const max = req.body.max || 9999 ^ 9999;
+                const discount = req.body.discount || 0
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
@@ -99,6 +100,9 @@ class ProductModel extends ModelController {
                                     [Op.lte]: max,
                                 },
                             },
+                            discount: {
+                                [Op.gte]: discount
+                            }
                         }
                     },
                 });

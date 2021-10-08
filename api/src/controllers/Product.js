@@ -156,6 +156,27 @@ class ProductModel extends ModelController {
           })
       }
 
+      deleteProduct = async (req,res) => {
+            const { id } = req.params
+            if(id){
+                try{
+                    const product = await this.model.findByPk(id)
+                    const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
+                    const deleted = await this.model.destroy({where: {id: id}})
+                    if(deleted === 1){  
+                        res.json({message: "Product successfully deleted"})
+                    }else{
+                        res.json({message: "Error"})
+                    }
+
+                }catch(e){
+                    res.send(e)
+                }
+            }else{
+                res.send({message: "Must include a product id"})
+            }
+      }
+
 };
 
 

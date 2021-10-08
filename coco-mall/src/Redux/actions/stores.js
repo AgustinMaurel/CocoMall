@@ -50,7 +50,9 @@ export const filterProducts = (id, payload) => {
         name: payload.searchProduct,
         min: payload.min,
         max: payload.max,
+        discount: payload.discount
     };
+    console.log(payload, obj)
     return async (dispatch) => {
         const response = await axios.post(`${BASE_URL}/product/filter/${id}`,obj );
         console.log(response);

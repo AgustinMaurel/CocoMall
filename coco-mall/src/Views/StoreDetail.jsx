@@ -17,7 +17,7 @@ import {
     getProductDetail,
     filterProducts,
     getProductTypes,
-    ordersProduct
+    ordersProduct,
 } from '../Redux/actions/stores';
 import {
     addToCart,
@@ -50,6 +50,7 @@ export default function StoreDetail() {
         type: [],
         min: '',
         max: '',
+        discount: '',
     });
 
     //SLIDER HERO configuraciones
@@ -91,9 +92,12 @@ export default function StoreDetail() {
                 ...prevData,
                 [e.target.name]: e.target.value,
             };
-            if (filters.searchProduct) {
-                filters.searchProduct =
-                    filters.searchProduct[0].toUpperCase() + filters.searchProduct.substring(1);
+            if (state.searchProduct) {
+                state.searchProduct =
+                    state.searchProduct[0].toUpperCase() + state.searchProduct.substring(1);
+            }
+            if (state.discount) {
+                state.discount = 1;
             }
             return state;
         });
@@ -118,7 +122,7 @@ export default function StoreDetail() {
             dispatch(filterProducts(id, filters));
         } else {
             setCheckType(newChecked.filter((el) => el !== parseInt(e.target.value)));
-            filters.type = newChecked.filter((el) => el !== parseInt(e.target.value))
+            filters.type = newChecked.filter((el) => el !== parseInt(e.target.value));
             dispatch(filterProducts(id, filters));
         }
         const updatedCheckState = check.map((item, index) => {
@@ -129,7 +133,18 @@ export default function StoreDetail() {
 
     const handleOrder = (e) => {
         e.preventDefault();
-        dispatch(ordersProduct(e.target.value))
+        dispatch(ordersProduct(e.target.value));
+    };
+
+    const handleDiscount = () => {
+        if(!filters.discount){
+            ++filters.discount
+            dispatch(filterProducts(id, filters));
+        }else{
+            --filters.discount
+            dispatch(filterProducts(id, filters));
+        }
+        
     }
 
     return (
@@ -139,10 +154,30 @@ export default function StoreDetail() {
             </div>
             <div className='col-span-12 content-center mx-auto w-full'>
                 <Slider {...settingsHero}>
-                    <HeroCard color={'bg-gray-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
-                    <HeroCard color={'bg-green-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/>
-                    <HeroCard color={'bg-blue-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/>
-                    <HeroCard color={'bg-red-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/> 
+                    <HeroCard
+                        color={'bg-gray-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-green-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-blue-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-red-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
                 </Slider>
             </div>
 
@@ -184,6 +219,8 @@ export default function StoreDetail() {
                         ></input>
                         <button type='submit'>Search Price</button>
                     </form>
+                        <button onClick={handleDiscount}>Discount</button>
+                    
 
                     {productTypes.length
                         ? productTypes.map((type, index) => {
@@ -203,23 +240,28 @@ export default function StoreDetail() {
                           })
                         : false}
 
-                        {filters ? 
+                    {filters ? (
                         <div>
                             {/* Agregar cantidad de resultados al buscar productos */}
-                        {filters.searchProduct !== "" ? <li>{filters.searchProduct}</li> :false}
-                        {filters.type.length ? <li>{filters.type}</li> :false}
-                        {filters.min !== "" ? <li>{filters.min}</li> :false}
-                        {filters.max !== "" ? <li>{filters.max}</li> :false}
+                            {filters.searchProduct !== '' ? (
+                                <li>{filters.searchProduct}</li>
+                            ) : (
+                                false
+                            )}
+                            {filters.type.length ? <li>{filters.type}</li> : false}
+                            {filters.min !== '' ? <li>{filters.min}</li> : false}
+                            {filters.max !== '' ? <li>{filters.max}</li> : false}
                         </div>
-                        :false
-                    }
+                    ) : (
+                        false
+                    )}
                     <div>
                         Ordenamientos
                         <br />
                         <select onChange={handleOrder}>
-                            <option value="Mas relevantes">Mas relevantes</option>
-                            <option value="Barato">Barato</option>
-                            <option value="Caro">Caro</option>
+                            <option value='Mas relevantes'>Mas relevantes</option>
+                            <option value='Barato'>Barato</option>
+                            <option value='Caro'>Caro</option>
                         </select>
                     </div>
                 </div>

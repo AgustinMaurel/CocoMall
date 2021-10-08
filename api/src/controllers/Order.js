@@ -6,21 +6,18 @@ class OrderModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
-    createOrder = async (req, res, next) => {
-        const userId = req.body.userId;
-        const storeId = req.body.storeId;
-        const direction = req.body.address;
+    createOrder = async (req, res) => {
+        const { userId, storeId, address, cords, amount, orderState} = req.body
 
-        if (userId && storeId && addressId) {
+        if (userId && storeId && address && cords) {
             try {
                 const order = {
-                    amount: req.body.amount,
-                    orderState: req.body.orderState,
+                    amount,
+                    orderState
                 };
 
                 // create Order
                 const newOrder = await this.model.create(order);
-
                 const orderId = newOrder.id;
                 // add User to order
                 const user = await User.findByPk(userId);
@@ -29,11 +26,13 @@ class OrderModel extends ModelController {
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const address = await Address.findOrCreate({
-                    where: { directions: direction }
+                const shipmentAdress = await Address.findOrCreate({
+                    where: {
+                        address,
+                        cords
+                    }
                 })
-                await address.addOrder(orderId);
-
+                await shipmentAdress.addOrder(orderId);
                 res.send(newOrder);
             } catch (err) {
                 res.send(err);

@@ -6,11 +6,13 @@ const router = Router();
 const {
  addToCart,
  deleteFromCart,
- clearCart
+ clearCart,
+ getProducto
 } = require('../controllers/Cart.js');
 
 //se importa la ruta y se la agrega
 //modelo
+router.get('/getProduct',getProducto)
 router.post('/addToCart',addToCart);
 router.post('/deleteFromCart',deleteFromCart)
 router.post('/clearCart',clearCart)

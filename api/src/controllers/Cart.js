@@ -6,6 +6,17 @@ class OrderModel extends ModelController {
     constructor(model) {
         super(model);
     }
+    getProducto=async(req,res)=>{
+        let user=req.body.userID;
+        let carrito=await this.model.findOne({where:{UserId:user}})
+        let listado=await Item.findAll({where:{CartId:carrito.id},
+            include:[{model:Product}]
+        })
+        res.json({
+            listado
+        })
+        
+    }
     //Specific Functions for this model
     addToCart=async (req,res)=>{
         let idUser=req.body.idUser

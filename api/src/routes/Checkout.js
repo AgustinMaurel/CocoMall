@@ -51,6 +51,7 @@ router.post("/mercadopago", async (req, res) => {
         auto_return: "approved",
     };
     let answer = await mercadopago.preferences.create(preference);
+    
     const response = answer.body.id;
     const init_points = answer.body.init_point;
     console.log("RESPONSE: ", response, "INIT POINT: ", init_points);

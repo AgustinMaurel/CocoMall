@@ -10,19 +10,19 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 primaryKey: true,
             },
-            payment: {
-                type: DataTypes.STRING,
-                // PENDIENTE
+            amount: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+               
             },
             orderState: {
                 type: DataTypes.ENUM(
-                    'Pending',
-                    'Rejected',
-                    'Shipped',
-                    'Completed'
+                    'Failure',
+                    'Success',
+                    /* 'Pending' */
                 ),
                 allowNull: false,
-                defaultValue: 'Pending',
+                /* defaultValue: 'Pending', */
             },
         },
         {

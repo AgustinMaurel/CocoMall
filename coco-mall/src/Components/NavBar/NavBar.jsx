@@ -6,24 +6,22 @@ import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
 
-function NavBar({ data }) {
+function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
     const [displayMenu, setDisplayMenu] = useState(false);
     const breakpoint = 1024;
 
     const history = useHistory();
-    const cart = useSelector((state) => state.stores.cart);
     const user = useSelector((state) => state.auth);
+    const items = useSelector((state) => state.stores.itemsInCart)
     const dispatch = useDispatch();
 
-    let totalItems = Object.values(cart).reduce((previous, key) => previous + key.quantity, 0);
 
-    const handleCheckout = () => {
-        axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
-            history.push(`/cart/${order.data.response}`);
-        });
-        console.log('click')
-    };
+    // const handleCheckout = () => {
+    //     axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
+    //         history.push(`/cart/${order.data.response}`);
+    //     });
+    // };
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -76,9 +74,10 @@ function NavBar({ data }) {
                         <div className='flex gap-x-5 items-center'>
                             {user.uid ? (
                                 <>
-                                    <div onClick={handleCheckout} className='relative cursor-pointer'>
+                                    <div  className='relative cursor-pointer'>
+                                    <Link to='/cart'>
                                         <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
-                                            {totalItems}
+                                            {items}
                                         </div>
                                         <svg
                                             className='w-6 h-6'
@@ -94,6 +93,7 @@ function NavBar({ data }) {
                                                 d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                                             ></path>
                                         </svg>
+                                        </Link>
                                     </div>
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link

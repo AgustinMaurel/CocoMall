@@ -4,8 +4,10 @@ import { modalOptions } from './swalFunction'
 import { useState } from 'react'
 import ProductsCreate from '../Components/Forms/ProductsCreate'
 
+
 export default function ModelTable({ info, title, filters, column_title, types, idStore }) {
-    const [render, setRender ]= useState(false)
+    const [render, setRender] = useState(false)
+
 
     return (
 
@@ -16,9 +18,9 @@ export default function ModelTable({ info, title, filters, column_title, types, 
                 {filters.map((el) => (
                     <li key={el} className='border bg-secondary-light border-gray-200 rounded-md px-5'>{el}</li>
                 ))}
-                <li onClick={()=> !render ? setRender(true): setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd/></li>
+                <li onClick={() => !render ? setRender(true) : setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></li>
             </ul>
-            { render ? <ProductsCreate idStore={idStore}/> : <table className='items-center border-separate text-center justify-center w-full'>
+            {render ? <ProductsCreate idStore={idStore} /> : <table className='items-center border-separate text-center justify-center w-full'>
 
 
                 <thead>
@@ -33,7 +35,10 @@ export default function ModelTable({ info, title, filters, column_title, types, 
                         <tr key={el}>
                             <td className='  border text-center justify-center items-center border-gray-400 py-2'>
                                 <div className='flex justify-center'>
-                                    <GrSettingsOption className='self-center cursor-pointer' onClick={() => modalOptions(el.id)} />
+                                    <GrSettingsOption className='self-center cursor-pointer'
+                                        onClick={() => {
+                                            modalOptions(el.id)
+                                        }} />
                                 </div>
                             </td>
                             <td className='border  border-gray-400 py-2'>{el.productName}</td>

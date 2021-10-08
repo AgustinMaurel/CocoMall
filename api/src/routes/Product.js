@@ -6,6 +6,8 @@ const {
     bulkCreateProducts,
     findAllProductsOfStore,
     filterProductsByStore,
+    deleteDataById,
+    updateDataProduct,
 } = require('../controllers/Product.js');
 const { route } = require('./Store.js');
 

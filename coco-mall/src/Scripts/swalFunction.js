@@ -2,8 +2,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { DELETE_PRODUCT } from "./constants";
 
+
+
 export async function modalOptions(id, handleSubmit){
     
+  
     const inputOptions = new Promise((resolve) => {
         setTimeout(() => {
           resolve({
@@ -50,9 +53,10 @@ export async function modalOptions(id, handleSubmit){
                 }))
                 .catch((err)=> Swal.fire({
                     icon: 'error',
-                    title:'Error'
+                    title:'error'
                 }))
             
           }
       }
+      
 }

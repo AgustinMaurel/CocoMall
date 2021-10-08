@@ -5,7 +5,8 @@ import {
     GET_PRODUCT,
     SHOPPING_CART_TYPES,
     GET_PRODUCT_DETAIL,
-    FILTER_PRODUCTS
+    FILTER_PRODUCTS,
+    POST_STORE
 } from '../actions/actionTypes';
 
 const initialState = {

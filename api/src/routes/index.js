@@ -11,6 +11,7 @@ const ReviewRoutes = require('./Review.js');
 const StoreRoutes = require('./Store.js');
 const UserRoutes = require('./User.js');
 const CheckOutRoutes = require('./Checkout.js');
+const Cart =require("./Cart.js")
 
 //se importa la ruta y se la agrega
 //modelo
@@ -21,6 +22,7 @@ router.use('/productType', ProductTypeRoutes);
 router.use('/review', ReviewRoutes);
 router.use('/store', StoreRoutes);
 router.use('/user', UserRoutes);
-router.use('/checkout', CheckOutRoutes);
+router.use('/checkout',CheckOutRoutes);
+router.use('/car',Cart);
 
 module.exports = router;

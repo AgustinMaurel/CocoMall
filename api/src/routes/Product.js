@@ -18,7 +18,7 @@ router.get('/', getAllData);
 
 router.get('/:id', findAllProductsOfStore);
 
-router.get('/filter/:id', filterProductsByTypeAndName);
+router.post('/filter/:id', filterProductsByStore);//este es pra obtener datos filtrados en realidad no para crear
 
 //POST's
 router.post('/bulkCreate', bulkCreateProducts);

@@ -71,7 +71,7 @@ class OrderModel extends ModelController {
         try {
             let user = req.body.userID;
             let product = req.body.idProduct;
-            let quantity = req.body.quantity;
+            let cantidad = req.body.quantity;
 
             let carrito = await this.model.findOne({ where: { UserId: user } });
 
@@ -79,10 +79,10 @@ class OrderModel extends ModelController {
                 where: { CartId: carrito.id, ProductId: product },
             });
 
-            if (item.quantity === 1 || item.quantity === quantity) {
+            if (item.cantidad === 1 || item.cantidad === cantidad) {
                 await Item.destroy({ where: { id: item.id } });
             } else {
-                await item.update({ quantity: item.quantity - quantity });
+                await item.update({ cantidad: item.cantidad - cantidad });
             }
             res.json('borrado con exito');
         } catch (err) {

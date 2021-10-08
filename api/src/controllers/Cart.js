@@ -7,38 +7,48 @@ class OrderModel extends ModelController {
     }
     //Specific Functions for this model
     getProduct = async (req, res) => {
-        let user = req.body.userID;
-        let carrito = await this.model.findOne({ where: { UserId: user } });
+        try {
+            let idUser = req.body.idUser;
+            let carrito = await this.model.findOne({ where: { UserId: idUser } });
 
-        let listado = await Item.findAll({
-            where: { CartId: carrito.id },
-            include: [{ model: Product }],
-        });
-        res.json({
-            listado,
-        });
+            let listado = await Item.findAll({
+                where: { CartId: carrito.id },
+                include: [{ model: Product }],
+            });
+            res.json({
+                listado,
+            });
+
+            console.log(listado)
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     addToCart = async (req, res) => {
-        let idUser = req.body.idUser;
-        let product = req.body.idProduct;
-        let quantity = req.body.quantity;
+        try {
+            let idUser = req.body.idUser;
+            let product = req.body.idProduct;
+            let cantidad = req.body.quantity;
 
-        const [answer, create] = await this.model.findOrCreate({
-            where: { UserId: idUser },
-        });
+            const [answer, create] = await this.model.findOrCreate({
+                where: { UserId: idUser },
+            });
 
-        const [data, create1] = await Item.findOrCreate({
-            where: { ProductId: product, CartId: answer.id },
-            defaults: { quantity },
-        });
+            const [data, create1] = await Item.findOrCreate({
+                where: { ProductId: product, CartId: answer.id },
+                defaults: { cantidad },
+            });
 
-        if (create1) {
-            await data.setCart(answer.id);
-        } else {
-            await data.update({ quantity: data.quantity + quantity });
+            if (create1) {
+                await data.setCart(answer.id);
+            } else {
+                await data.update({ cantidad: data.cantidad + cantidad });
+            }
+            res.json(answer);
+        } catch (err) {
+            console.log(err);
         }
-        res.json(answer);
     };
 
     deleteFromCart = async (req, res) => {

@@ -12,7 +12,7 @@ const {
 
 //se importa la ruta y se la agrega
 //modelo
-router.get('/getProduct',getProduct)
+router.post('/getProduct',getProduct)
 router.post('/addToCart',addToCart);
 router.post('/deleteFromCart',deleteFromCart)
 router.post('/clearCart',clearCart)

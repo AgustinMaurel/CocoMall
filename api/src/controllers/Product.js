@@ -2,7 +2,7 @@ const { Product, Store, ProductType } = require('../models/index');
 const { cloudinary } = require('../utils/cloudinary/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
-
+// filterProductsByStore
 class ProductModel extends ModelController {
     constructor(model) {
         super(model);
@@ -198,6 +198,71 @@ class ProductModel extends ModelController {
               ProductoActualizado
           })
       }
+
+    deleteProduct = async (req,res) => {
+            const { id } = req.params
+            if(id){
+                try{
+                    const product = await this.model.findByPk(id)
+                    const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
+                    const deleted = await this.model.destroy({where: {id: id}})
+                    if(deleted === 1){  
+                        res.json({message: "Product successfully deleted"})
+                    }else{
+                        res.json({message: "Error"})
+                    }
+
+                }catch(e){
+                    res.send(e)
+                }
+            }else{
+                res.send({message: "Must include a product id"})
+            }
+      }
+
+      filterProductsByStore = async (req, res) => {
+        //Id of the store from which i need products
+        const storeId = req.params.id;
+        if (storeId) {
+            try {
+                //Array of the Types of products (on ID forms) that i need
+                const allTypes = req.body.types || [];
+                const nameToFilter = req.body.name || '';
+                const min = req.body.min || 0;
+                const max = req.body.max || 9999 ^ 9999;
+                const discount = req.body.discount || 0
+                const filteredProducts = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                        [Op.and]: {
+                            ProductTypeId: {
+                                [Op.or]: allTypes,
+                            },
+                            productName: {
+                                [Op.iLike]: `%${nameToFilter}%`,
+                            },
+                            price: {
+                                [Op.and]: {
+                                    [Op.gte]: min,
+                                    [Op.lte]: max,
+                                },
+                            },
+                            discount: {
+                                [Op.gte]: discount
+                            }
+                        }
+                    },
+                });
+                console.log(allTypes)
+                console.log(typeof allTypes)
+                res.send(filteredProducts);
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
 
 };
 

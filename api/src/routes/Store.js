@@ -25,4 +25,5 @@ router.post('/bulkCreate', postBulkCreate);
 router.delete('/delete/:id', deleteDeep);
 //update store
 router.put('/update/:id', updateDataStore);
+
 module.exports = router;

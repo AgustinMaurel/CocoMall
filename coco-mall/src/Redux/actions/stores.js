@@ -5,6 +5,7 @@ import {
     GET_PRODUCT,
     GET_PRODUCT_DETAIL,
     FILTER_PRODUCTS,
+    GET_PRODUCT_TYPES
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -43,6 +44,7 @@ export const getProductDetail = (id) => {
 };
 
 export const filterProducts = (id, payload) => {
+    console.log(payload)
     const obj = {
         types: payload.type,
         name: payload.searchProduct,
@@ -50,9 +52,15 @@ export const filterProducts = (id, payload) => {
         max: payload.max,
     };
     return async (dispatch) => {
-        const response = await axios.post(`${BASE_URL}/product/filter/${id}`, 
-         obj
-        );
-        dispatch({ type: FILTER_PRODUCTS, payload: response.data });
+        const response = await axios.post(`${BASE_URL}/product/filter/${id}`,obj );
+        console.log(response);
+        await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };
+
+export const getProductTypes = () => {
+    return async (dispatch) => {
+        const response = await axios.get(`${BASE_URL}/productType`)
+        await dispatch({type: GET_PRODUCT_TYPES, payload: response.data})
+    }
+}

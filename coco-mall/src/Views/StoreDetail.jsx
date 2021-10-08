@@ -16,6 +16,7 @@ import {
     getProductsStore,
     getProductDetail,
     filterProducts,
+    getProductTypes,
 } from '../Redux/actions/stores';
 import {
     addToCart,
@@ -27,9 +28,22 @@ import CartItem from '../Components/ShoppingCart/CartItem';
 import ReactModal from 'react-modal';
 import ProductDetail from '../Components/Product/ProductDetail';
 
+ReactModal.setAppElement('#root');
 export default function StoreDetail() {
+    const dispatch = useDispatch();
+    const storeDetail = useSelector((state) => state.stores.storeDetail);
+    const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
+    const shoppingCart = useSelector((state) => state.stores.cart);
+    const productDetail = useSelector((state) => state.stores.productDetail);
+    const productTypes = useSelector((state) => state.stores.productTypes);
+
+
     const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [checkType, setCheckType] = useState([]);
+
+    const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
+
     const [filters, setFilters] = useState({
         searchProduct: '',
         type: [],
@@ -37,11 +51,6 @@ export default function StoreDetail() {
         max: '',
     });
 
-    const dispatch = useDispatch();
-    const storeDetail = useSelector((state) => state.stores.storeDetail);
-    const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
-    const shoppingCart = useSelector((state) => state.stores.cart);
-    const productDetail = useSelector((state) => state.stores.productDetail);
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -68,6 +77,7 @@ export default function StoreDetail() {
     useEffect(() => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
+        dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
     }, [dispatch]);
 
@@ -90,26 +100,25 @@ export default function StoreDetail() {
         });
     };
 
-    const handleChangeTypes = (e) => {
-        setFilters((prevData) => {
-            const state = {
-                ...prevData,
-                [e.target.name]: [parseInt(e.target.value)],
-            };
-            return state;
+    const handleChecked = (e, position) => {
+        const newChecked = [...checkType];
+        if (e.target.checked) {
+            newChecked.push(parseInt(e.target.value));
+            setCheckType(newChecked);
+        } else {
+            setCheckType(checkType.filter((el) => el !== parseInt(e.target.value)));
+        }
+        const updatedCheckState = check.map((item, index) => {
+            return index === position ? !item : item;
         });
-    };
+        setCheck(updatedCheckState);
 
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (filters.searchProduct) {
+        filters.type = [...checkType];
+        if (filters.searchProduct || checkType.length || filters.min || filters.max) {
             dispatch(filterProducts(id, filters));
-            setFilters(() => ({
-                searchProduct: '',
-                type: [],
-                min: '',
-                max: '',
-            }));
         } else {
             dispatch(filterProducts(id, filters));
         }
@@ -146,16 +155,6 @@ export default function StoreDetail() {
                             onChange={handleChange}
                         />
 
-                        <label>type</label>
-                        <input
-                            type='number'
-                            placeholder='Type'
-                            name='type'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.type}
-                            onChange={handleChangeTypes}
-                        />
-
                         <label>min</label>
                         <input
                             type='number'
@@ -177,6 +176,23 @@ export default function StoreDetail() {
                         ></input>
                         <button type='submit'>FILTER</button>
                     </form>
+                    {productTypes.length
+                        ? productTypes.map((type, index) => {
+                              return (
+                                  <div>
+                                      <label>{type.Name}</label>
+                                      <input
+                                          type='checkbox'
+                                          name={type.id}
+                                          value={type.id}
+                                          onChange={(e) => handleChecked(e, index)}
+                                          checked={check[index]}
+                                      />
+                                      <span>{type.id}</span>
+                                  </div>
+                              );
+                          })
+                        : false}
                 </div>
             </div>
 
@@ -184,7 +200,7 @@ export default function StoreDetail() {
             <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>
                 <div className='w-3/4 m-auto mt-16'>
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
-
+                    {/* 
                     <Slider {...settingsCards}>
                         {homeStores()?.map((e, i) => (
                             <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
@@ -196,22 +212,17 @@ export default function StoreDetail() {
                                 />
                             </Link>
                         ))}
-                    </Slider>
+                    </Slider> */}
                 </div>
                 <div className='cards   overflow-y-scroll '>
                     {storeProducts.length
                         ? storeProducts?.map((product) => (
-                              //   <Link
-                              //       to={`${location.pathname}/products/${product.id}`}
-                              //       onClick={() => dispatch(getProductDetail(product.id))}
-                              //   >
                               <div onClick={() => modalFuncion(product.id)}>
                                   <Product
                                       product={product}
                                       addToCart={() => addToCart(product.id)}
                                   />
                               </div>
-                              //   </Link>
                           ))
                         : false}
 

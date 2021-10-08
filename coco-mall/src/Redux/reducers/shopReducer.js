@@ -5,7 +5,8 @@ import {
     GET_PRODUCT,
     SHOPPING_CART_TYPES,
     GET_PRODUCT_DETAIL,
-    FILTER_PRODUCTS
+    FILTER_PRODUCTS,
+    GET_PRODUCT_TYPES
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
     storeProducts: [],
     storeProductsFilter: [],
     productDetail: {},
+    productTypes: [],
     cart: [],
 };
 
@@ -50,7 +52,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: state.storeProducts.find((product) => {
+                productDetail: state.storeProductsFilter.find((product) => {
                     return product.id === payload;
                 }),
             };
@@ -59,6 +61,12 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         return { 
             ...state,
             storeProductsFilter: payload
+        }
+
+        case GET_PRODUCT_TYPES: 
+        return {
+            ...state,
+            productTypes: payload
         }
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {

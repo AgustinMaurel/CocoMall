@@ -16,9 +16,7 @@ class StoreModel extends ModelController {
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';
-                const uploadedResponse = await cloudinary.uploader.upload(
-                    fileString
-                );
+                const uploadedResponse = await cloudinary.uploader.upload(fileString, {folder: "Stores"});
                 let public_id = uploadedResponse.public_id;
 
         //Our DataBase

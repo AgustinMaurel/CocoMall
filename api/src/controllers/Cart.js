@@ -65,7 +65,7 @@ class OrderModel extends ModelController {
 
     deleteFromCart = async (req, res) => {
         try {
-            let user = req.body.userID;
+            let user = req.body.idUser;
             let product = req.body.idProduct;
             let cantidad = req.body.quantity;
 
@@ -88,7 +88,7 @@ class OrderModel extends ModelController {
 
     clearCart = async (req, res) => {
         try {
-            let user = req.body.userID;
+            let user = req.body.idUser;
             let carrito = await this.model.findOne({ where: { UserId: user } });
             await Item.destroy({ where: { CartId: carrito.id } });
             res.json('limpiado');

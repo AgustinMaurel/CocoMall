@@ -50,7 +50,7 @@ export default function StoreDetail() {
         type: [],
         min: '',
         max: '',
-        discount: '',
+        discount: 0,
     });
 
     //SLIDER HERO configuraciones
@@ -240,8 +240,11 @@ export default function StoreDetail() {
                           })
                         : false}
 
-                    {filters ? (
+                    {filters.searchProduct || filters.type.length || filters.min || filters.max || filters.discount ? (
                         <div>
+                            <span>Render Filters </span>
+                            <br/>
+                            <span>Resultados</span> <span>{storeProducts.length}</span>
                             {/* Agregar cantidad de resultados al buscar productos */}
                             {filters.searchProduct !== '' ? (
                                 <li>{filters.searchProduct}</li>
@@ -251,6 +254,7 @@ export default function StoreDetail() {
                             {filters.type.length ? <li>{filters.type}</li> : false}
                             {filters.min !== '' ? <li>{filters.min}</li> : false}
                             {filters.max !== '' ? <li>{filters.max}</li> : false}
+                            {filters.discount !== 0 ? <li>Discount</li> : false}
                         </div>
                     ) : (
                         false
@@ -266,6 +270,7 @@ export default function StoreDetail() {
                     </div>
                 </div>
             </div>
+
 
             {/* CARDS */}
             <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>

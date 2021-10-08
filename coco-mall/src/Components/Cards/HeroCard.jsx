@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactModal from 'react-modal';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const IMG = 'https://customblog.neocities.org/5.jpg';
 ReactModal.setAppElement('#root');
 const HeroCard = ({ color, info, infoModal, setInfoModal }) => {
+    const location = useLocation();
+    const [share, setShare] = useState({
+        value: 'http://localhost:3000' + location.pathname,
+        copied: false,
+    });
+    console.log(location);
     return (
         <div className={`h-28 ${color}`}>
             <div className='h-full'>
@@ -28,7 +37,21 @@ const HeroCard = ({ color, info, infoModal, setInfoModal }) => {
                     <li>STATE{info?.state}</li>
                 </ReactModal>
                 {/* Agregar compartir URL usando useLocation sacando el path y un Sweet alarm para avisar que se copio el link */}
-                <li>share</li>
+                <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
+                    <button
+                        onClick={() =>
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: 'Copied',
+                                showConfirmButton: false,
+                                timer: 1000,
+                            })
+                        }
+                    >
+                        Share
+                    </button>
+                </CopyToClipboard>
             </div>
         </div>
     );

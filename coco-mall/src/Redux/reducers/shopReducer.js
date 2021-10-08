@@ -36,8 +36,6 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             };
 
         case SEARCH_BY_ID:
-            console.log(payload)
-            console.log(state.allStores)
             return {
                 ...state,
                 storeDetail: state.allStores.find((store) => {

@@ -9,17 +9,24 @@ class OrderModel extends ModelController {
     getProduct = async (req, res) => {
         try {
             let idUser = req.body.idUser;
-            let carrito = await this.model.findOne({ where: { UserId: idUser } });
-
-            let listado = await Item.findAll({
-                where: { CartId: carrito.id },
-                include: [{ model: Product }],
+            let carrito = await this.model.findOne({
+                where: {
+                    UserId: idUser
+                },
+                include: {
+                    model: Item,
+                    atributes: ["cantidad"],
+                    includes: { 
+                        model: Product,
+                        atributes: ["productName", "price", "stock", "description", "cloudImage"]
+                    }
+                }
             });
-            res.json({
-                listado,
-            });
-
-            console.log(listado)
+            // let listado = await Item.findAll({
+            //     where: { CartId: carrito.id },
+            //     include: [{ model: Product }],
+            // });
+            res.send(carrito);
         } catch (err) {
             console.error(err);
         }

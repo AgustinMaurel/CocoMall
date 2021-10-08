@@ -3,6 +3,7 @@ export const POST_STORE = 'POST_STORE';
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const GET_PRODUCT = 'GET_PRODUCT';
 //PRODUCT FILTERS
+export const ORDER_PRODUCTS = 'ORDER_PRODUCTS';
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCT_TYPES = 'GET_PRODUCT_TYPES';
@@ -22,6 +23,8 @@ export const FIREBASE_ERR = 'FIREBASE_ERR';
 export const GET_STORES = 'GET_STORES';
 export const SEARCH_BY_NAME = 'SEARCH_BY_NAME';
 export const SEARCH_BY_ID = 'SEARCH_BY_ID';
+export const ORDER_STORE = 'ORDER_STORE';
+export const FILTER_STORE = 'FILTER_STORE';
 
 // SHOPPING CART
 export const SHOPPING_CART_TYPES = {

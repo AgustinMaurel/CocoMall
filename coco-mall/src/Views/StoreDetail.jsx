@@ -17,6 +17,7 @@ import {
     getProductDetail,
     filterProducts,
     getProductTypes,
+    ordersProduct
 } from '../Redux/actions/stores';
 import {
     addToCart,
@@ -31,15 +32,15 @@ import ProductDetail from '../Components/Product/ProductDetail';
 ReactModal.setAppElement('#root');
 export default function StoreDetail() {
     const dispatch = useDispatch();
-    const storeDetail = useSelector((state) => state.stores.storeDetail);
+    const storeDetail = useSelector((state) => state.stores.allStores);
     const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
     const shoppingCart = useSelector((state) => state.stores.cart);
     const productDetail = useSelector((state) => state.stores.productDetail);
     const productTypes = useSelector((state) => state.stores.productTypes);
 
-
     const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [infoModal, setInfoModal] = useState(false);
     const [checkType, setCheckType] = useState([]);
 
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
@@ -50,7 +51,6 @@ export default function StoreDetail() {
         min: '',
         max: '',
     });
-
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -75,7 +75,6 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
-        dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
@@ -100,20 +99,6 @@ export default function StoreDetail() {
         });
     };
 
-    const handleChecked = (e, position) => {
-        const newChecked = [...checkType];
-        if (e.target.checked) {
-            newChecked.push(parseInt(e.target.value));
-            setCheckType(newChecked);
-        } else {
-            setCheckType(checkType.filter((el) => el !== parseInt(e.target.value)));
-        }
-        const updatedCheckState = check.map((item, index) => {
-            return index === position ? !item : item;
-        });
-        setCheck(updatedCheckState);
-
-    };
     const handleSubmit = (e) => {
         e.preventDefault();
         filters.type = [...checkType];
@@ -124,6 +109,29 @@ export default function StoreDetail() {
         }
     };
 
+    const handleChecked = (e, position) => {
+        const newChecked = [...checkType];
+        if (e.target.checked) {
+            newChecked.push(parseInt(e.target.value));
+            setCheckType(newChecked);
+            filters.type = [...newChecked];
+            dispatch(filterProducts(id, filters));
+        } else {
+            setCheckType(newChecked.filter((el) => el !== parseInt(e.target.value)));
+            filters.type = newChecked.filter((el) => el !== parseInt(e.target.value))
+            dispatch(filterProducts(id, filters));
+        }
+        const updatedCheckState = check.map((item, index) => {
+            return index === position ? !item : item;
+        });
+        setCheck(updatedCheckState);
+    };
+
+    const handleOrder = (e) => {
+        e.preventDefault();
+        dispatch(ordersProduct(e.target.value))
+    }
+
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow  '>
@@ -131,10 +139,10 @@ export default function StoreDetail() {
             </div>
             <div className='col-span-12 content-center mx-auto w-full'>
                 <Slider {...settingsHero}>
-                    <HeroCard color={'bg-gray-500'} />
-                    <HeroCard color={'bg-green-500'} />
-                    <HeroCard color={'bg-blue-500'} />
-                    <HeroCard color={'bg-red-500'} />
+                    <HeroCard color={'bg-gray-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
+                    <HeroCard color={'bg-green-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/>
+                    <HeroCard color={'bg-blue-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/>
+                    <HeroCard color={'bg-red-500'} info={storeDetail[0]} infoModal={infoModal} setInfoModal={setInfoModal}/> 
                 </Slider>
             </div>
 
@@ -174,8 +182,9 @@ export default function StoreDetail() {
                             value={filters.max}
                             onChange={handleChange}
                         ></input>
-                        <button type='submit'>FILTER</button>
+                        <button type='submit'>Search Price</button>
                     </form>
+
                     {productTypes.length
                         ? productTypes.map((type, index) => {
                               return (
@@ -193,6 +202,26 @@ export default function StoreDetail() {
                               );
                           })
                         : false}
+
+                        {filters ? 
+                        <div>
+                            {/* Agregar cantidad de resultados al buscar productos */}
+                        {filters.searchProduct !== "" ? <li>{filters.searchProduct}</li> :false}
+                        {filters.type.length ? <li>{filters.type}</li> :false}
+                        {filters.min !== "" ? <li>{filters.min}</li> :false}
+                        {filters.max !== "" ? <li>{filters.max}</li> :false}
+                        </div>
+                        :false
+                    }
+                    <div>
+                        Ordenamientos
+                        <br />
+                        <select onChange={handleOrder}>
+                            <option value="Mas relevantes">Mas relevantes</option>
+                            <option value="Barato">Barato</option>
+                            <option value="Caro">Caro</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 

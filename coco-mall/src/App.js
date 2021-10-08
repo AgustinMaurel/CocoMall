@@ -12,6 +12,7 @@ import RegisterScreen from './Views/Auth/RegisterScreen';
 import Home from './Views/Home';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
+import Cart from './Views/Cart';
 
 function App() {
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
             <Switch>
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
+                <Route path='/cart/:id' exact component={Cart} />
                 <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />

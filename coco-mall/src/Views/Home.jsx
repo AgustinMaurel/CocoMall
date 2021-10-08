@@ -16,14 +16,14 @@ function Home() {
     }
 
     return (
-        <div className='grid grid-col-6   grid-rows-8  h-screen '>
-            <div className=' col-span-6 row-span-1 row-end-1  bg-gray-200 shadow '>
+        <div className='grid grid-col-8   grid-rows-8  h-screen '>
+            <div className=' col-span-8 row-span-1 row-end-1  bg-gray-200 shadow '>
                 <NavBar />
             </div>
 
             {/* SIDEBAR */}
 
-            <div className='hidden lg:flex w-3/4 flex-col col-start-1 col-end-1  row-span-full relative  border-r bg-gray-100 border-gray-200 p-5  '>
+            <div className='hidden lg:flex w-4/4 flex-col col-start-1 col-end-1  row-span-full relative  border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col '>
                     <label>Search</label>
                     <input
@@ -39,7 +39,7 @@ function Home() {
 
             {/* CARDS */}
 
-            <div className='relative w-full  col-span-5 row-span-full  p-6 overflow-y-scroll'>
+            <div className='relative w-full  col-span-7 row-span-full bg-gray-100 bg-opacity-50 p-6 overflow-y-scroll'>
                 <div className='cards p-3  '>
                     {allStores.allStores?.map((e, i) => (
                         <Link

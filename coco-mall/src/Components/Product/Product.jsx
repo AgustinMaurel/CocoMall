@@ -12,7 +12,7 @@ export default function Product(props) {
             <li>{product.price}</li>
             <li>{product.stock}</li>
             <img src={product.cloudImage} alt={product.productName} />
-            <button class='border '  onClick={() =>dispatch(props.addToCart(product.id))}>
+            <button className='border '  onClick={() =>dispatch(props.addToCart(product.id))}>
                     Add to cart
                 </button>
         </div>

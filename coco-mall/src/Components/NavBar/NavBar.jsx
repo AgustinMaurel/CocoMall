@@ -13,6 +13,7 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
+    const items = useSelector((state) => state.stores.itemsInCart)
     const dispatch = useDispatch();
 
 
@@ -76,7 +77,7 @@ function NavBar() {
                                     <div  className='relative cursor-pointer'>
                                     <Link to='/cart'>
                                         <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
-                                            5
+                                            {items}
                                         </div>
                                         <svg
                                             className='w-6 h-6'

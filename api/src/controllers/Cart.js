@@ -11,22 +11,31 @@ class OrderModel extends ModelController {
             let idUser = req.body.idUser;
             let carrito = await this.model.findOne({
                 where: {
-                    UserId: idUser
+                    UserId: idUser,
                 },
                 include: {
                     model: Item,
-                    attributes: ["cantidad"],
-                    includes: { 
+                    attributes: ['cantidad'],
+                    include: {
                         model: Product,
-                        attributes: ["productName", "price", "stock", "description", "cloudImage"]
-                    }
-                }
+                        attributes: [
+                            'id',
+                            'productName',
+                            'price',
+                            'stock',
+                            'description',
+                            'cloudImage',
+                        ],
+                    },
+                },
             });
             // let listado = await Item.findAll({
             //     where: { CartId: carrito.id },
             //     include: [{ model: Product }],
             // });
+            
             res.send(carrito);
+            
         } catch (err) {
             console.error(err);
         }
@@ -59,29 +68,37 @@ class OrderModel extends ModelController {
     };
 
     deleteFromCart = async (req, res) => {
-        let user = req.body.userID;
-        let product = req.body.idProduct;
-        let quantity = req.body.quantity;
+        try {
+            let user = req.body.userID;
+            let product = req.body.idProduct;
+            let quantity = req.body.quantity;
 
-        let carrito = await this.model.findOne({ where: { UserId: user } });
+            let carrito = await this.model.findOne({ where: { UserId: user } });
 
-        let item = await Item.findOne({
-            where: { CartId: carrito.id, ProductId: product },
-        });
+            let item = await Item.findOne({
+                where: { CartId: carrito.id, ProductId: product },
+            });
 
-        if (item.quantity === 1 || item.quantity === quantity) {
-            await Item.destroy({ where: { id: item.id } });
-        } else {
-            await item.update({ quantity: item.quantity - quantity });
+            if (item.quantity === 1 || item.quantity === quantity) {
+                await Item.destroy({ where: { id: item.id } });
+            } else {
+                await item.update({ quantity: item.quantity - quantity });
+            }
+            res.json('borrado con exito');
+        } catch (err) {
+            console.log(err);
         }
-        res.json('borrado con exito');
     };
 
     clearCart = async (req, res) => {
-        let user = req.body.userID;
-        let carrito = await this.model.findOne({ where: { UserId: user } });
-        await Item.destroy({ where: { CartId: carrito.id } });
-        res.json('limpiado');
+        try {
+            let user = req.body.userID;
+            let carrito = await this.model.findOne({ where: { UserId: user } });
+            await Item.destroy({ where: { CartId: carrito.id } });
+            res.json('limpiado');
+        } catch (err) {
+            console.log(err);
+        }
     };
 }
 

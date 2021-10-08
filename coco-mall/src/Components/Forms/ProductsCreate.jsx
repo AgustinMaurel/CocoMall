@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-
+import { useEffect } from 'react';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
 import { postProduct } from '../../Redux/actions/post';
+import { getProductsStore } from '../../Redux/actions/stores';
+
 
 const ProductsCreate = ({ idStore }) => {
     
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(getProductsStore(idStore))
+    },[idStore, dispatch])
+
     console.log(idStore)
     //--HOOKS--
-    const dispatch = useDispatch();
+    
     const {
         register,
         handleSubmit,
@@ -47,8 +55,8 @@ const ProductsCreate = ({ idStore }) => {
         }
         let productCreated = { product: product, storeId: idStore, idImage: [image], typeId: '1' };
         alert('Product Created!');
-        console.log(productCreated);
         dispatch(postProduct(productCreated));
+        dispatch(getProductsStore(idStore))
     };
 
     //TODO get de categorias -> hacer input SELECT

@@ -12,7 +12,7 @@ import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
-import Cart from './Components/ShoppingCart/Cart';
+
 import ProductDetail from './Components/Product/ProductDetail'
 
 

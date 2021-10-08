@@ -4,22 +4,28 @@ import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';
-
+import { getProductsStore } from '../Redux/actions/stores';
 
 export default function StorePanel() {
 
+    const products = useSelector((state) => state.stores.storeProducts)
+
+    useEffect(() => {
+        dispatch(getProductsStore(idActual))
+    }, [])
+
     const [selectStore, setSelectStore] = useState("")
-    const [productStore, setProductsStore] = useState([])
     const [render, setRender] = useState("")
     const [types, setTypes] = useState([])
     const [idActual, setIdActual] = useState("")
 
     const stores = useSelector((state) => state.stores)
+
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         axios.get('http://localhost:3001/productType')
-            .then((res) => setTypes(res.data))    
+            .then((res) => setTypes(res.data))
     }, [])
 
 
@@ -27,23 +33,15 @@ export default function StorePanel() {
         if (e.target.value !== "All") {
             setSelectStore(e.target.value)
             const aux = stores.allStores.find(store => store.storeName === e.target.value)
+            dispatch(getProductsStore(aux.id))
             setIdActual(aux.id)
-            axios.get(`http://localhost:3001/product/${aux.id}`)
-                .then(res => setProductsStore(res.data))
         }
         return false
     }
 
-    useEffect(()=>{
-        dispatch()
-    },[stores.storeProducts])
-
     function handleRender(e) {
         setRender(e.target.value)
     }
-
-
-
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
@@ -53,7 +51,7 @@ export default function StorePanel() {
             <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
                     <h1>Select Store</h1>
-                    <select name="selectStore" onClick={handleStore}>
+                    <select name="selectStore" onChange={handleStore}>
                         <option value="All">All</option>
                         {stores.allStores.map(e => {
                             return <option key={e.id} value={e.storeName}>{e.storeName}</option>
@@ -88,9 +86,10 @@ export default function StorePanel() {
                 <div className='text-center justify-center items-center'>
                     {selectStore === "All" && <span>Select a Store</span>}
 
-                    {render === "Products" && selectStore !== "All" && <ModelTable info={productStore} idStore={idActual} types={types} title={"Products"}
+                    {render === "Products" && selectStore !== "All" && <ModelTable info={products} idStore={idActual} types={types} title={"Products"}
                         filters={["A-Z", "Z-A", "Price", "Type", "Stock",]}
                         column_title={["Action", "Name", "Price", "Id", "Image", "Stock", "Type"]} />}
+                        <button onClick={()=>dispatch(getProductsStore(idActual))}> Actualizar</button>
 
                     {render === "Orders" && selectStore !== "All" && <ModelTable info={[]} title={"Orders"}
                         filters={["All", "Shipped", "Rejected", "Pending", "Completed"]} column_title={["Action", "State", "Payment", "Description",]} />}

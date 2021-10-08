@@ -10,7 +10,7 @@ class AddressModel extends ModelController {
         if (req.body.id) {
             try {
                 //id of User
-                const userId = req.body.id ? req.body.id : null;
+                const userId = req.body.id
                 const address = {
                     directions: req.body.directions,
                 };

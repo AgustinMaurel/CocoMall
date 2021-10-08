@@ -1,4 +1,4 @@
-const {Order, User, Store, Address} = require("../models/index");
+const { Order, User, Store, Address } = require("../models/index");
 const ModelController = require("./index");
 
 class OrderModel extends ModelController {
@@ -9,7 +9,7 @@ class OrderModel extends ModelController {
     createOrder = async (req, res, next) => {
         const userId = req.body.userId;
         const storeId = req.body.storeId;
-        const addressId = req.body.addressId;
+        const direction = req.body.address;
 
         if (userId && storeId && addressId) {
             try {
@@ -29,7 +29,9 @@ class OrderModel extends ModelController {
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const address = await Address.findByPk(addressId);
+                const address = await Address.findOrCreate({
+                    where: { directions: direction }
+                })
                 await address.addOrder(orderId);
 
                 res.send(newOrder);
@@ -37,7 +39,7 @@ class OrderModel extends ModelController {
                 res.send(err);
             }
         } else {
-            res.status(400).send({message: "Wrong parameters"});
+            res.status(400).send({ message: "Wrong parameters" });
         }
     };
 }

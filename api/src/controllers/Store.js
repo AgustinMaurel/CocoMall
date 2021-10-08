@@ -118,16 +118,26 @@ class StoreModel extends ModelController {
         let id = req.params.id;
         if(id){
             try{
-
+                // Delete store image, Cloudinary
                 const old = await this.model.findByPk(id)
                 let arr = [old.cloudImage]
-                const deletedImage = await cloudinary.api.delete_resources(arr, {folder: "Stores"});     
+                const deletedImage = await cloudinary.api.delete_resources(arr, {folder: "Stores"});
 
+                // Delete product images, Cloudinary
+                const allProducts = await Product.findAll({where: {StoreId: id}}) // [ {...} , {...}]
+                const img = allProducts.map(product => product.cloudImage)
+                let deletedImagesCloudinary = []
+                for(let i=0; i<img.length; i++){
+                    deletedImagesCloudinary[i] = await cloudinary.api.delete_resources(img[i], {folder: "Products"});
+                }
+
+                // Borro la tienda y sus productos
                 const[ProductDelte,StoreDelte]=await Promise.all([
                     Product.destroy({where:{StoreId:id}}),
                     this.model.destroy({where:{id:id}}),
                 ])
 
+                
                 res.json({ProductDelte, StoreDelte})
 
             }catch(error){

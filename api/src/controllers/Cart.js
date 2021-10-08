@@ -15,10 +15,10 @@ class OrderModel extends ModelController {
                 },
                 include: {
                     model: Item,
-                    atributes: ["cantidad"],
+                    attributes: ["cantidad"],
                     includes: { 
                         model: Product,
-                        atributes: ["productName", "price", "stock", "description", "cloudImage"]
+                        attributes: ["productName", "price", "stock", "description", "cloudImage"]
                     }
                 }
             });

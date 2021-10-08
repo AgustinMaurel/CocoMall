@@ -8,7 +8,8 @@ const {
     filterProductsByTypeAndName,
     updateDataProduct,
     deleteDataById,
-    deleteProduct
+    deleteProduct,
+    filterProductsByStore
 } = require('../controllers/Product.js');
 const { route } = require('./Store.js');
 
@@ -19,7 +20,7 @@ router.get('/', getAllData);
 
 router.get('/:id', findAllProductsOfStore);
 
-router.get('/filter/:id', filterProductsByTypeAndName);
+router.post('/filter/:id', filterProductsByStore);//este es pra obtener datos filtrados en realidad no para crear
 
 //POST's
 router.post('/bulkCreate', bulkCreateProducts);
@@ -27,7 +28,7 @@ router.post('/bulkCreate', bulkCreateProducts);
 router.post('/create', createProduct);
 
 //Delete Product
-router.delete('/delete/:id',deleteProduct) 
+router.delete('/delete/:id', deleteProduct) 
 
 //Update Product
 router.put('/update/:id',updateDataProduct) 

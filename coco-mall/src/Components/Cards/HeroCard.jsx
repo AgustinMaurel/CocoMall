@@ -4,8 +4,8 @@ const IMG = 'https://customblog.neocities.org/5.jpg';
 
 const HeroCard = ({ color }) => {
     return (
-        <div className={`h-80 ${color} mr-2 shadow-md rounded-md`}>
-            <div className='h-44 -mb-10 overflow-hidden'>
+        <div className={`h-28 ${color}`}>
+            <div className='h-full'>
                 {/* <img src={IMG} alt="banner card" />
                 <h3>{store}</h3> */}
 

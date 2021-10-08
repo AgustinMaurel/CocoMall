@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
@@ -9,8 +10,6 @@ import validate from '../../Scripts/validate';
 import { postProduct } from '../../Redux/actions/post';
 
 const ProductsCreate = ({ idStore }) => {
-    
-    console.log(idStore)
     //--HOOKS--
     const dispatch = useDispatch();
     const {
@@ -24,16 +23,18 @@ const ProductsCreate = ({ idStore }) => {
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
 
+    
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-
+        
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
             setIsUploaded(true);
         };
+
     };    
 
     //POST DATA PRODUCT & ID STORE
@@ -46,8 +47,15 @@ const ProductsCreate = ({ idStore }) => {
             sellBy: data.sellBy || 'Cuantity',
         }
         let productCreated = { product: product, storeId: idStore, idImage: [image], typeId: '1' };
-        alert('Product Created!');
-        console.log(productCreated);
+        
+        //configurar a medida
+        Swal.fire({
+            icon: 'success',
+            title: 'Store Created!',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
         dispatch(postProduct(productCreated));
     };
 

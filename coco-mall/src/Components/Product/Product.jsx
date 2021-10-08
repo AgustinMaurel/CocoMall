@@ -1,8 +1,9 @@
 import { addToCart, getProducts } from '../../Scripts/cart';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
+import { addItemsToCart } from '../../Redux/actions/stores';
 
 export default function Product(props) {
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const { product } = props;
     const user = useSelector((state) => state.auth.uid);
 
@@ -19,6 +20,7 @@ export default function Product(props) {
    
     const handleClick = () => {
         addToCart(productToCart);
+        dispatch(addItemsToCart(productToCart.quantity))
         getProducts(userId)
         console.log(productToCart)
     };

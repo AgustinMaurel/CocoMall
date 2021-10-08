@@ -1,10 +1,11 @@
-import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT } from '../actions/actionTypes';
+import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT, ADD_ITEMS_TO_CART } from '../actions/actionTypes';
 
 const initialState = {
     allStores: [],
-    storesByName: {},
+    
     storeDetail: {},
     storeProducts: [],
+    itemsInCart: 0
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
@@ -34,6 +35,12 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 storeProducts: payload,
             };
+
+        case ADD_ITEMS_TO_CART:
+            return {
+                ...state,
+                itemsInCart: state.itemsInCart + payload
+            }
 
         default:
             return state;

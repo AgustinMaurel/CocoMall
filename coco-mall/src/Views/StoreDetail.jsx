@@ -16,6 +16,8 @@ import {
     getProductsStore,
     getProductDetail,
     filterProducts,
+    getProductTypes,
+    ordersProduct,
 } from '../Redux/actions/stores';
 import {
     addToCart,
@@ -27,21 +29,29 @@ import CartItem from '../Components/ShoppingCart/CartItem';
 import ReactModal from 'react-modal';
 import ProductDetail from '../Components/Product/ProductDetail';
 
+ReactModal.setAppElement('#root');
 export default function StoreDetail() {
+    const dispatch = useDispatch();
+    const storeDetail = useSelector((state) => state.stores.allStores);
+    const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
+    const shoppingCart = useSelector((state) => state.stores.cart);
+    const productDetail = useSelector((state) => state.stores.productDetail);
+    const productTypes = useSelector((state) => state.stores.productTypes);
+
     const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [infoModal, setInfoModal] = useState(false);
+    const [checkType, setCheckType] = useState([]);
+
+    const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
+
     const [filters, setFilters] = useState({
         searchProduct: '',
         type: [],
         min: '',
         max: '',
+        discount: '',
     });
-
-    const dispatch = useDispatch();
-    const storeDetail = useSelector((state) => state.stores.storeDetail);
-    const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
-    const shoppingCart = useSelector((state) => state.stores.cart);
-    const productDetail = useSelector((state) => state.stores.productDetail);
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -65,10 +75,9 @@ export default function StoreDetail() {
     };
     //by Chris
 
-
     useEffect(() => {
-        dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
+        dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
     }, [dispatch]);
 
@@ -83,38 +92,60 @@ export default function StoreDetail() {
                 ...prevData,
                 [e.target.name]: e.target.value,
             };
-            if (filters.searchProduct) {
-                filters.searchProduct =
-                    filters.searchProduct[0].toUpperCase() + filters.searchProduct.substring(1);
+            if (state.searchProduct) {
+                state.searchProduct =
+                    state.searchProduct[0].toUpperCase() + state.searchProduct.substring(1);
             }
-            return state;
-        });
-    };
-
-    const handleChangeTypes = (e) => {
-        setFilters((prevData) => {
-            const state = {
-                ...prevData,
-                [e.target.name]: [parseInt(e.target.value)]
-            };
+            if (state.discount) {
+                state.discount = 1;
+            }
             return state;
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (filters.searchProduct) {
+        filters.type = [...checkType];
+        if (filters.searchProduct || checkType.length || filters.min || filters.max) {
             dispatch(filterProducts(id, filters));
-            setFilters(() => ({
-                searchProduct: '',
-                type: [],
-                min: '',
-                max: '',
-            }));
         } else {
             dispatch(filterProducts(id, filters));
         }
     };
+
+    const handleChecked = (e, position) => {
+        const newChecked = [...checkType];
+        if (e.target.checked) {
+            newChecked.push(parseInt(e.target.value));
+            setCheckType(newChecked);
+            filters.type = [...newChecked];
+            dispatch(filterProducts(id, filters));
+        } else {
+            setCheckType(newChecked.filter((el) => el !== parseInt(e.target.value)));
+            filters.type = newChecked.filter((el) => el !== parseInt(e.target.value));
+            dispatch(filterProducts(id, filters));
+        }
+        const updatedCheckState = check.map((item, index) => {
+            return index === position ? !item : item;
+        });
+        setCheck(updatedCheckState);
+    };
+
+    const handleOrder = (e) => {
+        e.preventDefault();
+        dispatch(ordersProduct(e.target.value));
+    };
+
+    const handleDiscount = () => {
+        if(!filters.discount){
+            ++filters.discount
+            dispatch(filterProducts(id, filters));
+        }else{
+            --filters.discount
+            dispatch(filterProducts(id, filters));
+        }
+        
+    }
 
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
@@ -123,10 +154,30 @@ export default function StoreDetail() {
             </div>
             <div className='col-span-12 content-center mx-auto w-full'>
                 <Slider {...settingsHero}>
-                    <HeroCard color={'bg-gray-500'} />
-                    <HeroCard color={'bg-green-500'} />
-                    <HeroCard color={'bg-blue-500'} />
-                    <HeroCard color={'bg-red-500'} />
+                    <HeroCard
+                        color={'bg-gray-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-green-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-blue-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
+                    <HeroCard
+                        color={'bg-red-500'}
+                        info={storeDetail[0]}
+                        infoModal={infoModal}
+                        setInfoModal={setInfoModal}
+                    />
                 </Slider>
             </div>
 
@@ -145,16 +196,6 @@ export default function StoreDetail() {
                             className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
                             value={filters.searchProduct}
                             onChange={handleChange}
-                        />
-
-                        <label>type</label>
-                        <input
-                            type='number'
-                            placeholder='Type'
-                            name='type'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.type}
-                            onChange={handleChangeTypes}
                         />
 
                         <label>min</label>
@@ -176,18 +217,61 @@ export default function StoreDetail() {
                             value={filters.max}
                             onChange={handleChange}
                         ></input>
-                        <button type='submit'>FILTER</button>
+                        <button type='submit'>Search Price</button>
                     </form>
+                        <button onClick={handleDiscount}>Discount</button>
+                    
+
+                    {productTypes.length
+                        ? productTypes.map((type, index) => {
+                              return (
+                                  <div>
+                                      <label>{type.Name}</label>
+                                      <input
+                                          type='checkbox'
+                                          name={type.id}
+                                          value={type.id}
+                                          onChange={(e) => handleChecked(e, index)}
+                                          checked={check[index]}
+                                      />
+                                      <span>{type.id}</span>
+                                  </div>
+                              );
+                          })
+                        : false}
+
+                    {filters ? (
+                        <div>
+                            {/* Agregar cantidad de resultados al buscar productos */}
+                            {filters.searchProduct !== '' ? (
+                                <li>{filters.searchProduct}</li>
+                            ) : (
+                                false
+                            )}
+                            {filters.type.length ? <li>{filters.type}</li> : false}
+                            {filters.min !== '' ? <li>{filters.min}</li> : false}
+                            {filters.max !== '' ? <li>{filters.max}</li> : false}
+                        </div>
+                    ) : (
+                        false
+                    )}
+                    <div>
+                        Ordenamientos
+                        <br />
+                        <select onChange={handleOrder}>
+                            <option value='Mas relevantes'>Mas relevantes</option>
+                            <option value='Barato'>Barato</option>
+                            <option value='Caro'>Caro</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             {/* CARDS */}
             <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>
-
-
-            <div className='w-3/4 m-auto mt-16'>
+                <div className='w-3/4 m-auto mt-16'>
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
-
+                    {/* 
                     <Slider {...settingsCards}>
                         {homeStores()?.map((e, i) => (
                             <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
@@ -199,44 +283,44 @@ export default function StoreDetail() {
                                 />
                             </Link>
                         ))}
-                    </Slider>
+                    </Slider> */}
                 </div>
-
-
                 <div className='cards   overflow-y-scroll '>
-                    {dataProducts().length
-                        ? dataProducts()?.map((product) => (
-                              //   <Link
-                              //       to={`${location.pathname}/products/${product.id}`}
-                              //       onClick={() => dispatch(getProductDetail(product.id))}
-                              //   >
+                    {storeProducts.length
+                        ? storeProducts?.map((product) => (
                               <div onClick={() => modalFuncion(product.id)}>
                                   <Product
                                       product={product}
                                       addToCart={() => addToCart(product.id)}
                                   />
                               </div>
-                              //   </Link>
                           ))
                         : false}
 
-                    <ReactModal
-                        style={{
-                            overlay: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                            },
-                        }}
-                        isOpen={modalIsOpen}
-                        onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
-                    >
-                        {productDetail ? <ProductDetail product={productDetail} /> : false}
-                    </ReactModal>
+                    {productDetail ? (
+                        <ReactModal
+                            style={{
+                                overlay: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                                },
+                            }}
+                            isOpen={modalIsOpen}
+                            onRequestClose={() => setModalIsOpen(false)}
+                            className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
+                        >
+                            <ProductDetail
+                                product={productDetail}
+                                addToCart={() => addToCart(productDetail.id)}
+                            />
+                        </ReactModal>
+                    ) : (
+                        false
+                    )}
                 </div>
             </div>
 
             {/* CART */}
-            <div className='hidden bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
+            <div className=' bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
                 <div className=' '>
                     <h3>Carrito</h3>
                     {shoppingCart.length ? (

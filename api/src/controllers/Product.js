@@ -76,9 +76,11 @@ class ProductModel extends ModelController {
                 const allTypes = req.body.types || [];
                 const nameToFilter = req.body.name || '';
                 const min = req.body.min || 0;
-                const max = req.body.max || 9999 ^ 9999;
+                const max = req.body.max || 99 ^ 99999999;
                 const discount = req.body.discount || 0
-                const filteredProducts = await this.model.findAll({
+                console.log(min)
+                console.log(max)
+                const filteredProducts = await Product.findAll({
                     where: {
                         StoreId: storeId,
                         [Op.and]: {
@@ -100,8 +102,6 @@ class ProductModel extends ModelController {
                         }
                     },
                 });
-                console.log(allTypes)
-                console.log(typeof allTypes)
                 res.send(filteredProducts);
             } catch (error) {
                 res.send(error);

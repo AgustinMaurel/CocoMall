@@ -25,11 +25,6 @@ export default function Product(props) {
                 <li>{product.price}</li>
                 <li>{product.stock}</li>
 
-
-                
-                <button class='border '  onClick={() =>dispatch(props.addToCart(product.id))}>
-                        Add to cart
-                </button>
             </div>
         </div>
     )

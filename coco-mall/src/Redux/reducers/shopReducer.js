@@ -9,11 +9,12 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
+    FILTER_STORE
 } from '../actions/actionTypes';
 
 const initialState = {
     allStores: [],
-    storesByName: {},
+    storesFilters: [],
     storeDetail: {},
     storeProducts: [],
     storeProductsFilter: [],
@@ -29,6 +30,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 allStores: payload,
+                storesFilters: payload
             };
 
         case POST_STORE:
@@ -37,10 +39,10 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 storeCreated: payload,
             };
 
-        case SEARCH_BY_NAME:
+        case FILTER_STORE:
             return {
                 ...state,
-                storesByName: payload,
+                storesFilters: payload,
             };
 
         case SEARCH_BY_ID:

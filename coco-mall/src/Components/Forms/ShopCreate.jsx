@@ -11,15 +11,16 @@ import Textarea from '../Inputs/Textarea';
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import { postStore } from '../../Redux/actions/post';
-//import InputMaps from '../Inputs/InputMaps';
+import InputMaps from '../Inputs/InputMaps';
 
 function ShopCreate({ setIsTrue }) {
+
     //STATES
     const auth = useSelector((state) => state.auth);
     const userId = auth.uid;
     const [image, setImage] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
-    const [placeSelected, setPlaceSelected] = useState('');
+    const [placeSelected, setPlaceSelected] = useState({});
 
     //--HOOKS--
     const dispatch = useDispatch();
@@ -98,10 +99,10 @@ function ShopCreate({ setIsTrue }) {
                                 state: place.address_components[4]?.long_name,
                                 country: place.address_components[5]?.long_name,
                                 cp: place.address_components[6]?.long_name || 'C3100',
-                                coord: [
-                                    place.geometry.location.lat(),
-                                    place.geometry.location.lng(),
-                                ],
+                                coord: {
+                                    lat: place.geometry.location.lat(),
+                                    lng: place.geometry.location.lng(),
+                                },
                             });
                         }}
                         options={{
@@ -123,8 +124,10 @@ function ShopCreate({ setIsTrue }) {
                         </div>
                     </div>
                 </div>
-
-                {/* <InputMaps coord={placeSelected.coord} /> */}
+                
+                <div className='h-36 mb-8'>
+                    <InputMaps coord={ placeSelected.coord } />
+                </div>
 
                 <Textarea
                     register={register}

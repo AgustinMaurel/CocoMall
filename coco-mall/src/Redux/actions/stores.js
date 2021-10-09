@@ -1,6 +1,6 @@
 import {
     GET_STORES,
-    SEARCH_BY_NAME,
+    FILTER_STORE,
     SEARCH_BY_ID,
     GET_PRODUCT,
     GET_PRODUCT_DETAIL,
@@ -18,10 +18,19 @@ export const getStores = () => {
     };
 };
 
-export const getStoresByName = () => {
+export const filterStores = (payload) => {
+    const obj = {
+        state: payload.state,
+        types: payload.type,
+        name: payload.searchProduct,
+        nameStore: payload.searchStore,
+        rating: payload.rating
+    };
+    console.log("OBJ",obj)
     return async (dispatch) => {
-        const response = await axios.get(SEARCH_URL);
-        dispatch({ type: SEARCH_BY_NAME, payload: response.data });
+        const response = await axios.post(SEARCH_URL, obj);
+        console.log("RESPONSE", response.data)
+        dispatch({ type: FILTER_STORE, payload: response.data });
     };
 };
 
@@ -54,7 +63,6 @@ export const filterProducts = (id, payload) => {
     };
     return async (dispatch) => {
         const response = await axios.post(`${BASE_URL}/product/filter/${id}`,obj );
-        console.log(response);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };

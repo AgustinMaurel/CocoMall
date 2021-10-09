@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
+import Info from '../Components/StoreInfo/Info';
+import Share from '../Components/StoreInfo/Share';
+import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
 
-import Arrow from '../Components/Slides/Arrow';
+//import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 // import homeStores from '../Helpers/homeStores';
 // import dataProducts from '../Helpers/dataProducts';
@@ -11,14 +14,7 @@ import HeroCard from '../Components/Cards/HeroCard';
 
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
-import {
-    getStoreDetail,
-    getProductsStore,
-    getProductDetail,
-    filterProducts,
-    getProductTypes,
-    ordersProduct,
-} from '../Redux/actions/stores';
+import { getProductsStore, getProductDetail, getProductTypes } from '../Redux/actions/stores';
 import {
     addToCart,
     deleteFromCart,
@@ -28,15 +24,18 @@ import {
 import CartItem from '../Components/ShoppingCart/CartItem';
 import ReactModal from 'react-modal';
 import ProductDetail from '../Components/Product/ProductDetail';
+import {
+    handleOnChange,
+    handleOnOrder,
+    handleOnSubmit,
+    handleOnDiscount,
+    handleOnChecked
+} from '../Scripts/handles';
 
 ReactModal.setAppElement('#root');
 export default function StoreDetail() {
     const dispatch = useDispatch();
-    const storeDetail = useSelector((state) => state.stores.allStores);
-    const storeProducts = useSelector((state) => state.stores.storeProductsFilter);
-    const shoppingCart = useSelector((state) => state.stores.cart);
-    const productDetail = useSelector((state) => state.stores.productDetail);
-    const productTypes = useSelector((state) => state.stores.productTypes);
+    const {allStores, storeProductsFilter, cart, productDetail, productTypes} = useSelector((state) => state.stores)
 
     const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -64,20 +63,20 @@ export default function StoreDetail() {
         pauseOnHover: true,
     };
 
-    const settingsCards = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        nextArrow: <Arrow />,
-        prevArrow: <Arrow />,
-    };
+    // const settingsCards = {
+    //     dots: false,
+    //     infinite: true,
+    //     speed: 500,
+    //     slidesToShow: 4,
+    //     slidesToScroll: 4,
+    //     nextArrow: <Arrow />,
+    //     prevArrow: <Arrow />,
+    // };
     //by Chris
 
     useEffect(() => {
         dispatch(getProductsStore(id));
-        dispatch(getProductTypes());
+        // dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
     }, [dispatch, id]);
 
@@ -86,99 +85,39 @@ export default function StoreDetail() {
         setModalIsOpen(true);
     };
 
-    const handleChange = (e) => {
-        setFilters((prevData) => {
-            const state = {
-                ...prevData,
-                [e.target.name]: e.target.value,
-            };
-            if (state.searchProduct) {
-                state.searchProduct =
-                    state.searchProduct[0].toUpperCase() + state.searchProduct.substring(1);
-            }
-            if (state.discount) {
-                state.discount = 1;
-            }
-            return state;
-        });
-    };
+    const handleChange = handleOnChange(setFilters);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        filters.type = [...checkType];
-        if (filters.searchProduct || checkType.length || filters.min || filters.max) {
-            dispatch(filterProducts(id, filters));
-        } else {
-            dispatch(filterProducts(id, filters));
-        }
-    };
+    const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
 
-    const handleChecked = (e, position) => {
-        const newChecked = [...checkType];
-        if (e.target.checked) {
-            newChecked.push(parseInt(e.target.value));
-            setCheckType(newChecked);
-            filters.type = [...newChecked];
-            dispatch(filterProducts(id, filters));
-        } else {
-            setCheckType(newChecked.filter((el) => el !== parseInt(e.target.value)));
-            filters.type = newChecked.filter((el) => el !== parseInt(e.target.value));
-            dispatch(filterProducts(id, filters));
-        }
-        const updatedCheckState = check.map((item, index) => {
-            return index === position ? !item : item;
-        });
-        setCheck(updatedCheckState);
-    };
+    const handleChecked = handleOnChecked(
+        checkType,
+        setCheckType,
+        filters,
+        dispatch,
+        id,
+        check,
+        setCheck,
+    );
 
-    const handleOrder = (e) => {
-        e.preventDefault();
-        dispatch(ordersProduct(e.target.value));
-    };
+    const handleOrder = handleOnOrder(dispatch);
 
-    const handleDiscount = () => {
-        if(!filters.discount){
-            ++filters.discount
-            dispatch(filterProducts(id, filters));
-        }else{
-            --filters.discount
-            dispatch(filterProducts(id, filters));
-        }
-        
-    }
+    const handleDiscount = handleOnDiscount(filters, dispatch, id);
 
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow  '>
                 <NavBar />
             </div>
-            <div className='col-span-12 content-center mx-auto w-full'>
+            <div className='col-span-12 content-center relative mx-auto w-full'>
                 <Slider {...settingsHero}>
-                    <HeroCard
-                        color={'bg-gray-500'}
-                        info={storeDetail[0]}
-                        infoModal={infoModal}
-                        setInfoModal={setInfoModal}
-                    />
-                    <HeroCard
-                        color={'bg-green-500'}
-                        info={storeDetail[0]}
-                        infoModal={infoModal}
-                        setInfoModal={setInfoModal}
-                    />
-                    <HeroCard
-                        color={'bg-blue-500'}
-                        info={storeDetail[0]}
-                        infoModal={infoModal}
-                        setInfoModal={setInfoModal}
-                    />
-                    <HeroCard
-                        color={'bg-red-500'}
-                        info={storeDetail[0]}
-                        infoModal={infoModal}
-                        setInfoModal={setInfoModal}
-                    />
+                    <HeroCard color={'bg-gray-500'} />
+                    <HeroCard color={'bg-green-500'} />
+                    <HeroCard color={'bg-blue-500'} />
+                    <HeroCard color={'bg-red-500'} />
                 </Slider>
+
+                <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
+                <Share />
             </div>
 
             {/* SIDEBAR */}
@@ -219,32 +158,30 @@ export default function StoreDetail() {
                         ></input>
                         <button type='submit'>Search Price</button>
                     </form>
-                        <button onClick={handleDiscount}>Discount</button>
-                    
+                    <button onClick={handleDiscount}>Discount</button>
 
                     {productTypes.length
                         ? productTypes.map((type, index) => {
                               return (
-                                  <div>
-                                      <label>{type.Name}</label>
-                                      <input
-                                          type='checkbox'
-                                          name={type.id}
-                                          value={type.id}
-                                          onChange={(e) => handleChecked(e, index)}
-                                          checked={check[index]}
+                                      <FilterTypeProduct
+                                      type={type}
+                                      index={index}
+                                      handleChecked={handleChecked}
+                                      check={check}
                                       />
-                                      <span>{type.id}</span>
-                                  </div>
                               );
                           })
                         : false}
 
-                    {filters.searchProduct || filters.type.length || filters.min || filters.max || filters.discount ? (
+                    {filters.searchProduct ||
+                    filters.type.length ||
+                    filters.min ||
+                    filters.max ||
+                    filters.discount ? (
                         <div>
                             <span>Render Filters </span>
-                            <br/>
-                            <span>Resultados</span> <span>{storeProducts.length}</span>
+                            <br />
+                            <span>Resultados</span> <span>{storeProductsFilter.length}</span>
                             {/* Agregar cantidad de resultados al buscar productos */}
                             {filters.searchProduct !== '' ? (
                                 <li>{filters.searchProduct}</li>
@@ -271,7 +208,6 @@ export default function StoreDetail() {
                 </div>
             </div>
 
-
             {/* CARDS */}
             <div className='flex flex-col col-span-10 row-span-14 pl-5 py-2 '>
                 <div className='w-3/4 m-auto mt-16'>
@@ -279,7 +215,7 @@ export default function StoreDetail() {
                     {/* 
                     <Slider {...settingsCards}>
                         {homeStores()?.map((e, i) => (
-                            <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
+                            <Link to={`/home/store/${e.id}`} onClick={() => allStores(e.id)}>
                                 <ProductCard
                                     productName={e.storeName}
                                     description={e.description}
@@ -291,8 +227,8 @@ export default function StoreDetail() {
                     </Slider> */}
                 </div>
                 <div className='cards   overflow-y-scroll '>
-                    {storeProducts.length
-                        ? storeProducts?.map((product) => (
+                    {storeProductsFilter.length
+                        ? storeProductsFilter?.map((product) => (
                               <div onClick={() => modalFuncion(product.id)}>
                                   <Product
                                       product={product}
@@ -328,7 +264,7 @@ export default function StoreDetail() {
             <div className=' bg-green-300 flex row-span-14 col-span-2    border-r border-gray-200   '>
                 <div className=' '>
                     <h3>Carrito</h3>
-                    {shoppingCart.length ? (
+                    {cart.length ? (
                         <button
                             className='border bg-red-600 text-white shadow p-1'
                             onClick={() => dispatch(clearCart())}
@@ -338,7 +274,7 @@ export default function StoreDetail() {
                     ) : (
                         false
                     )}
-                    {shoppingCart?.map((item, index) => (
+                    {cart?.map((item, index) => (
                         <CartItem
                             key={index}
                             data={item}

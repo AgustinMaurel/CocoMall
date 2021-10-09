@@ -89,9 +89,11 @@ class StoreModel extends ModelController {
     };
 
     filterStoresByProductTypes = async (req, res) => {
+        console.log(req.body)
         const stateStore =req.body.state || '';
         const typesId = req.body.types || [];
-        const nameToFilter = req.body.name || '';
+        const productToFilter = req.body.name || '';
+        const storeToFilter = req.body.nameStore || '';
         const min = req.body.min || 0;
         const max = req.body.max || 99 ^ 9999;
         try {
@@ -103,21 +105,26 @@ class StoreModel extends ModelController {
                         ProductTypeId: {
                             [Op.or]: typesId,
                         },
+                        //Filtrar por nombre del producto
                         productName: {
-                            [Op.iLike]: `%${nameToFilter}%`,
+                            [Op.iLike]: `%${productToFilter}%`,
                         },
-                        price: {
-                            [Op.and]: {
-                                [Op.gte]: min,
-                                [Op.lte]: max,
-                            },
-                        },
+                        // price: {
+                        //     [Op.and]: {
+                        //         [Op.gte]: min,
+                        //         [Op.lte]: max,
+                        //     },
+                        // },
                     },
                 },
                 //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
                 where:{
                     state:{
                         [Op.iLike]:`%${stateStore}%`
+                    },
+                    //Estoy filtrando por el nombre de la tienda
+                    storeName: {
+                        [Op.iLike]: `%${storeToFilter}%`
                     }
                 }
             });

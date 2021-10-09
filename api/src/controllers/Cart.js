@@ -29,8 +29,7 @@ class OrderModel extends ModelController {
                     },
                 },
             });
-            let totalItems = carrito.Items.length
-            carrito = { ...carrito, totalItems: totalItems }
+           
             res.send(carrito);
            
         } catch (err) {

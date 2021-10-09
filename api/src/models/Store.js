@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
             },
             coord: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
+                type: DataTypes.JSON,
             },
             // payment_account: {
             //PENDING

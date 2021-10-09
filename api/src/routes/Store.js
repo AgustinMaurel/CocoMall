@@ -15,7 +15,7 @@ const {
 //GET's
 router.get('/', getAllData);
 
-router.get('/filter', filterStoresByProductTypes);
+router.post('/filter', filterStoresByProductTypes);
 
 //POST's
 router.post('/create', createStore);

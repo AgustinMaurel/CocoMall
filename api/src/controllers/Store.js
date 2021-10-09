@@ -89,6 +89,7 @@ class StoreModel extends ModelController {
     };
 
     filterStoresByProductTypes = async (req, res) => {
+        const stateStore =req.body.state || '';
         const typesId = req.body.types || [];
         const nameToFilter = req.body.name || '';
         const min = req.body.min || 0;
@@ -113,6 +114,12 @@ class StoreModel extends ModelController {
                         },
                     },
                 },
+                //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
+                where:{
+                    state:{
+                        [Op.iLike]:`%${stateStore}%`
+                    }
+                }
             });
             res.send(filteredStores);
         } catch (error) {

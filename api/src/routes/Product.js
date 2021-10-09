@@ -5,6 +5,7 @@ const {
     createProduct,
     bulkCreateProducts,
     findAllProductsOfStore,
+    filterProductsByStore,
     filterProductsByTypeAndName,
     updateDataProduct,
     deleteDataById

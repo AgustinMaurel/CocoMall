@@ -5,19 +5,28 @@ import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';
 import { getProductsStore } from '../Redux/actions/stores';
+import { IoArrowBack } from "react-icons/io5";
+import ProductsCreate from '../Components/Forms/ProductsCreate';
 
 export default function StorePanel() {
 
+   
     const products = useSelector((state) => state.stores.storeProducts)
+
+    const [flag, setFlag] = useState(false)
+
+    const [idActual, setIdActual] = useState("")
+
+    const [product, setProduct]  = useState()
 
     useEffect(() => {
         dispatch(getProductsStore(idActual))
-    }, [])
+    }, [flag])
 
     const [selectStore, setSelectStore] = useState("")
     const [render, setRender] = useState("")
     const [types, setTypes] = useState([])
-    const [idActual, setIdActual] = useState("")
+    const [editState, setEditState] = useState(true)
 
     const stores = useSelector((state) => state.stores)
 
@@ -26,7 +35,7 @@ export default function StorePanel() {
     useEffect(() => {
         axios.get('http://localhost:3001/productType')
             .then((res) => setTypes(res.data))
-    }, [])
+    }, [dispatch])
 
 
     function handleStore(e) {
@@ -41,6 +50,8 @@ export default function StorePanel() {
 
     function handleRender(e) {
         setRender(e.target.value)
+        setFlag(!flag)
+
     }
 
     return (
@@ -64,38 +75,39 @@ export default function StorePanel() {
                     <h1 className='text-start self-center p-5'>
                         Store Panel
                     </h1>
-                    <div>
-                        <label htmlFor="Products">
-                            <input type="radio" name="render" id="Products" value="Products" onChange={handleRender} checked={null} />
-                            Products</label>
 
+                    <div className='flex flex-col'>
+                        <button name="Products" value="Products" onClick={handleRender} className='cursor-pointer' >
+                            Products </button>
+                        <button name="Orders" value="Orders" onClick={handleRender} className='cursor-pointer' >
+                            Orders </button>
                     </div>
-                    <div>
-                        <label htmlFor="Orders">
-                            <input type="radio" name="render" id="Orders" value="Orders" onChange={handleRender} checked={null} />
-                            Orders</label>
-                    </div>
-
 
 
                 </div>
 
             </div>
-
+            
+            {editState?            
             <div className=' col-start-2 col-end-6 row-span-full text-center justify-center items-center overflow-y-hidden p-4 '>
+                <IoArrowBack/>
                 <div className='text-center justify-center items-center'>
                     {selectStore === "All" && <span>Select a Store</span>}
 
-                    {render === "Products" && selectStore !== "All" && <ModelTable info={products} idStore={idActual} types={types} title={"Products"}
+                    {render === "Products" && selectStore !== "All" && <ModelTable info={products} setProduct={setProduct} setEditState={setEditState} idStore={idActual} types={types} title={"Products"}
                         filters={["A-Z", "Z-A", "Price", "Type", "Stock",]}
                         column_title={["Action", "Name", "Price", "Id", "Image", "Stock", "Type"]} />}
-                        <button onClick={()=>dispatch(getProductsStore(idActual))}> Actualizar</button>
 
                     {render === "Orders" && selectStore !== "All" && <ModelTable info={[]} title={"Orders"}
                         filters={["All", "Shipped", "Rejected", "Pending", "Completed"]} column_title={["Action", "State", "Payment", "Description",]} />}
 
                 </div>
+            </div>:
+            <div>
+                <IoArrowBack onClick={()=>setEditState(true)}/>
+                <ProductsCreate idStore={idActual} product={product}/>
             </div>
+            }
         </div>
     );
 }

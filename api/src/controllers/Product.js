@@ -18,18 +18,18 @@ class ProductModel extends ModelController {
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';
-                let img=[]
-                for(let x=0;x<fileString.length;x++){
-                    img[x]=await cloudinary.uploader.upload(
+                let img = []
+                for (let x = 0; x < fileString.length; x++) {
+                    img[x] = await cloudinary.uploader.upload(
                         fileString[x]
                     );
                 }
                 console.log(img);
-                let public_id = img.map(el=>el.public_id);
-            
+                let public_id = img.map(el => el.public_id);
+
                 //Get the Product from body
                 const product = { ...req.body.product, cloudImage: public_id ? public_id : 'No image id' };
-                
+
                 //Create new Product
                 const newProduct = await this.model.create(product);
                 const productId = newProduct.id;
@@ -76,7 +76,7 @@ class ProductModel extends ModelController {
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
         }
-      }
+    }
 
     filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products
@@ -122,105 +122,106 @@ class ProductModel extends ModelController {
         }
     };
 
-      filterProductsByTypeAndName = async (req, res) => {
-          //Id of the store from which i need products
-          const storeId = req.params.id;
-          if (storeId) {
-              try {
-                  //Array of the Types of products (on ID forms) that i need
-                  const allTypes = req.body.types || [];
-                  const nameToFilter = req.body.name || '';
-                  const min = req.body.min || 0;
-                  const max = req.body.max || 99 ^ 9999;
-                  const filteredProducts = await this.model.findAll({
-                      where: {
-                          StoreId: storeId,
-                          ProductTypeId: {
-                              [Op.or]: allTypes,
-                          },
-                          productName: {
-                              [Op.iLike]: `%${nameToFilter}%`,
-                          },
-                          price: {
-                              [Op.and]: {
-                                  [Op.gte]: min,
-                                  [Op.lte]: max,
-                              },
-                          },
-                      },
-                  });
-                  res.send(filteredProducts);
-              } catch (error) {
-                  res.send(error);
-              }
-          } else {
-              res.status(400).send({ message: 'Wrong parameters' });
-          }
-      };
-      
-      findAllProductsOfStore = async (req, res) => {
-          const storeId = req.params.id;
-          if (storeId) {
-              try {
-                  const allProductOfStore = await this.model.findAll({
-                      where: {
-                          StoreId: storeId,
-                      },
-                  });
-                  res.send(allProductOfStore);
-              } catch (error) {
-                  res.send(error);
-              }
-          } else {
-              res.status(400).send({ message: 'Wrong parameters' });
-          }
-      };
-  
-      updateDataProduct = async (req,res)=>{
-  
-          const id1 = req.params.id;
-          const {id,StoreId,...product} = req.body;
-  
-          if(product.cloudImage){
-  
-              // Corregir para hacerlo con muchas imagenes
-  
-              const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
-              let public_id = uploadedResponse.public_id;
-              product.cloudImage = public_id;
-          }
-  
-          const ProductoActualizado = await this.model.update({...product},{where:{
-              id:id1    
-          }})
-          res.json({
-              msg:"Updated product ok",
-              ProductoActualizado
-          })
-      }
-
-    deleteProduct = async (req,res) => {
-            const { id } = req.params
-            if(id){
-                try{
-                    const product = await this.model.findByPk(id)
-                    const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
-                    const deleted = await this.model.destroy({where: {id: id}})
-                    if(deleted === 1){  
-                        res.json({message: "Product successfully deleted"})
-                    }else{
-                        res.json({message: "Error"})
-                    }
-
-                }catch(e){
-                    res.send(e)
-                }
-            }else{
-                res.send({message: "Must include a product id"})
+    filterProductsByTypeAndName = async (req, res) => {
+        //Id of the store from which i need products
+        const storeId = req.params.id;
+        if (storeId) {
+            try {
+                //Array of the Types of products (on ID forms) that i need
+                const allTypes = req.body.types || [];
+                const nameToFilter = req.body.name || '';
+                const min = req.body.min || 0;
+                const max = req.body.max || 99 ^ 9999;
+                const filteredProducts = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                        ProductTypeId: {
+                            [Op.or]: allTypes,
+                        },
+                        productName: {
+                            [Op.iLike]: `%${nameToFilter}%`,
+                        },
+                        price: {
+                            [Op.and]: {
+                                [Op.gte]: min,
+                                [Op.lte]: max,
+                            },
+                        },
+                    },
+                });
+                res.send(filteredProducts);
+            } catch (error) {
+                res.send(error);
             }
-      }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
 
-      filterProductsByStore = async (req, res) => {
+    findAllProductsOfStore = async (req, res) => {
+        const storeId = req.params.id;
+        if (storeId) {
+            try {
+                const allProductOfStore = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                    },
+                });
+                res.send(allProductOfStore);
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+
+    updateDataProduct = async (req, res) => {
+
+        const id1 = req.params.id;
+        const { id, StoreId, ...product } = req.body;
+
+        if (product.cloudImage) {
+            // Corregir para hacerlo con muchas imagenes
+            const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
+            let public_id = uploadedResponse.public_id;
+            product.cloudImage = public_id;
+        }
+
+        const ProductoActualizado = await this.model.update({ ...product },
+            {
+                where: {
+                    id: id1
+                }
+            })
+        res.json({
+            msg: "Updated product ok",
+            ProductoActualizado
+        })
+    }
+
+    deleteProduct = async (req, res) => {
+        const { id } = req.params
+        if (id) {
+            try {
+                const product = await this.model.findByPk(id)
+                const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
+                const deleted = await this.model.destroy({ where: { id: id } })
+                if (deleted === 1) {
+                    res.json({ message: "Product successfully deleted" })
+                } else {
+                    res.json({ message: "Error" })
+                }
+
+            } catch (e) {
+                res.send(e)
+            }
+        } else {
+            res.send({ message: "Must include a product id" })
+        }
+    }
+
+    filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {

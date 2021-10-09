@@ -1,24 +1,33 @@
 import React from 'react'
-import { GrSettingsOption, GrAdd } from 'react-icons/gr'
+import { FiSettings } from "react-icons/fi";
+import { GrAdd, GrEdit, GrClose } from 'react-icons/gr'
 import { modalOptions } from './swalFunction'
 import { useState } from 'react'
 import ProductsCreate from '../Components/Forms/ProductsCreate'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { getProductsStore } from '../Redux/actions/stores'
 
-
-export default function ModelTable({ info, title, filters, column_title, types, idStore }) {
+export default function ModelTable({ info, title, filters, column_title, types, idStore, setEditState, setProduct }) {
     const [render, setRender] = useState(false)
+    const [flag, setFlag] = useState(false)
 
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getProductsStore(idStore))
+    }, [flag])
 
     return (
 
         <div className='items-center text-center justify-center w-full' >
-
-            <h1 className='text-center items-center '>{title}</h1>
+          
+        <div>
+        <h1 className='text-center items-center '>{title}</h1>
             <ul className=' flex text-center justify-evenly items-center h-32 '>
                 {filters.map((el) => (
                     <li key={el} className='border bg-secondary-light border-gray-200 rounded-md px-5'>{el}</li>
                 ))}
-                <li onClick={() => !render ? setRender(true) : setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></li>
+                <li onClick={() => dispatch(getProductsStore(idStore)) && !render ? setRender(true) : setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></li>
             </ul>
             {render ? <ProductsCreate idStore={idStore} /> : <table className='items-center border-separate text-center justify-center w-full'>
 
@@ -31,14 +40,16 @@ export default function ModelTable({ info, title, filters, column_title, types, 
                     </tr>
                 </thead>
                 <tbody>
-                    {info?.map((el) => (
+                    {info.length > 0 && info?.map((el) => (
                         <tr key={el}>
                             <td className='  border text-center justify-center items-center border-gray-400 py-2'>
-                                <div className='flex justify-center'>
-                                    <GrSettingsOption className='self-center cursor-pointer'
+                                <div className='flex justify-evenly'>
+                                    <FiSettings
                                         onClick={() => {
-                                            modalOptions(el.id)
+                                            modalOptions(el.id, setEditState, setFlag, flag, setProduct, el)
+                                            setProduct(el)
                                         }} />
+                                    
                                 </div>
                             </td>
                             <td className='border  border-gray-400 py-2'>{el.productName}</td>
@@ -50,8 +61,12 @@ export default function ModelTable({ info, title, filters, column_title, types, 
 
                         </tr>
                     ))}
+
                 </tbody>
-            </table>}
+
+             </table>}
+
+            </div>
         </div>
     )
 

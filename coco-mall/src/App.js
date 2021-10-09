@@ -43,7 +43,7 @@ function App() {
     return (
         <>
             <Switch>
-                <Route exact path='/storePanel' component={StorePanel}/> 
+                <Route path='/storePanel' component={StorePanel}/> 
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
                 <Route path='/create/shop' exact component={ShopCreation} />

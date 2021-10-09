@@ -86,7 +86,7 @@ function NavBar() {
                                             to='/auth/login'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name}
+                                                {user.name.split(' ')[0]} {/* para ver solo nombre */}
                                             </button>
                                         </Link>
                                     </div>

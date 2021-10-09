@@ -128,6 +128,7 @@ function Home() {
                     />
 
                     {/* Van los filtros acá */}
+                    
                     {productTypes.length
                         ? productTypes.map((type, index) => {
                               return (

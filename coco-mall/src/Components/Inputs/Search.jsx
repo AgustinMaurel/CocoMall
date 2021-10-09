@@ -8,13 +8,16 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
     };
     return (
         <div className='flex flex-col w-3/4 m-auto mb-10'>
-            <form class='bg-white flex items-center rounded-full shadow-md' onSubmit={handleSubmit}>
+            <form
+                className='bg-white flex items-center rounded-full shadow-md'
+                onSubmit={handleSubmit}
+            >
                 {/* Hay que meter un switch dependiendo si busco por tienda o
                 por producto */}
                 {!typeSearch ? (
                     <>
                         <input
-                            class='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'
+                            className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'
                             type='text'
                             name='searchStore'
                             placeholder='Search stores..'
@@ -25,7 +28,7 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
                 ) : (
                     <>
                         <input
-                            class='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'
+                            className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none placeholder-cocoMall-400'
                             type='text'
                             name='searchProduct'
                             placeholder='Search products..'
@@ -34,16 +37,24 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
                         />
                     </>
                 )}
-                <span>Products</span>
-                <input
-                    type='checkbox'
-                    name='searchType'
-                    checked={typeSearch}
-                    onChange={handleSearch}
-                />
-                <button class='text-cocoMall hover:text-secondary w-14 h-14 flex items-center justify-center'>
+                {/* CHECKBOX */}
+                <div className='relative inline-block w-12 mr-6 align-middle select-none'>
+                    <input
+                        className='toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer'
+                        type='checkbox'
+                        name='searchType'
+                        id='searchType'
+                        checked={typeSearch}
+                        onChange={handleSearch}
+                    />
+                    <label
+                        for='searchType'
+                        className='toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer'
+                    ></label>
+                </div>
+                {/* <button class='text-cocoMall hover:text-secondary w-14 h-14 flex items-center justify-center'>
                     <BsSearch />
-                </button>
+                </button> */}
             </form>
         </div>
     );

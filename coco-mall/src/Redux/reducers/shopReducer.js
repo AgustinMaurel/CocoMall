@@ -1,6 +1,5 @@
 import {
     GET_STORES,
-    SEARCH_BY_NAME,
     SEARCH_BY_ID,
     GET_PRODUCT,
     SHOPPING_CART_TYPES,

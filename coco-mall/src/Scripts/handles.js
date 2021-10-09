@@ -63,9 +63,14 @@ export function handleOnChange(setFilters) {
                 ...prevData,
                 [e.target.name]: e.target.value,
             };
-            if (state.searchProduct) {
+            if (state.searchProduct ) {
                 state.searchProduct =
                     state.searchProduct[0].toUpperCase() + state.searchProduct.substring(1);
+            if(state.searchStore){
+
+                state.searchStore =
+                state.searchStore[0].toUpperCase() + state.searchStore.substring(1);
+            }
             }
             if (state.discount) {
                 state.discount = 1;

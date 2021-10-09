@@ -11,25 +11,21 @@ import HeroCard from '../Components/Cards/HeroCard';
 import homeStores from '../Helpers/homeStores';
 import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
-import {
-    handleOnChange,
-    handleOnOrder,
-    handleOnSubmit,
-    handleOnChecked
-} from '../Scripts/handles';
-import coco from '../Assets/icons/loco_coco.png'
+import { handleOnChange, handleOnOrder, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
+import coco from '../Assets/icons/loco_coco.png';
 
 function Home() {
     const dispatch = useDispatch();
-    const {productTypes, storesFilters, allStores} = useSelector((state) => state.stores);
+    const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
 
     const [checkType, setCheckType] = useState([]);
-const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
+    const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
+        searchStore: '',
         searchProduct: '',
         type: [],
         state: '',
-        rating: ''
+        rating: '',
     });
 
     const storeDetail = (id) => {
@@ -59,43 +55,45 @@ const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
             {
                 breakpoint: 1620,
                 settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  infinite: true,
-                  dots: true
-                }
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true,
+                },
             },
             {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                infinite: true,
-                dots: true
-              }
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true,
+                },
             },
             {
-              breakpoint: 600,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                initialSlide: 4,
-              }
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 4,
+                },
             },
             {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-              }
-            }
-          ]
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
     };
 
     let id;
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch);
-    const handleChecked = handleOnChecked(checkType,setCheckType,
+    const handleChecked = handleOnChecked(
+        checkType,
+        setCheckType,
         filters,
         dispatch,
         id,
@@ -121,21 +119,24 @@ const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
                     </Slider>
                 </div>
 
-
                 <div className='w-3/4 m-auto mt-16'>
-                    <Search search={filters.searchProduct} handleChange={handleChange} handleSubmit={handleSubmit}/> 
+                    <Search
+                        searchProduct={filters.searchProduct}
+                        searchStore={filters.searchStore}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
 
                     {/* Van los filtros acá */}
                     {productTypes.length
                         ? productTypes.map((type, index) => {
                               return (
-                                  
-                                      <FilterTypeProduct
+                                  <FilterTypeProduct
                                       type={type}
                                       index={index}
                                       handleChecked={handleChecked}
                                       check={check}
-                                      />
+                                  />
                               );
                           })
                         : false}

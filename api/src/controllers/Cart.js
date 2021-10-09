@@ -9,7 +9,7 @@ class OrderModel extends ModelController {
     getProduct = async (req, res) => {
         try {
             let idUser = req.body.idUser;
-            let cart = await this.model.findOne({
+            let carrito = await this.model.findOne({
                 where: {
                     UserId: idUser,
                 },
@@ -29,9 +29,10 @@ class OrderModel extends ModelController {
                     },
                 },
             });
-            let totalItems = cart.Items.length
-            cart = { ...cart, totalItems }
-            res.send(cart);
+            let totalItems = carrito.Items.length
+            carrito = { ...carrito, totalItems: totalItems }
+            res.send(carrito);
+           
         } catch (err) {
             console.error(err);
         }
@@ -42,6 +43,10 @@ class OrderModel extends ModelController {
             let idUser = req.body.idUser;
             let product = req.body.idProduct;
             let cantidad = req.body.quantity;
+
+            console.log(idUser, 'ID USER')
+            console.log(product, 'ID PRODUCT')
+            console.log(cantidad, 'CANTIDAD')
 
             const [answer, create] = await this.model.findOrCreate({
                 where: { UserId: idUser },

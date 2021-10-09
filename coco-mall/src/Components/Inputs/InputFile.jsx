@@ -9,7 +9,7 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch, is
                 className='outline-none p-2 w-full rounded'
                 style={{ display: 'none' }}
                 type={type}
-                accept='.png'
+                accept="image/png, image/jpeg"
                 placeholder={name}
                 {...register(name, validate)}
                 onChange={onChange}

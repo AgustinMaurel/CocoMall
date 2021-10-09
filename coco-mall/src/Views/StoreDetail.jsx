@@ -86,9 +86,7 @@ export default function StoreDetail() {
     };
 
     const handleChange = handleOnChange(setFilters);
-
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
-
     const handleChecked = handleOnChecked(
         checkType,
         setCheckType,
@@ -98,9 +96,7 @@ export default function StoreDetail() {
         check,
         setCheck,
     );
-
     const handleOrder = handleOnOrder(dispatch);
-
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
 
     return (

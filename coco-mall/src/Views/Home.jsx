@@ -8,10 +8,9 @@ import HomeCards from '../Components/Cards/HomeCards';
 import NavBar from '../Components/NavBar/NavBar';
 import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
-import homeStores from '../Helpers/homeStores';
 import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
-import { handleOnChange, handleOnOrder, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
+import { handleOnChange, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
 import coco from '../Assets/icons/loco_coco.png';
 
 function Home() {
@@ -103,7 +102,7 @@ function Home() {
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-100'>
-            <div className=' col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
+            <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
 
@@ -128,37 +127,25 @@ function Home() {
                     />
 
                     {/* Van los filtros acá */}
-                    
-                    {productTypes.length
-                        ? productTypes.map((type, index) => {
-                              return (
-                                  <FilterTypeProduct
-                                      type={type}
-                                      index={index}
-                                      handleChecked={handleChecked}
-                                      check={check}
-                                  />
-                              );
-                          })
-                        : false}
+                    <div className="flex w-full h-36 justify-center gap-4">
+                        {productTypes.length
+                            ? productTypes.map((type, index) => {
+                                return (
+                                    <FilterTypeProduct
+                                        type={type}
+                                        index={index}
+                                        handleChecked={handleChecked}
+                                        check={check}
+                                    />
+                                );
+                            })
+                            : false}
+                    </div>
 
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
-                    <Slider {...settingsCards}>
-                        {allStores?.map((e, i) => (
-                            <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
-                                <HomeCards
-                                    storeName={e.storeName}
-                                    description={e.description}
-                                    cloudImage={e.logo || coco}
-                                    key={i}
-                                />
-                            </Link>
-                        ))}
-                    </Slider>
                 </div>
 
                 <div className='w-3/4 m-auto mt-16'>
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>All stores</h3>
+                    <h3 className='text-2xl font-bold text-cocoMall-800'>Stores</h3>
                     <div className='cards p-3'>
                         {storesFilters?.map((e, i) => (
                             <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
@@ -171,6 +158,19 @@ function Home() {
                             </Link>
                         ))}
                     </div>
+                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations in your "City"</h3>
+                    <Slider {...settingsCards}>
+                        {allStores?.map((e, i) => (
+                            <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
+                                <HomeCards
+                                    storeName={e.storeName}
+                                    description={e.description}
+                                    cloudImage={e.logo || coco}
+                                    key={i}
+                                />
+                            </Link>
+                        ))}
+                    </Slider>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';
-import { getProductsStore } from '../Redux/actions/stores';
+import { getProductsStore, getStores } from '../Redux/actions/stores';
 import { IoArrowBack } from "react-icons/io5";
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 
@@ -19,6 +19,10 @@ export default function StorePanel() {
 
     const [product, setProduct]  = useState()
 
+    useEffect(()=>{
+        dispatch(getStores())
+    },[])
+
     useEffect(() => {
         dispatch(getProductsStore(idActual))
     }, [flag])
@@ -29,7 +33,9 @@ export default function StorePanel() {
     const [editState, setEditState] = useState(true)
 
     const stores = useSelector((state) => state.stores)
-
+    const user= useSelector((state)=> state.auth)
+    const storesUser= stores.allStores.filter(el=> el.UserId === user.uid)
+    
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -61,10 +67,11 @@ export default function StorePanel() {
             </div>
             <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
-                    <h1>Select Store</h1>
+                   
                     <select name="selectStore" onChange={handleStore}>
-                        <option value="All">All</option>
-                        {stores.allStores.map(e => {
+
+                        <option selected="SelectStore" disabled={true} value="Select Store">Select Store</option>
+                        {storesUser?.map(e => {
                             return <option key={e.id} value={e.storeName}>{e.storeName}</option>
                         })}
                     </select>

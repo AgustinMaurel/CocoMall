@@ -18,6 +18,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const [isUploaded, setIsUploaded] = useState(false);
     
     const products = useSelector((state)=> state.stores.storeProducts)
+
     const dispatch = useDispatch()
     
     //--HOOKS--
@@ -69,7 +70,6 @@ const ProductsCreate = ({ idStore, product }) => {
             })
         }
         else{
-            
             axios.post( PRODUCT_CREATE_URL, dataProductClean )
             .then(()=>{
                 Swal.fire({
@@ -104,7 +104,7 @@ const ProductsCreate = ({ idStore, product }) => {
                     className='w-full xl:w-1/3 flex flex-col'
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>{product?"Edit your Product":"Create your Product"}</h3>
+                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>{ product ? "Edit your Product" : "Create your Product"}</h3>
                     <InputDefault
                         register={register}
                         errors={errors}

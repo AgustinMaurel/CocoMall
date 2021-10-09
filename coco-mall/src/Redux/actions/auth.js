@@ -36,7 +36,7 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                console.log(user);
+                
                 dispatch(login(user.uid, user.displayName));
                 axios.get(`http://localhost:3001/user/${user.uid}`);
             })

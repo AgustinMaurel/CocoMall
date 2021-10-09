@@ -8,3 +8,4 @@ export const GET_STORES = 'GET_STORES';
 export const SEARCH_BY_NAME = 'SEARCH_BY_NAME';
 export const SEARCH_BY_ID = 'SEARCH_BY_ID';
 export const ADD_ITEMS_TO_CART = 'ADD_ITEMS_TO_CART'
+export const SET_CART = 'SET_CART'

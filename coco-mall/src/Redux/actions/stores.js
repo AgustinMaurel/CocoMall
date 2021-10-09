@@ -63,6 +63,7 @@ export const filterProducts = (id, payload) => {
     };
     return async (dispatch) => {
         const response = await axios.post(`${BASE_URL}/product/filter/${id}`,obj );
+        console.log(response.data);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };

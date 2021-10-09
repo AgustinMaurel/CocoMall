@@ -83,12 +83,11 @@ class ProductModel extends ModelController {
                 const min = req.body.min || 0;
                 const max = req.body.max || 99 ^ 99999999;
                 const discount = req.body.discount || 0
-                console.log(min)
-                console.log(max)
                 const filteredProducts = await Product.findAll({
                     where: {
                         StoreId: storeId,
                         [Op.and]: {
+                            //CORREGIR FILTRO DE TIPOS
                             ProductTypeId: {
                                 [Op.or]: allTypes,
                             },

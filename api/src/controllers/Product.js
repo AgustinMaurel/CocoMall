@@ -21,10 +21,10 @@ class ProductModel extends ModelController {
                 let img = []
                 for (let x = 0; x < fileString.length; x++) {
                     img[x] = await cloudinary.uploader.upload(
-                        fileString[x]
+                        fileString[x], { folder: "Products" }
                     );
                 }
-                console.log(img);
+                // console.log(img);
                 let public_id = img.map(el => el.public_id);
 
                 //Get the Product from body
@@ -111,8 +111,8 @@ class ProductModel extends ModelController {
                         }
                     },
                 });
-                console.log(allTypes)
-                console.log(typeof allTypes)
+                // console.log(allTypes)
+                // console.log(typeof allTypes)
                 res.send(filteredProducts);
             } catch (error) {
                 res.send(error);
@@ -179,33 +179,41 @@ class ProductModel extends ModelController {
     updateDataProduct = async (req, res) => {
 
         const id1 = req.params.id;
-        const { id, StoreId, ...product } = req.body;
+        const { product } = req.body;
 
         if (product.cloudImage) {
+
             // Corregir para hacerlo con muchas imagenes
-            const uploadedResponse = await cloudinary.uploader.upload(product.cloudImage)
-            let public_id = uploadedResponse.public_id;
-            product.cloudImage = public_id;
+            let img = []
+            for (let i = 0; i < product.cloudImage.length; i++) {
+                img[i] = await cloudinary.uploader.upload(
+                    product.cloudImage[i], { folder: "Products" }
+                );
+            }
+            let public_id = img.map(el => el.public_id)
+            product.cloudImage = public_id
+
+            const old = await this.model.findByPk(id1)
+            product.cloudImage = old.cloudImage.concat(public_id)
         }
 
-        const ProductoActualizado = await this.model.update({ ...product },
-            {
-                where: {
-                    id: id1
-                }
-            })
+        const ProductoActualizado = await this.model.update({ ...product }, {
+            where: {
+                id: id1
+            }
+        })
         res.json({
             msg: "Updated product ok",
             ProductoActualizado
         })
     }
 
-    deleteProduct = async (req, res) => {
+   /*  deleteProduct = async (req, res) => {
         const { id } = req.params
         if (id) {
             try {
                 const product = await this.model.findByPk(id)
-                const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
+                const deletedImages = await cloudinary.api.delete_resources(product.cloudImage[0], { folder: "Products" });
                 const deleted = await this.model.destroy({ where: { id: id } })
                 if (deleted === 1) {
                     res.json({ message: "Product successfully deleted" })
@@ -213,13 +221,42 @@ class ProductModel extends ModelController {
                     res.json({ message: "Error" })
                 }
 
-            } catch (e) {
-                res.send(e)
+                const ProductoActualizado = await this.model.update({ ...product },
+                    {
+                        where: {
+                            id: id1
+                        }
+                    })
+                res.json({
+                    msg: "Updated product ok",
+                    ProductoActualizado
+                })
             }
-        } else {
-            res.send({ message: "Must include a product id" })
         }
-    }
+    } */
+
+
+
+      deleteProduct = async (req, res) => {
+          const { id } = req.params
+          if (id) {
+              try {
+                  const product = await this.model.findByPk(id)
+                  const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
+                  const deleted = await this.model.destroy({ where: { id: id } })
+                  if (deleted === 1) {
+                      res.json({ message: "Product successfully deleted" })
+                  } else {
+                      res.json({ message: "Error" })
+                  }
+  
+              } catch (e) {
+                  res.send(e)
+              }
+          } else {
+              res.send({ message: "Must include a product id" })
+          }
+      }
 
     filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products

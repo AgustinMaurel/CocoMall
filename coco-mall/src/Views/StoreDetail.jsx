@@ -7,26 +7,27 @@ import Product from '../Components/Product/Product';
 import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
 
 import CartItem from '../Components/ShoppingCart/CartItem';
+import { addToCart, deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
 
 export default function StoreDetail() {
     const { id } = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
-    // const storeDetail = useSelector((state) => state.stores.storeDetail);
+    const storeDetail = useSelector((state) => state.stores.storeDetail);
     const storeProducts = useSelector((state) => state.stores.storeProducts);
     const shoppingCart = useSelector((state) => state.stores.cart);
 
     /*---------CREO OBJETO QUE MANDO AL BACK-------------*/
 
-    // let total = Object.values(shoppingCart).reduce(
-    //     (previous, key) => previous + key.price * key.quantity,
-    //     0,
-    // );
+    let total = Object.values(shoppingCart).reduce(
+        (previous, key) => previous + key.price * key.quantity,
+        0,
+    );
 
-    // let data = {
-    //     title: 'Cart',
-    //     total: total,
-    // };
+    let data = {
+        title: 'Cart',
+        total: total,
+    };
 
     /*----------------------------------*/
 
@@ -38,11 +39,11 @@ export default function StoreDetail() {
 
     /*---------LE PIDO AL BACK EL LINK DE PAGO------------*/
 
-    // const handleCheckout = () => {
-    //     axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
-    //         history.push(`/cart/${order.data.response}`);
-    //     });
-    // };
+    const handleCheckout = () => {
+        axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
+            history.push(`/cart/${order.data.response}`);
+        });
+    };
 
     return (
         <div className='grid grid-cols-12  w-screen  grid-rows-8   h-screen '>
@@ -74,7 +75,11 @@ export default function StoreDetail() {
                 <div className='cards   overflow-y-scroll '>
                     {storeProducts.length
                         ? storeProducts?.map((product) => (
-                              <Product product={product} key={product.id} />
+                            <Product
+                                  product={product}
+                                  key={product.id}
+                                  addToCart={() => addToCart(product.id)}
+                              />
                           ))
                         : false}
                 </div>
@@ -91,7 +96,13 @@ export default function StoreDetail() {
                  
                     <div className='relative flex flex-col justify-between bg-yellow-400 h-full'>
                       
-                         
+                        {shoppingCart && shoppingCart?.map(item => (
+                            <CartItem key={item.id}
+                                      data={item}
+                                      deleteFromCart={deleteFromCart}
+                                      deleteAllFromCart={deleteAllFromCart}
+                            />
+                        ))}
                       
                         <div>
                             <h1>Total : </h1>

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
-import { getProducts } from '../../Scripts/cart';
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -15,7 +14,8 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
-    const items = useSelector((state) => state.stores.itemsInCart);
+    // const items = useSelector((state) => state.stores.itemsInCart);
+    const cartItems = useSelector((state) => state.stores.cart);
     const dispatch = useDispatch();
 
     function handleCheckout() {
@@ -48,6 +48,8 @@ function NavBar() {
         else setDisplayMenu(true);
     }
 
+
+    
     //relacionar el pago con el id de tienda, para asi en una propiedad que tenga ej: wallet que sea donde esta el total de sus ventas
     //checkout carrito general --> id + tienda --> pago --> tienda: wallet --> pago
 
@@ -87,9 +89,9 @@ function NavBar() {
                                         
                                         className='relative cursor-pointer'
                                     >
-                                    <button className='bg-red-500' onClick={handleCheckout} >
+                                    <button  onClick={handleCheckout} >
                                         <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
-                                            {items}
+                                            {cartItems.length}
                                         </div>
                                         <svg
                                             className='w-6 h-6 pointer-events-none'

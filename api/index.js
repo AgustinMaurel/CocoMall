@@ -5,7 +5,7 @@ const { PORT } = require('./src/utils/config/index');
 
 // Syncing all the models at once.
 db.sync()
-    .then(() => {
+.then(() => {
         server.listen(PORT, () => {
             console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
         });

@@ -29,13 +29,14 @@ import {
     handleOnOrder,
     handleOnSubmit,
     handleOnDiscount,
-    handleOnChecked
+    handleOnChecked,
 } from '../Scripts/handles';
 
 ReactModal.setAppElement('#root');
 export default function StoreDetail() {
     const dispatch = useDispatch();
-    const {allStores, storeProductsFilter, cart, productDetail, productTypes} = useSelector((state) => state.stores)
+    const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts } =
+        useSelector((state) => state.stores);
 
     const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -98,6 +99,18 @@ export default function StoreDetail() {
     );
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
+    let productTypesArr = [];
+    storeProducts.length &&
+        storeProducts.map((product, index) => {
+            if (!productTypesArr.includes(product.ProductTypeId)) {
+                productTypesArr.push(product.ProductTypeId);
+            }
+        });
+
+    const typesProductInStore = productTypes.filter((type, index) => {
+        console.log(type);
+        return productTypesArr.includes(type.id);
+    });
 
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
@@ -115,7 +128,7 @@ export default function StoreDetail() {
                 <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
                 <Share />
             </div>
-
+            
             {/* SIDEBAR */}
             <div
                 className='col-span-2  row-span-8
@@ -156,16 +169,18 @@ export default function StoreDetail() {
                     </form>
                     <button onClick={handleDiscount}>Discount</button>
 
-                    {productTypes.length
-                        ? productTypes.map((type, index) => {
-                              return (
-                                      <FilterTypeProduct
-                                      type={type}
-                                      index={index}
-                                      handleChecked={handleChecked}
-                                      check={check}
-                                      />
-                              );
+                    {typesProductInStore.length
+                        ? typesProductInStore.map((type, index) => {
+                            console.log(type)
+                            return(
+
+                                <FilterTypeProduct
+                                type={type}
+                                index={index}
+                                handleChecked={handleChecked}
+                                check={check}
+                                />
+                                )
                           })
                         : false}
 

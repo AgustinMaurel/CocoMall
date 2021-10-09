@@ -302,7 +302,6 @@ export default function StoreDetail() {
                               </div>
                           ))
                         : false}
-
                     {productDetail ? (
                         <ReactModal
                             style={{

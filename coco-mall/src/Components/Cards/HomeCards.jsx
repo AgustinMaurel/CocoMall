@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Image } from 'cloudinary-react';
 
 function HomeCards({ storeName, description, cloudImage }) {
     return (
@@ -10,7 +12,8 @@ function HomeCards({ storeName, description, cloudImage }) {
             />
 
             <div className='flex justify-center px-5 -mt-6'>
-                <img
+                {/* LOGO */}
+                <Image
                     className=' h-14 w-14
                                 bg-white rounded-full
                                 shadow
@@ -18,8 +21,12 @@ function HomeCards({ storeName, description, cloudImage }) {
                                 md:h-20 md:w-20
                                 xl:-mt-4
                                 2xl:h-20 2xl:w-20'
-                    src={cloudImage}
+                    publicId={cloudImage}
                     alt='logo'
+                    cloudName='cocomalls'
+                    //                                 publicId={imageId}
+                    width='300'
+                    crop='scale'
                 />
             </div>
             <div>

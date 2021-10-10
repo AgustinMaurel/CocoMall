@@ -1,0 +1,21 @@
+{
+    "name": "cocomall",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "heroku-prebuild": "cd app &&  npm start",
+        "start": "cd api && npm start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AgustinMaurel/CocoMall.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AgustinMaurel/CocoMall/issues"
+    },
+    "homepage": "https://github.com/AgustinMaurel/CocoMall#readme"
+}

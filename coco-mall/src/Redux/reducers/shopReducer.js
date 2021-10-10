@@ -7,7 +7,7 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
-    FILTER_STORE,
+    FILTER_STORE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -18,7 +18,6 @@ const initialState = {
     storeProductsFilter: [],
     productDetail: {},
     productTypes: [],
-    cart: [],
     storeCreated: {},
 };
 
@@ -28,8 +27,9 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 allStores: payload,
-                storesFilters: payload,
+                storesFilters: payload
             };
+      
 
         case POST_STORE:
             return {
@@ -110,6 +110,8 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                         .slice(),
                 };
             }
+
+        
 
         default:
             return state;

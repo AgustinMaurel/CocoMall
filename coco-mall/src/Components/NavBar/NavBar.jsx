@@ -15,7 +15,7 @@ function NavBar() {
     const history = useHistory();
     const user = useSelector((state) => state.auth);
     // const items = useSelector((state) => state.stores.itemsInCart);
-    const cartItems = useSelector((state) => state.stores.cart);
+    const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
     function handleCheckout() {
@@ -30,7 +30,7 @@ function NavBar() {
                 history.push(`/cart/${order.data.response}`);
             })
             .catch((err) => console.log(err));
-    };
+    }
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -48,8 +48,6 @@ function NavBar() {
         else setDisplayMenu(true);
     }
 
-
-    
     //relacionar el pago con el id de tienda, para asi en una propiedad que tenga ej: wallet que sea donde esta el total de sus ventas
     //checkout carrito general --> id + tienda --> pago --> tienda: wallet --> pago
 
@@ -85,29 +83,29 @@ function NavBar() {
                         <div className='flex gap-x-5 items-center'>
                             {user.uid ? (
                                 <>
-                                    <div
-                                        
-                                        className='relative cursor-pointer'
-                                    >
-                                    <button  onClick={handleCheckout} >
-                                        <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
-                                            {cartItems.length}
-                                        </div>
-                                        <svg
-                                            className='w-6 h-6 pointer-events-none'
-                                            fill='none'
-                                            stroke='currentColor'
-                                            viewBox='0 0 24 24'
-                                            xmlns='http://www.w3.org/2000/svg'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                strokeWidth='2'
-                                                d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
-                                            ></path>
-                                        </svg>
-                                    </button>
+                                    <div className='relative cursor-pointer'>
+                                        <button onClick={handleCheckout}>
+                                          
+                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                    5
+                                                </div>
+                                          
+
+                                            <svg
+                                                className='w-6 h-6 pointer-events-none'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                                xmlns='http://www.w3.org/2000/svg'
+                                            >
+                                                <path
+                                                    strokeLinecap='round'
+                                                    strokeLinejoin='round'
+                                                    strokeWidth='2'
+                                                    d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
+                                                ></path>
+                                            </svg>
+                                        </button>
                                     </div>
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link
@@ -115,7 +113,8 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name.split(' ')[0]} {/* para ver solo nombre */}
+                                                {user.name.split(' ')[0]}{' '}
+                                                {/* para ver solo nombre */}
                                             </button>
                                         </Link>
                                     </div>

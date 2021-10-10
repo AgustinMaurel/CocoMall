@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { auth } from './firebase/firebaseConfig';
-import { login, setCart } from './Redux/actions/auth';
+import { login } from './Redux/actions/auth';
 import './App.css';
 
 import { getStores, getProductTypes } from './Redux/actions/stores';
@@ -15,7 +15,7 @@ import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
 
-import ProductDetail from './Components/Product/ProductDetail'
+// import ProductDetail from './Components/Product/ProductDetail'
 
 
 
@@ -29,7 +29,7 @@ function App() {
         auth.onAuthStateChanged((user) => {
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
-                dispatch(setCart(user.uid))
+                
                 setIsLoggedIn(true);
             } else {
                 setIsLoggedIn(false);

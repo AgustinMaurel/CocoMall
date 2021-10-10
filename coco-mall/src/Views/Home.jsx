@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
+import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
@@ -28,7 +28,7 @@ function Home() {
         rating: '',
     });
 
-    console.log(check);
+ 
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -142,9 +142,7 @@ function Home() {
 
                 <div className='w-3/4 m-auto mt-8'>
                     <div>
-                        <h3 className='text-2xl font-bold text-cocoMall-800'>
-                            Stores in "Paraná"
-                        </h3>
+                        <h3 className='text-2xl font-bold text-cocoMall-800'>Stores in "Paraná"</h3>
                         <Slider {...settingsCards}>
                             {allStores?.map((e, i) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>

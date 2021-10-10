@@ -25,4 +25,9 @@ export const SHOPPING_CART = {
 };
 
 
+export const DELETE_PRODUCT = 'http://localhost:3001/product/delete'
+
 export const CREATE_USER_URL = 'http://localhost:3001/user/create';
+
+
+export const UPDATE_PRODUCT = 'http://localhost:3001/product/update'

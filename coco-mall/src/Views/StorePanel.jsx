@@ -1,61 +1,94 @@
 import { useEffect, useState } from 'react';
-import ProductsCreate from '../Components/Forms/ProductsCreate';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
-import { data } from '../Scripts/jsonPrueba';
 import NavBar from '../Components/NavBar/NavBar';
+import { getProductsStore, getStores, ordersProduct } from '../Redux/actions/stores';
+import { IoArrowBack } from "react-icons/io5";
+import ProductsCreate from '../Components/Forms/ProductsCreate';
+import { GrAdd } from 'react-icons/gr'
+
 
 
 export default function StorePanel() {
 
-    const [selectStore, setSelectStore] = useState("")
-    const [productStore, setProductsStore] = useState([])
-    const [viewTable, setViewTable] = useState(false)
-    const [viewOrders, setViewOrders] = useState(false)
-    const [form, setForm] = useState(false)
-    const [idState, setIdState] = useState({})
+    const dispatch = useDispatch()
 
     const stores = useSelector((state) => state.stores)
-    const user = useSelector(state => state.auth)
 
-    const storesUser = stores.allStores.filter(e => e.UserId === user.uid)
+    const user = useSelector((state) => state.auth)
 
-    useEffect(()=>{
-        setIdState(selectStore !== "All" ? storesUser.find(e=>e.storeName === selectStore) : null)
-    },[selectStore, storesUser])
+    const storesUser = stores.allStores.filter(el => el.UserId === user.uid)
 
-  
+    const products = useSelector((state) => state.stores.storeProductsFilter)
+
+    const [flag, setFlag] = useState(false)
+    const [idActual, setIdActual] = useState("")
+    const [product, setProduct] = useState()
+    const [selectStore, setSelectStore] = useState("Select Store")
+    const [render, setRender] = useState("")
+    const [types, setTypes] = useState([])
+    const [editState, setEditState] = useState(true)
+    const [renderSec, setRenderSec] = useState(false)
+    const [finalProducts, setFinalProducts] = useState([])
+
+    useEffect(() => {
+        dispatch(getStores())
+    }, [])
+
+    useEffect(() => {
+        dispatch(getProductsStore(idActual))
+    }, [flag])
+
+    
+   
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/productType')
+            .then((res) => setTypes(res.data))
+    }, [dispatch])
+
 
     function handleStore(e) {
-        setSelectStore(e.target.value)
+        if (e.target.value !== "All") {
+            setSelectStore(e.target.value)
+            const aux = stores.allStores.find(store => store.storeName === e.target.value)
+            dispatch(getProductsStore(aux.id))
+            setIdActual(aux.id)
+        }
+        return false
     }
-   function handleSubmit(e) {
-        
-        e.preventDefault()
-        let aux = storesUser.find(e => e.storeName === selectStore)
-        axios.get(`http://localhost:3001/product/${aux.id}`)
-            .then(res => setProductsStore(res.data))
-              
+
+    function handleRender(e) {
+        setRender(e.target.value)
+        setFlag(!flag)
+
     }
+
+    const filterProduct = ["A-Z", "Z-A", "Price", "Type", "Stock"]
+
+    const filterOrders = ["All", "Shipped", "Rejected", "Pending", "Completed"]
+
+    const filtersNow = render === "Products" ? filterProduct : render === 'Orders' ? filterOrders : []
 
 
     return (
         <div className='grid grid-col-6   grid-rows-8  h-screen '>
-            <div className=' col-span-6 row-span-1 row-end-1 flex  h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10  '>
+            <div className=' col-span-6 row-span-1 row-end-1   border-b-2 border-gray-100   '>
                 <NavBar />
             </div>
             <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
-                    <h1>Select Store</h1>
-                    <select name="selectStore" onClick={handleStore}>
-                        <option value="All">All</option>
-                        {storesUser.map(e => {
+
+                    <select defaultValue="SelectStore" name="selectStore" onChange={handleStore}>
+
+                        <option  selected="SelectStore" disabled={true} value="Select Store">Select Store</option>
+                        {storesUser?.map(e => {
                             return <option key={e.id} value={e.storeName}>{e.storeName}</option>
                         })}
                     </select>
-                    <button type="submit" onClick={handleSubmit} disabled={selectStore === "All" ? true: false } >Go</button>
+
                     <img className="w-9/12" src={logo} alt="not found" />
 
 
@@ -63,29 +96,55 @@ export default function StorePanel() {
                         Store Panel
                     </h1>
 
-                    <button onClick={()=> form ? setForm(false): setForm(true)}>Create products</button>
-
-                    <button onClick={()=> viewTable ? setViewTable(false): setViewTable(true)} >All products</button>
-
-                    <button onClick={()=> viewOrders ? setViewOrders(false): setViewOrders(true)}> Orders</button>
+                    <div className='flex flex-col'>
+                        <button name="Products" value="Products" onClick={handleRender} className='cursor-pointer' >
+                            Products </button>
+                        <button name="Orders" value="Orders" onClick={handleRender} className='cursor-pointer' >
+                            Orders </button>
+                    </div>
 
 
                 </div>
 
             </div>
 
-            <div className=' col-start-2 col-end-6 row-span-full text-center justify-center items-center overflow-y-hidden p-4 '>
-                    <div className='text-center justify-center items-center'> 
-                        {selectStore === "All" ? <span>Select a Store</span>
-                        : 
-                         form ? <ProductsCreate idStore={idState?.id} /> :  viewTable ? <ModelTable info={productStore} title={"Products"}
-                            filters={["A-Z", "Z-A", "Price", "Type", "Stock", ]} column_title={["Action","Name", "Price", "Id", "Image", "Stock", "Type"]} />
-                            :
-                        viewOrders ? <ModelTable info={data} title={"Orders"}
-                            filters={[ "All", "Shipped", "Rejected", "Pending", "Completed"]} column_title={["Action","State", "Payment", "Description",]} />
-                            :false}
+            {editState ?
+                <div className=' col-start-2 col-end-6 row-span-full text-center justify-center items-center overflow-y-hidden p-4 '>
+                    <IoArrowBack />
+                    <div className='text-center justify-center items-center'>
+                        {selectStore === "All" && <span>Select a Store</span>}
+
+
+                        <div>
+
+
+                            <h1 className='text-center items-center '>{render === "Products" ? "Products" : render ==="Orders" ? "Orders" : false}</h1>
+                            <div className=' flex text-center justify-evenly items-center h-32 '>
+                                {filtersNow.map((el) => (
+                                    <label onClick={()=>{
+                                        dispatch(ordersProduct(el))
+                                        console.log(finalProducts)
+                                    }}  key={el} className='border cursor-pointer bg-secondary-light border-gray-200 rounded-md px-5'>{el}</label>
+                                ))}
+                                <label onClick={() => dispatch(getProductsStore(idActual)) && !renderSec ? setRenderSec(true) : setRenderSec(false)} className='border cursor-pointer bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></label>
+                            </div>
+                        </div>
+
+                        {render === "Products" && selectStore !== "Select Store" && renderSec === false ?
+                            <ModelTable info={products} setProduct={setProduct} setEditState={setEditState} idStore={idActual} types={types}
+                                column_title={["Action", "Name", "Price", "Id", "Image", "Stock", "Type"]} />
+                            : renderSec === true ? <ProductsCreate idStore={idActual} />: false}
+
+                                {render === "Orders" && selectStore !== "All" && <ModelTable info={[]} 
+                                     column_title={["Action", "State", "Payment", "Description",]} />}
+
                     </div>
-            </div>
+                </div> :
+                <div>
+                    <IoArrowBack onClick={() => setEditState(true)} />
+                    <ProductsCreate idStore={idActual} product={product} />
+                </div>
+            }
         </div>
     );
 }

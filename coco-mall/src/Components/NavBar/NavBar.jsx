@@ -112,10 +112,10 @@ function NavBar() {
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link
                                             className='relative w-full h-full flex items-center align-center justify-center'
-                                            to='/auth/login'
+                                            to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name}
+                                                {user.name.split(' ')[0]} {/* para ver solo nombre */}
                                             </button>
                                         </Link>
                                     </div>

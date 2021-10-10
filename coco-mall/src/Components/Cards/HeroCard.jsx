@@ -3,7 +3,7 @@ import React from 'react';
 const HeroCard = ({ color }) => {
 
     return (
-        <div className={`h-28 ${color}`}>
+        <div className={`h-28 ${color} rounded-lg`}>
             <div className='h-full'>
                 {/* <img src={IMG} alt="banner card" />
                 <h3>{store}</h3> */}

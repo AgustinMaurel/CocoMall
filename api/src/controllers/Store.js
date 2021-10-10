@@ -16,9 +16,7 @@ class StoreModel extends ModelController {
                 const fileString = req.body.idImage
                     ? req.body.idImage
                     : 'No image base64 string';
-                const uploadedResponse = await cloudinary.uploader.upload(
-                    fileString
-                );
+                const uploadedResponse = await cloudinary.uploader.upload(fileString, {folder: "Stores"});
                 let public_id = uploadedResponse.public_id;
 
         //Our DataBase
@@ -52,10 +50,6 @@ class StoreModel extends ModelController {
 
   getAllData = async (req, res, next) => {
     try {
-      //Cloudinary
-
-      // Our DataBase
-
             let data = await Store.findAll({
                 include: [{model: Product}]
             });
@@ -137,17 +131,28 @@ class StoreModel extends ModelController {
     deleteDeep=async(req,res)=>{
         let id = req.params.id;
         if(id){
-
-            // Borrar fotos de productos y de la tienda de Cloudinary
-            // to do
-
             try{
+                // Delete store image, Cloudinary
+                const old = await this.model.findByPk(id)
+                let arr = [old.cloudImage]
+                const deletedImage = await cloudinary.api.delete_resources(arr, {folder: "Stores"});
+
+                // Delete product images, Cloudinary
+                const allProducts = await Product.findAll({where: {StoreId: id}}) // [ {...} , {...}]
+                const img = allProducts.map(product => product.cloudImage)
+                let deletedImagesCloudinary = []
+                for(let i=0; i<img.length; i++){
+                    deletedImagesCloudinary[i] = await cloudinary.api.delete_resources(img[i], {folder: "Products"});
+                }
+
+                // Borro la tienda y sus productos
                 const[ProductDelte,StoreDelte]=await Promise.all([
                     Product.destroy({where:{StoreId:id}}),
                     this.model.destroy({where:{id:id}}),
                 ])
-                res.json({ProductDelte,
-                        StoreDelte})
+
+                
+                res.json({ProductDelte, StoreDelte})
 
             }catch(error){
                 res.status(400).json(error)
@@ -171,10 +176,10 @@ class StoreModel extends ModelController {
             let arr = []
             const oldStore = await this.model.findByPk(id1)
             arr.push(oldStore.cloudImage)
-            const deletedImage = await cloudinary.api.delete_resources(arr);
+            const deletedImage = await cloudinary.api.delete_resources(arr, {folder: "Stores"});
             
             // Subo la imagen nueva a Cloudinary
-            const uploadedResponse = await cloudinary.uploader.upload(store.cloudImage)
+            const uploadedResponse = await cloudinary.uploader.upload(store.cloudImage, {folder: "Stores"})
             
             // Guardo el token de la imagen, asi tambien se actualiza
             let public_id = uploadedResponse.public_id;

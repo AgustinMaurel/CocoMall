@@ -5,10 +5,11 @@ const {
     createProduct,
     bulkCreateProducts,
     findAllProductsOfStore,
-    filterProductsByStore,
     filterProductsByTypeAndName,
     updateDataProduct,
-    deleteDataById
+    deleteDataById,
+    deleteProduct,
+    filterProductsByStore
 } = require('../controllers/Product.js');
 const { route } = require('./Store.js');
 
@@ -27,7 +28,7 @@ router.post('/bulkCreate', bulkCreateProducts);
 router.post('/create', createProduct);
 
 //Delete Product
-router.delete('/delete/:id',deleteDataById) 
+router.delete('/delete/:id', deleteProduct) 
 
 //Update Product
 router.put('/update/:id',updateDataProduct) 

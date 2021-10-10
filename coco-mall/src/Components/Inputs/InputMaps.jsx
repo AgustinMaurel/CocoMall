@@ -21,7 +21,7 @@ const InputMaps = ({ coord }) => {
     });
 
     const [map, setMap] = React.useState(null);
-
+    
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds();
         map.fitBounds(bounds);
@@ -32,11 +32,13 @@ const InputMaps = ({ coord }) => {
         setMap(null);
     }, []);
 
+    console.log(map)
+
     return isLoaded ? (
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={15}
+            zoom={18}
             onLoad={onLoad}
             onUnmount={onUnmount}
         >

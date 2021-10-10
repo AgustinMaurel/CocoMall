@@ -15,6 +15,10 @@ import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
 
+import ProductDetail from './Components/Product/ProductDetail'
+
+
+
 function App() {
     const dispatch = useDispatch();
 
@@ -42,7 +46,7 @@ function App() {
     return (
         <>
             <Switch>
-                <Route exact path='/storePanel' component={StorePanel}/> 
+                <Route path='/storePanel' component={StorePanel}/> 
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
                 <Route path='/cart/:id' exact component={Cart} />

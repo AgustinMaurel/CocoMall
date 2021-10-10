@@ -17,7 +17,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                 type={type}
                 placeholder={placeholder}
                 {...register(name, validate)}
-            />
+                />
 
             {errors[name] ? (
                 <p className='absolute text-red-500 -top-6 left-0 whitespace-nowrap'>
@@ -27,22 +27,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
                         <p className='min-w-max'> {finalResult}</p>
-                        {/* <div>
-                            <svg
-                                className='w-3 h-3 rounded-full bg-green-400'
-                                fill='none'
-                                stroke='currentColor'
-                                viewBox='0 0 24 24'
-                                xmlns='http://www.w3.org/2000/svg'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='2'
-                                    d='M5 13l4 4L19 7'
-                                ></path>
-                            </svg>
-                        </div> */}
+                       
                     </div>
                 </div>
             )}

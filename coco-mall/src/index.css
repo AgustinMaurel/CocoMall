@@ -1,5 +1,16 @@
 @tailwind base;
 @tailwind components;
+
+.toggle-checkbox:checked {
+    @apply: right-0 border-green-400;
+    right: 0;
+    border-color: #4DC1C3;
+}
+.toggle-checkbox:checked + .toggle-label {
+    @apply: bg-green-400;
+    background-color: #38A3A5;
+  }
+
 @tailwind utilities;
 
 * {

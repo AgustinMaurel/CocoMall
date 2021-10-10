@@ -19,16 +19,18 @@ const ProductsCreate = ({ idStore, product }) => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm ({ defaultValues: product });
 
 
+    
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-
+        
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
             setIsUploaded(true);
         };
+
     };    
 
     //POST DATA PRODUCT & ID STORE

@@ -6,7 +6,6 @@ import ReactModal from 'react-modal';
 ReactModal.setAppElement('#root');
 
 function ProductDetail(props) {
-    console.log(props);
     const { product } = props;
     return (
         <div>
@@ -15,6 +14,7 @@ function ProductDetail(props) {
             <p>{product.description}</p>
             <span>{product.price}</span>
             <span>{product.stock}</span>
+            {product.discount > 0 ? <span>{product.discount}</span> : false}
             <button onClick={props.addToCart}>Add Cart</button>
         </div>
     );

@@ -1,11 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom';
-
 
 export default function Product(props) {
-    const dispatch = useDispatch()
-    const location = useLocation();
     const { product } = props
 
     return (

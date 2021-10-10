@@ -53,7 +53,8 @@ export const getProductDetail = (id) => {
     };
 };
 
-export const filterProducts = (id, payload) => {
+export const filterProducts = (id, payload) => {  
+console.log(payload)
     const obj = {
         types: payload.type,
         name: payload.searchProduct,

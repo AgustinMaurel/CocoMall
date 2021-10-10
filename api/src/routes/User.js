@@ -24,6 +24,6 @@ router.post('/bulkCreate', bulkCreateUser);
 //PUT's
 router.put('/update/:id', updateData);
 
-router.put('/update/cart', updateCart)
+router.post('/update/cart', updateCart)
 
 module.exports = router;

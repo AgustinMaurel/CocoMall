@@ -98,15 +98,15 @@ Order.belongsToMany(Product, { through: 'ordersProduct' });
 Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
 Question.belongsTo(Product);
 
-// //----------------------------------
-User.hasOne(Cart, { foreignKey: { id: 'myUserId' } });
-Cart.belongsTo(User);
-// //----------------------------------
-Cart.hasMany(Item, { foreignKey: { id: 'myItemId' } });
-Item.belongsTo(Cart);
-// //----------------------------------
-Product.hasMany(Item, { foreignKey: { id: 'myItemId' } });
-Item.belongsTo(Product);
+// // //----------------------------------
+// User.hasOne(Cart, { foreignKey: { id: 'myUserId' } });
+// Cart.belongsTo(User);
+// // //----------------------------------
+// Cart.hasMany(Item, { foreignKey: { id: 'myItemId' } });
+// Item.belongsTo(Cart);
+// // //----------------------------------
+// Product.hasMany(Item, { foreignKey: { id: 'myItemId' } });
+// Item.belongsTo(Product);
 
 module.exports = {
     db: sequelize,

@@ -80,8 +80,13 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body
         if (userId) {
             try {
-                const user = await this.model.findById(userId)
+                const user = await this.model.findOne({
+                    where: {
+                        id: userId
+                    }
+                })
                 user.Cart = cart
+                console.log(user)
                 const updatedUser = await user.save()
                 res.send(updatedUser)
             } catch (error) {

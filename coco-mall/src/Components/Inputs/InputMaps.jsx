@@ -3,13 +3,16 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 
 const InputMaps = ({ coord }) => {
+
     const containerStyle = {
         width: '100%',
-        height: '200px',
-        marginBottom: '15px',
+        height: '100%',
     };
 
-    const center = coord;
+    const center = coord || {
+        lat: -31.7190478,
+        lng: -60.5368534
+    };
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -18,9 +21,7 @@ const InputMaps = ({ coord }) => {
     });
 
     const [map, setMap] = React.useState(null);
-
-    console.log(map);
-
+    
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds();
         map.fitBounds(bounds);
@@ -30,6 +31,8 @@ const InputMaps = ({ coord }) => {
     const onUnmount = React.useCallback(function callback(map) {
         setMap(null);
     }, []);
+
+    console.log(map)
 
     return isLoaded ? (
         <GoogleMap

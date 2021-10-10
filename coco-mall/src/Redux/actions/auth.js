@@ -36,17 +36,13 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                console.log(user)
                 let aux = {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email
                 }
-                console.log(aux)
                 axios.post(CREATE_USER_URL, aux)
                 dispatch(login( user.uid, user.displayName))
-                
-                
             })
             .catch((err) =>
                 Swal.fire({

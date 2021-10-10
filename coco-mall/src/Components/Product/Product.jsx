@@ -1,13 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
-import { useParams, Link, useLocation } from 'react-router-dom';
-
-import { addToCart } from '../../Redux/actions/shoppingActions'
-import { getProductDetail } from '../../Redux/actions/stores'
 
 export default function Product(props) {
-    const dispatch = useDispatch()
-    const location = useLocation();
     const { product } = props
 
     return (

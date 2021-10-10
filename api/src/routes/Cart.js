@@ -7,13 +7,13 @@ const {
     addToCart,
     deleteFromCart,
     clearCart,
-    getProduct
+    getCart
 } = require('../controllers/Cart.js');
 
 //se importa la ruta y se la agrega
 //modelo
 
-router.post('/getProduct', getProduct)
+router.post('/getProduct', getCart)
 
 router.post('/addToCart', addToCart);
 

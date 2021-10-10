@@ -23,7 +23,7 @@ class ProductModel extends ModelController {
                 );
                 let public_id = uploadedResponse.public_id;
                 //Get the Product from body
-                const product = { ...req.body.product, cloudImage: public_id};
+                const product = { ...req.body.product, cloudImage: public_id };
                 //Create new Product
                 const newProduct = await this.model.create(product);
                 const productId = newProduct.id;
@@ -45,30 +45,23 @@ class ProductModel extends ModelController {
     };
 
     bulkCreateProducts = async (req, res) => {
-        const allProducts = req.body.products;
-        const allIds = req.body.ids;
-        if (typeof allProducts === 'object') {
-            try {
-                const products = await this.model.bulkCreate(allProducts);
-                products.forEach(async (product, i) => {
-                    //Each Product we need the id
-                    let productId = product.id;
-                    let storeId = allIds[i].storeId;
-                    let typeId = allIds[i].typeId;
-                    //Attach the new product with the Store
-                    const store = await Store.findByPk(storeId);
-                    await store.addProduct(productId);
-                    //Attach the new product with his Type
-                    const productType = await ProductType.findByPk(typeId);
-                    await productType.addProduct(productId);
-                });
-                //lindo msj
-                res.send('Successfully Created');
-            } catch (error) {
-                res.send(error);
+        const { storeId, allTypes, products} = req.body
+        try {
+            const productsDB = await this.model.bulkCreate(products)
+            for (const [i, product] of productsDB.entries()) {        
+                const productId = product.id
+                const productTpeId = allTypes[i]
+                //Attach the new product with the Store
+                const store = await Store.findByPk(storeId);
+                await store.addProduct(productId);
+                //Attach the new product with his Type
+                const productType = await ProductType.findByPk(productTpeId);
+                await productType.addProduct(productId);
             }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
+            //lindo msj
+            res.send('Successfully Created');
+        } catch (error) {
+            res.send(error);
         }
     };
 

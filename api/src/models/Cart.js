@@ -10,8 +10,6 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 primaryKey: true,
             },
-
-            
         },
         {
             timestamps: false,

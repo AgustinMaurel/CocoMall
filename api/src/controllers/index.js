@@ -4,11 +4,11 @@ class ModelController {
     }
     //general Functions
     createData = async (req, res) => {
-        if (typeof req.body === 'object') {
+        const data = req.body;
+        if (typeof data === 'object') {
             try {
-                let data = req.body;
-                let updatedData = await this.model.create(data);
-                res.send(updatedData);
+                let createdDaata = await this.model.create(data);
+                res.send(createdDaata);
             } catch (e) {
                 res.send(e);
             }
@@ -61,11 +61,14 @@ class ModelController {
         }
     };
 
-    getAllData = async (req, res, next) => {
-        let data = await this.model.findAll().catch((err) => {
-            next(err);
-        });
-        res.send(data);
+    getAllData = async (req, res) => {
+        try {
+            let data = await this.model.findAll()     
+            res.send(data);
+        } catch (error) {
+            res.send(error)
+        }
+
     };
 }
 

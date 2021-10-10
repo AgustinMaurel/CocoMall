@@ -9,7 +9,7 @@ class StoreModel extends ModelController {
     }
     //Specific Functions for this model
     createStore = async (req, res) => {
-        
+
         if (req.body.idUser) {
             try {
                 //Cloudinary
@@ -48,14 +48,14 @@ class StoreModel extends ModelController {
                 const storeId = newStore.id;
 
                 //Attach the Store with the User ID
-                
+
                 const user = await User.findByPk(id);
-                
+
                 await user.addStore(storeId);
 
                 // Final Store
                 const finalStore = await this.model.findByPk(storeId);
-                
+
                 res.send(finalStore);
             } catch (e) {
                 res.send(e);
@@ -76,7 +76,7 @@ class StoreModel extends ModelController {
             // Our DataBase
 
             let data = await Store.findAll({
-                include: [{model: Product}]
+                include: [{ model: Product }]
             });
             res.send(data);
         } catch (e) {
@@ -85,16 +85,15 @@ class StoreModel extends ModelController {
     };
 
     postBulkCreate = async (req, res) => {
-        const allStore = req.body.Store;
-        const allId = req.body.Ids;
-        if (typeof allStore === 'object') {
+        const { store, ids } = req.body;
+        if (typeof store === 'object') {
             try {
-                let stores = await this.model.bulkCreate(allStore);
+                let stores = await this.model.bulkCreate(store);
                 stores.forEach(async (store, i) => {
                     //Get the id of each store
                     const storeId = store.id;
                     //Attach the Store with the User ID
-                    const user = await User.findByPk(allId[i]);
+                    const user = await User.findByPk(ids[i]);
                     await user.addStore(storeId);
                 });
                 //lindo msj
@@ -132,6 +131,13 @@ class StoreModel extends ModelController {
                         },
                     },
                 },
+                where: {
+                    Products: {
+                        ProductTypeId: {
+                            [Op.or]: typesId,
+                        },
+                    }
+                }
             });
             res.send(filteredStores);
         } catch (error) {
@@ -139,10 +145,8 @@ class StoreModel extends ModelController {
         }
     };
 
-
-    
     findStoresOfUser = async (req, res) => {
-        const id = req.body.id ? req.body.id : null ;
+        const id = req.body.id ? req.body.id : null;
         // return res.send(id)
         if (id) {
             try {

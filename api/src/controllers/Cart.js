@@ -6,7 +6,7 @@ class OrderModel extends ModelController {
         super(model);
     }
     //Specific Functions for this model
-    getProduct = async (req, res) => {
+    getCart = async (req, res) => {
         try {
             let idUser = req.body.idUser;
             let cart = await this.model.findOne({
@@ -29,9 +29,7 @@ class OrderModel extends ModelController {
                     },
                 },
             });
-            let totalItems = cart.Items.length
-            cart = { ...cart, totalItems }
-            res.send(cart);
+            res.send(cart, totalProducs);
         } catch (err) {
             console.error(err);
         }

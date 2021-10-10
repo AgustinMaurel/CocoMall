@@ -1,23 +1,30 @@
 import { LOGIN, LOGOUT, SET_CART, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
 
+
+
 const initialState = {
     uid: '',
     name: '',
-    storeProducts: [],
-    userCart: [],
+    storeProducts:[],
+    userCart: [], // mandar este carrito al back para que quede guardado en BD 
 };
 
 export const authReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case LOGIN:
             return {
+                ...state,
                 uid: payload.uid,
                 name: payload.displayName,
+                
+                userCart:[],
             };
         case LOGOUT:
             return {
                 uid: '',
                 name: '',
+                storeProducts:[],
+                userCart:[], 
             };
 
         case GET_PRODUCT:
@@ -33,11 +40,11 @@ export const authReducer = (state = initialState, { type, payload }) => {
             return repeatedItem
                 ? {
                       ...state,
-                      cart: state.userCart.map((item) =>
+                      userCart: state.userCart.map((item) =>
                           item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item,
                       ),
                   }
-                : { ...state, cart: [...state.userCart, { ...newItem, quantity: 1 }] };
+                : { ...state, userCart: [...state.userCart, { ...newItem, quantity: 1 }] };
         }
         case SHOPPING_CART_TYPES.REMOVE_ONE_FROM_CART: {
             let itemToDelete = state.userCart.find((item) => item.id === payload);
@@ -45,7 +52,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
             return itemToDelete.quantity > 1
                 ? {
                       ...state,
-                      cart: state.userCart.map((item) =>
+                      userCart: state.userCart.map((item) =>
                           item.id === payload ? { ...item, quantity: item.quantity - 1 } : item,
                       ),
                   }
@@ -55,14 +62,14 @@ export const authReducer = (state = initialState, { type, payload }) => {
         case SHOPPING_CART_TYPES.REMOVE_ALL_FROM_CART: {
             return {
                 ...state,
-                cart: state.userCart.filter((item) => item.id !== payload),
+                userCart: state.userCart.filter((item) => item.id !== payload),
             };
         }
 
         case SHOPPING_CART_TYPES.CLEAR_CART: {
             return {
                 ...state,
-                cart: [],
+                userCart: [],
             };
         }
         case SET_CART:

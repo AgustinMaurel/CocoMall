@@ -10,7 +10,8 @@ import Textarea from '../Inputs/Textarea';
 
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
-import { postStore } from '../../Redux/actions/post';
+import { postStore} from '../../Redux/actions/post';
+import { getStores} from '../../Redux/actions/stores';
 import InputMaps from '../Inputs/InputMaps';
 
 function ShopCreate({ setIsTrue }) {
@@ -66,6 +67,7 @@ function ShopCreate({ setIsTrue }) {
         })
 
         dispatch(postStore(storeCreated));
+        dispatch(getStores());
     };
 
     return (

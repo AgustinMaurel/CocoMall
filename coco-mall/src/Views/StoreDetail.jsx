@@ -37,10 +37,11 @@ export default function StoreDetail() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-   const storeDetail = useSelector((state) => state.stores.storeDetail);
-    const shoppingCart = useSelector((state) => state.stores.cart);
-    const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts } =
+ 
+    const { allStores, storeProductsFilter,  productDetail, productTypes, storeProducts } =
         useSelector((state) => state.stores);
+
+    const cart = useSelector(state => state.auth.userCart)
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModal, setInfoModal] = useState(false);
@@ -80,15 +81,15 @@ export default function StoreDetail() {
 
     /*---------CREO OBJETO QUE MANDO AL BACK-------------*/
 
-    let total = Object.values(shoppingCart).reduce(
-        (previous, key) => previous + key.price * key.quantity,
-        0,
-    );
+    // let total = Object.values(shoppingCart).reduce(
+    //     (previous, key) => previous + key.price * key.quantity,
+    //     0,
+    // );
 
-    let data = {
-        title: 'Cart',
-        total: total,
-    };
+    // let data = {
+    //     title: 'Cart',
+    //     total: total,
+    // };
 
     /*----------------------------------*/
 
@@ -100,11 +101,11 @@ export default function StoreDetail() {
 
     /*---------LE PIDO AL BACK EL LINK DE PAGO------------*/
 
-    const handleCheckout = () => {
-        axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
-            history.push(`/cart/${order.data.response}`);
-        });
-    };
+    // const handleCheckout = () => {
+    //     axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
+    //         history.push(`/cart/${order.data.response}`);
+    //     });
+    // };
 
     
     const modalFuncion = (id) => {
@@ -127,7 +128,7 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     let productTypesArr = [];
     storeProducts.length &&
-        storeProducts.map((product, index) => {
+        storeProducts.map((product, ) => {
             if (!productTypesArr.includes(product.ProductTypeId)) {
                 productTypesArr.push(product.ProductTypeId);
             }
@@ -299,79 +300,80 @@ export default function StoreDetail() {
             </div>
 
             {/* CARDS */}
-            <div className='flex flex-col col-span-12 row-span-14 pl-12 pr-12'>
-                <div className='w-1/4 m-auto mt-5'>
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
-                    {/* 
-                    <Slider {...settingsCards}>
-                        {homeStores()?.map((e, i) => (
-                            <Link to={`/home/store/${e.id}`} onClick={() => allStores(e.id)}>
-                                <ProductCard
-                                    productName={e.storeName}
-                                    description={e.description}
-                                    cloudImage={e.logo}
-                                    key={i}
-                                />
-                            </Link>
-                        ))}
-                    </Slider> */}
-                </div>
-                <div className='flex flex-wrap justify-center'>
-                    {storeProductsFilter.length
-                        ? storeProductsFilter?.map((product) => (
-                              <div onClick={() => modalFuncion(product.id)}>
-                                  <Product
-                                      product={product}
-                                      addToCart={() => addToCart(product.id)}
-                                  />
-                              </div>
-                          ))
-                        : false}
-                    {productDetail ? (
-                        <ReactModal
-                            style={{
-                                overlay: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                                },
-                            }}
-                            isOpen={modalIsOpen}
-                            onRequestClose={() => setModalIsOpen(false)}
-                            className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
-                        >
-                            <ProductDetail
-                                product={productDetail}
-                                addToCart={() => addToCart(productDetail.id)}
-                            />
-                        </ReactModal>
-                    ) : (
-                        false
-                    )}
-                </div>
-            </div>
-
-            {/* CART */}
-            <div className='hidden'>
-                <div className=' bg-green-300 flex row-span-14 col-span-2 border-r border-gray-200 '>
-                    <div className=' '>
-                        <h3>Carrito</h3>
-                        {cart.length ? (
-                            <button
-                                className='border bg-red-600 text-white shadow p-1'
-                                onClick={() => dispatch(clearCart())}
+            <div className='col-span-12'>
+                <div className='flex flex-col col-span-12 row-span-14 pl-12 pr-12'>
+                    <div className='w-1/4 m-auto mt-5'>
+                        <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
+                        {/*
+                        <Slider {...settingsCards}>
+                            {homeStores()?.map((e, i) => (
+                                <Link to={`/home/store/${e.id}`} onClick={() => allStores(e.id)}>
+                                    <ProductCard
+                                        productName={e.storeName}
+                                        description={e.description}
+                                        cloudImage={e.logo}
+                                        key={i}
+                                    />
+                                </Link>
+                            ))}
+                        </Slider> */}
+                    </div>
+                    <div className='flex flex-wrap justify-center'>
+                        {storeProductsFilter.length
+                            ? storeProductsFilter?.map((product) => (
+                                  <div onClick={() => modalFuncion(product.id)}>
+                                      <Product
+                                          product={product}
+                                          addToCart={() => addToCart(product.id)}
+                                      />
+                                  </div>
+                              ))
+                            : false}
+                        {/* {productDetail ? (
+                            <ReactModal
+                                style={{
+                                    overlay: {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                                    },
+                                }}
+                                isOpen={modalIsOpen}
+                                onRequestClose={() => setModalIsOpen(false)}
+                                className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
                             >
-                                Clear cart
-                            </button>
+                                <ProductDetail
+                                    product={productDetail}
+                                    addToCart={() => addToCart(productDetail.id)}
+                                />
+                            </ReactModal>
                         ) : (
                             false
-                        )}
-                        {cart?.map((item, index) => (
-                            <CartItem
-                                key={index}
-                                data={item}
-                                deleteFromCart={() => dispatch(deleteFromCart(item.id))}
-                                deleteAllFromCart={() => dispatch(deleteAllFromCart(item.id))}
-                            />
-                        ))}
+                        )} */}
+                    </div>
+                </div>
+                {/* CART */}
+                <div className=' col-span-12 flex flex-col h-screen row-span-14 pl-12 pr-12'>
+                    <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
+                        <div className=' '>
+                            <h3>Carrito</h3>
+                            {cart.length ? (
+                                <button
+                                    className='border bg-red-600 text-white shadow p-1'
+                                    onClick={() => dispatch(clearCart())}
+                                >
+                                    Clear cart
+                                </button>
+                            ) : (
+                                false
+                            )}
+                            {cart?.map((item, index) => (
+                                <CartItem
+                                    key={index}
+                                    data={item}
+                                    deleteFromCart={() => deleteFromCart(item.id)}
+                                    deleteAllFromCart={() => deleteAllFromCart(item.id)}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

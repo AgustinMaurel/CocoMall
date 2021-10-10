@@ -23,3 +23,6 @@ export const SHOPPING_CART = {
     REMOVE_FROM_CART: `${SHOPPING_CART_BASE}/deleteFromCart`,
     CLEAR_CART: `${SHOPPING_CART_BASE}/clearCart`,
 };
+
+
+export const CREATE_USER_URL = 'http://localhost:3001/user/create';

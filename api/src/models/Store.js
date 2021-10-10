@@ -35,6 +35,9 @@ module.exports = (sequelize) => {
             cp: {
                 type: DataTypes.STRING,
             },
+            coord: {
+                type: DataTypes.JSON,
+            },
             // payment_account: {
             //PENDING
             // }

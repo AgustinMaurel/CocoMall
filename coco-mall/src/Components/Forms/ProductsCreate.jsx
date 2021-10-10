@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
-import { postProduct } from '../../Scripts/post';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
+import { postProduct } from '../../Redux/actions/post';
 
-const ProductsCreate = () => {
+const ProductsCreate = ({ idStore }) => {
     //--HOOKS--
     const dispatch = useDispatch();
     const {
@@ -19,30 +20,42 @@ const ProductsCreate = () => {
     } = useForm({ mode: 'onTouched' });
 
     //STATES
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
 
+    
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-
+        
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
             setIsUploaded(true);
         };
-    };
 
-    //Obtener el id de la STORE que crea el producto REDUX
-    let idStore = '5038c6e8-ac4a-4e5b-a374-dd9192084719';
+    };    
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
+        let product = {
+            productName: data.productName,
+            description: data.description,
+            price: Number(data.price),
+            stock: Number(data.stock),
+            sellBy: data.sellBy || 'Cuantity',
+        }
+        let productCreated = { product: product, storeId: idStore, idImage: [image], typeId: '1' };
+        
+        //configurar a medida
+        Swal.fire({
+            icon: 'success',
+            title: 'Store Created!',
+            showConfirmButton: false,
+            timer: 2000
+        })
 
-        alert('Product Created!');
-        console.log(productCreated);
         dispatch(postProduct(productCreated));
     };
 

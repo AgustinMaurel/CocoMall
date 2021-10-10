@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { getStores } from './Redux/actions/stores';
 import { auth } from './firebase/firebaseConfig';
 import { login, setCart } from './Redux/actions/auth';
 import './App.css';
 
+import { getStores, getProductTypes } from './Redux/actions/stores';
+import StorePanel from './Views/StorePanel';
 import Landing from './Views/Landing';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
@@ -34,12 +35,14 @@ function App() {
     }, [dispatch, setChecking, setIsLoggedIn]);
 
     useEffect(() => {
-        dispatch(getStores());
-    }, [dispatch]);
+        dispatch(getStores())       
+        dispatch(getProductTypes())       
+    }, [dispatch])
 
     return (
         <>
             <Switch>
+                <Route exact path='/storePanel' component={StorePanel}/> 
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
                 <Route path='/cart/:id' exact component={Cart} />

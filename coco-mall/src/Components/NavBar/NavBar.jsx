@@ -115,7 +115,7 @@ function NavBar() {
                                             to='/auth/login'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name || 'Pablo Koll'}
+                                                {user.name}
                                             </button>
                                         </Link>
                                     </div>

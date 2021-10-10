@@ -18,6 +18,10 @@ function NavBar() {
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
+    let ITEMS_IN_CART = cartItems
+        ?.map((el) => el.quantity)
+        .reduce((current, sum) => current + sum, 0);
+
     function handleCheckout() {
         console.log('click');
         axios
@@ -85,11 +89,13 @@ function NavBar() {
                                 <>
                                     <div className='relative cursor-pointer'>
                                         <button onClick={handleCheckout}>
-                                          
+                                            {cartItems.length > 0 ? (
                                                 <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
-                                                    5
+                                                    {ITEMS_IN_CART}
                                                 </div>
-                                          
+                                            ) : (
+                                                false
+                                            )}
 
                                             <svg
                                                 className='w-6 h-6 pointer-events-none'

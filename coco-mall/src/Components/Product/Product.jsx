@@ -1,4 +1,5 @@
 import {  useDispatch} from 'react-redux';
+import axios from 'axios'
 
 export default function Product(props) {
     const dispatch = useDispatch()
@@ -22,6 +23,12 @@ export default function Product(props) {
     //     getProducts(userId)
     //     console.log(productToCart)
     // };
+
+    const   handleButtonClick = () => {
+        dispatch(props.addToCart(product.id))
+        axios.post('http://localhost:3001/')
+    }
+
   return (
         <div className='w-48 h-96 bg-gray-400 shadow-lg m-4 rounded-md' key={product.id}>
             <div className='border w-full h-2/3 flex'>
@@ -36,7 +43,7 @@ export default function Product(props) {
                 <p className='text-xs'>{product.description}</p>
                 <li>{product.price}</li>
                 <li>{product.stock}</li>
-                <button onClick={() => dispatch(props.addToCart(product.id))} className='border '>Add to cart</button>
+                <button onClick={handleButtonClick} className='border '>Add to cart</button>
             </div>
         </div>
     );

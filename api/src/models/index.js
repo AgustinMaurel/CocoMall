@@ -98,7 +98,7 @@ Order.belongsToMany(Product, { through: 'ordersProduct' });
 Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
 Question.belongsTo(Product);
 
-// // //----------------------------------
+
 // User.hasOne(Cart, { foreignKey: { id: 'myUserId' } });
 // Cart.belongsTo(User);
 // // //----------------------------------

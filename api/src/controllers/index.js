@@ -21,7 +21,7 @@ class ModelController {
     if (req.params.id) {
       try {
         let id = req.params.id;
-        let data = await this.model.findById(id);
+        let data = await this.model.findByPk(id);
         res.send(data);
       } catch (e) {
         res.send(e);
@@ -29,13 +29,13 @@ class ModelController {
     } else {
       res.send({ message: 'Wrong parameters' });
     }
-    return await this.model.findById(id);
+    return await this.model.findByPk(id);
   };
 
   deleteDataById = async (req, res) => {
     console.log(req.params.id)
     if (req.params.id) {
-      
+
       try {
         let id = req.params.id;
         let deletedData = await this.model.destroy({ where: { id: id } });
@@ -44,7 +44,7 @@ class ModelController {
         res.send(e);
       }
     } else {
-      res.send({msg: 'Wrong parameters' });
+      res.send({ msg: 'Wrong parameters' });
     }
   };
 

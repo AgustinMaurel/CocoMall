@@ -76,6 +76,22 @@ class UserModel extends ModelController {
         }
     };
 
+    updateCart = async (req, res) => {
+        const { userId, cart } = req.body
+        if (userId) {
+            try {
+                const user = await this.model.findById(userId)
+                user.Cart = cart
+                const updatedUser = await user.save()
+                res.send(updatedUser)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send('wrong data')
+        }
+    }
+
     getFindId = async (req, res, next) => {
         const { id } = req.body;
         let data = await User.findByPk(id);

@@ -28,6 +28,11 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true,
             },
+            Cart: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+                defaultValue: [],
+                allowNull: false
+            }
         },
         {
             timestamps: false,

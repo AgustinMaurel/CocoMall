@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ReactModal from 'react-modal';
-import Product from './Product';
+
 
 ReactModal.setAppElement('#root');
 

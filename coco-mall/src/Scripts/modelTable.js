@@ -1,6 +1,6 @@
 import React from 'react'
 import { FiSettings } from "react-icons/fi";
-import { GrAdd, GrEdit, GrClose } from 'react-icons/gr'
+
 import { modalOptions } from './swalFunction'
 import { useState } from 'react'
 import ProductsCreate from '../Components/Forms/ProductsCreate'
@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { getProductsStore } from '../Redux/actions/stores'
 
 export default function ModelTable({ info, title, filters, column_title, types, idStore, setEditState, setProduct }) {
-    const [render, setRender] = useState(false)
+    
     const [flag, setFlag] = useState(false)
 
     const dispatch = useDispatch()
@@ -22,14 +22,8 @@ export default function ModelTable({ info, title, filters, column_title, types, 
         <div className='items-center text-center justify-center w-full' >
           
         <div>
-        <h1 className='text-center items-center '>{title}</h1>
-            <ul className=' flex text-center justify-evenly items-center h-32 '>
-                {filters.map((el) => (
-                    <li key={el} className='border bg-secondary-light border-gray-200 rounded-md px-5'>{el}</li>
-                ))}
-                <li onClick={() => dispatch(getProductsStore(idStore)) && !render ? setRender(true) : setRender(false)} className='border bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></li>
-            </ul>
-            {render ? <ProductsCreate idStore={idStore} /> : <table className='items-center border-separate text-center justify-center w-full'>
+       
+            <table className='items-center border-separate text-center justify-center w-full'>
 
 
                 <thead>
@@ -64,7 +58,7 @@ export default function ModelTable({ info, title, filters, column_title, types, 
 
                 </tbody>
 
-             </table>}
+             </table>
 
             </div>
         </div>

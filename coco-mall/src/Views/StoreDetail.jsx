@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 import homeStores from '../Helpers/homeStores';
-import dataProducts from '../Helpers/dataProducts';
 import ProductCard from '../Components/Cards/ProductCard';
 
 import NavBar from '../Components/NavBar/NavBar';

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
@@ -9,7 +7,6 @@ import validate from '../../Scripts/validate';
 import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 
 const ProductsCreate = ({ idStore, product }) => {
     
@@ -17,13 +14,8 @@ const ProductsCreate = ({ idStore, product }) => {
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     
-    const products = useSelector((state)=> state.stores.storeProducts)
-
-    const dispatch = useDispatch()
-    
     //--HOOKS--
-    
-    
+
     const { register, handleSubmit, watch, formState: { errors } } = useForm ({ defaultValues: product });
 
 
@@ -42,7 +34,7 @@ const ProductsCreate = ({ idStore, product }) => {
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
-            productName: data.productName,
+            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
             description: data.description,
             price: Number(data.price),
             stock: Number(data.stock),

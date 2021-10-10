@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
+import { Image } from 'cloudinary-react';
 
 import HomeCard from '../Components/Cards/HomeCards';
 import StoreState from '../Components/Cards/StoreState';
 import NavBar from '../Components/NavBar/NavBar';
-import Arrow from '../Components/Slides/Arrow';
+// import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
@@ -28,7 +29,7 @@ function Home() {
         rating: '',
     });
 
- 
+   
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -144,13 +145,16 @@ function Home() {
                     <div>
                         <h3 className='text-2xl font-bold text-cocoMall-800'>Stores in "Paraná"</h3>
                         <Slider {...settingsCards}>
-                            {allStores?.map((e, i) => (
-                                <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
+                            {allStores?.map((store) => (
+                                <Link
+                                    to={`/home/store/${store.id}`}
+                                    onClick={() => storeDetail(store.id)}
+                                >
                                     <StoreState
-                                        storeName={e.storeName}
-                                        description={e.description}
-                                        cloudImage={e.logo || coco}
-                                        key={i}
+                                        storeName={store.storeName}
+                                        description={store.description}
+                                        cloudImage={store.logo || coco}
+                                        key={store.id}
                                     />
                                 </Link>
                             ))}
@@ -160,18 +164,23 @@ function Home() {
                     <div>
                         <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>
                         <div className='cards p-3'>
-                            {storesFilters?.map((e, i) => (
-                                <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
+                            {storesFilters?.map((store) => (
+                                <Link
+                                    to={`/home/store/${store.id}`}
+                                    onClick={() => storeDetail(store.id)}
+                                >
                                     <HomeCard
-                                        storeName={e.storeName}
-                                        description={e.description}
-                                        cloudImage={e.logo || coco}
-                                        key={i}
+                                        id={store.id}
+                                        storeName={store.storeName}
+                                        description={store.description}
+                                        cloudImage={store.cloudImage}
+                                        key={store.id}
                                     />
                                 </Link>
                             ))}
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

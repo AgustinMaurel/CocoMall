@@ -7,6 +7,7 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
+    CLOUDINARY_IMAGES,
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -79,3 +80,16 @@ export const ordersProduct = (payload) => {
         dispatch({ type: ORDER_PRODUCTS, payload });
     };
 };
+
+// export const getProductImages = () => {
+//     return async (dispatch) => {
+//         const result = await axios.get('http://localhost:3001/images/product');
+//         dispatch({ type: CLOUDINARY_IMAGES.GET_PRODUCT_IMAGES, payload: result.data });
+//     };
+// };
+// export const getStoreImages = () => {
+//     return async (dispatch) => {
+//         const result = await axios.get('http://localhost:3001/images/store');
+//         dispatch({ type: CLOUDINARY_IMAGES.GET_STORE_IMAGES, payload: result.data });
+//     };
+// };

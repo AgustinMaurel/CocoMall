@@ -3,9 +3,14 @@ import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
-import './App.css';
 
-import { getStores, getProductTypes } from './Redux/actions/stores';
+import {
+    getStores,
+    getProductTypes,
+    // getStoreImages,
+    // getProductImages,
+} from './Redux/actions/stores';
+
 import StorePanel from './Views/StorePanel';
 import Landing from './Views/Landing';
 import LoginScreen from './Views/Auth/LoginScreen';
@@ -17,8 +22,6 @@ import Cart from './Views/Cart';
 
 // import ProductDetail from './Components/Product/ProductDetail'
 
-
-
 function App() {
     const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ function App() {
         auth.onAuthStateChanged((user) => {
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
-                
+
                 setIsLoggedIn(true);
             } else {
                 setIsLoggedIn(false);
@@ -39,14 +42,16 @@ function App() {
     }, [dispatch, setChecking, setIsLoggedIn]);
 
     useEffect(() => {
-        dispatch(getStores())       
-        dispatch(getProductTypes())       
-    }, [dispatch])
+        dispatch(getStores());
+        dispatch(getProductTypes());
+        // dispatch(getProductImages());
+        // dispatch(getStoreImages());
+    }, [dispatch]);
 
     return (
         <>
             <Switch>
-                <Route path='/storePanel' component={StorePanel}/> 
+                <Route path='/storePanel' component={StorePanel} />
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
                 <Route path='/cart/:id' exact component={Cart} />

@@ -7,7 +7,8 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
-    FILTER_STORE
+    FILTER_STORE,
+    // CLOUDINARY_IMAGES
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,9 +17,11 @@ const initialState = {
     storeDetail: {},
     storeProducts: [],
     storeProductsFilter: [],
-    productDetail: {},
+    productDetail: {}, //deberiamos pasarlo a local
     productTypes: [],
-    storeCreated: {},
+    storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
+    productImageIds: [],
+    storeImageIds: [],
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
@@ -27,9 +30,8 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 allStores: payload,
-                storesFilters: payload
+                storesFilters: payload,
             };
-      
 
         case POST_STORE:
             return {
@@ -99,25 +101,23 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                     storeProductsFilter: copy,
                 };
             }
-            if(payload === 'A-Z'){
-                let copy= state.storeProducts
-                .sort((a,b)=>{
+            if (payload === 'A-Z') {
+                let copy = state.storeProducts.sort((a, b) => {
                     if (a.productName > b.productName) {
                         return 1;
                     }
                     if (b.productName > a.productName) {
-                        return -1
+                        return -1;
                     }
                     return 0;
-                })
-                return{
+                });
+                return {
                     ...state,
-                    storeProductsFilter:copy
-                }
+                    storeProductsFilter: copy,
+                };
             }
-            if(payload === 'Z-A'){
-                let copy= state.storeProducts
-                .sort((a,b)=>{
+            if (payload === 'Z-A') {
+                let copy = state.storeProducts.sort((a, b) => {
                     if (a.productName > b.productName) {
                         return -1;
                     }
@@ -125,45 +125,42 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                         return 1;
                     }
                     return 0;
-                })
-                return{
+                });
+                return {
                     ...state,
-                    storeProductsFilter:copy
-                }
+                    storeProductsFilter: copy,
+                };
             }
-            if(payload === 'Price'){
-                let copy= state.storeProducts
-                .sort((a,b)=>{
+            if (payload === 'Price') {
+                let copy = state.storeProducts.sort((a, b) => {
                     if (a.price > b.price) {
                         return 1;
                     }
                     if (b.price > a.price) {
-                        return -1
+                        return -1;
                     }
                     return 0;
-                })
-                return{
+                });
+                return {
                     ...state,
-                    storeProductsFilter:copy
-                }
+                    storeProductsFilter: copy,
+                };
             }
-            if(payload === 'Stock'){
-                let copy= state.storeProducts
-                .sort((a,b)=>{
+            if (payload === 'Stock') {
+                let copy = state.storeProducts.sort((a, b) => {
                     if (a.stock > b.stock) {
                         return 1;
                     }
                     if (b.stock > a.stock) {
-                        return -1
+                        return -1;
                     }
                     return 0;
-                })
-                return{
+                });
+                return {
                     ...state,
-                    storeProductsFilter:copy
-                }
-            }
-             else {
+                    storeProductsFilter: copy,
+                };
+            } else {
                 return {
                     ...state,
                     storeProductsFilter: state.storeProductsFilter
@@ -176,7 +173,17 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 };
             }
 
-        
+          
+        // case CLOUDINARY_IMAGES.GET_STORE_IMAGES:
+        //     return {
+        //         ...state,
+        //         storeImageIds: payload
+        //     }
+        // case CLOUDINARY_IMAGES.GET_PRODUCT_IMAGES:
+        //     return {
+        //         ...state,
+        //         productImageIds: payload
+        //     }
 
         default:
             return state;

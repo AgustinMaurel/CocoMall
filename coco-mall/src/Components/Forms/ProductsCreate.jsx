@@ -1,111 +1,118 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { getProductImages } from '../../Redux/actions/stores';
+import validate from '../../Scripts/validate';
+import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
-import validate from '../../Scripts/validate';
-import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
-import Swal from 'sweetalert2';
-import axios from 'axios';
 
 const ProductsCreate = ({ idStore, product }) => {
-    
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    
+
     //--HOOKS--
+    const dispatch = useDispatch();
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm ({ defaultValues: product });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm({ defaultValues: product });
 
-
-    
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-        
+
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
             setIsUploaded(true);
         };
-
-    };    
+    };
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
-            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
+            productName:
+                data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
             description: data.description,
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
-        }
-        let dataProductClean = { product: dataRawProduct, storeId: idStore, idImage: [image], typeId: '1' };
+        };
+        let dataProductClean = {
+            product: dataRawProduct,
+            storeId: idStore,
+            idImage: [image],
+            typeId: '1',
+        };
 
-        if(product){
-            axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean )
-            .then(()=>{
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Product Updated!',
-                    showConfirmButton: false,
-                    timer: 1500
+        if (product) {
+            axios
+                .put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product Updated!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 })
-            })
-            .catch(()=>{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'An error has occurred, contact an administrator.',
-                    showConfirmButton: false,
-                    timer: 1500
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error has occurred, contact an administrator.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                });
+        } else {
+            axios
+                .post(PRODUCT_CREATE_URL, dataProductClean)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product Created!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 })
-            })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error has occurred, contact an administrator.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                });
         }
-        else{
-            axios.post( PRODUCT_CREATE_URL, dataProductClean )
-            .then(()=>{
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Product Created!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-            .catch(()=>{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'An error has occurred, contact an administrator.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-        }
-        
-        
     };
+
+
 
     //TODO get de categorias -> hacer input SELECT
 
     return (
-        <div
-            className='w-full flex justify-center items-center m-auto'
-        >
+        <div className='w-full flex justify-center items-center m-auto'>
             {/* --CONTAINER-- */}
             <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
-                <form
-                    className='w-full xl:w-1/3 flex flex-col'
-                    onSubmit={handleSubmit(onSubmit)}
-                >
-                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>{ product ? "Edit your Product" : "Create your Product"}</h3>
+                <form className='w-full xl:w-1/3 flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>
+                        {product ? 'Edit your Product' : 'Create your Product'}
+                    </h3>
                     <InputDefault
                         register={register}
                         errors={errors}
                         name='productName'
                         placeholder='Eg: T-Shirt'
                         validate={validate.product}
-                        
                     />
                     <InputDefault
                         register={register}

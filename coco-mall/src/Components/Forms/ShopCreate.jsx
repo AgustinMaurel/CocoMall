@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -66,8 +66,12 @@ function ShopCreate({ setIsTrue }) {
         });
 
         dispatch(postStore(storeCreated));
-        dispatch(getStores());
+        
     };
+
+    useEffect(() => {
+        return dispatch(getStores());
+    },[dispatch])
 
     return (
         <div

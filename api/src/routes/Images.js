@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const router = Router();
-const  getAllImages  = require('../controllers/Images.js');
+const  {getStoreImages , getProductImages}  = require('../controllers/Images.js');
 
 //all routes start with /adress
-router.get('/', getAllImages);
+router.get('/store', getStoreImages);
+router.get('/product', getProductImages);
 
 module.exports = router;

@@ -5,23 +5,32 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
+import { getProducts } from '../../Scripts/cart';
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
     const [displayMenu, setDisplayMenu] = useState(false);
+
     const breakpoint = 1024;
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
-    const items = useSelector((state) => state.stores.itemsInCart)
+    const items = useSelector((state) => state.stores.itemsInCart);
     const dispatch = useDispatch();
 
-
-    // const handleCheckout = () => {
-    //     axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
-    //         history.push(`/cart/${order.data.response}`);
-    //     });
-    // };
+    function handleCheckout() {
+        console.log('click');
+        axios
+            .post('http://localhost:3001/checkout/mercadopago', {
+                title: 'cart',
+                total: 10,
+                quantity: 1,
+            })
+            .then((order) => {
+                history.push(`/cart/${order.data.response}`);
+            })
+            .catch((err) => console.log(err));
+    };
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -74,13 +83,16 @@ function NavBar() {
                         <div className='flex gap-x-5 items-center'>
                             {user.uid ? (
                                 <>
-                                    <div  className='relative cursor-pointer'>
-                                    <Link to='/cart'>
+                                    <div
+                                        
+                                        className='relative cursor-pointer'
+                                    >
+                                    <button className='bg-red-500' onClick={handleCheckout} >
                                         <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                             {items}
                                         </div>
                                         <svg
-                                            className='w-6 h-6'
+                                            className='w-6 h-6 pointer-events-none'
                                             fill='none'
                                             stroke='currentColor'
                                             viewBox='0 0 24 24'
@@ -93,7 +105,7 @@ function NavBar() {
                                                 d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                                             ></path>
                                         </svg>
-                                        </Link>
+                                    </button>
                                     </div>
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link

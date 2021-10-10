@@ -101,7 +101,72 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                     ...state,
                     storeProductsFilter: copy,
                 };
-            } else {
+            }
+            if(payload === 'A-Z'){
+                let copy= state.storeProducts
+                .sort((a,b)=>{
+                    if (a.productName > b.productName) {
+                        return 1;
+                    }
+                    if (b.productName > a.productName) {
+                        return -1
+                    }
+                    return 0;
+                })
+                return{
+                    ...state,
+                    storeProductsFilter:copy
+                }
+            }
+            if(payload === 'Z-A'){
+                let copy= state.storeProducts
+                .sort((a,b)=>{
+                    if (a.productName > b.productName) {
+                        return -1;
+                    }
+                    if (b.productName > a.productName) {
+                        return 1;
+                    }
+                    return 0;
+                })
+                return{
+                    ...state,
+                    storeProductsFilter:copy
+                }
+            }
+            if(payload === 'Price'){
+                let copy= state.storeProducts
+                .sort((a,b)=>{
+                    if (a.price > b.price) {
+                        return 1;
+                    }
+                    if (b.price > a.price) {
+                        return -1
+                    }
+                    return 0;
+                })
+                return{
+                    ...state,
+                    storeProductsFilter:copy
+                }
+            }
+            if(payload === 'Stock'){
+                let copy= state.storeProducts
+                .sort((a,b)=>{
+                    if (a.stock > b.stock) {
+                        return 1;
+                    }
+                    if (b.stock > a.stock) {
+                        return -1
+                    }
+                    return 0;
+                })
+                return{
+                    ...state,
+                    storeProductsFilter:copy
+                }
+            }
+             else {
                 return {
                     ...state,
                     storeProductsFilter: state.storeProductsFilter

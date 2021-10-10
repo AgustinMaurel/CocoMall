@@ -6,6 +6,7 @@
     "@craco/craco": "^6.3.0",
     "@headlessui/react": "^1.4.1",
     "@react-google-maps/api": "^2.4.1",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "@tatjsn/react-slick": "^0.11.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

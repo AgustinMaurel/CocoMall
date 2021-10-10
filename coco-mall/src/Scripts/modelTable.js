@@ -37,7 +37,7 @@ export default function ModelTable({ info, title, filters, column_title, types, 
                     {info.length > 0 && info?.map((el) => (
                         <tr key={el}>
                             <td className='  border text-center justify-center items-center border-gray-400 py-2'>
-                                <div className='flex justify-evenly'>
+                                <div className='flex justify-evenly cursor-pointer'>
                                     <FiSettings
                                         onClick={() => {
                                             modalOptions(el.id, setEditState, setFlag, flag, setProduct, el)

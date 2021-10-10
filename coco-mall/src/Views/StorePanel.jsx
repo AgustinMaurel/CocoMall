@@ -4,22 +4,34 @@ import logo from '../Assets/icons/loco_coco.png';
 import axios from 'axios';
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';
-import { getProductsStore, getStores } from '../Redux/actions/stores';
+import { getProductsStore, getStores, ordersProduct } from '../Redux/actions/stores';
 import { IoArrowBack } from "react-icons/io5";
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr'
-import { sortFunction } from '../Scripts/sortFunction';
+
+
 
 export default function StorePanel() {
 
+    const dispatch = useDispatch()
 
-    const products = useSelector((state) => state.stores.storeProducts)
+    const stores = useSelector((state) => state.stores)
+
+    const user = useSelector((state) => state.auth)
+
+    const storesUser = stores.allStores.filter(el => el.UserId === user.uid)
+
+    const products = useSelector((state) => state.stores.storeProductsFilter)
 
     const [flag, setFlag] = useState(false)
-
     const [idActual, setIdActual] = useState("")
-
     const [product, setProduct] = useState()
+    const [selectStore, setSelectStore] = useState("Select Store")
+    const [render, setRender] = useState("")
+    const [types, setTypes] = useState([])
+    const [editState, setEditState] = useState(true)
+    const [renderSec, setRenderSec] = useState(false)
+    const [finalProducts, setFinalProducts] = useState([])
 
     useEffect(() => {
         dispatch(getStores())
@@ -29,18 +41,8 @@ export default function StorePanel() {
         dispatch(getProductsStore(idActual))
     }, [flag])
 
-    const [selectStore, setSelectStore] = useState("Select Store")
-    const [render, setRender] = useState("")
-    const [types, setTypes] = useState([])
-    const [editState, setEditState] = useState(true)
-    const [renderSec, setRenderSec] = useState(false)
-    const [finalProducts, setFinalProducts] = useState([])
-
-    const stores = useSelector((state) => state.stores)
-    const user = useSelector((state) => state.auth)
-    const storesUser = stores.allStores.filter(el => el.UserId === user.uid)
-
-    const dispatch = useDispatch()
+    
+   
 
     useEffect(() => {
         axios.get('http://localhost:3001/productType')
@@ -79,9 +81,9 @@ export default function StorePanel() {
             <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
 
-                    <select name="selectStore" onChange={handleStore}>
+                    <select defaultValue="SelectStore" name="selectStore" onChange={handleStore}>
 
-                        <option selected="SelectStore" disabled={true} value="Select Store">Select Store</option>
+                        <option  selected="SelectStore" disabled={true} value="Select Store">Select Store</option>
                         {storesUser?.map(e => {
                             return <option key={e.id} value={e.storeName}>{e.storeName}</option>
                         })}
@@ -120,7 +122,7 @@ export default function StorePanel() {
                             <div className=' flex text-center justify-evenly items-center h-32 '>
                                 {filtersNow.map((el) => (
                                     <label onClick={()=>{
-                                        setFinalProducts(sortFunction(el, products))
+                                        dispatch(ordersProduct(el))
                                         console.log(finalProducts)
                                     }}  key={el} className='border cursor-pointer bg-secondary-light border-gray-200 rounded-md px-5'>{el}</label>
                                 ))}

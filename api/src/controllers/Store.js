@@ -88,7 +88,7 @@ class StoreModel extends ModelController {
         const productToFilter = req.body.name || '';
         const storeToFilter = req.body.nameStore || '';
         const min = req.body.min || 0;
-        const max = req.body.max || 99 ^ 9999;
+        const max = req.body.max || Math.pow(99,99);
         try {
             const filteredStores = await this.model.findAll({
                 include: {

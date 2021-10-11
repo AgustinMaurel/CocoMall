@@ -50,8 +50,6 @@ class ProductModel extends ModelController {
     } else {
       res.status(400).send({ message: 'Wrong parameters' });
     }
-    console.log(img);
-    let public_id = img.map((el) => el.public_id);
   };
 
   bulkCreateProducts = async (req, res) => {

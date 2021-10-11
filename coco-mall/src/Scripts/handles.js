@@ -89,7 +89,7 @@ export function handleOnChange(setFilters) {
     };
 }
 
-export function handleOnTypes(dispatch, id) {
+export function handleOnTypes(dispatch, id, filters) {
     return (e) => {
         let val = parseInt(e.target.value);
         let aux = {
@@ -97,8 +97,10 @@ export function handleOnTypes(dispatch, id) {
         };
         if (e.target.value !== "All") {
             aux.type = [val];
+            filters.type = [val]
             dispatch(filterProducts(id, aux));
         } else {
+            filters.type = []
             dispatch(filterProducts(id, aux));
         }
     };

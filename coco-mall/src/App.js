@@ -14,6 +14,7 @@ import Home from './Views/Home';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
 import Cart from './Views/Cart';
+import Checkout from './Views/Checkout';
 
 function App() {
     const dispatch = useDispatch();
@@ -54,11 +55,12 @@ function App() {
                 <Route path='/storePanel' component={StorePanel} />
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
-                <Route path='/cart/:id' exact component={Cart} />
+                <Route path='/cart' exact component={Cart} />
                 <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
                 <Route path='/home/store/:id' exact component={StoreDetail} />
+                <Route path='/checkout/:id' exact component={Checkout}/>
             </Switch>
         </>
     );

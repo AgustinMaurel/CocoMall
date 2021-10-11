@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect,  } from 'react';
+// import axios from 'axios';
 import { useParams } from 'react-router';
 import NavBar from '../Components/NavBar/NavBar';
-import { useSelector } from 'react-redux';
-import { SHOPPING_CART } from '../Scripts/constants';
+// import { useSelector } from 'react-redux';
+// import { SHOPPING_CART } from '../Scripts/constants';
 
 const FORM_ID = 'payment-form';
 
 export default function Cart() {
-    const user = useSelector((state) => state.auth.uid);
+    // const user = useSelector((state) => state.auth.uid);
     // useEffect(() => {
     //     axios.post(SHOPPING_CART.GET_PRODUCTS, {idUser:user}).then(res => setCart(res.data))
     // }, [user]);

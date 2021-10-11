@@ -183,6 +183,7 @@ class ProductModel extends ModelController {
         } else {
           res.json({ message: 'Error' });
         }
+<<<<<<< HEAD
 
         const ProductoActualizado = await this.model.update(
           { ...product },
@@ -213,6 +214,9 @@ class ProductModel extends ModelController {
     });
     res.send(allProducts);
   };
+=======
+    }  
+>>>>>>> d0b667d78f71d6fdfebc72668d870df33029831f
 
   updateDataProduct = async (req, res) => {
     const id1 = req.params.id;

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image} from 'cloudinary-react'
 
 export default function Product(props) {
     const { product } = props
@@ -6,10 +7,15 @@ export default function Product(props) {
     return (
         <div className='w-48 h-96 bg-gray-400 shadow-lg m-4 rounded-md' key={product.id}>
             <div className='border w-full h-2/3 flex'>
-                <img className='w-2/3 object-contain flex' src={product.cloudImage} alt={product.productName} />
                 <div className='w-1/3 h-full flex flex-col'>
-                    <img className='h-1/3 object-contain mx-2 my-4' src={product.cloudImage} alt={product.productName} />
-                    <img className='h-1/3 object-contain mx-2 my-4' src={product.cloudImage} alt={product.productName} />
+                    <Image  
+                                key={product.id}
+                                cloudName='cocomalls' 
+                                publicId={product.cloudImage[0]}
+                                width="300"
+                                crop="scale"
+                                
+                            />
                 </div>
             </div>
             <div className='border w-full h-1/3 flex flex-col'>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { SHOPPING_CART } from '../../Scripts/constants';
@@ -28,15 +28,17 @@ export default function Product(props) {
 
     const { userCart, uid } = useSelector((state) => state.auth);
 
-    let userCartToBack = {
-        userId: uid,
-        cart: userCart?.map((item) => {
-            return {
-                idproduct: item.id,
-                cantidad: item.quantity,
-            };
-        }),
-    };
+    let userCartToBack = useMemo(() => {
+        return {
+            userId: uid,
+            cart: userCart?.map((item) => {
+                return {
+                    idproduct: item.id,
+                    cantidad: item.quantity,
+                };
+            }),
+        };
+    }, [userCart, uid]);
 
     // console.log('LO QUE MANDO', userCartToBack);
 
@@ -45,7 +47,7 @@ export default function Product(props) {
     };
 
     useEffect(() => {
-        return axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     }, [userCartToBack]);
 
     return (

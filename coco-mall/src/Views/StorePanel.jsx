@@ -9,7 +9,6 @@ import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr'
 
 
-
 export default function StorePanel() {
 
     const dispatch = useDispatch()
@@ -85,7 +84,7 @@ export default function StorePanel() {
             <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center '>
 
-                    <select name="selectStore" onChange={handleStore}>
+                    <select name="selectStore" onChange={handleStore} className='my-1 bg-primary rounded text-white p-1 cursor-pointer'>
 
                         <option defaultValue="SelectStore" selected="SelectStore" disabled={true} value="Select Store">Select Store</option>
                         {storesUser?.map(e => {
@@ -101,9 +100,9 @@ export default function StorePanel() {
                     </h1>
 
                     <div className='flex flex-col'>
-                        <button name="Products" value="Products" onClick={handleRender} className='cursor-pointer' >
+                        <button name="Products" value="Products" onClick={handleRender} className='my-1 bg-primary rounded text-white p-1 cursor-pointer' >
                             Products </button>
-                        <button name="Orders" value="Orders" onClick={handleRender} className='cursor-pointer' >
+                        <button name="Orders" value="Orders" onClick={handleRender} className=' my-1 bg-primary rounded text-white p-1 cursor-pointer' >
                             Orders </button>
                     </div>
 
@@ -153,11 +152,10 @@ export default function StorePanel() {
 
                         {render === "Orders" && selectStore !== "All" && <ModelTable info={[]}
                             column_title={["Action", "State", "Payment", "Description",]} />}
-
                     </div>
                 </div> :
                 <div>
-                    <IoArrowBack onClick={() => setEditState(true)} />
+                    <IoArrowBack onClick={() => setEditState(true)}/>
                     <ProductsCreate idStore={idActual} product={product} />
                 </div>
             }

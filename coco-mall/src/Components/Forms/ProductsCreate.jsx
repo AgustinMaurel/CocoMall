@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { getStores } from '../../Redux/actions/stores';
+import { Image } from 'cloudinary-react';
 
 const ProductsCreate = ({ idStore, product }) => {
 
@@ -24,8 +25,6 @@ const ProductsCreate = ({ idStore, product }) => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues: product });
 
-
-
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
@@ -38,9 +37,7 @@ const ProductsCreate = ({ idStore, product }) => {
         };
 
     };
-
     const handleTypes = (e)=> {
-        console.log(e.target.value)
         setTypes(e.target.value)
     }
 
@@ -97,6 +94,7 @@ const ProductsCreate = ({ idStore, product }) => {
 
 
     };
+    console.log(allTypes)
 
     //TODO get de categorias -> hacer input SELECT
 
@@ -143,7 +141,7 @@ const ProductsCreate = ({ idStore, product }) => {
                     <div className='relative mb-4 items-start flex flex-col'>
                     <p className='min-w-max '>Type</p>
                     <select name="types" onChange={handleTypes} required={true} className='outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'>
-                        <option defaultValue="SelectType" selected="SelectType" disabled={true}> Select Type</option>
+                        <option defaultValue="SelectType" selected="SelectType" disabled={true}>{product ? allTypes?.find(el => el.id ===  product.ProductTypeId).Name : "Select Type"}</option>
                         {allTypes?.map(type=>{
                            return <option key={type.id} value={type.id}>{type.Name}</option>
                         })}
@@ -172,7 +170,8 @@ const ProductsCreate = ({ idStore, product }) => {
                     className='hidden bg-white shadow-md rounded py-8 ml-4 w-80 text-center
                                 xl:block overflow-hidden'
                 >
-                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
+                
+                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />}
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('productName') ? watch('productName').toUpperCase() : 'PRODUCT'}
                     </p>

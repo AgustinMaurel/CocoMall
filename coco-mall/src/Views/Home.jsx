@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
+import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 import HomeCard from '../Components/Cards/HomeCards';
 import StoreState from '../Components/Cards/StoreState';
@@ -78,6 +79,7 @@ function Home() {
 
             {/* CARDS */}
             <div className='w-full col-span-6 row-span-full p-6 overflow-y-scroll'>
+                {/* --- ADS --- */}
                 <div className='m-auto w-3/4'>
                     <Slider {...settingsHero}>
                         <HeroCard img={'/banners/bannerHero-1.png'} color={'bg-gray-500'} />
@@ -86,6 +88,7 @@ function Home() {
                     </Slider>
                 </div>
 
+                {/* --- SEARCH & FILTERS --- */}
                 <div className='w-3/4 m-auto mt-16'>
                     <Search
                         searchProduct={filters.searchProduct}
@@ -120,9 +123,10 @@ function Home() {
                     </div>
                 </div>
 
-                <div className='w-3/4 m-auto mt-8'>
+                <div className='w-3/4 m-auto mt-4'>
+                    {/* --- STORES BY CITY --- */}
                     {allStores === storesFilters ? (
-                        <div>
+                        <div className='mt-6'>
                             <h3 className='text-2xl font-bold text-cocoMall-800'>
                                 Stores in "Paraná"
                             </h3>
@@ -143,12 +147,15 @@ function Home() {
                             </Slider>
                         </div>
                     ) : (
-                        <span></span>
+                        <button onClick={()=>{dispatch(getStores())}} className='flex items-center gap-2 text-cocoMall-200 mb-2 cursor-pointer hover:text-cocoMall-400'>
+                            <IoMdArrowRoundBack/> <span>GO BACK</span>
+                        </button>
                     )}
 
-                    <div>
+                    {/* --- ALL STORES ---- */}
+                    <div className='mt-6'>
                         <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>
-                        <div className='cards p-3'>
+                        <div className='cards'>
                             {storesFilters?.map((e, i) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
                                     <HomeCard

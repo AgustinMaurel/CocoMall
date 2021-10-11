@@ -8,13 +8,11 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
     };
     console.log(searchStore)
     return (
-        <div className='flex flex-col w-3/4 m-auto mb-10'>
+        <div className='flex flex-col w-3/4 m-auto mb-4'>
             <form
                 className='bg-white flex items-center rounded-full shadow-md'
                 onSubmit={handleSubmit}
             >
-                {/* Hay que meter un switch dependiendo si busco por tienda o
-                por producto */}
                 {!typeSearch ? (
                     <>
                         <input

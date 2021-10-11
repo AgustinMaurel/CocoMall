@@ -6,7 +6,8 @@ import {
     GET_PRODUCT_DETAIL,
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
-    ORDER_PRODUCTS
+    ORDER_PRODUCTS,
+    ORDER_STORE
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -24,7 +25,8 @@ export const filterStores = (payload) => {
         types: payload.type,
         name: payload.searchProduct,
         nameStore: payload.searchStore,
-        rating: payload.rating
+        state: payload.searchState,
+        // rating: payload.rating
     };
     console.log("OBJ",obj)
     return async (dispatch) => {
@@ -77,5 +79,11 @@ export const getProductTypes = () => {
 export const ordersProduct = (payload) => {
     return async (dispatch) => {
         dispatch({ type: ORDER_PRODUCTS, payload})
+    }
+}
+
+export const ordersStores = (payload) => {
+    return async (dispatch) => {
+        dispatch({ type: ORDER_STORE, payload})
     }
 }

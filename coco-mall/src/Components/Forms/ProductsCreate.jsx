@@ -8,6 +8,7 @@ import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
 import { postProduct } from '../../Redux/actions/post';
+import { getStores } from '../../Redux/actions/stores';
 
 const ProductsCreate = ({ idStore }) => {
     //--HOOKS--
@@ -57,6 +58,7 @@ const ProductsCreate = ({ idStore }) => {
         })
 
         dispatch(postProduct(productCreated));
+        dispatch(getStores())
     };
 
     //TODO get de categorias -> hacer input SELECT

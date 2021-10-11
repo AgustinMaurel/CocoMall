@@ -1,271 +1,162 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
-import { useSelector, useDispatch } from 'react-redux';
-import {getStores} from '../../Redux/actions/stores'
+import InputFile from '../Inputs/InputFile';
+import Textarea from '../Inputs/Textarea';
+import Autocomplete from 'react-google-autocomplete';
+import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
+import { postStore } from '../../Redux/actions/post';
+import { getStores } from '../../Redux/actions/stores';
+import InputMaps from '../Inputs/InputMaps';
 
 function ShopCreate({ setIsTrue }) {
-    //Hacer un useSelector para tomar el id del usuario y asi linkearlo con la tienda que cree
+    //STATES
     const auth = useSelector((state) => state.auth);
-    const dispatch = useDispatch()
-
     const userId = auth.uid;
+    const [image, setImage] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
+    const [placeSelected, setPlaceSelected] = useState({});
 
+    //--HOOKS--
+    const dispatch = useDispatch();
     const {
-        handleSubmit,
-        formState: { errors },
         register,
-        setValue,
+        handleSubmit,
         watch,
+        formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
-    const [fileInputState, setFileInputState] = useState('');
-    const [previewSource, setPreviewSource] = useState('');
-    const [selectedFile, setSelectedFile] = useState();
-
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        previewFile(file);
-        setSelectedFile(file);
-        setFileInputState(e.target.value);
-    };
-
-    const previewFile = (file) => {
+    //LOAD IMAGE
+    const handleImageChange = (e) => {
         const reader = new FileReader();
+        const file = e.target.files[0];
+
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewSource(reader.result);
+            setImage(reader.result);
+            setIsUploaded(true);
         };
     };
 
+    //POST DATA STORE & ID USER
     const handleRegister = (data) => {
-        if (!selectedFile) return;
+        let store = {
+            storeName: data.storeName,
+            description: data.description,
+            address: placeSelected.name,
+            country: placeSelected.country,
+            cp: placeSelected.cp,
+            state: placeSelected.state,
+            coord: placeSelected.coord,
+        };
+        let storeCreated = { store: store, idUser: userId, idImage: image };
         setIsTrue(false);
-        
-        const reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = () => {
-            sendData(reader.result, data);
-        };
-        reader.onerror = () => {
-            console.error('AHHHHHHHH!!');
-        };
+
+        //configurar a medida
+        Swal.fire({
+            icon: 'success',
+            title: 'Store Created!',
+            showConfirmButton: false,
+            timer: 2000,
+        });
+
+        dispatch(postStore(storeCreated));
+        dispatch(getStores())
     };
 
-    const sendData = async (base64EncodedImage, info) => {
-        let data = {
-            idImage: base64EncodedImage,
-            store: info, 
-            idUser: userId,
-        };
-        console.log(data)
-        try {
-            await axios.post('http://localhost:3001/store/create', data).then(() => {
-                setValue('storeName', '');
-                setValue('address', '');
-                setValue('country', '');
-                setValue('cp', '');
-                setValue('description', '');
-                dispatch(getStores())
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    useEffect(() => {
+        return dispatch(getStores());
+    },[dispatch])
 
     return (
-        <div className='flex flex-col text-center  h-screen py-3 overflow-hidden relative'>
-            <form
-                className='flex flex-col w-96  h-3/4 my-auto relative mx-auto '
-                onSubmit={handleSubmit(handleRegister)}
-            >
-                <div className='relaitve    flex flex-col h-full justify-evenly   '>
-                    <i>Create Store</i>
+        <div
+            className='h-full w-full flex justify-center items-center m-auto
+                        xl:w-1/2'
+        >
+            <form className='w-4/5 flex flex-col 2xl:w-3/5' onSubmit={handleSubmit(handleRegister)}>
+                <h3 className='sm:mb-10 text-2xl md:text-3xl'>Create your Store</h3>
+                <br />
 
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='storeName'
-                        placeholder='Eg: Chilli King'
-                        validate={validate.storeName}
-                        watch={watch}
-                    />
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='country'
-                        placeholder='Eg: Argentina'
-                        validate={validate.country}
-                        watch={watch}
-                    />
+                <InputDefault
+                    register={register}
+                    errors={errors}
+                    name='storeName'
+                    placeholder='Eg: Chilli King'
+                    validate={validate.storeName}
+                />
 
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='state'
-                        placeholder='Eg: Buenos Aires'
-                        validate={validate.state}
-                        watch={watch}
-                    />
-
-                    <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='address'
-                        placeholder='Eg: Nuñez 3800'
-                        validate={validate.address}
-                        watch={watch}
-                    />
-
-                    <div className='relative'>
-                        <input
-                            {...register('cp', {
-                                required: { value: true, message: 'Area Code is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Area Code must contain at least 4 numbers',
+                <div className='relative my-4'>
+                    <Autocomplete
+                        className={
+                            'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
+                        }
+                        apiKey={GOOGLE_MAPS_API_KEY}
+                        onPlaceSelected={(place) => {
+                            setPlaceSelected({
+                                place: place,
+                                name: place.name,
+                                address: place.formatted_address,
+                                state: place.address_components[4]?.long_name,
+                                country: place.address_components[5]?.long_name,
+                                cp: place.address_components[6]?.long_name || 'C3100',
+                                coord: {
+                                    lat: place.geometry.location.lat(),
+                                    lng: place.geometry.location.lng(),
                                 },
-                                maxLength: {
-                                    value: 15,
-                                    message: 'Area Code must contain a maximum of 15 numbers ',
-                                },
-                                pattern: {
-                                    value: /^\d+$/gm,
-                                    message: 'Wrong postal code',
-                                },
-                            })}
-                            type='text'
-                            placeholder='Eg: 1430'
-                            name='cp'
-                            autoComplete='off'
-                            className={
-                                errors.cp
-                                    ? 'outline-none p-2 w-full rounded text-sm border border-red-200'
-                                    : 'outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.cp ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.cp.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Area Code*
-                            </p>
-                        )}
+                            });
+                        }}
+                        options={{
+                            fields: [
+                                'name',
+                                'address_component',
+                                'adr_address',
+                                'formatted_address',
+                                'geometry',
+                            ],
+                            types: ['address'],
+                            // componentRestrictions: { country: 'ar' },
+                        }}
+                        placeholder='Eg: Av. Belgrano 3200'
+                    />
+                    <div>
+                        <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
+                            <p className='min-w-max'> Address</p>
+                        </div>
                     </div>
-
-                    <div className='relative'>
-                        <textarea
-                            {...register('description', {
-                                required: { value: true, message: 'Description is required' },
-                                minLength: {
-                                    value: 4,
-                                    message: 'Description must contain at least 4 characters',
-                                },
-                                maxLength: {
-                                    value: 255,
-                                    message:
-                                        'Description must contain a maximum of 255 characters ',
-                                },
-                            })}
-                            placeholder='Vegan food shop...'
-                            name='description'
-                            autoComplete='off'
-                            className={
-                                errors.description
-                                    ? 'border border-red-200 resize-none outline-none p-2 w-full rounded text-sm'
-                                    : 'resize-none outline-none p-2 w-full rounded text-sm border border-gray-200'
-                            }
-                        />
-                        {errors.description ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.description.message}
-                            </p>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Description*
-                            </p>
-                        )}
-                    </div>
-
-                    <div className='relative'>
-                        <input
-                            // {...register('image')}
-                            type='file'
-                            name='image'
-                            value={fileInputState}
-                            onChange={handleFileInputChange}
-                            className='outline-none p-2 w-full rounded'
-                            id='selectedFile'
-                            accept='.png'
-                            style={{ display: 'none' }}
-                        />
-                        <input
-                            type='button'
-                            value='Select Logo'
-                            onClick={() => document.getElementById('selectedFile').click()}
-                            className={
-                                // errors.image
-                                //     ? 'border border-red-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer' :
-                                'border border-gray-200 bg-white text-gray-400 outline-none p-2 w-full rounded cursor-pointer'
-                            }
-                        />
-                        {/* {errors.image ? (
-                            <p className='absolute text-xs text-red-500 -top-4 left-0 font-semibold'>
-                                {errors.image.message}
-                            </p>
-                        ) : watch('image')?.length > 0 ? (
-                            <div>
-                                <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-4 left-0'>
-                                    <p className=' text-xs  min-w-max  font-semibold '>Logo</p>
-                                    <div>
-                                        <svg
-                                            className='w-3 h-3 rounded-full bg-green-400'
-                                            fill='none'
-                                            stroke='currentColor'
-                                            viewBox='0 0 24 24'
-                                            xmlns='http://www.w3.org/2000/svg'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                strokeWidth='2'
-                                                d='M5 13l4 4L19 7'
-                                            ></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <p className='absolute text-xs  min-w-max  -top-4 left-0 font-semibold'>
-                                Logo*
-                            </p>
-                        )} */}
-                    </div>
-
-                    <button type='submit' className='bg-secondary w-32 rounded h-8 text-white'>
-                        Next
-                    </button>
                 </div>
+
+                <div className='h-36 mb-8'>
+                    <InputMaps coord={placeSelected.coord} />
+                </div>
+
+                <Textarea
+                    register={register}
+                    errors={errors}
+                    name='description'
+                    placeholder='Vegan food shop...'
+                    validate={validate.descriptionStore}
+                />
+
+                <InputFile
+                    register={register}
+                    errors={errors}
+                    name='logo'
+                    type='file'
+                    validate={validate.image}
+                    watch={watch}
+                    onChange={handleImageChange}
+                    isUploaded={isUploaded}
+                />
+
+                <button type='submit' className='w-full bg-secondary rounded my-4 p-2 text-white'>
+                    Next
+                </button>
             </form>
-            {previewSource && <img src={previewSource} alt='chosen' style={{ height: '300px' }} />}
         </div>
     );
 }
 
 export default ShopCreate;
-// {/* <div
-//             className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
-//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-//         ></div>
-//         <div
-//             className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
-//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-//         ></div>
-//         <div
-//             className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
-//             xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-//         ></div> */}

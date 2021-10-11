@@ -30,7 +30,6 @@ const CheckoutForm = () => {
                 amount: price * 100, // se pasa el montoa pagar en centavos de la moneda con la que se esta pagando, es decir el "precio" * 100
                 description: "remerita, jean, pistola, chaleco" // productos comprados
             })
-            console.log(data)
             
         }
     }

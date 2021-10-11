@@ -40,7 +40,6 @@ export default function Product(props) {
         };
     }, [userCart, uid]);
 
-    // console.log('LO QUE MANDO', userCartToBack);
 
     const handleButtonClick = () => {
         dispatch(addToCart(product.id));

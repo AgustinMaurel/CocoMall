@@ -23,7 +23,6 @@ function NavBar() {
         
 
     function handleCheckout() {
-        console.log('click');
         axios
             .post('http://localhost:3001/checkout/mercadopago', {
                 title: 'cart',

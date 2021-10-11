@@ -22,7 +22,6 @@ export function postStore(payload) {
             .post(`${STORE_CREATE_URL}`, payload)
             .then((res) => res.data)
             .then((store) => {
-                console.log(store)
                 return dispatch({ type: POST_STORE, payload: store });
             })
             .catch((error) => console.log(error));

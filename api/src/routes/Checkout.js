@@ -20,7 +20,6 @@ router.post("/stripe", async (req, res) => {
             payment_method: id,
             confirm: true,
         });
-        console.log(payment);
         res.send("pagado papu");
     } catch (error) {
         res.send(error.raw.message);
@@ -54,7 +53,6 @@ router.post("/mercadopago", async (req, res) => {
     
     const response = answer.body.id;
     const init_points = answer.body.init_point;
-    console.log("RESPONSE: ", response, "INIT POINT: ", init_points);
     res.json({response: response, init_points: init_points});
 });
 

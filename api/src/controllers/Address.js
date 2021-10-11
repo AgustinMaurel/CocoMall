@@ -20,7 +20,6 @@ class AddressModel extends ModelController {
                 const addressId = newAddress.id;
                 //Search the User and attach the Address
                 const user = await User.findByPk(id);
-                console.log(user, '<---- el user encontrado')
                 await user.addAddress(addressId);
                 res.send(newAddress);
             } catch (e) {

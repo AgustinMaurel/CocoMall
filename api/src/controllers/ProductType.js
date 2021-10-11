@@ -14,7 +14,6 @@ class ProducTypeModel extends ModelController {
                 res.send(data);
             } catch (error) {
                 res.send(error);
-                // console.log(error)
             }
         } else {
             res.status(400).send({ message: 'Wrong parameters' });

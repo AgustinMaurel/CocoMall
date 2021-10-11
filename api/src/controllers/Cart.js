@@ -43,9 +43,7 @@ class OrderModel extends ModelController {
             let product = req.body.idProduct;
             let cantidad = req.body.quantity;
 
-            console.log(idUser, 'ID USER')
-            console.log(product, 'ID PRODUCT')
-            console.log(cantidad, 'CANTIDAD')
+          
 
             const [answer, create] = await this.model.findOrCreate({
                 where: { UserId: idUser },

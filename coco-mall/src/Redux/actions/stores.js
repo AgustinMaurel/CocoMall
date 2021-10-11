@@ -27,10 +27,8 @@ export const filterStores = (payload) => {
         nameStore: payload.searchStore,
         rating: payload.rating,
     };
-    console.log('OBJ', obj);
     return async (dispatch) => {
         const response = await axios.post(SEARCH_URL, obj);
-        console.log('RESPONSE', response.data);
         dispatch({ type: FILTER_STORE, payload: response.data });
     };
 };

@@ -123,7 +123,6 @@ export default function StorePanel() {
                                 {filtersNow.map((el) => (
                                     <label onClick={()=>{
                                         dispatch(ordersProduct(el))
-                                        console.log(finalProducts)
                                     }}  key={el} className='border cursor-pointer bg-secondary-light border-gray-200 rounded-md px-5'>{el}</label>
                                 ))}
                                 <label onClick={() => dispatch(getProductsStore(idActual)) && !renderSec ? setRenderSec(true) : setRenderSec(false)} className='border cursor-pointer bg-secondary-light border-gray-200 rounded-md px-5 py-1'><GrAdd /></label>

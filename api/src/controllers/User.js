@@ -81,23 +81,18 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body
         if (userId) {
             try {
-                // console.log(cart)
                 let allIds = await cart.map(item => {
                     return item.idProduct
                 })
-                // console.log(allIds)
                 let allQuantity = await cart.map(item => {
                     return item.quantity
                 })
-                // console.log(allQuantity)
                 let products = []
                 for (const [i, id] of allIds.entries()) {
                     let product = await Product.findByPk(id)
-                    // console.log(product.dataValues)
                     product = { ...product.dataValues, quantity: allQuantity[i] }
                     products = [...products, product]
                 }
-                console.log(products)
                 const user = await this.model.findOne({
                     where: {
                         id: userId

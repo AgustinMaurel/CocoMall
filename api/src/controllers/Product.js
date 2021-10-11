@@ -24,7 +24,6 @@ class ProductModel extends ModelController {
                         fileString[x], { folder: "Products" }
                     );
                 }
-                // console.log(img);
                 let public_id = img.map(el => el.public_id);
 
                 //Get the Product from body
@@ -36,7 +35,6 @@ class ProductModel extends ModelController {
                 //Attach the new product with the Store
                 const store = await Store.findByPk(storeId);
                 await store.addProduct(productId);
-                console.log(store)
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId);
                 await productType.addProduct(productId);
@@ -106,8 +104,6 @@ class ProductModel extends ModelController {
                         }
                     },
                 });
-                // console.log(allTypes)
-                // console.log(typeof allTypes)
                 res.send(filteredProducts);
             } catch (error) {
                 res.send(error);
@@ -198,7 +194,6 @@ class ProductModel extends ModelController {
 
     findAllProductsByIds = async (req, res) => {
         const { allIds } = req.body
-        console.log(allIds)
         const allProducts = await this.model.findAll({
             where: {
                 id: {

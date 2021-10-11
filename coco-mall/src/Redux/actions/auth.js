@@ -59,7 +59,6 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
-                console.log(user)
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -108,11 +107,3 @@ export const logout = () => {
     };
 };
 
-// export const setCart = (user) => {
-//     return async (dispatch) => {
-//         console.log('entre')
-//         const result = await axios.post(SHOPPING_CART.GET_PRODUCTS, { idUser: user });
-//         console.log(result.data)
-//         dispatch({ type: SET_CART, payload: result.data });
-//     };
-// };

@@ -1,39 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
-import Slider from 'react-slick';
-import Info from '../Components/StoreInfo/Info';
-import Share from '../Components/StoreInfo/Share';
-import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
 import Search from '../Components/Inputs/Search';
-
-//import Arrow from '../Components/Slides/Arrow';
-import HeroCard from '../Components/Cards/HeroCard';
-
 import { SHOPPING_CART} from '../Scripts/constants'
-import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
+import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import { AiOutlinePercentage } from 'react-icons/ai';
-
-import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
 import {
     addToCart,
     deleteFromCart,
     deleteAllFromCart,
     clearCart,
 } from '../Redux/actions/shoppingActions';
-import Info from '../Components/StoreInfo/Info';
-import Share from '../Components/StoreInfo/Share';
-import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
-import Search from '../Components/Inputs/Search';
-import HeroCard from '../Components/Cards/HeroCard';
-import NavBar from '../Components/NavBar/NavBar';
-import Product from '../Components/Product/Product';
 import CartItem from '../Components/ShoppingCart/CartItem';
 import ProductDetail from '../Components/Product/ProductDetail';
 import {
@@ -328,7 +311,7 @@ export default function StoreDetail() {
 
           
                 {/* CART */}
-                <div className=' col-span-12 flex flex-col h-screen row-span-14 pl-12 pr-12'>
+                <div className=' col-span-12 flex flex-col hidden pl-12 pr-12'>
                     <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
                         <div className=' '>
                             <h3>Carrito</h3>

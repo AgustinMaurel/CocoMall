@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSelector } from 'react-redux';
 import logo from '../Assets/icons/loco_coco.png';
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';

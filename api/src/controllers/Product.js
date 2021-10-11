@@ -72,7 +72,7 @@ class ProductModel extends ModelController {
         }
     };
 
-    filterProductsByTypeAndName = async (req, res) => {
+    filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {

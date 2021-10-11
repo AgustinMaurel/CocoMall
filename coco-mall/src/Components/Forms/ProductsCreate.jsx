@@ -112,7 +112,6 @@ const ProductsCreate = ({ idStore }) => {
                         watch={watch}
                         onChange={handleImageChange}
                     />
-
                     <button
                         type='submit'
                         className='w-full bg-secondary rounded my-4 p-2 text-white'

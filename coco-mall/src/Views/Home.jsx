@@ -155,7 +155,8 @@ function Home() {
 
                     {/* --- ALL STORES ---- */}
                     <div className='mt-6'>
-                        <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>
+                        {/* agregar cantidad de resultados y mostrar el texto que buscó */}
+                    <h3 className='text-2xl font-bold text-cocoMall-800'>{ allStores !== storesFilters ? filters.searchStore : 'All Stores'}</h3> 
                         <div className='cards'>
                             {storesFilters?.map((e) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>

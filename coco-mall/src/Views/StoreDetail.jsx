@@ -2,19 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import Info from '../Components/StoreInfo/Info';
-import Share from '../Components/StoreInfo/Share';
-import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
-import Search from '../Components/Inputs/Search';
+import ReactModal from 'react-modal';
 
-//import Arrow from '../Components/Slides/Arrow';
-import HeroCard from '../Components/Cards/HeroCard';
-// import homeStores from '../Helpers/homeStores';
-// import dataProducts from '../Helpers/dataProducts';
-// import ProductCard from '../Components/Cards/ProductCard';
-
-import NavBar from '../Components/NavBar/NavBar';
-import Product from '../Components/Product/Product';
 import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
 import {
     addToCart,
@@ -22,8 +11,14 @@ import {
     deleteAllFromCart,
     clearCart,
 } from '../Redux/actions/shoppingActions';
+import Info from '../Components/StoreInfo/Info';
+import Share from '../Components/StoreInfo/Share';
+import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
+import Search from '../Components/Inputs/Search';
+import HeroCard from '../Components/Cards/HeroCard';
+import NavBar from '../Components/NavBar/NavBar';
+import Product from '../Components/Product/Product';
 import CartItem from '../Components/ShoppingCart/CartItem';
-import ReactModal from 'react-modal';
 import ProductDetail from '../Components/Product/ProductDetail';
 import {
     handleOnChange,
@@ -32,20 +27,21 @@ import {
     handleOnDiscount,
     handleOnChecked,
 } from '../Scripts/handles';
+import Arrow from '../Components/Slides/Arrow';
 
 ReactModal.setAppElement('#root');
+
 export default function StoreDetail() {
+    //HOOKS
     const dispatch = useDispatch();
+    const { id } = useParams();
+    //STATES
     const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts } =
         useSelector((state) => state.stores);
-
-    const { id } = useParams();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModal, setInfoModal] = useState(false);
     const [checkType, setCheckType] = useState([]);
-
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
-
     const [filters, setFilters] = useState({
         searchProduct: '',
         type: [],
@@ -65,15 +61,13 @@ export default function StoreDetail() {
         pauseOnHover: true,
     };
 
-    // const settingsCards = {
-    //     dots: false,
-    //     infinite: true,
-    //     speed: 500,
-    //     slidesToShow: 4,
-    //     slidesToScroll: 4,
-    //     nextArrow: <Arrow />,
-    //     prevArrow: <Arrow />,
-    // };
+    const settingsTypes = {
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        nextArrow: <Arrow />,
+        prevArrow: <Arrow />,
+    };
     //by Chris
 
     useEffect(() => {
@@ -100,6 +94,7 @@ export default function StoreDetail() {
     );
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
+
     let productTypesArr = [];
     storeProducts.length &&
         storeProducts.map((product, index) => {
@@ -117,51 +112,47 @@ export default function StoreDetail() {
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
                 <NavBar />
             </div>
-
-            <div className='col-span-12 row-span-2 row-end-3 content-center relative mx-auto w-full'>
+            {/* --- BANNER PRODUCTS --- */}
+            <div className='col-span-12 content-center mx-auto w-full'>
                 <Slider {...settingsHero}>
                     <HeroCard color={'bg-gray-500'} />
                     <HeroCard color={'bg-green-500'} />
                     <HeroCard color={'bg-blue-500'} />
                     <HeroCard color={'bg-red-500'} />
                 </Slider>
-                
-                <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
-                <Share />
+                {/*                 
+                <div className='border-4'>
+                    <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
+                    <Share />
+                </div> */}
             </div>
-            <div className='col-span-12 row-span-3 content-center relative mx-auto w-full'>
+
+            {/* --- FILTERS & SEARCH --- */}
+            <div className='border col-span-12 content-center mx-auto w-full h-60'>
                 <Search
                     searchProduct={filters.searchProduct}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                 />
-                <div className='flex flex-col justify-center'>
-                    <div className='flex m-auto w-1/5'>
-                        {typesProductInStore.length
-                            ? typesProductInStore.map((type, index) => {
-                                  return (
-                                      <FilterTypeProduct
-                                          type={type}
-                                          index={index}
-                                          handleChecked={handleChecked}
-                                          check={check}
-                                      />
-                                  );
-                              })
-                            : false}
+                {/* --- FILTERS --- */}
+                <div className='flex w-3/4 m-auto mt-4'>
+                    <div className='border w-64 h-36 m-auto'>
+                        <Slider {...settingsTypes}>
+                            {typesProductInStore?.map((type, index) => {
+                                return (
+                                    <FilterTypeProduct
+                                        type={type}
+                                        index={index}
+                                        handleChecked={handleChecked}
+                                        check={check}
+                                    />
+                                );
+                            })}
+                        </Slider>
                     </div>
-                    <div className='flex m-auto w-1/5 p-5'>
-                        <form onSubmit={(e) => handleSubmit(e)} className='flex p-5 w-3/4 h-full'>
-                            {/* <label>Search</label>
-                        <input
-                            type='search'
-                            placeholder='Find Products...'
-                            name='searchProduct'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.searchProduct}
-                            onChange={handleChange}
-                        /> */}
 
+                    <div className='border flex m-auto w-2/4 p-5'>
+                        <form onSubmit={(e) => handleSubmit(e)} className='flex p-5 w-3/4 h-full'>
                             <label>min</label>
                             <input
                                 type='number'
@@ -184,67 +175,23 @@ export default function StoreDetail() {
                         </form>
                         <button onClick={handleDiscount}>Discount</button>
                     </div>
-                </div>
-            </div>
-            {/* SIDEBAR */}
-            <div
-                className='col-span-2  row-span-8
-                bg-gray-100 border-gray-200 border-r hidden'
-            >
-                <div className='  '>
-                    <form onSubmit={(e) => handleSubmit(e)}>
-                        {/* <label>Search</label>
-                        <input
-                            type='search'
-                            placeholder='Find Products...'
-                            name='searchProduct'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.searchProduct}
-                            onChange={handleChange}
-                        /> */}
 
-                        <label>min</label>
-                        <input
-                            type='number'
-                            placeholder='min'
-                            name='min'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.min}
-                            onChange={handleChange}
-                        ></input>
-
-                        <label>max</label>
-                        <input
-                            type='number'
-                            placeholder='max'
-                            name='max'
-                            className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                            value={filters.max}
-                            onChange={handleChange}
-                        ></input>
-                        <button type='submit'>Search Price</button>
-                    </form>
-                    <button onClick={handleDiscount}>Discount</button>
-
-                    {typesProductInStore.length
-                        ? typesProductInStore.map((type, index) => {
-                              return (
-                                  <FilterTypeProduct
-                                      type={type}
-                                      index={index}
-                                      handleChecked={handleChecked}
-                                      check={check}
-                                  />
-                              );
-                          })
-                        : false}
-
+                    {/* --- ORDERS --- */}
+                    <div className='border'>
+                        Ordenamientos
+                        <br />
+                        <select onChange={handleOrder}>
+                            <option value='Mas relevantes'>Mas relevantes</option>
+                            <option value='Barato'>Barato</option>
+                            <option value='Caro'>Caro</option>
+                        </select>
+                    </div>
                     {filters.searchProduct ||
                     filters.type.length ||
                     filters.min ||
                     filters.max ||
                     filters.discount ? (
-                        <div>
+                        <div className='border'>
                             <span>Render Filters </span>
                             <br />
                             <span>Resultados</span> <span>{storeProductsFilter.length}</span>
@@ -262,35 +209,13 @@ export default function StoreDetail() {
                     ) : (
                         false
                     )}
-                    <div>
-                        Ordenamientos
-                        <br />
-                        <select onChange={handleOrder}>
-                            <option value='Mas relevantes'>Mas relevantes</option>
-                            <option value='Barato'>Barato</option>
-                            <option value='Caro'>Caro</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
             {/* CARDS */}
-            <div className='flex flex-col col-span-12 row-span-14 pl-12 pr-12'>
+            <div className='flex flex-col col-span-12 row-span-14 m-auto'>
                 <div className='w-1/4 m-auto mt-5'>
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations</h3>
-                    {/* 
-                    <Slider {...settingsCards}>
-                        {homeStores()?.map((e, i) => (
-                            <Link to={`/home/store/${e.id}`} onClick={() => allStores(e.id)}>
-                                <ProductCard
-                                    productName={e.storeName}
-                                    description={e.description}
-                                    cloudImage={e.logo}
-                                    key={i}
-                                />
-                            </Link>
-                        ))}
-                    </Slider> */}
+                    <h3 className='text-2xl font-bold text-cocoMall-800'>Alls Products</h3>
                 </div>
                 <div className='flex flex-wrap justify-center'>
                     {storeProductsFilter.length

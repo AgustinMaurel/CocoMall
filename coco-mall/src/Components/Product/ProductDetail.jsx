@@ -3,9 +3,9 @@ import React from 'react';
 import ReactModal from 'react-modal';
 
 
-ReactModal.setAppElement('#root');
 import { Image } from 'cloudinary-react';
 
+ReactModal.setAppElement('#root');
 function ProductDetail(props) {
     const { product } = props;
     return (

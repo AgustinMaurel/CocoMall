@@ -5,7 +5,6 @@ const {
     DB_PASSWORD,
     DB_HOST,
     DB_NAME,
-    PUBLIC_KEY,
     SECRET_KEY,
 } = require('../utils/config/index');
 

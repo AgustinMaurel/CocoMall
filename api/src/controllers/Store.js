@@ -181,27 +181,6 @@ class StoreModel extends ModelController {
         }
     };
 
-    deleteDeep = async (req, res) => {
-        let id = req.params.id;
-        if (id) {
-            // Borrar fotos de productos y de la tienda de Cloudinary
-            // to do
-
-            try {
-                const [ProductDelte, StoreDelte] = await Promise.all([
-                    Product.destroy({ where: { StoreId: id } }),
-                    this.model.destroy({ where: { id: id } }),
-                ]);
-                res.json({ ProductDelte, StoreDelte });
-            } catch (error) {
-                res.status(400).json(error);
-            }
-        } else {
-            res.status(400).json({
-                msg: 'faltan datos',
-            });
-        }
-    };
 
     // UPDATE FUNCIONA PERFECTO --  NO TOCAR MUCHO !
     updateDataStore = async (req, res) => {

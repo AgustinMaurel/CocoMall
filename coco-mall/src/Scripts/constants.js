@@ -11,12 +11,9 @@ export const DELETE_PRODUCT = 'http://localhost:3001/product/delete'
 
 export const CREATE_USER_URL = 'http://localhost:3001/user/create';
 
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
-
 export const UPDATE_PRODUCT = 'http://localhost:3001/product/update'
 export const PRODUCT_URL = 'http://localhost:3001/product/create';
-export const IMG_DEFAULT =
-    'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
+
 export const LOGO_DEFAULT = 'https://cireasesores.com/wp-content/uploads/2017/01/default_logo.png';
 export const BANNER_DEFAULT =
     'https://img.freepik.com/vector-gratis/personas-pie-cola-tienda_23-2148594615.jpg?size=626&ext=jpg';

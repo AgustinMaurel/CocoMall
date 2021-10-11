@@ -39,12 +39,13 @@ export default function StoreDetail() {
     //HOOKS
     const dispatch = useDispatch();
     const { id } = useParams();
+
     //STATES
-    const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts } =
+    const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts, storeDetail } =
         useSelector((state) => state.stores);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [infoModal, setInfoModal] = useState(false);
     const [checkType, setCheckType] = useState([]);
+    const [infoModal, setInfoModal] = useState(false);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
         searchProduct: '',
@@ -75,13 +76,14 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
-        dispatch(getProductsStore(id));
         dispatch(getStoreDetail(id));
+        dispatch(getProductsStore(id));
         return () => {
             dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
-    }, [allStores]);
+    }, [dispatch, allStores]);
+
 
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -112,19 +114,9 @@ export default function StoreDetail() {
                 <NavBar />
             </div>
             {/* --- BANNER PRODUCTS --- */}
-            <div className='col-span-12 flex justify-center content-center mx-auto w-full bg-cocoMall-200'>
-                <h3 className='text-5xl font-extrabold text-white'>CHRIS STORE</h3>
-                {/* <Slider {...settingsHero}>
-                    <HeroCard color={'bg-gray-500'} />
-                    <HeroCard color={'bg-green-500'} />
-                    <HeroCard color={'bg-blue-500'} />
-                    <HeroCard color={'bg-red-500'} />
-                </Slider> */}
-                {/*                 
-                <div className='border-4'>
-                    <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
-                    <Share />
-                </div> */}
+            <div className='col-span-12 flex flex-col items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 gap-2'>
+                <h3 className='text-5xl font-extrabold text-white'>{storeDetail?.storeName?.toUpperCase()}</h3>
+                <p>{storeDetail?.description}</p>
             </div>
 
             {/* --- FILTERS & SEARCH --- */}
@@ -153,19 +145,6 @@ export default function StoreDetail() {
                                 );
                             })}
                         </select>
-
-                        {/* <Slider {...settingsTypes}>
-                            {typesProductInStore?.map((type, index) => {
-                                return (
-                                    <FilterTypeProduct
-                                        type={type}
-                                        index={index}
-                                        handleChecked={handleChecked}
-                                        check={check}
-                                    />
-                                );
-                            })}
-                        </Slider> */}
                     </div>
 
                     <div className='flex'>
@@ -213,36 +192,13 @@ export default function StoreDetail() {
                             <option value='Caro'>Caro</option>
                         </select>
                     </div>
-                    {filters.searchProduct ||
-                    filters.type.length ||
-                    filters.min ||
-                    filters.max ||
-                    filters.discount ? (
-                        <div className='border'>
-                            <span>Render Filters </span>
-                            <br />
-                            <span>Resultados</span> <span>{storeProductsFilter.length}</span>
-                            {/* Agregar cantidad de resultados al buscar productos */}
-                            {filters.searchProduct !== '' ? (
-                                <li>{filters.searchProduct}</li>
-                            ) : (
-                                false
-                            )}
-                            {filters.type.length ? <li>{filters.type}</li> : false}
-                            {filters.min !== '' ? <li>{filters.min}</li> : false}
-                            {filters.max !== '' ? <li>{filters.max}</li> : false}
-                            {filters.discount !== 0 ? <li>Discount</li> : false}
-                        </div>
-                    ) : (
-                        false
-                    )}
                 </div>
             </div>
 
             {/* CARDS */}
             <div className='col-span-12 w-2/3 m-auto'>
                 <div>
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>Alls Products</h3>
+                    <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
                 </div>
                 <div className='flex flex-wrap'>
                     {/* {storeProductsFilter.length
@@ -295,7 +251,7 @@ export default function StoreDetail() {
                             }}
                             isOpen={modalIsOpen}
                             onRequestClose={() => setModalIsOpen(false)}
-                            className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
+                            className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
                         >
                             <ProductDetail
                                 product={productDetail}
@@ -337,3 +293,47 @@ export default function StoreDetail() {
         </div>
     );
 }
+
+
+//RENDERS FILTERS
+
+// {
+//     filters.searchProduct ||
+//     filters.type.length ||
+//     filters.min ||
+//     filters.max ||
+//     filters.discount ? (
+//         <div className='border'>
+//             <span>Render Filters </span>
+//             <br />
+//             <span>Resultados</span> <span>{storeProductsFilter.length}</span>
+//             {/* Agregar cantidad de resultados al buscar productos */}
+//             {filters.searchProduct !== '' ? (
+//                 <li>{filters.searchProduct}</li>
+//             ) : (
+//                 false
+//             )}
+//             {filters.type.length ? <li>{filters.type}</li> : false}
+//             {filters.min !== '' ? <li>{filters.min}</li> : false}
+//             {filters.max !== '' ? <li>{filters.max}</li> : false}
+//             {filters.discount !== 0 ? <li>Discount</li> : false}
+//     </div>
+// ) : (
+//     false
+// )}
+
+
+/* <Slider {...settingsTypes}>
+    {typesProductInStore?.map((type, index) => {
+        return (
+            <FilterTypeProduct
+                type={type}
+                index={index}
+                handleChecked={handleChecked}
+                check={check}
+            />
+        );
+    })}
+</Slider> */
+
+

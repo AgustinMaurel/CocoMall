@@ -138,7 +138,7 @@ export default function StoreDetail() {
                 <div className='flex w-3/4 m-auto items-center justify-between'>
                     <div className=''>
                         <select
-                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300'
+                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                             name='category'
                             id='category'
                             onChange={handleTypes}
@@ -192,7 +192,7 @@ export default function StoreDetail() {
                     {/* --- ORDERS --- */}
                     <div>
                         <select
-                            className='border cursor-pointer p-2 rounded-md text-white bg-gray-300'
+                            className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                             onChange={handleOrder}
                         >
                             <option value='Mas relevantes'>Mas relevantes</option>
@@ -206,60 +206,65 @@ export default function StoreDetail() {
             {/* CARDS */}
             <div className='col-span-12 w-2/3 m-auto'>
                 <div>
-                    <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
+                    { storeProducts <= storeProductsFilter ? <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3> : <></> }
                 </div>
-                <div className='flex flex-wrap'>
-                    {/* Por cada tipo de producto que tenga la tienda quiero renderizar
-                        una seccion de productos 
-                        */}
-
+                <div className='flex flex-col'>
                     {storeProductsFilter.length && typesProductInStore.length
                         ? typesProductInStore.map((type) => {
-                            if(filters.type.includes(type.id)){
-                                return (
-                                    <>
-                                    <h2>{type.Name}</h2>
-                                    {storeProductsFilter.map((product) => {
-                                        if (type.id === product.ProductTypeId) {
-                                            return (
-                                                <>
-                                                    <div onClick={() => modalFuncion(product.id)}>
-                                                        <Product
-                                                            product={product}
-                                                            addToCart={() =>
-                                                                addToCart(product.id)
-                                                            }
-                                                        />
-                                                    </div>
-                                                </>
-                                            );
-                                        }
-                                    })}
-                                    </>
-                                )
-                            }
-                            if(!filters.type.length){
-                                return (
-                                  <div className='flex'>
-                                      <h2>{type.Name}</h2>
-                                      {storeProductsFilter.map((product) => {
-                                          if (type.id === product.ProductTypeId) {
-                                              return (
-                                                  <>
-                                                      <div onClick={() => modalFuncion(product.id)}>
-                                                          <Product
-                                                              product={product}
-                                                              addToCart={() =>
-                                                                  addToCart(product.id)
+                              if (filters.type.includes(type.id)) {
+                                  return (
+                                      <>
+                                          <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>{type.Name}</h3>
+                                          {storeProductsFilter.map((product) => {
+                                              if (type.id === product.ProductTypeId) {
+                                                  return (
+                                                      <>
+                                                          <div
+                                                              onClick={() =>
+                                                                  modalFuncion(product.id)
                                                               }
-                                                          />
-                                                      </div>
-                                                  </>
-                                              );
-                                          }
-                                      })}
-                                  </div>
-                              )}
+                                                          >
+                                                              <Product
+                                                                  product={product}
+                                                                  addToCart={() =>
+                                                                      addToCart(product.id)
+                                                                  }
+                                                              />
+                                                          </div>
+                                                      </>
+                                                  );
+                                              }
+                                          })}
+                                      </>
+                                  );
+                              }
+                              if (!filters.type.length) {
+                                  return (
+                                      <div className='flex'>
+                                          <span className='w-24 mt-4 ml-4 font-semibold text-cocoMall-300'>{type.Name.toUpperCase()}</span>
+                                          {storeProductsFilter.map((product) => {
+                                              if (type.id === product.ProductTypeId) {
+                                                  return (
+                                                      <>
+                                                          <div
+                                                              onClick={() =>
+                                                                  modalFuncion(product.id)
+                                                              }
+                                                          >
+                                                              <Product
+                                                                  product={product}
+                                                                  addToCart={() =>
+                                                                      addToCart(product.id)
+                                                                  }
+                                                              />
+                                                          </div>
+                                                      </>
+                                                  );
+                                              }
+                                          })}
+                                      </div>
+                                  );
+                              }
                           })
                         : false}
 
@@ -354,3 +359,7 @@ export default function StoreDetail() {
         );
     })}
 </Slider> */
+
+// {
+//     storeProductsFilter[0].ProductTypeId === type?.id ? <h2>{type.Name}</h2> : <></>
+// }

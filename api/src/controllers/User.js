@@ -1,4 +1,4 @@
-const { User, Store, Address } = require('../models/index');
+const { User, Store, Address, Product } = require('../models/index');
 const ModelController = require('./index');
 class UserModel extends ModelController {
     constructor(model) {
@@ -80,14 +80,30 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body
         if (userId) {
             try {
+                let allIds = await cart.map(item => {
+                    return item.idProduct
+                })
+                let allQuantity = await cart.map(item => {
+                    return item.quantity
+                })
+                const products = await Product.findAll({
+                    where: {
+                        id: {
+                            [Op.or]: allIds
+                        }
+                    }
+                });
+                let newCart = await products.forEach((product, i) => {
+                    return { ...product, quantity: allQuantity[i] }
+                });
                 const user = await this.model.findOne({
                     where: {
                         id: userId
                     }
                 })
-                user.Cart = cart
+                user.Cart = newCart
                 await user.save()
-                res.send(await user.save())
+                res.send(newCart)
             } catch (error) {
                 res.send(error)
             }

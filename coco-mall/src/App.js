@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { auth } from './firebase/firebaseConfig';
 import { login } from './Redux/actions/auth';
 
-import {
-    getStores,
-    getProductTypes,
-    // getStoreImages,
-    // getProductImages,
-} from './Redux/actions/stores';
+import { getStores, getProductTypes } from './Redux/actions/stores';
+
+import { setCart } from './Redux/actions/shoppingActions';
 
 import StorePanel from './Views/StorePanel';
 import Landing from './Views/Landing';
@@ -32,8 +30,51 @@ function App() {
         auth.onAuthStateChanged((user) => {
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
-
                 setIsLoggedIn(true);
+                
+                
+                
+                // axios
+                //     .get(`http://localhost:3001/user/${user.uid}`)
+                //     .then((res) => {
+                //         return res.data[0].Cart?.map((element) => {
+                //             return { idProduct: element.idproduct, quantity: element.cantidad };
+                //         });
+                //     })
+                //     .then((res) => {
+                //         let idProducts = res.map((el) => el.idProduct);
+                //         let aux = {
+                //             allIds: idProducts,
+                //         };
+                //         // let quantities = res.map((el) => );
+                //         // let temp = res;
+                //         //mi res es un arreglo con los objetos que contienen el id producto y la cantidad
+                //         axios.post('http://localhost:3001/product/cart', aux).then((res) => {
+                //             //donde se cruce el temp.idProduct con el res.data[i].id --> agregar al res.data[i] la propiedad quantity que me llega en temp
+
+                //             res.data?.map(el => dispatch(setCart(el)))
+                            
+                //             //mañana hacer una action que me agregue esta info directo al cart
+
+                //             //hacer un map de temp donde el ele
+
+                //             // let result = res.data.find(
+                //             //     (product) =>
+                //             //         product.id === temp.map((el) => el.idProduct).toString(),
+                //             // );
+                //             // console.log(result);
+
+                //             //ESTO ES INVIABLE TARDA MUCHO RESOLVER DESDE EL BACK JAJA SALU2
+                            
+                //         });
+                //     });
+
+                // .then((res) =>
+                //     res.data.map((element) => {
+                //         return { idProduct: element.id, quantity: element.cantidad };
+                //     }),
+                // )
+                // .then((res) => axios.post('http://localhost:3001/product/cart', res));
             } else {
                 setIsLoggedIn(false);
             }
@@ -44,8 +85,6 @@ function App() {
     useEffect(() => {
         dispatch(getStores());
         dispatch(getProductTypes());
-        // dispatch(getProductImages());
-        // dispatch(getStoreImages());
     }, [dispatch]);
 
     return (

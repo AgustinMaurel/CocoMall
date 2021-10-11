@@ -18,9 +18,9 @@ function NavBar() {
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
-    let ITEMS_IN_CART = cartItems
-        ?.map((el) => el.quantity)
+    let ITEMS_IN_CART = cartItems.length > 0 && cartItems?.map((el) => el.quantity)
         .reduce((current, sum) => current + sum, 0);
+        
 
     function handleCheckout() {
         console.log('click');

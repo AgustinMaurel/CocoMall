@@ -13,7 +13,8 @@ import Search from '../Components/Inputs/Search';
 //import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 
-import { getProductsStore, getProductDetail, getProductTypes } from '../Redux/actions/stores';
+import { SHOPPING_CART} from '../Scripts/constants'
+import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
 import {
     addToCart,
     deleteFromCart,
@@ -41,7 +42,7 @@ export default function StoreDetail() {
     const { allStores, storeProductsFilter,  productDetail, productTypes, storeProducts } =
         useSelector((state) => state.stores);
 
-    const cart = useSelector(state => state.auth.userCart)
+    const {uid ,userCart} = useSelector(state => state.auth)
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [infoModal, setInfoModal] = useState(false);
@@ -57,6 +58,11 @@ export default function StoreDetail() {
         discount: 0,
     });
 
+    let userCartToBack = {
+        userId: uid,
+        cart: []
+    }
+
     //SLIDER HERO configuraciones
     const settingsHero = {
         dots: true,
@@ -68,18 +74,7 @@ export default function StoreDetail() {
         pauseOnHover: true,
     };
 
-    // const settingsCards = {
-    //     dots: false,
-    //     infinite: true,
-    //     speed: 500,
-    //     slidesToShow: 4,
-    //     slidesToScroll: 4,
-    //     nextArrow: <Arrow />,
-    //     prevArrow: <Arrow />,
-    // };
-    //by Chris
 
-    /*---------CREO OBJETO QUE MANDO AL BACK-------------*/
 
     // let total = Object.values(shoppingCart).reduce(
     //     (previous, key) => previous + key.price * key.quantity,
@@ -95,7 +90,6 @@ export default function StoreDetail() {
 
     useEffect(() => {
         dispatch(getProductsStore(id));
-        // dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
     }, [dispatch, id]);
 
@@ -107,6 +101,11 @@ export default function StoreDetail() {
     //     });
     // };
 
+    const handleClearCart = () => {
+        dispatch(clearCart())
+        
+        axios.post(SHOPPING_CART.ADD_TO_CART , userCartToBack  )
+    }
     
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -324,7 +323,7 @@ export default function StoreDetail() {
                                   <div onClick={() => modalFuncion(product.id)}>
                                       <Product
                                           product={product}
-                                          addToCart={() => addToCart(product.id)}
+                                          key={product.id}
                                       />
                                   </div>
                               ))
@@ -355,17 +354,17 @@ export default function StoreDetail() {
                     <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
                         <div className=' '>
                             <h3>Carrito</h3>
-                            {cart.length ? (
+                            {userCart.length > 0 ? (
                                 <button
                                     className='border bg-red-600 text-white shadow p-1'
-                                    onClick={() => dispatch(clearCart())}
+                                    onClick={handleClearCart}
                                 >
                                     Clear cart
                                 </button>
                             ) : (
                                 false
                             )}
-                            {cart?.map((item, index) => (
+                            {userCart?.map((item, index) => (
                                 <CartItem
                                     key={index}
                                     data={item}

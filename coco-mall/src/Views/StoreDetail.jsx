@@ -221,7 +221,10 @@ export default function StoreDetail() {
                             // storeProductsFilter
                               return (
                                   <div className='flex'>
-                                      <h2>{type.Name}</h2>
+                                    {
+                                       storeProductsFilter[0].ProductTypeId === type?.id ? <h2>{type.Name}</h2> : <></>
+                                    }
+
                                       {storeProductsFilter
                                           ?.sort((a, b) => a.ProductTypeId - b.ProductTypeId)
                                           .map((product) => {
@@ -337,3 +340,7 @@ export default function StoreDetail() {
 </Slider> */
 
 
+
+// {
+//     storeProductsFilter[0].ProductTypeId === type?.id ? <h2>{type.Name}</h2> : <></>
+// }

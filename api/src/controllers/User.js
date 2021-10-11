@@ -1,4 +1,5 @@
 const { User, Store, Address, Product } = require('../models/index');
+const { Op } = require('sequelize');
 const ModelController = require('./index');
 class UserModel extends ModelController {
     constructor(model) {
@@ -80,30 +81,31 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body
         if (userId) {
             try {
+                // console.log(cart)
                 let allIds = await cart.map(item => {
                     return item.idProduct
                 })
+                // console.log(allIds)
                 let allQuantity = await cart.map(item => {
                     return item.quantity
                 })
-                const products = await Product.findAll({
-                    where: {
-                        id: {
-                            [Op.or]: allIds
-                        }
-                    }
-                });
-                let newCart = await products.forEach((product, i) => {
-                    return { ...product, quantity: allQuantity[i] }
-                });
+                // console.log(allQuantity)
+                let products = []
+                for (const [i, id] of allIds.entries()) {
+                    let product = await Product.findByPk(id)
+                    // console.log(product.dataValues)
+                    product = { ...product.dataValues, quantity: allQuantity[i] }
+                    products = [...products, product]
+                }
+                console.log(products)
                 const user = await this.model.findOne({
                     where: {
                         id: userId
                     }
                 })
-                user.Cart = newCart
+                user.Cart = products
                 await user.save()
-                res.send(newCart)
+                res.json(products)
             } catch (error) {
                 res.send(error)
             }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
@@ -29,7 +29,6 @@ const ProductsCreate = ({ idStore, product }) => {
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
@@ -37,6 +36,7 @@ const ProductsCreate = ({ idStore, product }) => {
         };
 
     };
+
     const handleTypes = (e)=> {
         setTypes(e.target.value)
     }
@@ -44,24 +44,18 @@ const ProductsCreate = ({ idStore, product }) => {
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
-            productName:
-                data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
+            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
             description: data.description,
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
         };
-        let dataProductClean = {
-            product: dataRawProduct,
-            storeId: idStore,
-            idImage: [image],
-            typeId: '1',
-        };
-
+        let dataProductClean = {  product: dataRawProduct, storeId: idStore, idImage:[image], typeId:types};
+        console.log(dataProductClean)
         if (product) {
-            axios
-                .put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
+            axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
                 .then(() => {
+                    setTypes("")
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',

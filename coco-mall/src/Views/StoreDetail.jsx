@@ -113,7 +113,7 @@ export default function StoreDetail() {
     });
 
     return (
-        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
+        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-100'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
                 <NavBar />
             </div>
@@ -124,7 +124,7 @@ export default function StoreDetail() {
                     <HeroCard color={'bg-blue-500'} />
                     <HeroCard color={'bg-red-500'} />
                 </Slider>
-
+                
                 <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
                 <Share />
             </div>

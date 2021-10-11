@@ -89,7 +89,6 @@ class StoreModel extends ModelController {
     };
 
     filterStoresByProductTypes = async (req, res) => {
-        console.log(req.body)
         const stateStore =req.body.state || '';
         const typesId = req.body.types || [];
         const productToFilter = req.body.name || '';

@@ -95,7 +95,4 @@ module.exports = {
             borderColor: ['checked'],
         },
     },
-    plugins: [
-        require('@tailwindcss/custom-forms'),
-    ],
 };

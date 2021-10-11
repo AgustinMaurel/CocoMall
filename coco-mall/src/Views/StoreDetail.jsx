@@ -75,13 +75,13 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
-            dispatch(getProductsStore(id));
-            dispatch(getStoreDetail(id));
+        dispatch(getProductsStore(id));
+        dispatch(getStoreDetail(id));
         return () => {
-            dispatch(getProductsStore());
+            dispatch(getProductsStore())
             dispatch(getStoreDetail());
         };
-    }, [allStores]);
+    }, [dispatch, id]);
 
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -112,13 +112,14 @@ export default function StoreDetail() {
                 <NavBar />
             </div>
             {/* --- BANNER PRODUCTS --- */}
-            <div className='col-span-12 content-center mx-auto w-full'>
-                <Slider {...settingsHero}>
+            <div className='col-span-12 flex justify-center content-center mx-auto w-full bg-cocoMall-200'>
+                <h3 className='text-5xl font-extrabold text-white'>CHRIS STORE</h3>
+                {/* <Slider {...settingsHero}>
                     <HeroCard color={'bg-gray-500'} />
                     <HeroCard color={'bg-green-500'} />
                     <HeroCard color={'bg-blue-500'} />
                     <HeroCard color={'bg-red-500'} />
-                </Slider>
+                </Slider> */}
                 {/*                 
                 <div className='border-4'>
                     <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />

@@ -47,9 +47,8 @@ class ProductModel extends ModelController {
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
         }
-        console.log(img);
-        let public_id = img.map((el) => el.public_id);
-      }
+
+    }
 
     bulkCreateProducts = async (req, res) => {
         const { storeId, allTypes, products } = req.body
@@ -81,7 +80,7 @@ class ProductModel extends ModelController {
                 const allTypes = req.body.types || [];
                 const nameToFilter = req.body.name || '';
                 const min = req.body.min || 0;
-                const max = req.body.max || Math.pow(99,99);
+                const max = req.body.max || Math.pow(99, 99);
                 const discount = req.body.discount || 0
                 const filteredProducts = await this.model.findAll({
                     where: {
@@ -204,36 +203,6 @@ class ProductModel extends ModelController {
         })
         res.send(allProducts)
     }
-
-  
-
-  updateDataProduct = async (req, res) => {
-    const id1 = req.params.id;
-    const { id, StoreId, ...product } = req.body;
-
-    if (product.cloudImage) {
-      // Corregir para hacerlo con muchas imagenes
-
-      const uploadedResponse = await cloudinary.uploader.upload(
-        product.cloudImage
-      );
-      let public_id = uploadedResponse.public_id;
-      product.cloudImage = public_id;
-    }
-
-    const ProductoActualizado = await this.model.update(
-      { ...product },
-      {
-        where: {
-          id: id1,
-        },
-      }
-    );
-    res.json({
-      msg: "Updated product ok",
-      ProductoActualizado,
-    });
-  };
 }
 
 const ProductController = new ProductModel(Product);

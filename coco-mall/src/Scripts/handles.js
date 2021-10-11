@@ -88,3 +88,18 @@ export function handleOnChange(setFilters) {
         });
     };
 }
+
+export function handleOnTypes(dispatch, id) {
+    return (e) => {
+        let val = parseInt(e.target.value);
+        let aux = {
+            type: []
+        };
+        if (e.target.value !== "All") {
+            aux.type = [val];
+            dispatch(filterProducts(id, aux));
+        } else {
+            dispatch(filterProducts(id, aux));
+        }
+    };
+}

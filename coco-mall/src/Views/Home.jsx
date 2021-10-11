@@ -121,16 +121,17 @@ function Home() {
                                 Stores in "Paraná"
                             </h3>
                             <Slider {...settingsCards}>
-                                {allStores?.map((e, i) => (
+                                {allStores?.map((e) => (
                                     <Link
                                         to={`/home/store/${e.id}`}
                                         onClick={() => storeDetail(e.id)}
                                     >
                                         <StoreState
+                                            id={e.id}
                                             storeName={e.storeName}
                                             description={e.description}
-                                            cloudImage={e.logo || coco}
-                                            key={i}
+                                            cloudImage={e.cloudImage || coco}
+                                            key={e.id}
                                         />
                                     </Link>
                                 ))}
@@ -146,13 +147,14 @@ function Home() {
                     <div className='mt-6'>
                         <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>
                         <div className='cards'>
-                            {storesFilters?.map((e, i) => (
+                            {storesFilters?.map((e) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
                                     <HomeCard
+                                        id={e.id}
                                         storeName={e.storeName}
                                         description={e.description}
-                                        cloudImage={e.logo || coco}
-                                        key={i}
+                                        cloudImage={e.cloudImage || coco}
+                                        key={e.id}
                                     />
                                 </Link>
                             ))}

@@ -15,7 +15,7 @@ function FilterTypeProduct({ type, index, handleChecked, check }) {
                 value={type?.id}
                 onChange={(e) => handleChecked(e, index)}
                 checked={check[index]}
-                className='absolute top-1 right-1'
+                className='appearance-none absolute top-1 right-1'
             />
             <label className='text-gray-600 text-sm'>{type?.Name.toUpperCase()}</label>
         </label>

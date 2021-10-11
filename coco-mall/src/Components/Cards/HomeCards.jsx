@@ -1,15 +1,20 @@
 import React from 'react';
+import { Image } from 'cloudinary-react';
 
-function HomeCards({ storeName, description, cloudImage }) {
+function HomeCards({ storeName, description, cloudImage, id }) {
     return (
         <article className='h-80 shadow-lg m-4 rounded-md relative'>
             <div className='flex justify-center relative'>
-                <div
-                    className='bg-cocoMall-400 rounded-md h-28 w-full'
-                ></div>
-
+                <div className='bg-cocoMall-400 rounded-md h-28 w-full'></div>
                 <picture className='flex m-auto h-16 w-h-16 bg-cocoMall-50 rounded-full overflow-hidden shadow-lg absolute -bottom-8'>
-                    <img className='p-3 shadow object-cover' src={cloudImage} alt='logo' />
+                    <Image
+                        key={id}
+                        crop='scale'
+                        cloudName='cocomalls'
+                        className='p-3 shadow object-cover'
+                        publicId={cloudImage}
+                        alt='logo'
+                    />
                 </picture>
             </div>
             <div className='mt-6'>

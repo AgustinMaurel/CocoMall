@@ -86,7 +86,6 @@ class UserModel extends ModelController {
                     }
                 })
                 user.Cart = cart
-                console.log(user)
                 const updatedUser = await user.save()
                 res.send(updatedUser)
             } catch (error) {

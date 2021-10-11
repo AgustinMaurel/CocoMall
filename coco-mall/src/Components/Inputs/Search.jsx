@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { BsSearch } from 'react-icons/bs';
 
 const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
     const [typeSearch, setTypeSearch] = useState(false);
     const handleSearch = () => {
         setTypeSearch(!typeSearch);
     };
-    console.log(searchStore)
+
     return (
         <div className='flex flex-col w-3/4 m-auto mb-4'>
             <form
@@ -55,9 +54,6 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
                 : <div className='relative inline-block w-12 mr-6 align-middle select-none'>
             </div>
             }
-                {/* <button class='text-cocoMall hover:text-secondary w-14 h-14 flex items-center justify-center'>
-                <BsSearch />
-                </button> */}
             </form>
         </div>
     );

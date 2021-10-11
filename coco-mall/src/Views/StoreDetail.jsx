@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import ReactModal from 'react-modal';
+import { BsFillArrowRightCircleFill } from 'react-icons/bs';
+import { AiOutlineLine } from 'react-icons/ai';
+import { AiOutlinePercentage } from 'react-icons/ai';
 
 import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
 import {
@@ -72,7 +75,6 @@ export default function StoreDetail() {
 
     useEffect(() => {
         dispatch(getProductsStore(id));
-        // dispatch(getProductTypes());
         return () => dispatch(getProductsStore());
     }, [dispatch, id]);
 
@@ -97,13 +99,13 @@ export default function StoreDetail() {
 
     let productTypesArr = [];
     storeProducts.length &&
-        storeProducts.map((product, index) => {
+        storeProducts.map((product) => {
             if (!productTypesArr.includes(product.ProductTypeId)) {
                 productTypesArr.push(product.ProductTypeId);
             }
         });
 
-    const typesProductInStore = productTypes.filter((type, index) => {
+    const typesProductInStore = productTypes.filter((type) => {
         return productTypesArr.includes(type.id);
     });
 
@@ -128,16 +130,30 @@ export default function StoreDetail() {
             </div>
 
             {/* --- FILTERS & SEARCH --- */}
-            <div className='border col-span-12 content-center mx-auto w-full h-60'>
+            <div className='col-span-12 w-3/4 row-span-2 m-auto'>
                 <Search
                     searchProduct={filters.searchProduct}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                 />
                 {/* --- FILTERS --- */}
-                <div className='flex w-3/4 m-auto mt-4'>
-                    <div className='border w-64 h-36 m-auto'>
-                        <Slider {...settingsTypes}>
+                <div className='flex w-3/4 m-auto items-center justify-between'>
+                    <div className=''>
+                        <select
+                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300'
+                            name='category'
+                            id='category'
+                        >
+                            {typesProductInStore?.map((type) => {
+                                return (
+                                    <option key={type.id} value={type.Name}>
+                                        {type.Name}
+                                    </option>
+                                );
+                            })}
+                        </select>
+
+                        {/* <Slider {...settingsTypes}>
                             {typesProductInStore?.map((type, index) => {
                                 return (
                                     <FilterTypeProduct
@@ -148,63 +164,78 @@ export default function StoreDetail() {
                                     />
                                 );
                             })}
-                        </Slider>
+                        </Slider> */}
                     </div>
 
-                    <div className='border flex m-auto w-2/4 p-5'>
-                        <form onSubmit={(e) => handleSubmit(e)} className='flex p-5 w-3/4 h-full'>
-                            <label>min</label>
+                    <div className='flex'>
+                        <form
+                            onSubmit={(e) => handleSubmit(e)}
+                            className='flex items-center gap-1'
+                        >
                             <input
                                 type='number'
-                                placeholder='min'
+                                placeholder='minimum'
                                 name='min'
-                                className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
+                                className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
+                                            focus:outline-none focus:bg-white focus:border-cocoMall-100 '
                                 value={filters.min}
                                 onChange={handleChange}
                             ></input>
-                            <label>max</label>
+                            <AiOutlineLine className='text-cocoMall-400' />
                             <input
                                 type='number'
-                                placeholder='max'
+                                placeholder='maximum'
                                 name='max'
-                                className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
+                                className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
+                                            focus:outline-none focus:bg-white focus:border-cocoMall-100 '
                                 value={filters.max}
                                 onChange={handleChange}
                             ></input>
-                            <button type='submit'>Search Price</button>
+                            <button className='flex text-cocoMall-300 h-6' type='submit'>
+                                <BsFillArrowRightCircleFill className='h-full w-full' />
+                            </button>
                         </form>
-                        <button onClick={handleDiscount}>Discount</button>
+                        <button
+                            className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
+                            disabled
+                            onClick={handleDiscount}
+                        >
+                            Promotions
+                            <AiOutlinePercentage />
+                        </button>
                     </div>
 
                     {/* --- ORDERS --- */}
-                    <div className='border'>
-                        Ordenamientos
-                        <br />
-                        <select onChange={handleOrder}>
+                    <div>
+                        <select
+                            className='border cursor-pointer p-2 rounded-md text-white bg-gray-300'
+                            onChange={handleOrder}
+                        >
                             <option value='Mas relevantes'>Mas relevantes</option>
                             <option value='Barato'>Barato</option>
                             <option value='Caro'>Caro</option>
                         </select>
                     </div>
-                    {filters.searchProduct ||
-                    filters.type.length ||
-                    filters.min ||
-                    filters.max ||
-                    filters.discount ? (
-                        <div className='border'>
-                            <span>Render Filters </span>
-                            <br />
-                            <span>Resultados</span> <span>{storeProductsFilter.length}</span>
-                            {/* Agregar cantidad de resultados al buscar productos */}
-                            {filters.searchProduct !== '' ? (
-                                <li>{filters.searchProduct}</li>
-                            ) : (
-                                false
-                            )}
-                            {filters.type.length ? <li>{filters.type}</li> : false}
-                            {filters.min !== '' ? <li>{filters.min}</li> : false}
-                            {filters.max !== '' ? <li>{filters.max}</li> : false}
-                            {filters.discount !== 0 ? <li>Discount</li> : false}
+                    {
+                        filters.searchProduct ||
+                        filters.type.length ||
+                        filters.min ||
+                        filters.max ||
+                        filters.discount ? (
+                            <div className='border'>
+                                <span>Render Filters </span>
+                                <br />
+                                <span>Resultados</span> <span>{storeProductsFilter.length}</span>
+                                {/* Agregar cantidad de resultados al buscar productos */}
+                                {filters.searchProduct !== '' ? (
+                                    <li>{filters.searchProduct}</li>
+                                ) : (
+                                    false
+                                )}
+                                {filters.type.length ? <li>{filters.type}</li> : false}
+                                {filters.min !== '' ? <li>{filters.min}</li> : false}
+                                {filters.max !== '' ? <li>{filters.max}</li> : false}
+                                {filters.discount !== 0 ? <li>Discount</li> : false}
                         </div>
                     ) : (
                         false
@@ -213,21 +244,17 @@ export default function StoreDetail() {
             </div>
 
             {/* CARDS */}
-            <div className='flex flex-col col-span-12 row-span-14 m-auto'>
-                <div className='w-1/4 m-auto mt-5'>
+            <div className='col-span-12 w-2/3 m-auto'>
+                <div>
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Alls Products</h3>
                 </div>
-                <div className='flex flex-wrap justify-center'>
-                    {storeProductsFilter.length
-                        ? storeProductsFilter?.map((product) => (
-                              <div onClick={() => modalFuncion(product.id)}>
-                                  <Product
-                                      product={product}
-                                      addToCart={() => addToCart(product.id)}
-                                  />
-                              </div>
-                          ))
-                        : false}
+                <div className='flex flex-wrap'>
+                    {storeProductsFilter.length ? storeProductsFilter?.map((product) => (
+                        <div onClick={() => modalFuncion(product.id)}>
+                            <Product product={product} addToCart={() => addToCart(product.id)} />
+                        </div>
+                    )) : false }
+
                     {productDetail ? (
                         <ReactModal
                             style={{

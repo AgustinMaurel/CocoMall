@@ -191,21 +191,7 @@ class ProductModel extends ModelController {
                 res.send(e)
             }
         }
-    }
-
-    findAllProductsByIds = async (req, res) => {
-        const { allIds } = req.body
-        const allProducts = await this.model.findAll({
-            where: {
-                id: {
-                    [Op.or]: allIds
-                }
-            }
-        })
-        res.send(allProducts)
-    }
-
-  
+    }  
 
   updateDataProduct = async (req, res) => {
     const id1 = req.params.id;

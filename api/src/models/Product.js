@@ -26,18 +26,19 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 defaultValue: 'Cuantity',
             },
+            discount: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 0
+            },
             description: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
             cloudImage: {
-                type: DataTypes.STRING,
+                type: DataTypes.ARRAY(DataTypes.STRING),
                 allowNull: false,
             },
-        },
-        {
-            timestamps: false,
-            createdAt: false,
-        }
+        },        
     );
 };

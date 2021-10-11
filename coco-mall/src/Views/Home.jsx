@@ -1,59 +1,186 @@
-import React from 'react';
-import HomeCards from '../Components/Cards/HomeCards';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
+import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import { Image } from 'cloudinary-react';
+
+import HomeCard from '../Components/Cards/HomeCards';
+import StoreState from '../Components/Cards/StoreState';
 import NavBar from '../Components/NavBar/NavBar';
-import cocoIcon from '../Assets/icons/coco_png.png'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import { getStoreDetail, getProductsStore } from '../Redux/actions/stores';
+// import Arrow from '../Components/Slides/Arrow';
+import HeroCard from '../Components/Cards/HeroCard';
+import Search from '../Components/Inputs/Search';
+import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
+import { handleOnChange, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
+import coco from '../Assets/icons/coco.png';
 
 function Home() {
-    const allStores = useSelector((state) => state.stores);
     const dispatch = useDispatch();
+    const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
+
+    const [checkType, setCheckType] = useState([]);
+    const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
+    const [filters, setFilters] = useState({
+        searchStore: '',
+        searchProduct: '',
+        type: [],
+        state: '',
+        rating: '',
+    });
+
+   
 
     const storeDetail = (id) => {
-        dispatch(getStoreDetail(id))
-        dispatch(getProductsStore(id))
-    }
+        dispatch(getStoreDetail(id));
+        dispatch(getProductsStore(id));
+    };
+
+    const settingsTypes = {
+        infinite: true,
+        slidesToShow: 9,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1620,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
+    };
+
+    const settingsHero = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        // autoplay: true,
+        // autoplaySpeed: 3000,
+        // pauseOnHover: true,
+    };
+
+    const settingsCards = {
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        dots: true,
+    };
+
+    let id;
+    const handleChange = handleOnChange(setFilters);
+    const handleSubmit = handleOnSubmit(filters, checkType, dispatch);
+    const handleChecked = handleOnChecked(
+        checkType,
+        setCheckType,
+        filters,
+        dispatch,
+        id,
+        check,
+        setCheck,
+    );
 
     return (
-        <div className='grid grid-col-8   grid-rows-8  h-screen '>
-            <div className=' col-span-8 row-span-1 row-end-1  bg-gray-200 shadow '>
+        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-100'>
+            <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
 
-            {/* SIDEBAR */}
-
-            <div className='hidden lg:flex w-4/4 flex-col col-start-1 col-end-1  row-span-full relative  border-r bg-gray-100 border-gray-200 p-5  '>
-                <div className='flex flex-col '>
-                    <label>Search</label>
-                    <input
-                        type='search'
-                        placeholder='Shops/Products...'
-                        name=''
-                        id=''
-                        className='relative  border border-secondary rounded px-2 w-full focus:outline-none  '
-                    />
-                </div>
-                <div></div>
-            </div>
-
             {/* CARDS */}
+            <div className='w-full col-span-6 row-span-full p-6 overflow-y-scroll'>
+                <div className='m-auto w-3/4'>
+                    <Slider {...settingsHero}>
+                        <HeroCard img={'/banners/bannerHero-1.png'} color={'bg-gray-500'} />
+                        <HeroCard img={'/banners/bannerHero-2.png'} color={'bg-green-500'} />
+                        <HeroCard img={'/banners/bannerHero-3.png'} color={'bg-blue-500'} />
+                    </Slider>
+                </div>
 
-            <div className='relative w-full  col-span-7 row-span-full bg-gray-100 bg-opacity-50 p-6 overflow-y-scroll'>
-                <div className='cards p-3  '>
-                    {allStores.allStores?.map((e, i) => (
-                        <Link
-                            to={`/home/store/${e.id}`}
-                            onClick={() => storeDetail(e.id)}
-                        >
-                            <HomeCards
-                                storeName={e.storeName}
-                                description={e.description}
-                                cloudImage={cocoIcon}
-                                key={i}
-                            />
-                        </Link>
-                    ))}
+                <div className='w-3/4 m-auto mt-16'>
+                    <Search
+                        searchProduct={filters.searchProduct}
+                        searchStore={filters.searchStore}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
+
+                    <div className='w-3/4 h-36 m-auto'>
+                        <Slider {...settingsTypes}>
+                            {productTypes?.map((type, index) => {
+                                return (
+                                    <FilterTypeProduct
+                                        type={type}
+                                        index={index}
+                                        handleChecked={handleChecked}
+                                        check={check}
+                                    />
+                                );
+                            })}
+                        </Slider>
+                    </div>
+                </div>
+
+                <div className='w-3/4 m-auto mt-8'>
+                    <div>
+                        <h3 className='text-2xl font-bold text-cocoMall-800'>Stores in "Paraná"</h3>
+                        <Slider {...settingsCards}>
+                            {allStores?.map((store) => (
+                                <Link
+                                    to={`/home/store/${store.id}`}
+                                    onClick={() => storeDetail(store.id)}
+                                >
+                                    <StoreState
+                                        storeName={store.storeName}
+                                        description={store.description}
+                                        cloudImage={store.logo || coco}
+                                        key={store.id}
+                                    />
+                                </Link>
+                            ))}
+                        </Slider>
+                    </div>
+
+                    <div>
+                        <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>
+                        <div className='cards p-3'>
+                            {storesFilters?.map((store) => (
+                                <Link
+                                    to={`/home/store/${store.id}`}
+                                    onClick={() => storeDetail(store.id)}
+                                >
+                                    <HomeCard
+                                        id={store.id}
+                                        storeName={store.storeName}
+                                        description={store.description}
+                                        cloudImage={store.cloudImage}
+                                        key={store.id}
+                                    />
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

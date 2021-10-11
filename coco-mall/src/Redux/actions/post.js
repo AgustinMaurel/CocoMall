@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { PRODUCT_CREATE_URL, STORE_CREATE_URL } from './constants';
+import { PRODUCT_CREATE_URL, STORE_CREATE_URL } from '../../Scripts/constants';
+import { POST_STORE } from './actionTypes';
 
 //create product data
 export function postProduct(payload) {
@@ -8,7 +9,7 @@ export function postProduct(payload) {
             .post(`${PRODUCT_CREATE_URL}`, payload)
             .then((res) => res.data)
             .then((product) => {
-                return product;
+                console.log('Producto creado: ', product);
             })
             .catch((error) => console.log(error));
     };
@@ -16,12 +17,13 @@ export function postProduct(payload) {
 
 //create store
 export function postStore(payload) {
-    return () => {
+    return (dispatch) => {
         axios
             .post(`${STORE_CREATE_URL}`, payload)
             .then((res) => res.data)
             .then((store) => {
-                console.log('ID store created: ', store);
+                console.log(store)
+                return dispatch({ type: POST_STORE, payload: store });
             })
             .catch((error) => console.log(error));
     };

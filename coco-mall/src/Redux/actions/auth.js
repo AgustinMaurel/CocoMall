@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, SET_CART } from './actionTypes.js';
+import { LOGIN, LOGOUT } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
+import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
 import Swal from 'sweetalert2';
-import { SHOPPING_CART } from '../../Scripts/constants.js';
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
@@ -36,9 +36,13 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
-                
-                dispatch(login(user.uid, user.displayName));
-                axios.get(`http://localhost:3001/user/${user.uid}`);
+                let aux = {
+                    Name: user.displayName,
+                    id: user.uid,
+                    Mail: user.email
+                }
+                axios.post(CREATE_USER_URL, aux)
+                dispatch(login( user.uid, user.displayName))
             })
             .catch((err) =>
                 Swal.fire({
@@ -55,6 +59,7 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
+                console.log(user)
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -78,7 +83,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 LastName: lastName,
                 Mail: email,
             };
-            axios.post('http://localhost:3001/user/create', userF);
+            axios.post(CREATE_USER_URL, userF);
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({
@@ -103,11 +108,11 @@ export const logout = () => {
     };
 };
 
-export const setCart = (user) => {
-    return async (dispatch) => {
-        console.log('entre')
-        const result = await axios.post(SHOPPING_CART.GET_PRODUCTS, { idUser: user });
-        console.log(result.data)
-        dispatch({ type: SET_CART, payload: result.data });
-    };
-};
+// export const setCart = (user) => {
+//     return async (dispatch) => {
+//         console.log('entre')
+//         const result = await axios.post(SHOPPING_CART.GET_PRODUCTS, { idUser: user });
+//         console.log(result.data)
+//         dispatch({ type: SET_CART, payload: result.data });
+//     };
+// };

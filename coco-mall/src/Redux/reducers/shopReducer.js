@@ -1,11 +1,27 @@
-import { GET_STORES, SEARCH_BY_NAME, SEARCH_BY_ID, GET_PRODUCT, ADD_ITEMS_TO_CART } from '../actions/actionTypes';
+import {
+    GET_STORES,
+    SEARCH_BY_ID,
+    GET_PRODUCT,
+    POST_STORE,
+    GET_PRODUCT_DETAIL,
+    FILTER_PRODUCTS,
+    GET_PRODUCT_TYPES,
+    ORDER_PRODUCTS,
+    FILTER_STORE,
+    // CLOUDINARY_IMAGES
+} from '../actions/actionTypes';
 
 const initialState = {
     allStores: [],
-    
+    storesFilters: [],
     storeDetail: {},
     storeProducts: [],
-    itemsInCart: 0
+    storeProductsFilter: [],
+    productDetail: {}, //deberiamos pasarlo a local
+    productTypes: [],
+    storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
+    productImageIds: [],
+    storeImageIds: [],
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
@@ -14,14 +30,20 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 allStores: payload,
+                storesFilters: payload,
             };
 
-        case SEARCH_BY_NAME:
+        case POST_STORE:
             return {
                 ...state,
-                storesByName: payload,
+                storeCreated: payload,
             };
 
+        case FILTER_STORE:
+            return {
+                ...state,
+                storesFilters: payload,
+            };
         case SEARCH_BY_ID:
             return {
                 ...state,
@@ -29,18 +51,139 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                     return store.id === payload;
                 }),
             };
-
         case GET_PRODUCT:
             return {
                 ...state,
                 storeProducts: payload,
+                storeProductsFilter: payload,
             };
 
-        case ADD_ITEMS_TO_CART:
+        case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                itemsInCart: state.itemsInCart + payload
+                productDetail: state.storeProductsFilter.find((product) => {
+                    return product.id === payload;
+                }),
+            };
+
+        case FILTER_PRODUCTS:
+            return {
+                ...state,
+                storeProductsFilter: payload,
+            };
+
+        case GET_PRODUCT_TYPES:
+            return {
+                ...state,
+                productTypes: payload,
+            };
+        //usar .slice() para actualiar el estado en los order
+        case ORDER_PRODUCTS:
+            if (payload === 'Barato') {
+                let copy = state.storeProductsFilter
+                    .sort(function (a, b) {
+                        return a.price - b.price;
+                    })
+                    .slice();
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
             }
+            if (payload === 'Caro') {
+                let copy = state.storeProductsFilter
+                    .sort(function (a, b) {
+                        return b.price - a.price;
+                    })
+                    .slice();
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
+            }
+            if (payload === 'A-Z') {
+                let copy = state.storeProducts.sort((a, b) => {
+                    if (a.productName > b.productName) {
+                        return 1;
+                    }
+                    if (b.productName > a.productName) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
+            }
+            if (payload === 'Z-A') {
+                let copy = state.storeProducts.sort((a, b) => {
+                    if (a.productName > b.productName) {
+                        return -1;
+                    }
+                    if (b.productName > a.productName) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
+            }
+            if (payload === 'Price') {
+                let copy = state.storeProducts.sort((a, b) => {
+                    if (a.price > b.price) {
+                        return 1;
+                    }
+                    if (b.price > a.price) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
+            }
+            if (payload === 'Stock') {
+                let copy = state.storeProducts.sort((a, b) => {
+                    if (a.stock > b.stock) {
+                        return 1;
+                    }
+                    if (b.stock > a.stock) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                return {
+                    ...state,
+                    storeProductsFilter: copy,
+                };
+            } else {
+                return {
+                    ...state,
+                    storeProductsFilter: state.storeProductsFilter
+                        .sort(function (a, b) {
+                            if (a.productName > b.productName) return 1;
+                            if (b.productName > a.productName) return -1;
+                            return 0;
+                        })
+                        .slice(),
+                };
+            }
+
+          
+        // case CLOUDINARY_IMAGES.GET_STORE_IMAGES:
+        //     return {
+        //         ...state,
+        //         storeImageIds: payload
+        //     }
+        // case CLOUDINARY_IMAGES.GET_PRODUCT_IMAGES:
+        //     return {
+        //         ...state,
+        //         productImageIds: payload
+        //     }
 
         default:
             return state;

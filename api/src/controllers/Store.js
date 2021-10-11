@@ -60,16 +60,15 @@ class StoreModel extends ModelController {
     };
 
     postBulkCreate = async (req, res) => {
-        const allStore = req.body.Store;
-        const allId = req.body.Ids;
-        if (typeof allStore === 'object') {
+        const { store, ids } = req.body;
+        if (typeof store === 'object') {
             try {
-                let stores = await this.model.bulkCreate(allStore);
+                let stores = await this.model.bulkCreate(store);
                 stores.forEach(async (store, i) => {
                     //Get the id of each store
                     const storeId = store.id;
                     //Attach the Store with the User ID
-                    const user = await User.findByPk(allId[i]);
+                    const user = await User.findByPk(ids[i]);
                     await user.addStore(storeId);
                 });
                 //lindo msj
@@ -89,7 +88,7 @@ class StoreModel extends ModelController {
         const productToFilter = req.body.name || '';
         const storeToFilter = req.body.nameStore || '';
         const min = req.body.min || 0;
-        const max = req.body.max || 99 ^ 9999;
+        const max = req.body.max || Math.pow(99,99);
         try {
             const filteredStores = await this.model.findAll({
                 include: {

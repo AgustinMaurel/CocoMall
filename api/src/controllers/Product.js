@@ -36,6 +36,7 @@ class ProductModel extends ModelController {
                 //Attach the new product with the Store
                 const store = await Store.findByPk(storeId);
                 await store.addProduct(productId);
+                console.log(store)
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId);
                 await productType.addProduct(productId);
@@ -69,7 +70,8 @@ class ProductModel extends ModelController {
         } catch (error) {
             res.send(error);
         }
-    }
+
+    };
 
     filterProductsByStore = async (req, res) => {
         //Id of the store from which i need products
@@ -80,7 +82,7 @@ class ProductModel extends ModelController {
                 const allTypes = req.body.types || [];
                 const nameToFilter = req.body.name || '';
                 const min = req.body.min || 0;
-                const max = req.body.max || 9999 ^ 9999;
+                const max = req.body.max || Math.pow(99,99);
                 const discount = req.body.discount || 0
                 const filteredProducts = await this.model.findAll({
                     where: {
@@ -195,7 +197,8 @@ class ProductModel extends ModelController {
     }
 
     findAllProductsByIds = async (req, res) => {
-        const allIds = req.body
+        const { allIds } = req.body
+        console.log(allIds)
         const allProducts = await this.model.findAll({
             where: {
                 id: {

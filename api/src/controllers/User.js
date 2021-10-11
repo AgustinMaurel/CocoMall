@@ -106,7 +106,6 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
-
 }
 
 const UserController = new UserModel(User);

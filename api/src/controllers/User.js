@@ -86,9 +86,8 @@ class UserModel extends ModelController {
                     }
                 })
                 user.Cart = cart
-                console.log(user)
-                const updatedUser = await user.save()
-                res.send(updatedUser)
+                await user.save()
+                res.send(await user.save())
             } catch (error) {
                 res.send(error)
             }
@@ -107,7 +106,6 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
-
 }
 
 const UserController = new UserModel(User);

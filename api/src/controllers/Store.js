@@ -60,16 +60,15 @@ class StoreModel extends ModelController {
     };
 
     postBulkCreate = async (req, res) => {
-        const allStore = req.body.Store;
-        const allId = req.body.Ids;
-        if (typeof allStore === 'object') {
+        const { store, ids } = req.body;
+        if (typeof store === 'object') {
             try {
-                let stores = await this.model.bulkCreate(allStore);
+                let stores = await this.model.bulkCreate(store);
                 stores.forEach(async (store, i) => {
                     //Get the id of each store
                     const storeId = store.id;
                     //Attach the Store with the User ID
-                    const user = await User.findByPk(allId[i]);
+                    const user = await User.findByPk(ids[i]);
                     await user.addStore(storeId);
                 });
                 //lindo msj

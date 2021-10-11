@@ -125,7 +125,7 @@ export default function StoreDetail() {
                     <HeroCard color={'bg-blue-500'} />
                     <HeroCard color={'bg-red-500'} />
                 </Slider>
-
+                
                 <Info info={allStores[0]} infoModal={infoModal} setInfoModal={setInfoModal} />
                 <Share />
             </div>

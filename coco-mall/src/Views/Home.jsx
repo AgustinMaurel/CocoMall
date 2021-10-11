@@ -82,9 +82,9 @@ function Home() {
                 {/* --- ADS --- */}
                 <div className='m-auto w-3/4'>
                     <Slider {...settingsHero}>
-                        <HeroCard img={'/banners/bannerHero-1.png'} color={'bg-gray-500'} />
-                        <HeroCard img={'/banners/bannerHero-2.png'} color={'bg-green-500'} />
-                        <HeroCard img={'/banners/bannerHero-3.png'} color={'bg-blue-500'} />
+                        <HeroCard img={'/banners/bannerHero-1.png'} />
+                        <HeroCard img={'/banners/bannerHero-2.png'} />
+                        <HeroCard img={'/banners/bannerHero-3.png'} />
                     </Slider>
                 </div>
 

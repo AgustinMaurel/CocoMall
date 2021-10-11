@@ -41,8 +41,15 @@ export default function StoreDetail() {
     const { id } = useParams();
 
     //STATES
-    const { allStores, storeProductsFilter, cart, productDetail, productTypes, storeProducts, storeDetail } =
-        useSelector((state) => state.stores);
+    const {
+        allStores,
+        storeProductsFilter,
+        cart,
+        productDetail,
+        productTypes,
+        storeProducts,
+        storeDetail,
+    } = useSelector((state) => state.stores);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [checkType, setCheckType] = useState([]);
     const [infoModal, setInfoModal] = useState(false);
@@ -84,7 +91,6 @@ export default function StoreDetail() {
         };
     }, [dispatch, allStores]);
 
-
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
         setModalIsOpen(true);
@@ -94,7 +100,7 @@ export default function StoreDetail() {
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
-    const handleTypes = handleOnTypes(dispatch, id);
+    const handleTypes = handleOnTypes(dispatch, id, filters);
 
     let productTypesArr = [];
     storeProducts.length &&
@@ -115,7 +121,9 @@ export default function StoreDetail() {
             </div>
             {/* --- BANNER PRODUCTS --- */}
             <div className='col-span-12 flex flex-col items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 gap-2'>
-                <h3 className='text-5xl font-extrabold text-white'>{storeDetail?.storeName?.toUpperCase()}</h3>
+                <h3 className='text-5xl font-extrabold text-white'>
+                    {storeDetail?.storeName?.toUpperCase()}
+                </h3>
                 <p>{storeDetail?.description}</p>
             </div>
 
@@ -201,29 +209,16 @@ export default function StoreDetail() {
                     <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
                 </div>
                 <div className='flex flex-wrap'>
-                    {/* {storeProductsFilter.length
-                        ? storeProductsFilter?.map((product) => (
-                              <div onClick={() => modalFuncion(product.id)}>
-                                  <Product
-                                      product={product}
-                                      addToCart={() => addToCart(product.id)}
-                                  />
-                              </div>
-                          ))
-                        : false} */}
-
                     {/* Por cada tipo de producto que tenga la tienda quiero renderizar
                         una seccion de productos 
                         */}
-
-                    {storeProductsFilter.length
+                    {/* 
+                    {storeProductsFilter.length && typesProductInStore.length
                         ? typesProductInStore.map((type) => {
-                            // storeProductsFilter
                               return (
-                                  <div className='flex'>
+                                  <div className='flex flex-wrap'>
                                       <h2>{type.Name}</h2>
                                       {storeProductsFilter
-                                          ?.sort((a, b) => a.ProductTypeId - b.ProductTypeId)
                                           .map((product) => {
                                               if (type.id === product.ProductTypeId) {
                                                   return (
@@ -235,13 +230,63 @@ export default function StoreDetail() {
                                                               }
                                                           />
                                                       </div>
-                                                  );
-                                              }
+                                                  )}
                                           })}
                                   </div>
                               );
                           })
+                        : false} */}
+
+                    {storeProductsFilter.length && typesProductInStore.length
+                        ? typesProductInStore.map((type) => {
+                            if(filters.type.includes(type.id)){
+                                return (
+                                    <>
+                                    <h2>{type.Name}</h2>
+                                    {storeProductsFilter.map((product) => {
+                                        if (type.id === product.ProductTypeId) {
+                                            return (
+                                                <>
+                                                    <div onClick={() => modalFuncion(product.id)}>
+                                                        <Product
+                                                            product={product}
+                                                            addToCart={() =>
+                                                                addToCart(product.id)
+                                                            }
+                                                        />
+                                                    </div>
+                                                </>
+                                            );
+                                        }
+                                    })}
+                                    </>
+                                )
+                            }
+                            if(!filters.type.length){
+                                return (
+                                  <div className='flex'>
+                                      <h2>{type.Name}</h2>
+                                      {storeProductsFilter.map((product) => {
+                                          if (type.id === product.ProductTypeId) {
+                                              return (
+                                                  <>
+                                                      <div onClick={() => modalFuncion(product.id)}>
+                                                          <Product
+                                                              product={product}
+                                                              addToCart={() =>
+                                                                  addToCart(product.id)
+                                                              }
+                                                          />
+                                                      </div>
+                                                  </>
+                                              );
+                                          }
+                                      })}
+                                  </div>
+                              )}
+                          })
                         : false}
+
                     {productDetail ? (
                         <ReactModal
                             style={{
@@ -294,7 +339,6 @@ export default function StoreDetail() {
     );
 }
 
-
 //RENDERS FILTERS
 
 // {
@@ -322,7 +366,6 @@ export default function StoreDetail() {
 //     false
 // )}
 
-
 /* <Slider {...settingsTypes}>
     {typesProductInStore?.map((type, index) => {
         return (
@@ -335,5 +378,3 @@ export default function StoreDetail() {
         );
     })}
 </Slider> */
-
-

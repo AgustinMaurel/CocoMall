@@ -13,7 +13,7 @@ class ProductModel extends ModelController {
     const storeId = req.body.storeId;
     const typeId = req.body.typeId;
     if (storeId && typeId) {
-      try {
+      try {npm st
         //Cloudinary
         const fileString = req.body.idImage
           ? req.body.idImage

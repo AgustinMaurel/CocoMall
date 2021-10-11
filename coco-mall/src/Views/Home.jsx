@@ -14,12 +14,12 @@ import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
 import { handleOnChange, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
 import coco from '../Assets/icons/coco.png';
-import SearchState from '../Components/Inputs/SearchState'
+import SearchState from '../Components/Inputs/SearchState';
 
 function Home() {
     const dispatch = useDispatch();
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
-
+    const [typeSearch, setTypeSearch] = useState(false);
     const [checkType, setCheckType] = useState([]);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
@@ -28,7 +28,7 @@ function Home() {
         type: [],
         searchState: '',
     });
-//Falta ordenamiento de raiting
+    //Falta ordenamiento de raiting
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
@@ -91,6 +91,8 @@ function Home() {
                 {/* --- SEARCH & FILTERS --- */}
                 <div className='w-3/4 m-auto mt-16'>
                     <Search
+                        typeSearch={typeSearch}
+                        setTypeSearch={setTypeSearch}
                         searchProduct={filters.searchProduct}
                         searchStore={filters.searchStore}
                         handleChange={handleChange}
@@ -111,14 +113,12 @@ function Home() {
                             })}
                         </Slider>
                     </div>
+                    <div className='hidden'>Ordenamientos</div>
                     <div className='hidden'>
-                        Ordenamientos
-                    </div>
-                    <div className='hidden'>
-                        <SearchState 
-                        searchState={filters.searchState}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
+                        <SearchState
+                            searchState={filters.searchState}
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
                         />
                     </div>
                 </div>
@@ -148,15 +148,22 @@ function Home() {
                             </Slider>
                         </div>
                     ) : (
-                        <button onClick={()=>{dispatch(getStores())}} className='flex items-center gap-2 text-cocoMall-200 mb-2 cursor-pointer hover:text-cocoMall-400'>
-                            <IoMdArrowRoundBack/> <span>GO BACK</span>
+                        <button
+                            onClick={() => {
+                                dispatch(getStores());
+                            }}
+                            className='flex items-center gap-2 text-cocoMall-200 mb-2 cursor-pointer hover:text-cocoMall-400'
+                        >
+                            <IoMdArrowRoundBack /> <span>GO BACK</span>
                         </button>
                     )}
 
                     {/* --- ALL STORES ---- */}
                     <div className='mt-6'>
                         {/* agregar cantidad de resultados y mostrar el texto que buscó */}
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>{ allStores !== storesFilters ? filters.searchStore : 'All Stores'}</h3> 
+                        <h3 className='text-2xl font-bold text-cocoMall-800'>
+                            {allStores !== storesFilters ? filters.searchStore : 'All Stores'}
+                        </h3>
                         <div className='cards'>
                             {storesFilters?.map((e) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>

@@ -29,6 +29,7 @@ import {
     handleOnSubmit,
     handleOnDiscount,
     handleOnChecked,
+    handleOnTypes
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';
 
@@ -89,17 +90,9 @@ export default function StoreDetail() {
 
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
-    const handleChecked = handleOnChecked(
-        checkType,
-        setCheckType,
-        filters,
-        dispatch,
-        id,
-        check,
-        setCheck,
-    );
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
+    const handleTypes = handleOnTypes(dispatch, id)
 
     let productTypesArr = [];
     storeProducts.length &&
@@ -148,10 +141,15 @@ export default function StoreDetail() {
                             className='cursor-pointer p-2 rounded-md text-white bg-gray-300'
                             name='category'
                             id='category'
+                            onChange={handleTypes}
+                            defaultValue="All"
                         >
+                            <option value="All">
+                                All products
+                            </option>
                             {typesProductInStore?.map((type) => {
                                 return (
-                                    <option key={type.id} value={type.Name}>
+                                    <option key={type.id} value={type.id}>
                                         {type.Name}
                                     </option>
                                 );
@@ -202,7 +200,7 @@ export default function StoreDetail() {
                         </form>
                         <button
                             className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
-                            disabled
+                            
                             onClick={handleDiscount}
                         >
                             Promotions
@@ -311,3 +309,5 @@ export default function StoreDetail() {
         </div>
     );
 }
+
+

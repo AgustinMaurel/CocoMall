@@ -14,3 +14,7 @@ export const deleteAllFromCart = (id) => {
 export const clearCart = () => {
     return { type: SHOPPING_CART_TYPES.CLEAR_CART };
 };
+
+export const setCart = (payload) => {
+    return {type : SHOPPING_CART_TYPES.SET_TO_CART, payload}
+}

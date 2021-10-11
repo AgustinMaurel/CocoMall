@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SET_CART, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
+import { LOGIN, LOGOUT,  SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
 
 
 
@@ -72,10 +72,10 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 userCart: [],
             };
         }
-        case SET_CART:
+        case SHOPPING_CART_TYPES.SET_TO_CART:
             return {
                 ...state,
-                userCart: payload,
+                userCart: [...state.userCart, payload],
             };
 
         default:

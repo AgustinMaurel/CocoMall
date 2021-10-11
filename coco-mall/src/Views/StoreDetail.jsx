@@ -354,7 +354,7 @@ export default function StoreDetail() {
                     <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
                         <div className=' '>
                             <h3>Carrito</h3>
-                            {userCart.length ? (
+                            {userCart.length > 0 ? (
                                 <button
                                     className='border bg-red-600 text-white shadow p-1'
                                     onClick={handleClearCart}

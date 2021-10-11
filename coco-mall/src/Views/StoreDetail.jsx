@@ -78,10 +78,10 @@ export default function StoreDetail() {
         dispatch(getProductsStore(id));
         dispatch(getStoreDetail(id));
         return () => {
-            dispatch(getProductsStore())
+            dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
-    }, [dispatch, id]);
+    }, [allStores]);
 
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -245,7 +245,7 @@ export default function StoreDetail() {
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Alls Products</h3>
                 </div>
                 <div className='flex flex-wrap'>
-                    {storeProductsFilter.length
+                    {/* {storeProductsFilter.length
                         ? storeProductsFilter?.map((product) => (
                               <div onClick={() => modalFuncion(product.id)}>
                                   <Product
@@ -254,8 +254,38 @@ export default function StoreDetail() {
                                   />
                               </div>
                           ))
-                        : false}
+                        : false} */}
 
+                    {/* Por cada tipo de producto que tenga la tienda quiero renderizar
+                        una seccion de productos 
+                        */}
+
+                    {storeProductsFilter.length
+                        ? typesProductInStore.map((type) => {
+                            // storeProductsFilter
+                              return (
+                                  <div className='flex'>
+                                      <h2>{type.Name}</h2>
+                                      {storeProductsFilter
+                                          ?.sort((a, b) => a.ProductTypeId - b.ProductTypeId)
+                                          .map((product) => {
+                                              if (type.id === product.ProductTypeId) {
+                                                  return (
+                                                      <div onClick={() => modalFuncion(product.id)}>
+                                                          <Product
+                                                              product={product}
+                                                              addToCart={() =>
+                                                                  addToCart(product.id)
+                                                              }
+                                                          />
+                                                      </div>
+                                                  );
+                                              }
+                                          })}
+                                  </div>
+                              );
+                          })
+                        : false}
                     {productDetail ? (
                         <ReactModal
                             style={{

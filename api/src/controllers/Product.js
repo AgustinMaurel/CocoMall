@@ -146,10 +146,9 @@ class ProductModel extends ModelController {
         });
       }
       let public_id = img.map((el) => el.public_id);
-      product.cloudImage = public_id;
 
       const old = await this.model.findByPk(id1);
-      product.cloudImage = [old.cloudImage.concat(public_id)]; // [...old.cloudImage, ...public_id]
+      product.cloudImage = old.cloudImage.concat(public_id); // [...old.cloudImage, ...public_id]
     }
 
     const ProductoActualizado = await this.model.update(

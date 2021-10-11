@@ -34,8 +34,8 @@ export const authReducer = (state = initialState, { type, payload }) => {
             };
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            let newItem = state.storeProducts?.find((item) => item.id === payload);
-            let repeatedItem = state.userCart?.find((item) => item.id === newItem.id);
+            let newItem = state.storeProducts?.find((item) => item.id === payload || item.idproduct === payload);
+            let repeatedItem = state.userCart?.find((item) => item.id === newItem.id || item.idproduct === payload);
 
             return repeatedItem
                 ? {

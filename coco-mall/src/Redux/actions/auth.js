@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT, SET_CART } from './actionTypes.js';
+import { LOGIN, LOGOUT } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
 import Swal from 'sweetalert2';
-import { SHOPPING_CART } from '../../Scripts/constants.js';
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {

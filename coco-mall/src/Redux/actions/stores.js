@@ -87,6 +87,4 @@ export const ordersProduct = (payload) => {
     }
 }
 
-export const addItemsToCart=(quantity) => {
-    return {type: ADD_ITEMS_TO_CART, payload:quantity}
-}
+

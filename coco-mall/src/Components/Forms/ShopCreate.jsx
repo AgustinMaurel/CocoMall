@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -10,12 +10,11 @@ import Textarea from '../Inputs/Textarea';
 
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
-import { postStore} from '../../Redux/actions/post';
-import { getStores} from '../../Redux/actions/stores';
+import { postStore } from '../../Redux/actions/post';
+import { getStores } from '../../Redux/actions/stores';
 import InputMaps from '../Inputs/InputMaps';
 
 function ShopCreate({ setIsTrue }) {
-
     //STATES
     const auth = useSelector((state) => state.auth);
     const userId = auth.uid;
@@ -63,12 +62,16 @@ function ShopCreate({ setIsTrue }) {
             icon: 'success',
             title: 'Store Created!',
             showConfirmButton: false,
-            timer: 2000
-        })
+            timer: 2000,
+        });
 
         dispatch(postStore(storeCreated));
-        dispatch(getStores());
+        
     };
+
+    useEffect(() => {
+        return dispatch(getStores());
+    },[dispatch])
 
     return (
         <div
@@ -126,9 +129,9 @@ function ShopCreate({ setIsTrue }) {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className='h-36 mb-8'>
-                    <InputMaps coord={ placeSelected.coord } />
+                    <InputMaps coord={placeSelected.coord} />
                 </div>
 
                 <Textarea

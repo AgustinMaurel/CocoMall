@@ -128,10 +128,10 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     let productTypesArr = [];
     storeProducts.length &&
-        storeProducts.map((product, ) => {
-            if (!productTypesArr.includes(product.ProductTypeId)) {
+        storeProducts.map((product, ) => { 
+            if (!productTypesArr.includes(product.ProductTypeId)) 
                 productTypesArr.push(product.ProductTypeId);
-            }
+            
         });
 
     const typesProductInStore = productTypes.filter((type, index) => {

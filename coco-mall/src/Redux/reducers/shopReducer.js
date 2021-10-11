@@ -8,7 +8,7 @@ import {
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
     FILTER_STORE,
-    // CLOUDINARY_IMAGES
+    ORDER_STORE
 } from '../actions/actionTypes';
 
 const initialState = {

@@ -101,12 +101,11 @@ const ProductsCreate = ({ idStore, product }) => {
 
 
     };
-    console.log(allTypes)
+    
 
 
 
     //TODO get de categorias -> hacer input SELECT
-
     return (
         <div className='w-full flex justify-center items-center m-auto'>
             {/* --CONTAINER-- */}
@@ -163,7 +162,6 @@ const ProductsCreate = ({ idStore, product }) => {
                         watch={watch}
                         onChange={handleImageChange}
                     />
-
                     <button
                         type='submit'
                         className='w-full bg-secondary rounded my-4 p-2 text-white'

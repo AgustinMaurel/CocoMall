@@ -7,7 +7,7 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
-    CLOUDINARY_IMAGES,
+    ORDER_STORE
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -25,7 +25,8 @@ export const filterStores = (payload) => {
         types: payload.type,
         name: payload.searchProduct,
         nameStore: payload.searchStore,
-        rating: payload.rating,
+        state: payload.searchState,
+        // rating: payload.rating
     };
     return async (dispatch) => {
         const response = await axios.post(SEARCH_URL, obj);
@@ -87,4 +88,8 @@ export const ordersProduct = (payload) => {
     }
 }
 
-
+export const ordersStores = (payload) => {
+    return async (dispatch) => {
+        dispatch({ type: ORDER_STORE, payload})
+    }
+}

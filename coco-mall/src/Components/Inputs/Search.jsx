@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-// import { BsSearch } from 'react-icons/bs';
 
-const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
-    const [typeSearch, setTypeSearch] = useState(false);
+const Search = ({
+    typeSearch,
+    setTypeSearch,
+    searchProduct,
+    searchStore,
+    handleChange,
+    handleSubmit,
+}) => {
     const handleSearch = () => {
         setTypeSearch(!typeSearch);
     };
     return (
-        <div className='flex flex-col w-3/4 m-auto mb-10'>
+        <div className='flex flex-col w-3/4 m-auto mb-4'>
             <form
                 className='bg-white flex items-center rounded-full shadow-md'
                 onSubmit={handleSubmit}
             >
-                {/* Hay que meter un switch dependiendo si busco por tienda o
-                por producto */}
-                {!typeSearch ? (
+                {typeSearch !== undefined && !typeSearch? (
                     <>
                         <input
                             className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'
@@ -38,24 +41,24 @@ const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
                     </>
                 )}
                 {/* CHECKBOX */}
-                {searchStore !== undefined ?
+                {searchStore !== undefined ? (
                     <div className='relative inline-block w-12 mr-6 align-middle select-none'>
-                    <input
-                        className='toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer'
-                        type='checkbox'
-                        name='searchType'
-                        id='searchType'
-                        checked={typeSearch}
-                        onChange={handleSearch}
+                        <input
+                            className='toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer'
+                            type='checkbox'
+                            name='searchType'
+                            id='searchType'
+                            checked={typeSearch}
+                            onChange={handleSearch}
                         />
-                    <label
-                        for='searchType'
-                        className='toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer'
+                        <label
+                            for='searchType'
+                            className='toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer'
                         ></label>
-                </div>
-                : <div className='relative inline-block w-12 mr-6 align-middle select-none'>
-            </div>
-            }
+                    </div>
+                ) : (
+                    <div className='relative inline-block w-12 mr-6 align-middle select-none'></div>
+                )}
                 {/* <button class='text-cocoMall hover:text-secondary w-14 h-14 flex items-center justify-center'>
                 <BsSearch />
                 </button> */}

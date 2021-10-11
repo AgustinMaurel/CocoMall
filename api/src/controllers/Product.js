@@ -47,7 +47,9 @@ class ProductModel extends ModelController {
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
         }
-    };
+        console.log(img);
+        let public_id = img.map((el) => el.public_id);
+      }
 
     bulkCreateProducts = async (req, res) => {
         const { storeId, allTypes, products } = req.body
@@ -203,29 +205,36 @@ class ProductModel extends ModelController {
         res.send(allProducts)
     }
 
-    /*  deleteProduct = async (req, res) => {
-         const { id } = req.params
-         if (id) {
-             try {
-                 const product = await this.model.findByPk(id)
-                 const deletedImages = await cloudinary.api.delete_resources(product.cloudImage);
-                 const deleted = await this.model.destroy({ where: { id: id } })
-                 if (deleted === 1) {
-                     res.json({ message: "Product successfully deleted" })
-                 } else {
-                     res.json({ message: "Error" })
-                 }
- 
-             } catch (e) {
-                 res.send(e)
-             }
-         } else {
-             res.send({ message: "Must include a product id" })
-         }
-     } */
+  
 
-};
+  updateDataProduct = async (req, res) => {
+    const id1 = req.params.id;
+    const { id, StoreId, ...product } = req.body;
 
+    if (product.cloudImage) {
+      // Corregir para hacerlo con muchas imagenes
+
+      const uploadedResponse = await cloudinary.uploader.upload(
+        product.cloudImage
+      );
+      let public_id = uploadedResponse.public_id;
+      product.cloudImage = public_id;
+    }
+
+    const ProductoActualizado = await this.model.update(
+      { ...product },
+      {
+        where: {
+          id: id1,
+        },
+      }
+    );
+    res.json({
+      msg: "Updated product ok",
+      ProductoActualizado,
+    });
+  };
+}
 
 const ProductController = new ProductModel(Product);
 

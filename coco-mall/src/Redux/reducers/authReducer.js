@@ -56,7 +56,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
                           item.id === payload ? { ...item, quantity: item.quantity - 1 } : item,
                       ),
                   }
-                : { ...state, cart: state.userCart.filter((item) => item.id !== payload) };
+                : { ...state, userCart: state.userCart.filter((item) => item.id !== payload) };
         }
 
         case SHOPPING_CART_TYPES.REMOVE_ALL_FROM_CART: {

@@ -4,7 +4,7 @@ const Arrow = ({ className, style, onClick }) => {
     return (
         <div
             className={className}
-            style={{ ...style, background: '#38A3A5', borderRadius: '100%' }}
+            style={{ ...style, background: '#99DBDD', borderRadius: '100%' }}
             onClick={onClick}
         />
     );

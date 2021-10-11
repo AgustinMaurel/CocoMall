@@ -15,7 +15,7 @@ import HeroCard from '../Components/Cards/HeroCard';
 
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
-import { getProductsStore, getProductDetail, getProductTypes } from '../Redux/actions/stores';
+import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
 import {
     addToCart,
     deleteFromCart,
@@ -113,10 +113,11 @@ export default function StoreDetail() {
     });
 
     return (
-        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden'>
+        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
                 <NavBar />
             </div>
+
             <div className='col-span-12 row-span-2 row-end-3 content-center relative mx-auto w-full'>
                 <Slider {...settingsHero}>
                     <HeroCard color={'bg-gray-500'} />

@@ -9,7 +9,7 @@ function HomeCards({ storeName, description, cloudImage }) {
                 alt='banner'
             />
 
-            <div className='flex justify-center px-5 -mt-6'>
+            <picture className='flex justify-center px-5 -mt-6 overflow-hidden '>
                 <img
                     className=' h-14 w-14
                                 bg-white rounded-full
@@ -21,7 +21,7 @@ function HomeCards({ storeName, description, cloudImage }) {
                     src={cloudImage}
                     alt='logo'
                 />
-            </div>
+            </picture>
             <div>
                 <div className='text text-md text-center'>
                     <h3

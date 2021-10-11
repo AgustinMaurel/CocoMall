@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 const CartItem = ({ data, deleteFromCart, deleteAllFromCart }) => {
     let { id, name, price, quantity } = data;

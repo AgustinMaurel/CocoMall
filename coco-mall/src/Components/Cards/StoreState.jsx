@@ -2,7 +2,7 @@ import React from 'react';
 
 const StoreState = ({ storeName, description, cloudImage }) => {
     return (
-        <article className='flex h-36 w-72 shadow-lg m-4 rounded-md'>
+        <article className='flex h-36 w-72 shadow-lg m-4 rounded-md bg-white'>
             <div className='flex items-center w-1/4 bg-cocoMall-600 rounded-md relative'>
                 <picture className='flex m-auto h-16 w-h-16 bg-cocoMall-50 rounded-full overflow-hidden shadow-lg absolute -right-6'>
                     <img className='p-3 shadow object-cover' src={cloudImage} alt='logo' />

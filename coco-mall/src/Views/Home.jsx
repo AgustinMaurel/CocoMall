@@ -28,8 +28,6 @@ function Home() {
         rating: '',
     });
 
-    console.log(check);
-
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
@@ -39,36 +37,8 @@ function Home() {
         infinite: true,
         slidesToShow: 9,
         slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1620,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
+        nextArrow: <Arrow />,
+        prevArrow: <Arrow />,
     };
 
     const settingsHero = {
@@ -101,7 +71,7 @@ function Home() {
     );
 
     return (
-        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-100'>
+        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-50'>
             <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
@@ -141,23 +111,30 @@ function Home() {
                 </div>
 
                 <div className='w-3/4 m-auto mt-8'>
-                    <div>
-                        <h3 className='text-2xl font-bold text-cocoMall-800'>
-                            Stores in "Paraná"
-                        </h3>
-                        <Slider {...settingsCards}>
-                            {allStores?.map((e, i) => (
-                                <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
-                                    <StoreState
-                                        storeName={e.storeName}
-                                        description={e.description}
-                                        cloudImage={e.logo || coco}
-                                        key={i}
-                                    />
-                                </Link>
-                            ))}
-                        </Slider>
-                    </div>
+                    {allStores === storesFilters ? (
+                        <div>
+                            <h3 className='text-2xl font-bold text-cocoMall-800'>
+                                Stores in "Paraná"
+                            </h3>
+                            <Slider {...settingsCards}>
+                                {allStores?.map((e, i) => (
+                                    <Link
+                                        to={`/home/store/${e.id}`}
+                                        onClick={() => storeDetail(e.id)}
+                                    >
+                                        <StoreState
+                                            storeName={e.storeName}
+                                            description={e.description}
+                                            cloudImage={e.logo || coco}
+                                            key={i}
+                                        />
+                                    </Link>
+                                ))}
+                            </Slider>
+                        </div>
+                    ) : (
+                        <span></span>
+                    )}
 
                     <div>
                         <h3 className='text-2xl font-bold text-cocoMall-800'>All Stores</h3>

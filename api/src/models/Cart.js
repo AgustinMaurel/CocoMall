@@ -2,22 +2,14 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     return sequelize.define(
-        'Address',
+        'Cart',
         {
-            id: {
+            id:{
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
                 primaryKey: true,
             },
-            directions: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            cords: {
-                type: DataTypes.JSON,
-                allowNull: false
-            }
         },
         {
             timestamps: false,

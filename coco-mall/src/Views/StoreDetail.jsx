@@ -76,6 +76,20 @@ export default function StoreDetail() {
     // };
     //by Chris
 
+    /*---------CREO OBJETO QUE MANDO AL BACK-------------*/
+
+    // let total = Object.values(shoppingCart).reduce(
+    //     (previous, key) => previous + key.price * key.quantity,
+    //     0,
+    // );
+
+    // let data = {
+    //     title: 'Cart',
+    //     total: total,
+    // };
+
+    /*----------------------------------*/
+
     useEffect(() => {
         dispatch(getProductsStore(id));
         // dispatch(getProductTypes());

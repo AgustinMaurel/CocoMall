@@ -13,7 +13,7 @@ function ShopCreation() {
     console.log(storeCreated);
 
     return (
-        <div className='h-screen flex flex-col items-center'>
+        <div className='h-screen flex flex-col gap-20'>
             <NavBar />
             <div className='h-full sm:h-5/6 w-full flex items-center justify-center'>
                 <div className='w-full flex items-center justify-between'>

@@ -26,11 +26,16 @@ export const filterStores = (payload) => {
         nameStore: payload.searchStore,
         rating: payload.rating
     };
-    console.log("OBJ",obj)
     return async (dispatch) => {
         const response = await axios.post(SEARCH_URL, obj);
-        console.log("RESPONSE", response.data)
         dispatch({ type: FILTER_STORE, payload: response.data });
+    }
+}
+
+export const getStoresByName = () => {
+    return async (dispatch) => {
+        const response = await axios.get(SEARCH_URL);
+        dispatch({ type: SEARCH_BY_NAME, payload: response.data });
     };
 };
 
@@ -80,4 +85,8 @@ export const ordersProduct = (payload) => {
     return async (dispatch) => {
         dispatch({ type: ORDER_PRODUCTS, payload})
     }
+}
+
+export const addItemsToCart=(quantity) => {
+    return {type: ADD_ITEMS_TO_CART, payload:quantity}
 }

@@ -1,8 +1,9 @@
-import { LOGIN, LOGOUT } from '../actions/actionTypes';
+import { LOGIN, LOGOUT , SET_CART} from '../actions/actionTypes';
 
 const initialState = {
     uid: '',
     name: '',
+    userCart: undefined
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -17,6 +18,12 @@ export const authReducer = (state = initialState, action) => {
                 uid: '',
                 name: '',
             };
+
+        case SET_CART: 
+            return {
+                ...state,
+                userCart: action.payload
+            }
 
         default:
             return state;

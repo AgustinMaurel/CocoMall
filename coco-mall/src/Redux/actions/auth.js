@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT } from './actionTypes.js';
+import { LOGIN, LOGOUT, SET_CART } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
 import Swal from 'sweetalert2';
+import { SHOPPING_CART } from '../../Scripts/constants.js';
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
@@ -47,7 +48,7 @@ export const startGoogleLogin = () => {
             .catch((err) =>
                 Swal.fire({
                     title: 'Error!',
-                    text: err.code ,
+                    text: err.code,
                     icon: 'error',
                     confirmButtonText: 'Close',
                 }),
@@ -59,7 +60,6 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
-                console.log(user)
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -105,5 +105,14 @@ export const startLogout = () => {
 export const logout = () => {
     return {
         type: LOGOUT,
+    };
+};
+
+export const setCart = (user) => {
+    return async (dispatch) => {
+        console.log('entre')
+        const result = await axios.post(SHOPPING_CART.GET_PRODUCTS, { idUser: user });
+        console.log(result.data)
+        dispatch({ type: SET_CART, payload: result.data });
     };
 };

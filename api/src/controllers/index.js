@@ -70,12 +70,15 @@ class ModelController {
     }
   };
 
-  getAllData = async (req, res, next) => {
-    let data = await this.model.findAll().catch((err) => {
-      next(err);
-    });
-    res.send(data);
-  };
+    getAllData = async (req, res) => {
+        try {
+            let data = await this.model.findAll()     
+            res.send(data);
+        } catch (error) {
+            res.send(error)
+        }
+
+    };
 }
 
 module.exports = ModelController;

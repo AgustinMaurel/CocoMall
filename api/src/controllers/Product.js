@@ -13,7 +13,7 @@ class ProductModel extends ModelController {
     const storeId = req.body.storeId;
     const typeId = req.body.typeId;
     if (storeId && typeId) {
-      try {npm st
+      try {
         //Cloudinary
         const fileString = req.body.idImage
           ? req.body.idImage
@@ -137,6 +137,7 @@ class ProductModel extends ModelController {
     const id1 = req.params.id;
     const { product } = req.body;
 
+
     if (product.cloudImage) {
       // Corregir para hacerlo con muchas imagenes
       let img = [];
@@ -153,12 +154,9 @@ class ProductModel extends ModelController {
 
     const ProductoActualizado = await this.model.update(
       { ...product },
-      {
-        where: {
-          id: id1,
-        },
-      }
+      { where: { id: id1 } }
     );
+
     res.json({
       msg: 'Updated product ok',
       ProductoActualizado,
@@ -211,34 +209,34 @@ class ProductModel extends ModelController {
     res.send(allProducts);
   };
 
-  updateDataProduct = async (req, res) => {
-    const id1 = req.params.id;
-    const { product } = req.body;
+  //   updateDataProduct = async (req, res) => {
+  //     const id1 = req.params.id;
+  //     const { product } = req.body;
 
-    if (product.cloudImage) {
-      // Corregir para hacerlo con muchas imagenes
+  //     if (product.cloudImage) {
+  //       // Corregir para hacerlo con muchas imagenes
 
-      const uploadedResponse = await cloudinary.uploader.upload(
-        product.cloudImage[0]
-      );
-      let public_id = uploadedResponse.public_id;
-      let old = await this.model.findByPk(id1);
-      product.cloudImage = [...old.cloudImage, public_id];
-    }
+  //       const uploadedResponse = await cloudinary.uploader.upload(
+  //         product.cloudImage[0]
+  //       );
+  //       let public_id = uploadedResponse.public_id;
+  //       let old = await this.model.findByPk(id1);
+  //       product.cloudImage = [...old.cloudImage, public_id];
+  //     }
 
-    const ProductoActualizado = await this.model.update(
-      { ...product },
-      {
-        where: {
-          id: id1,
-        },
-      }
-    );
-    res.json({
-      msg: 'Updated product ok',
-      ProductoActualizado,
-    });
-  };
+  //     const ProductoActualizado = await this.model.update(
+  //       { ...product },
+  //       {
+  //         where: {
+  //           id: id1,
+  //         },
+  //       }
+  //     );
+  //     res.json({
+  //       msg: 'Updated product ok',
+  //       ProductoActualizado,
+  //     });
+  //   };
 }
 
 const ProductController = new ProductModel(Product);

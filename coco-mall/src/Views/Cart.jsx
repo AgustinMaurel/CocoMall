@@ -1,86 +1,85 @@
-import React, { useEffect,  } from 'react';
-// import axios from 'axios';
-import { useParams } from 'react-router';
+import React from 'react';
+import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
-// import { useSelector } from 'react-redux';
-// import { SHOPPING_CART } from '../Scripts/constants';
-
-const FORM_ID = 'payment-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
 
 export default function Cart() {
-    // const user = useSelector((state) => state.auth.uid);
-    // useEffect(() => {
-    //     axios.post(SHOPPING_CART.GET_PRODUCTS, {idUser:user}).then(res => setCart(res.data))
-    // }, [user]);
+    const history = useHistory();
+    const dispatch = useDispatch();
 
-    const { id } = useParams();
+    const products = useSelector((state) => state.auth.userCart);
 
-    
-    useEffect(() => {
-        if (id) {
-            // con el preferenceId en mano, inyectamos el script de mercadoPago
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
+    let total =
+        products.length > 0 &&
+        Object.values(products).reduce((previous, key) => previous + key.price * key.quantity, 0);
 
-            const form = document.getElementById(FORM_ID);
-            script.setAttribute('data-preference-id', id);
-            form.appendChild(script);
-        }
-    }, [id]);
+    let objectToCheckout = {
+        title: 'Cart Products',
+        total: total,
+        quantity: 1,
+    };
+
+    console.log(products);
+
+    function handleCheckout() {
+        return products.length > 0
+            ? axios
+                  .post('http://localhost:3001/checkout/mercadopago', objectToCheckout)
+                  .then((order) => {
+                      history.push(`/checkout/${order.data.response}`);
+                  })
+                  .catch((err) => console.log(err))
+            : false;
+    }
+
     return (
-        <div>
+        <div className='h-screen'>
             <NavBar />
-            <div>
-               
-                <form id={FORM_ID} method='GET' />
+            <div className='flex flex-col justify-center relative h-full  bg-red-200'>
+                <div className='flex flex-col items-center align-center justify-between bg-green-200 h-3/4'>
+                    {products.length > 0 ? (
+                        products.map((el) => (
+                            <div key={el.id} className='bg-yellow-300 w-96 relative'>
+                                <h2>{el.productName}</h2>
+                                <h2>Price: {el.quantity * el.price}</h2>
+                                <h2>Quantity : {el.quantity}</h2>
+                                <button
+                                    onClick={() => dispatch(deleteFromCart(el.id))}
+                                    className='my-1 bg-red-200  rounded text-white p-2 mx-2 cursor-pointer'
+                                >
+                                    Delete one
+                                </button>
+                                <button
+                                    onClick={() => dispatch(deleteAllFromCart(el.id))}
+                                    className='my-1 bg-red-200  rounded text-white p-2 mx-2 cursor-pointer'
+                                >
+                                    Delete all
+                                </button>
+                            </div>
+                        ))
+                    ) : (
+                        <div>No tiene elementos en su carrito</div>
+                    )}
+
+                    {products.length > 0 && (
+                        <div
+                            className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8             
+                                    xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
+                        >
+                            <button
+                                className=' focus:outline-none text-center text-base
+                                        md:text-lg
+                                      xl:text-primary xl:text-xl'
+                                onClick={handleCheckout}
+                            >
+                                Go to checkout
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
-
-
-// import { Image } from 'cloudinary-react';
-
-// export default function Cart() {  
-   
-// //vamos a guardar los public_id en un estado (va a ser un array de ids)
-//     const [imageIds, setImageIds] = useState();
-
-//     //llamado al back para traer las imagenes
-//     const loadImages = async () => {
-//         try {
-//             const res = await fetch('http://localhost:3001/images');
-//             const data = await res.json();
-//             setImageIds(data);
-//         } catch (err) {
-//             console.error(err);
-//         }
-//     };
-
-// //cargamos las imagenes apenas se monta el componente
-//     useEffect(() => {
-//         loadImages();
-//     }, []);
-
-   
-//     return (            
-//             <div>
-               
-//                 <div className='gallery'>
-//                     {imageIds &&
-//                         imageIds?.map((imageId) => (
-//                             <Image  
-//                                 key={imageId}
-//                                 cloudName='cocomalls' 
-//                                 publicId={imageId}
-//                                 width="300"
-//                                 crop="scale"
-                                
-//                             />
-//                         ))}
-//                 </div>
-//             </div>
-       
-//     );
-// }

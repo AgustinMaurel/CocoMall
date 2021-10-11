@@ -14,7 +14,6 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
-    // const items = useSelector((state) => state.stores.itemsInCart);
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
@@ -22,18 +21,6 @@ function NavBar() {
         .reduce((current, sum) => current + sum, 0);
         
 
-    function handleCheckout() {
-        axios
-            .post('http://localhost:3001/checkout/mercadopago', {
-                title: 'cart',
-                total: 100,
-                quantity: 1,
-            })
-            .then((order) => {
-                history.push(`/cart/${order.data.response}`);
-            })
-            .catch((err) => console.log(err));
-    }
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -87,7 +74,7 @@ function NavBar() {
                             {user.uid ? (
                                 <>
                                     <div className='relative cursor-pointer'>
-                                        <button onClick={handleCheckout}>
+                                        <Link to='/cart'>
                                             {cartItems.length > 0 ? (
                                                 <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     {ITEMS_IN_CART}
@@ -112,7 +99,7 @@ function NavBar() {
                                                     d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                                                 ></path>
                                             </svg>
-                                        </button>
+                                        </Link >
                                     </div>
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link

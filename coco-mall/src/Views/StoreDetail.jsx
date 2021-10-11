@@ -24,7 +24,6 @@ import {
     handleOnOrder,
     handleOnSubmit,
     handleOnDiscount,
-    handleOnChecked,
     handleOnTypes,
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';

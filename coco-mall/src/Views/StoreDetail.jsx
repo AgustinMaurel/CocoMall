@@ -212,30 +212,6 @@ export default function StoreDetail() {
                     {/* Por cada tipo de producto que tenga la tienda quiero renderizar
                         una seccion de productos 
                         */}
-                    {/* 
-                    {storeProductsFilter.length && typesProductInStore.length
-                        ? typesProductInStore.map((type) => {
-                              return (
-                                  <div className='flex flex-wrap'>
-                                      <h2>{type.Name}</h2>
-                                      {storeProductsFilter
-                                          .map((product) => {
-                                              if (type.id === product.ProductTypeId) {
-                                                  return (
-                                                      <div onClick={() => modalFuncion(product.id)}>
-                                                          <Product
-                                                              product={product}
-                                                              addToCart={() =>
-                                                                  addToCart(product.id)
-                                                              }
-                                                          />
-                                                      </div>
-                                                  )}
-                                          })}
-                                  </div>
-                              );
-                          })
-                        : false} */}
 
                     {storeProductsFilter.length && typesProductInStore.length
                         ? typesProductInStore.map((type) => {

@@ -8,7 +8,8 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
-    FILTER_STORE
+    FILTER_STORE,
+    ORDER_STORE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -43,6 +44,41 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 storesFilters: payload,
             };
+
+        case ORDER_STORE:
+                if (payload === 'Barato') {
+                    let copy = state.storesFilters
+                        .sort(function (a, b) {
+                            return a.price - b.price;
+                        })
+                        .slice();
+                    return {
+                        ...state,
+                        storesFilters: copy,
+                    };
+                }
+                if (payload === 'Caro') {
+                    let copy = state.storesFilters
+                        .sort(function (a, b) {
+                            return b.price - a.price;
+                        })
+                        .slice();
+                    return {
+                        ...state,
+                        storesFilters: copy,
+                    };
+                } else {
+                    return {
+                        ...state,
+                        storesFilters: state.storesFilters
+                            .sort(function (a, b) {
+                                if (a.productName > b.productName) return 1;
+                                if (b.productName > a.productName) return -1;
+                                return 0;
+                            })
+                            .slice(),
+                    };
+                }
 
         case SEARCH_BY_ID:
             return {

@@ -14,6 +14,7 @@ import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
 import { handleOnChange, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
 import coco from '../Assets/icons/coco.png';
+import SearchState from '../Components/Inputs/SearchState'
 
 function Home() {
     const dispatch = useDispatch();
@@ -25,10 +26,9 @@ function Home() {
         searchStore: '',
         searchProduct: '',
         type: [],
-        state: '',
-        rating: '',
+        searchState: '',
     });
-
+//Falta ordenamiento de raiting
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
@@ -110,6 +110,16 @@ function Home() {
                                 );
                             })}
                         </Slider>
+                    </div>
+                    <div className='hidden'>
+                        Ordenamientos
+                    </div>
+                    <div className='hidden'>
+                        <SearchState 
+                        searchState={filters.searchState}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        />
                     </div>
                 </div>
 

@@ -29,13 +29,9 @@ class OrderModel extends ModelController {
                     },
                 },
             });
-<<<<<<< HEAD
-            res.send(cart, totalProducs);
-=======
            
             res.send(carrito);
            
->>>>>>> 426d8ab4e6062ef653f6234575d28c0d0ee87cad
         } catch (err) {
             console.error(err);
         }

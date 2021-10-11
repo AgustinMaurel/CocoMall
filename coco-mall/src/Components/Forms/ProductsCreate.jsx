@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
@@ -7,15 +7,20 @@ import validate from '../../Scripts/validate';
 import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { getStores } from '../../Redux/actions/stores';
 
 const ProductsCreate = ({ idStore, product }) => {
 
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [types, setTypes] = useState([])
+    const [types, setTypes] = useState("")
 
     //--HOOKS--
+    const dispatch = useDispatch()
+
+    const allTypes = useSelector(state=> state.stores.productTypes)
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues: product });
 
@@ -34,6 +39,11 @@ const ProductsCreate = ({ idStore, product }) => {
 
     };
 
+    const handleTypes = (e)=> {
+        console.log(e.target.value)
+        setTypes(e.target.value)
+    }
+
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
@@ -43,11 +53,11 @@ const ProductsCreate = ({ idStore, product }) => {
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
         }
-        let dataProductClean = { product: dataRawProduct, storeId: idStore, idImage: [image], typeId: '2' };
-
+        let dataProductClean = { product: dataRawProduct, storeId: idStore, idImage: [image], typeId: types };
         if (product) {
             axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
                 .then(() => {
+                    setTypes("")
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -67,6 +77,7 @@ const ProductsCreate = ({ idStore, product }) => {
         else {
             axios.post(PRODUCT_CREATE_URL, dataProductClean)
                 .then(() => {
+                    dispatch(getStores())
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Created!',
@@ -129,6 +140,15 @@ const ProductsCreate = ({ idStore, product }) => {
                         placeholder='Eg: 15'
                         type='number'
                     />
+                    <div className='relative mb-4 items-start flex flex-col'>
+                    <p className='min-w-max '>Type</p>
+                    <select name="types" onChange={handleTypes} required={true} className='outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'>
+                        <option defaultValue="SelectType" selected="SelectType" disabled={true}> Select Type</option>
+                        {allTypes?.map(type=>{
+                           return <option key={type.id} value={type.id}>{type.Name}</option>
+                        })}
+                    </select>
+                    </div>
                     <InputFile
                         register={register}
                         errors={errors}

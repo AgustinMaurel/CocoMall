@@ -9,10 +9,9 @@ const FORM_ID = 'payment-form';
 
 export default function Cart() {
     const user = useSelector((state) => state.auth.uid);
-    const [cart, setCart] = useState();
-    useEffect(() => {
-        axios.post(SHOPPING_CART.GET_PRODUCTS, {idUser:user}).then(res => setCart(res.data))
-    }, [user]);
+    // useEffect(() => {
+    //     axios.post(SHOPPING_CART.GET_PRODUCTS, {idUser:user}).then(res => setCart(res.data))
+    // }, [user]);
 
     const { id } = useParams();
 
@@ -33,13 +32,7 @@ export default function Cart() {
         <div>
             <NavBar />
             <div>
-                {cart && 
-                    cart.Items?.map(item => (
-                        <div>
-                            <h1>Name: {item.Product.productName}</h1>
-                        </div>
-                    ))
-                }
+               
                 <form id={FORM_ID} method='GET' />
             </div>
         </div>

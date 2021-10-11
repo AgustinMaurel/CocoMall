@@ -31,50 +31,53 @@ function App() {
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
                 setIsLoggedIn(true);
-                
-                
-                
-                // axios
-                //     .get(`http://localhost:3001/user/${user.uid}`)
+
+                axios
+                    .get(`http://localhost:3001/user/${user.uid}`)
+                    .then((res) => {
+                        return (
+                            // console.log('SOY DATO',res.data)
+                            // console.log('SOY CARTO',res.data[0].Cart)
+                            res.data.length > 0 && res.data[0].Cart.map((el) => dispatch(setCart(el)))
+                        );
+                    })
+                    .catch((err) => console.log(err));
                 //     .then((res) => {
-                //         return res.data[0].Cart?.map((element) => {
-                //             return { idProduct: element.idproduct, quantity: element.cantidad };
-                //         });
+                //         return (
+                //             res.data.length > 0 &&
+                //             res.data[0]?.Cart?.map((element) => {
+                //                 return { idProduct: element.idproduct, quantity: element.cantidad };
+                //             })
+                //         );
                 //     })
                 //     .then((res) => {
                 //         let idProducts = res.map((el) => el.idProduct);
                 //         let aux = {
                 //             allIds: idProducts,
                 //         };
-                //         // let quantities = res.map((el) => );
-                //         // let temp = res;
-                //         //mi res es un arreglo con los objetos que contienen el id producto y la cantidad
+
+                //         let temp = res.map((el) => el);
+
                 //         axios.post('http://localhost:3001/product/cart', aux).then((res) => {
-                //             //donde se cruce el temp.idProduct con el res.data[i].id --> agregar al res.data[i] la propiedad quantity que me llega en temp
+                //             res.data.length > 0 &&
+                //                 res.data
+                //                     .map((el) => {
+                //                         let product = temp.find((element) => {
+                //                             if (element.idProduct === el.id) {
+                //                                 var quantityResult = element.quantity;
+                //                             }
 
-                //             res.data?.map(el => dispatch(setCart(el)))
-                            
-                //             //mañana hacer una action que me agregue esta info directo al cart
-
-                //             //hacer un map de temp donde el ele
-
-                //             // let result = res.data.find(
-                //             //     (product) =>
-                //             //         product.id === temp.map((el) => el.idProduct).toString(),
-                //             // );
-                //             // console.log(result);
-
-                //             //ESTO ES INVIABLE TARDA MUCHO RESOLVER DESDE EL BACK JAJA SALU2
-                            
+                //                             console.log(product);
+                //                             return quantityResult;
+                //                         });
+                //                         return {
+                //                             ...el,
+                //                             quantity: product.quantity,
+                //                         };
+                //                     })
+                //                     .map((productToCart) => dispatch(setCart(productToCart)));
                 //         });
                 //     });
-
-                // .then((res) =>
-                //     res.data.map((element) => {
-                //         return { idProduct: element.id, quantity: element.cantidad };
-                //     }),
-                // )
-                // .then((res) => axios.post('http://localhost:3001/product/cart', res));
             } else {
                 setIsLoggedIn(false);
             }

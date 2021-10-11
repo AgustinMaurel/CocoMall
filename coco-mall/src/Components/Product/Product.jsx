@@ -33,8 +33,8 @@ export default function Product(props) {
             userId: uid,
             cart: userCart?.map((item) => {
                 return {
-                    idproduct: item.id,
-                    cantidad: item.quantity,
+                    idProduct: item.id,
+                    quantity: item.quantity,
                 };
             }),
         };

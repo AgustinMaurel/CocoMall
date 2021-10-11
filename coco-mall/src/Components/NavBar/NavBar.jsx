@@ -27,7 +27,7 @@ function NavBar() {
         axios
             .post('http://localhost:3001/checkout/mercadopago', {
                 title: 'cart',
-                total: 10,
+                total: 100,
                 quantity: 1,
             })
             .then((order) => {
@@ -94,7 +94,9 @@ function NavBar() {
                                                     {ITEMS_IN_CART}
                                                 </div>
                                             ) : (
-                                                false
+                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                    0
+                                                </div>
                                             )}
 
                                             <svg

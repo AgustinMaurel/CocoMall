@@ -24,7 +24,6 @@ class ProductModel extends ModelController {
                         fileString[x], { folder: "Products" }
                     );
                 }
-                // console.log(img);
                 let public_id = img.map(el => el.public_id);
 
                 //Get the Product from body
@@ -51,10 +50,10 @@ class ProductModel extends ModelController {
     };
 
     bulkCreateProducts = async (req, res) => {
-        const { storeId, allTypes, products} = req.body
+        const { storeId, allTypes, products } = req.body
         try {
             const productsDB = await this.model.bulkCreate(products)
-            for (const [i, product] of productsDB.entries()) {        
+            for (const [i, product] of productsDB.entries()) {
                 const productId = product.id
                 const productTpeId = allTypes[i]
                 //Attach the new product with the Store
@@ -80,22 +79,28 @@ class ProductModel extends ModelController {
                 const allTypes = req.body.types || [];
                 const nameToFilter = req.body.name || '';
                 const min = req.body.min || 0;
-                const max = req.body.max || 99 ^ 9999;
+                const max = req.body.max || Math.pow(99,99);
+                const discount = req.body.discount || 0
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
-                        ProductTypeId: {
-                            [Op.or]: allTypes,
-                        },
-                        productName: {
-                            [Op.iLike]: `%${nameToFilter}%`,
-                        },
-                        price: {
-                            [Op.and]: {
-                                [Op.gte]: min,
-                                [Op.lte]: max,
+                        [Op.and]: {
+                            ProductTypeId: {
+                                [Op.or]: allTypes,
                             },
-                        },
+                            productName: {
+                                [Op.iLike]: `%${nameToFilter}%`,
+                            },
+                            price: {
+                                [Op.and]: {
+                                    [Op.gte]: min,
+                                    [Op.lte]: max,
+                                },
+                            },
+                            discount: {
+                                [Op.gte]: discount
+                            }
+                        }
                     },
                 });
                 res.send(filteredProducts);
@@ -186,7 +191,17 @@ class ProductModel extends ModelController {
         }
     }
 
-
+    findAllProductsByIds = async (req, res) => {
+        const { allIds } = req.body
+        const allProducts = await this.model.findAll({
+            where: {
+                id: {
+                    [Op.or]: allIds
+                }
+            }
+        })
+        res.send(allProducts)
+    }
 
     /*  deleteProduct = async (req, res) => {
          const { id } = req.params
@@ -208,49 +223,6 @@ class ProductModel extends ModelController {
              res.send({ message: "Must include a product id" })
          }
      } */
-
-    filterProductsByStore = async (req, res) => {
-        //Id of the store from which i need products
-        const storeId = req.params.id;
-        if (storeId) {
-            try {
-                //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.body.types || [];
-                const nameToFilter = req.body.name || '';
-                const min = req.body.min || 0;
-                const max = req.body.max || 99 ^ 99999999;
-                const discount = req.body.discount || 0
-                const filteredProducts = await Product.findAll({
-                    where: {
-                        StoreId: storeId,
-                        [Op.and]: {
-                            //CORREGIR FILTRO DE TIPOS
-                            ProductTypeId: {
-                                [Op.or]: allTypes,
-                            },
-                            productName: {
-                                [Op.iLike]: `%${nameToFilter}%`,
-                            },
-                            price: {
-                                [Op.and]: {
-                                    [Op.gte]: min,
-                                    [Op.lte]: max,
-                                },
-                            },
-                            discount: {
-                                [Op.gte]: discount
-                            }
-                        }
-                    },
-                });
-                res.send(filteredProducts);
-            } catch (error) {
-                res.send(error);
-            }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
-        }
-    };
 
 };
 

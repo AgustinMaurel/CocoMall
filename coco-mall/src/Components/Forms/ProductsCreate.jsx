@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { getStores } from '../../Redux/actions/stores';
-import { Image } from 'cloudinary-react';
+
 
 const ProductsCreate = ({ idStore, product }) => {
 
@@ -44,17 +44,24 @@ const ProductsCreate = ({ idStore, product }) => {
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
-            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
+            productName:
+                data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
             description: data.description,
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
-        }
-        let dataProductClean = { product: dataRawProduct, storeId: idStore, idImage: [image], typeId: types };
+        };
+        let dataProductClean = {
+            product: dataRawProduct,
+            storeId: idStore,
+            idImage: [image],
+            typeId: '1',
+        };
+
         if (product) {
-            axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
+            axios
+                .put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
                 .then(() => {
-                    setTypes("")
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -96,12 +103,12 @@ const ProductsCreate = ({ idStore, product }) => {
     };
     console.log(allTypes)
 
+
+
     //TODO get de categorias -> hacer input SELECT
 
     return (
-        <div
-            className='w-full flex justify-center items-center m-auto'
-        >
+        <div className='w-full flex justify-center items-center m-auto'>
             {/* --CONTAINER-- */}
             <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
                 <form
@@ -171,7 +178,7 @@ const ProductsCreate = ({ idStore, product }) => {
                                 xl:block overflow-hidden'
                 >
                 
-                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />}
+                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('productName') ? watch('productName').toUpperCase() : 'PRODUCT'}
                     </p>

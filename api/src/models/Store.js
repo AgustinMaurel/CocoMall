@@ -16,6 +16,7 @@ module.exports = (sequelize) => {
             },
             address: {
                 type: DataTypes.STRING,
+                // unique: true,
             },
             description: {
                 type: DataTypes.STRING,
@@ -24,7 +25,6 @@ module.exports = (sequelize) => {
             cloudImage: {
                 type: DataTypes.STRING,
                 // allowNull: false,
-                defaultValue: "xlcr4ayyxwyorfxmafcu"
             },
             country: {
                 type: DataTypes.STRING,

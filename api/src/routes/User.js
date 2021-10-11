@@ -5,7 +5,8 @@ const {
     createUser,
     bulkCreateUser,
     getUserById,
-    updateData
+    updateData,
+    updateCart,
 } = require('../controllers/User.js');
 
 //all routes start with /user
@@ -20,7 +21,9 @@ router.post('/create', createUser);
 
 router.post('/bulkCreate', bulkCreateUser);
 
-//
-router.put('/update/:id',updateData);
+//PUT's
+router.put('/update/:id', updateData);
+
+router.post('/update/cart', updateCart) // body id usuario , y cart:[{idProduct, cantidad}]
 
 module.exports = router;

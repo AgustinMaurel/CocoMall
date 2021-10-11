@@ -6,7 +6,8 @@ import {
     GET_PRODUCT_DETAIL,
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
-    ORDER_PRODUCTS
+    ORDER_PRODUCTS,
+    CLOUDINARY_IMAGES,
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -24,7 +25,7 @@ export const filterStores = (payload) => {
         types: payload.type,
         name: payload.searchProduct,
         nameStore: payload.searchStore,
-        rating: payload.rating
+        rating: payload.rating,
     };
     return async (dispatch) => {
         const response = await axios.post(SEARCH_URL, obj);
@@ -65,21 +66,20 @@ console.log(payload)
         name: payload.searchProduct,
         min: payload.min,
         max: payload.max,
-        discount: payload.discount
+        discount: payload.discount,
     };
     return async (dispatch) => {
-        const response = await axios.post(`${BASE_URL}/product/filter/${id}`,obj );
-        console.log(response.data);
+        const response = await axios.post(`${BASE_URL}/product/filter/${id}`, obj);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };
 
 export const getProductTypes = () => {
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/productType`)
-        await dispatch({type: GET_PRODUCT_TYPES, payload: response.data})
-    }
-}
+        const response = await axios.get(`${BASE_URL}/productType`);
+        await dispatch({ type: GET_PRODUCT_TYPES, payload: response.data });
+    };
+};
 
 export const ordersProduct = (payload) => {
     return async (dispatch) => {

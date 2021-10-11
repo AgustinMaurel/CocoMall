@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { BsSearch } from 'react-icons/bs';
+// import { BsSearch } from 'react-icons/bs';
 
 const Search = ({ searchProduct, searchStore, handleChange, handleSubmit }) => {
     const [typeSearch, setTypeSearch] = useState(false);
     const handleSearch = () => {
         setTypeSearch(!typeSearch);
     };
-    console.log(searchStore)
     return (
         <div className='flex flex-col w-3/4 m-auto mb-10'>
             <form

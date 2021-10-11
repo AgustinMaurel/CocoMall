@@ -101,15 +101,9 @@ class UserModel extends ModelController {
                         id: userId
                     }
                 })
-<<<<<<< HEAD
                 user.Cart = newCart
                 await user.save()
                 res.send(newCart)
-=======
-                user.Cart = cart
-                const updatedUser = await user.save()
-                res.send(updatedUser)
->>>>>>> c78c0189af8ca2fe9235bd57a80b391ddcb85cf1
             } catch (error) {
                 res.send(error)
             }

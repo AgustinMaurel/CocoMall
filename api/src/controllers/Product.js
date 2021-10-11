@@ -177,20 +177,7 @@ class ProductModel extends ModelController {
           res.json({ message: 'Product successfully deleted' });
         } else {
           res.json({ message: 'Error' });
-        }
-
-        const ProductoActualizado = await this.model.update(
-          { ...product },
-          {
-            where: {
-              id: id1,
-            },
-          }
-        );
-        res.json({
-          msg: 'Updated product ok',
-          ProductoActualizado,
-        });
+        }  
       } catch (e) {
         res.send(e);
       }
@@ -209,34 +196,7 @@ class ProductModel extends ModelController {
     res.send(allProducts);
   };
 
-  //   updateDataProduct = async (req, res) => {
-  //     const id1 = req.params.id;
-  //     const { product } = req.body;
 
-  //     if (product.cloudImage) {
-  //       // Corregir para hacerlo con muchas imagenes
-
-  //       const uploadedResponse = await cloudinary.uploader.upload(
-  //         product.cloudImage[0]
-  //       );
-  //       let public_id = uploadedResponse.public_id;
-  //       let old = await this.model.findByPk(id1);
-  //       product.cloudImage = [...old.cloudImage, public_id];
-  //     }
-
-  //     const ProductoActualizado = await this.model.update(
-  //       { ...product },
-  //       {
-  //         where: {
-  //           id: id1,
-  //         },
-  //       }
-  //     );
-  //     res.json({
-  //       msg: 'Updated product ok',
-  //       ProductoActualizado,
-  //     });
-  //   };
 }
 
 const ProductController = new ProductModel(Product);

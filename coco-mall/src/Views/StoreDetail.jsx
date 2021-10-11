@@ -7,7 +7,7 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import { AiOutlinePercentage } from 'react-icons/ai';
 
-import { getProductsStore, getProductDetail } from '../Redux/actions/stores';
+import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
 import {
     addToCart,
     deleteFromCart,
@@ -29,7 +29,7 @@ import {
     handleOnSubmit,
     handleOnDiscount,
     handleOnChecked,
-    handleOnTypes
+    handleOnTypes,
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';
 
@@ -75,9 +75,13 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
-        dispatch(getProductsStore(id));
-        return () => dispatch(getProductsStore());
-    }, [dispatch, id]);
+            dispatch(getProductsStore(id));
+            dispatch(getStoreDetail(id));
+        return () => {
+            dispatch(getProductsStore());
+            dispatch(getStoreDetail());
+        };
+    }, [allStores]);
 
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -88,7 +92,7 @@ export default function StoreDetail() {
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
-    const handleTypes = handleOnTypes(dispatch, id)
+    const handleTypes = handleOnTypes(dispatch, id);
 
     let productTypesArr = [];
     storeProducts.length &&
@@ -137,11 +141,9 @@ export default function StoreDetail() {
                             name='category'
                             id='category'
                             onChange={handleTypes}
-                            defaultValue="All"
+                            defaultValue='All'
                         >
-                            <option value="All">
-                                All products
-                            </option>
+                            <option value='All'>All products</option>
                             {typesProductInStore?.map((type) => {
                                 return (
                                     <option key={type.id} value={type.id}>
@@ -166,10 +168,7 @@ export default function StoreDetail() {
                     </div>
 
                     <div className='flex'>
-                        <form
-                            onSubmit={(e) => handleSubmit(e)}
-                            className='flex items-center gap-1'
-                        >
+                        <form onSubmit={(e) => handleSubmit(e)} className='flex items-center gap-1'>
                             <input
                                 type='number'
                                 placeholder='minimum'
@@ -195,7 +194,6 @@ export default function StoreDetail() {
                         </form>
                         <button
                             className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
-                            
                             onClick={handleDiscount}
                         >
                             Promotions
@@ -214,26 +212,25 @@ export default function StoreDetail() {
                             <option value='Caro'>Caro</option>
                         </select>
                     </div>
-                    {
-                        filters.searchProduct ||
-                        filters.type.length ||
-                        filters.min ||
-                        filters.max ||
-                        filters.discount ? (
-                            <div className='border'>
-                                <span>Render Filters </span>
-                                <br />
-                                <span>Resultados</span> <span>{storeProductsFilter.length}</span>
-                                {/* Agregar cantidad de resultados al buscar productos */}
-                                {filters.searchProduct !== '' ? (
-                                    <li>{filters.searchProduct}</li>
-                                ) : (
-                                    false
-                                )}
-                                {filters.type.length ? <li>{filters.type}</li> : false}
-                                {filters.min !== '' ? <li>{filters.min}</li> : false}
-                                {filters.max !== '' ? <li>{filters.max}</li> : false}
-                                {filters.discount !== 0 ? <li>Discount</li> : false}
+                    {filters.searchProduct ||
+                    filters.type.length ||
+                    filters.min ||
+                    filters.max ||
+                    filters.discount ? (
+                        <div className='border'>
+                            <span>Render Filters </span>
+                            <br />
+                            <span>Resultados</span> <span>{storeProductsFilter.length}</span>
+                            {/* Agregar cantidad de resultados al buscar productos */}
+                            {filters.searchProduct !== '' ? (
+                                <li>{filters.searchProduct}</li>
+                            ) : (
+                                false
+                            )}
+                            {filters.type.length ? <li>{filters.type}</li> : false}
+                            {filters.min !== '' ? <li>{filters.min}</li> : false}
+                            {filters.max !== '' ? <li>{filters.max}</li> : false}
+                            {filters.discount !== 0 ? <li>Discount</li> : false}
                         </div>
                     ) : (
                         false
@@ -247,11 +244,16 @@ export default function StoreDetail() {
                     <h3 className='text-2xl font-bold text-cocoMall-800'>Alls Products</h3>
                 </div>
                 <div className='flex flex-wrap'>
-                    {storeProductsFilter.length ? storeProductsFilter?.map((product) => (
-                        <div onClick={() => modalFuncion(product.id)}>
-                            <Product product={product} addToCart={() => addToCart(product.id)} />
-                        </div>
-                    )) : false }
+                    {storeProductsFilter.length
+                        ? storeProductsFilter?.map((product) => (
+                              <div onClick={() => modalFuncion(product.id)}>
+                                  <Product
+                                      product={product}
+                                      addToCart={() => addToCart(product.id)}
+                                  />
+                              </div>
+                          ))
+                        : false}
 
                     {productDetail ? (
                         <ReactModal
@@ -304,5 +306,3 @@ export default function StoreDetail() {
         </div>
     );
 }
-
-

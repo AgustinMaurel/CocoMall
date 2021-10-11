@@ -7,14 +7,17 @@ module.exports = (sequelize) => {
             id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
-                allowNuull: false,
+                allowNull: false,
                 primaryKey: true,
             },
-
             directions: {
                 type: DataTypes.STRING,
-                allowNuull: false,
+                allowNull: false,
             },
+            cords: {
+                type: DataTypes.JSON,
+                allowNull: false
+            }
         },
         {
             timestamps: false,

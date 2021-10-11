@@ -32,7 +32,7 @@ const SectionModelStores = () => {
                 >
                     Model Stores
                 </h3>
-                <p className='text-lg xl:text-2xl'>
+                <p className='text-md xl:text-2xl'>
                     We have been working with clients around the world
                 </p>
             </div>

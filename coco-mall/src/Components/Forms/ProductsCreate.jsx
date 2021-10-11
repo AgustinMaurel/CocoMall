@@ -1,104 +1,114 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
-import { postProduct } from '../../Scripts/post';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
+import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { getStores } from '../../Redux/actions/stores';
 
-const ProductsCreate = () => {
-    //--HOOKS--
-    const dispatch = useDispatch();
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm({ mode: 'onTouched' });
 
+const ProductsCreate = ({ idStore, product }) => {
 
     //STATES
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
+    const [types, setTypes] = useState("")
+
+    //--HOOKS--
+    const dispatch = useDispatch()
+
+    const allTypes = useSelector(state=> state.stores.productTypes)
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues: product });
 
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
-
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImage(reader.result);
             setIsUploaded(true);
         };
+
     };
 
-
-
-    /*  {
-         "product": {
-             "ProductName": "REASM",
-             "Price": 2500,
-             "Stock": 5,
-             "Description": "Jeancito piola pa levanta minita",
-             "cloudImage": "",
-         },
-         "storeId": "c7dbd56c-acf5-470e-aac9-de43cbffec3a",
-         "typeId": 1
- 
- 
-             product: 'segq',
-             description: 'olkoklk',
-            price: '100',
-            stock: '10',
-             image: { '0': {} },
-             cloudImage: 'uip6ia95r1oepjujzcqe'
-     } */
-
-
-    //Obtener el id de la STORE que crea el producto
-    let idStore = "5038c6e8-ac4a-4e5b-a374-dd9192084719" ;
+    const handleTypes = (e)=> {
+        setTypes(e.target.value)
+    }
 
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
-        let productCreated = { product: data, storeId: idStore, idImage: image, typeId: 1 };
+        let dataRawProduct = {
+            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
+            description: data.description,
+            price: Number(data.price),
+            stock: Number(data.stock),
+            sellBy: data.sellBy || 'Cuantity',
+        };
+        let dataProductClean = {  product: dataRawProduct, storeId: idStore, idImage:[image], typeId:types};
+        console.log(dataProductClean)
+        if (product) {
+            axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
+                .then(() => {
+                    setTypes("")
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product Updated!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error has occurred, contact an administrator.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+        }
+        else {
+            axios.post(PRODUCT_CREATE_URL, dataProductClean)
+                .then(() => {
+                    dispatch(getStores())
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product Created!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error has occurred, contact an administrator.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+        }
 
-        alert('Product Created!');
-        console.log(productCreated)
-        dispatch(postProduct(productCreated));
+
     };
+    
+
+
 
     //TODO get de categorias -> hacer input SELECT
-
     return (
-        <div className='flex flex-col text-center h-screen py-3 overflow-hidden relative'>
-            {/* <div className='px-5 z-10'>
-                <NavBar />
-            </div> */}
-
-            {/* --BACKGROUND-- */}
-            {/* <div
-                className='h-20 w-20 bg-primary-light rounded-full absolute z-0 left-12 -top-10
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-40 w-40 bg-primary-light rounded-full absolute z-0 -left-12 -bottom-12
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
-                className='h-52 w-52 bg-primary-light rounded-full absolute z-0 -right-12 top-40
-                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div> */}
-
+        <div className='w-full flex justify-center items-center m-auto'>
             {/* --CONTAINER-- */}
-            <div className=' flex justify-center items-center m-auto p-8 z-10 '>
+            <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
                 <form
-                    className='  flex flex-col w-80 h-full gap-10 p-8 focus-within:relative'
+                    className='w-full xl:w-1/3 flex flex-col'
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <h3 className='text-xl text-center mb-4'>Create Product</h3>
+                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>{product ? "Edit your Product" : "Create your Product"}</h3>
                     <InputDefault
                         register={register}
                         errors={errors}
@@ -120,7 +130,6 @@ const ProductsCreate = () => {
                         placeholder='Eg: 1500'
                         type='number'
                         validate={validate.price}
-                        className=''
                     />
                     <InputDefault
                         register={register}
@@ -128,8 +137,16 @@ const ProductsCreate = () => {
                         name='stock'
                         placeholder='Eg: 15'
                         type='number'
-                        validate={validate.price}
                     />
+                    <div className='relative mb-4 items-start flex flex-col'>
+                    <p className='min-w-max '>Type</p>
+                    <select name="types" onChange={handleTypes} required={true} className='outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'>
+                        <option defaultValue="SelectType" selected="SelectType" disabled={true}>{product ? allTypes?.find(el => el.id ===  product.ProductTypeId).Name : "Select Type"}</option>
+                        {allTypes?.map(type=>{
+                           return <option key={type.id} value={type.id}>{type.Name}</option>
+                        })}
+                    </select>
+                    </div>
                     <InputFile
                         register={register}
                         errors={errors}
@@ -139,19 +156,20 @@ const ProductsCreate = () => {
                         watch={watch}
                         onChange={handleImageChange}
                     />
-                    <div className='flex items-center justify-between'>
-                        <input
-                            className='bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                            type='submit'
-                        />
-                    </div>
+                    <button
+                        type='submit'
+                        className='w-full bg-secondary rounded my-4 p-2 text-white'
+                    >
+                        Send
+                    </button>
                 </form>
 
                 {/* --PREVIEW-- */}
                 <div
-                    className='hidden bg-white shadow-md rounded p-8 m-4 w-80 text-center
-                                lg:block overflow-hidden'
+                    className='hidden bg-white shadow-md rounded py-8 ml-4 w-80 text-center
+                                xl:block overflow-hidden'
                 >
+                
                     <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('productName') ? watch('productName').toUpperCase() : 'PRODUCT'}

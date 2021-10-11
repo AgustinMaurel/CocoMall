@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             },
             address: {
                 type: DataTypes.STRING,
-                unique: true,
+                // unique: true,
             },
             description: {
                 type: DataTypes.STRING,
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
             },
             cloudImage: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                // allowNull: false,
             },
             country: {
                 type: DataTypes.STRING,
@@ -33,7 +33,10 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
             },
             cp: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
+            },
+            coord: {
+                type: DataTypes.JSON,
             },
             // payment_account: {
             //PENDING

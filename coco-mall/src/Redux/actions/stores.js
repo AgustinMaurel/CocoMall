@@ -7,7 +7,8 @@ import {
     FILTER_PRODUCTS,
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
-    ORDER_STORE
+    ORDER_STORE,
+    SEARCH_BY_NAME
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';

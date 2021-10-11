@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-
 import InputDefault from '../Inputs/InputDefault';
 import validate from '../../Scripts/validate';
 import InputFile from '../Inputs/InputFile';
 import Textarea from '../Inputs/Textarea';
-
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import { postStore } from '../../Redux/actions/post';
 import { getStores } from '../../Redux/actions/stores';
 import InputMaps from '../Inputs/InputMaps';
-import { getStores } from '../../Redux/actions/stores';
 
 function ShopCreate({ setIsTrue }) {
     //STATES

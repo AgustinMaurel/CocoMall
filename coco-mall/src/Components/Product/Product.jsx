@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import React,{ useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { SHOPPING_CART } from '../../Scripts/constants';
 import { addToCart } from '../../Redux/actions/shoppingActions';
+import { Image } from 'cloudinary-react'
 
 export default function Product(props) {
     const dispatch = useDispatch();

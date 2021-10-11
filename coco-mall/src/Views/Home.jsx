@@ -8,7 +8,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import HomeCard from '../Components/Cards/HomeCards';
 import StoreState from '../Components/Cards/StoreState';
 import NavBar from '../Components/NavBar/NavBar';
-// import Arrow from '../Components/Slides/Arrow';
+import Arrow from '../Components/Slides/Arrow';
 import HeroCard from '../Components/Cards/HeroCard';
 import Search from '../Components/Inputs/Search';
 import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
@@ -29,7 +29,7 @@ function Home() {
         searchState: '',
     });
 
-   
+
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -180,19 +180,6 @@ function Home() {
                             ))}
                         </div>
                     </div>
-                    <h3 className='text-2xl font-bold text-cocoMall-800'>Our recommendations in your "City"</h3>
-                    <Slider {...settingsCards}>
-                        {allStores?.map((e, i) => (
-                            <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
-                                <HomeCards
-                                    storeName={e.storeName}
-                                    description={e.description}
-                                    cloudImage={e.logo || coco}
-                                    key={i}
-                                />
-                            </Link>
-                        ))}
-                    </Slider>
                 </div>
             </div>
         </div>

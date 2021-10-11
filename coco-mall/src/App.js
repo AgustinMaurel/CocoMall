@@ -13,10 +13,6 @@ import RegisterScreen from './Views/Auth/RegisterScreen';
 import Home from './Views/Home';
 import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail'
-
-
-
-import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
 
 function App() {

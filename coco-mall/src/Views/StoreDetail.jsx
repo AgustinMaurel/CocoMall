@@ -94,13 +94,7 @@ export default function StoreDetail() {
         };
     }, [dispatch, allStores]);
 
-    /*---------LE PIDO AL BACK EL LINK DE PAGO------------*/
-
-    // const handleCheckout = () => {
-    //     axios.post('http://localhost:3001/checkout/mercadopago', data).then((order) => {
-    //         history.push(`/cart/${order.data.response}`);
-    //     });
-    // };
+   
 
     const handleClearCart = () => {
         dispatch(clearCart())

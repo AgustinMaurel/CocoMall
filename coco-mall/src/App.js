@@ -29,7 +29,7 @@ function App() {
                 setIsLoggedIn(true);
 
                 axios
-                    .get(`http://localhost:3001/user/${user.uid}`)
+                    .get(`/user/${user.uid}`)
                     .then((res) => {
                         return (
                             res.data.length > 0 &&

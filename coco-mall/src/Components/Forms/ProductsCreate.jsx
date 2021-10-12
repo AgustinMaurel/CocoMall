@@ -53,7 +53,7 @@ const ProductsCreate = ({ idStore, product }) => {
         let dataProductClean = {  product: dataRawProduct, storeId: idStore, idImage:[image], typeId:types};
         console.log(dataProductClean)
         if (product) {
-            axios.put(`${UPDATE_PRODUCT}/${product.id}`, dataProductClean)
+            axios.put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
                     setTypes("")
                     Swal.fire({
@@ -73,7 +73,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 })
         }
         else {
-            axios.post(PRODUCT_CREATE_URL, dataProductClean)
+            axios.post('/product/create', dataProductClean)
                 .then(() => {
                     dispatch(getStores())
                     Swal.fire({

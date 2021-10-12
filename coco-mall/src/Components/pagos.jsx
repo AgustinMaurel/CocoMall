@@ -22,7 +22,7 @@ const CheckoutForm = () => {
 
         if (!error) {
             const { id } = paymentMethod;
-            const { data } = await axios.post('http://localhost:3001/checkout', {
+            const { data } = await axios.post('/checkout', {
                 id,
                 currency: 'USD',
                 amount: price * 100, // se pasa el montoa pagar en centavos de la moneda con la que se esta pagando, es decir el "precio" * 100

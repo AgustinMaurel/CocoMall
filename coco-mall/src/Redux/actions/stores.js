@@ -50,7 +50,7 @@ export const getStoreDetail = (id) => {
 
 export const getProductsStore = (id) => {
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/product/${id}`);
+        const response = await axios.get(`/product/${id}`);
         dispatch({ type: GET_PRODUCT, payload: response.data });
     };
 };
@@ -71,14 +71,14 @@ console.log(payload)
         discount: payload.discount,
     };
     return async (dispatch) => {
-        const response = await axios.post(`${BASE_URL}/product/filter/${id}`, obj);
+        const response = await axios.post(`/product/filter/${id}`, obj);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };
 
 export const getProductTypes = () => {
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/productType`);
+        const response = await axios.get(`/productType`);
         await dispatch({ type: GET_PRODUCT_TYPES, payload: response.data });
     };
 };

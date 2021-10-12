@@ -4,7 +4,7 @@ const Textarea = ({ register, errors, name, placeholder, type, validate }) => {
     let text = name;
     let result = text.replace(/([A-Z])/g, ' $1');
     let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
-    
+
     return (
         <div className='relative my-4'>
             <textarea
@@ -19,9 +19,7 @@ const Textarea = ({ register, errors, name, placeholder, type, validate }) => {
                 {...register(name, validate)}
             />
             {errors[name] ? (
-                <p className='absolute text-red-500 -top-6 left-0'>
-                    {errors[name].message}
-                </p>
+                <p className='absolute text-red-500 -top-6 left-0'>{errors[name].message}</p>
             ) : (
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>

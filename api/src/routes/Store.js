@@ -1,14 +1,12 @@
-
-  
 const { Router } = require('express');
 const router = Router();
 const {
-  getAllData,
-  createStore,
-  postBulkCreate,
-  filterStoresByProductTypes,
-  deleteDeep,
-  updateDataStore,
+    getAllData,
+    createStore,
+    postBulkCreate,
+    filterStoresByProductTypes,
+    deleteDeep,
+    updateDataStore,
 } = require('../controllers/Store.js');
 
 //all routes start with /store

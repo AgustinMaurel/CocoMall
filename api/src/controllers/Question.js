@@ -10,7 +10,7 @@ class QuestionModel extends ModelController {
         if (req.body.id) {
             try {
                 //id of Product
-                const id = req.body.id
+                const id = req.body.id;
                 const question = {
                     question: req.body.question,
                 };
@@ -21,7 +21,7 @@ class QuestionModel extends ModelController {
                 const product = await Product.findByPk(id);
                 await product.addReview(questionId);
                 //final question
-                const finalQuestion = await this.model.findByPk(questionId)
+                const finalQuestion = await this.model.findByPk(questionId);
                 res.send(finalQuestion);
             } catch (e) {
                 res.send(e);
@@ -30,21 +30,24 @@ class QuestionModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
-    UpdateQuestion= async (req,res)=>{
-         if(req.body.id){
-            try{
-                const finalQuestion=this.model.update({answer:req.body.answer},{where:{
-                    id:req.body.id
-                }})
-            }catch(e){
-                res.send(`error producido:${e}`)
+    UpdateQuestion = async (req, res) => {
+        if (req.body.id) {
+            try {
+                const finalQuestion = this.model.update(
+                    { answer: req.body.answer },
+                    {
+                        where: {
+                            id: req.body.id,
+                        },
+                    }
+                );
+            } catch (e) {
+                res.send(`error producido:${e}`);
             }
-         }else{
-             res.send("error falta de argumentos")
-         }
-    }
-
-
+        } else {
+            res.send('error falta de argumentos');
+        }
+    };
 }
 
 const QuestionController = new QuestionModel(Question);

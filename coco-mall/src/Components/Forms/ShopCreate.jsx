@@ -64,12 +64,12 @@ function ShopCreate({ setIsTrue }) {
         });
 
         dispatch(postStore(storeCreated));
-        dispatch(getStores())
+        dispatch(getStores());
     };
 
     useEffect(() => {
         return dispatch(getStores());
-    },[dispatch])
+    }, [dispatch]);
 
     return (
         <div

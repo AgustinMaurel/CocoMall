@@ -5,8 +5,8 @@ import Benefits from '../Cards/Benefits';
 
 const SectionBenefits = () => {
     const data = dataBenefits();
-    const data1 =data.slice(0,2)
-    const data2 =data.slice(2,5)
+    const data1 = data.slice(0, 2);
+    const data2 = data.slice(2, 5);
 
     return (
         <div className='min-w-screen'>
@@ -23,9 +23,9 @@ const SectionBenefits = () => {
                 <div className='h-24 w-24 bg-primary-light rounded-full absolute z-0 left-2/3 top-60  xl:h-60 xl:w-60'></div>
             </div>
             <div
-                        className='h-64 w-64 bg-primary-light rounded-full absolute z-0 -left-20 -bottom-32  
+                className='h-64 w-64 bg-primary-light rounded-full absolute z-0 -left-20 -bottom-32  
                 2xl:h-80 2xl:w-80'
-                    ></div>
+            ></div>
 
             {/* SECTION */}
             <div className='flex flex-col items-center justify-center h-screen pb-10  xl:gap-28 '>
@@ -58,7 +58,7 @@ const SectionBenefits = () => {
                                 />
                             ))}
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </div>

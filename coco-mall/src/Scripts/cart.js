@@ -11,5 +11,3 @@ export function addToCart(product) {
         .then((res) => res.data)
         .catch((err) => console.error(err));
 }
-
-

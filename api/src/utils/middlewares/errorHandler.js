@@ -4,6 +4,6 @@ let errorHandler = (err, req, res, next) => {
     const message = err.message || err;
     console.error(err);
     res.status(status).send(message);
-  };
-  
-  module.exports = errorHandler
+};
+
+module.exports = errorHandler;

@@ -22,7 +22,6 @@ const ReviewFactory = require('./Review.js');
 const ProductTypeFactory = require('./ProductType.js');
 const QuestionFactory = require('./Question.js');
 
-
 //Sequalize
 
 /* const sequelize = new Sequelize(
@@ -34,10 +33,10 @@ const QuestionFactory = require('./Question.js');
 ); */
 
 let sequelize =
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === 'production'
         ? new Sequelize({
               database: DB_NAME,
-              dialect: "postgres",
+              dialect: 'postgres',
               host: DB_HOST,
               port: 5432,
               username: DB_USER,
@@ -72,7 +71,6 @@ const Order = OrderFactory(sequelize);
 const Review = ReviewFactory(sequelize);
 const ProductType = ProductTypeFactory(sequelize);
 const Question = QuestionFactory(sequelize);
-
 
 //Conection between tables
 
@@ -123,7 +121,6 @@ Order.belongsToMany(Product, { through: 'ordersProduct' });
 
 Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
 Question.belongsTo(Product);
-
 
 module.exports = {
     db: sequelize,

@@ -13,7 +13,7 @@ export default function Cart() {
     const { userCart, uid } = useSelector((state) => state.auth);
 
     let total =
-    userCart.length > 0 &&
+        userCart.length > 0 &&
         Object.values(userCart).reduce((previous, key) => previous + key.price * key.quantity, 0);
 
     let objectToCheckout = {
@@ -21,8 +21,6 @@ export default function Cart() {
         total: total,
         quantity: 1,
     };
-
-  
 
     let userCartToBack = useMemo(() => {
         return {
@@ -36,20 +34,16 @@ export default function Cart() {
         };
     }, [userCart, uid]);
 
-
-    const handleDeleteOne = (id)=> {
-     
-        dispatch(deleteFromCart(id))
-    } 
-    const handleDeleteAll = (id)=> {
-        dispatch(deleteAllFromCart(id))
-    } 
-
+    const handleDeleteOne = (id) => {
+        dispatch(deleteFromCart(id));
+    };
+    const handleDeleteAll = (id) => {
+        dispatch(deleteAllFromCart(id));
+    };
 
     useEffect(() => {
-       return axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+        return axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     }, [userCartToBack]);
-
 
     function handleCheckout() {
         return userCart.length > 0

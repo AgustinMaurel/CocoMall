@@ -1,12 +1,10 @@
-import { LOGIN, LOGOUT,  SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
-
-
+import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
 
 const initialState = {
     uid: '',
     name: '',
-    storeProducts:[],
-    userCart: [], // mandar este carrito al back para que quede guardado en BD 
+    storeProducts: [],
+    userCart: [], // mandar este carrito al back para que quede guardado en BD
 };
 
 export const authReducer = (state = initialState, { type, payload }) => {
@@ -16,15 +14,15 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 uid: payload.uid,
                 name: payload.displayName,
-                
-                userCart:[],
+
+                userCart: [],
             };
         case LOGOUT:
             return {
                 uid: '',
                 name: '',
-                storeProducts:[],
-                userCart:[], 
+                storeProducts: [],
+                userCart: [],
             };
 
         case GET_PRODUCT:
@@ -34,8 +32,12 @@ export const authReducer = (state = initialState, { type, payload }) => {
             };
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            let newItem = state.storeProducts?.find((item) => item.id === payload || item.idproduct === payload);
-            let repeatedItem = state.userCart?.find((item) => item.id === newItem.id || item.idproduct === payload);
+            let newItem = state.storeProducts?.find(
+                (item) => item.id === payload || item.idproduct === payload,
+            );
+            let repeatedItem = state.userCart?.find(
+                (item) => item.id === newItem.id || item.idproduct === payload,
+            );
 
             return repeatedItem
                 ? {

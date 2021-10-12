@@ -17,7 +17,7 @@ const Search = ({
                 className='bg-white flex items-center rounded-full shadow-md'
                 onSubmit={handleSubmit}
             >
-                {typeSearch !== undefined && !typeSearch? (
+                {typeSearch !== undefined && !typeSearch ? (
                     <>
                         <input
                             className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'

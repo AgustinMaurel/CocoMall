@@ -93,14 +93,14 @@ export function handleOnTypes(dispatch, id, filters) {
     return (e) => {
         let val = parseInt(e.target.value);
         let aux = {
-            type: []
+            type: [],
         };
-        if (e.target.value !== "All") {
+        if (e.target.value !== 'All') {
             aux.type = [val];
-            filters.type = [val]
+            filters.type = [val];
             dispatch(filterProducts(id, aux));
         } else {
-            filters.type = []
+            filters.type = [];
             dispatch(filterProducts(id, aux));
         }
     };

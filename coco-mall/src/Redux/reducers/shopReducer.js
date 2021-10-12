@@ -8,7 +8,7 @@ import {
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
     FILTER_STORE,
-    ORDER_STORE
+    ORDER_STORE,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -65,7 +65,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             };
 
         case FILTER_PRODUCTS:
-            console.log(payload)
+            console.log(payload);
             return {
                 ...state,
                 storeProductsFilter: payload,

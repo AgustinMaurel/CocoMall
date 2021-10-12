@@ -5,19 +5,27 @@ import launch from '../../Assets/images/launch.png';
 
 const SectionHow = () => {
     return (
-        <div className='  flex flex-col items-center justify-evenly h-screen pb-10
+        <div
+            className='  flex flex-col items-center justify-evenly h-screen pb-10
         sm:pb-14 
         
         xl:flex xl:justify-evenly xl:gap-10
-        2xl:mx-44'>
+        2xl:mx-44'
+        >
             <div className='xl:relative '>
-                <div className=' 
+                <div
+                    className=' 
                 sm:absolute sm:w-24 sm:h-24 sm:bg-primary-light sm:rounded-full sm:top-8 
                 xl:absolute xl:w-32 xl:h-32 xl:bg-primary-light xl:rounded-full xl:top-0
-                2xl:w-64 2xl:h-64 2xl:-top-20 2xl:-left-10'></div>
-                <h3 className='relative text-3xl font-bold 
+                2xl:w-64 2xl:h-64 2xl:-top-24 2xl:-left-10'
+                ></div>
+                <h3
+                    className='relative text-3xl font-bold 
                 sm:text-4xl
-                xl:text-5xl'>How it works</h3>
+                xl:text-5xl'
+                >
+                    How it works
+                </h3>
             </div>
 
             <div

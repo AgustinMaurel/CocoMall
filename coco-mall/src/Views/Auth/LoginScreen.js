@@ -8,7 +8,7 @@ import {
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import NavBar from '../../Components/NavBar';
+import NavBar from '../../Components/NavBar/NavBar';
 import { useHistory } from 'react-router';
 
 const LoginScreen = () => {
@@ -25,56 +25,52 @@ const LoginScreen = () => {
 
     const renderCond = useSelector((state) => state.auth);
 
-    const history = useHistory()
+    const history = useHistory();
 
     const handleLogin = (data) => {
         dispatch(startLoginEmailPassword(data.email, data.password));
-        history.push('/home')
+        history.push('/home');
         setValue('email', '');
         setValue('password', '');
     };
 
     const handleGoogleLogin = () => {
         dispatch(startGoogleLogin());
-       
     };
 
     const handleFacebookLogin = () => {
         dispatch(startFacebookLogin());
-        
     };
 
     return (
-        <div className='overflow-hidden '>
+        <div className='h-screen overflow-hidden '>
             <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
-            <div className='flex h-14 pt-4  border-b-2 border-gray-100 px-20 pb-3 z-50 overflow-hidden'>
-                <NavBar />
-            </div>
+            <NavBar />
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col mt-20 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
-                    <div className='flex-col text-xl text-left m-10 font-bold z-50 relative'>
-                        <h1 className='relative z-50'>Login in to your account</h1>
+                <div className='flex flex-col gap-10 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                    <div className='flex-col  text-left  font-bold z-1 relative'>
+                        <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
                     <div
                         className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
                     ></div>
                     <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
+                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
                     ></div>
 
                     <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
                         <div className='flex flex-col text-left z-10'>
-                            <label className='text-gray-500 text-xs ml-1 '>Email Address</label>
+                            <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 
                             <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
-                                    className='outline-none text-xs z-10 p-2'
+                                    className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('email', {
                                         required: { value: true, message: 'Email is required' },
                                     })}
@@ -91,11 +87,11 @@ const LoginScreen = () => {
                         </div>
 
                         <div className='flex flex-col text-left z-10'>
-                            <label className='text-gray-500 text-xs ml-1'>Password</label>
+                            <label className='text-gray-500 text-base ml-1'>Password</label>
 
                             <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
-                                    className='outline-none text-xs z-10 p-2'
+                                    className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('password', {
                                         required: { value: true, message: 'Password is required' },
                                     })}
@@ -159,29 +155,32 @@ const LoginScreen = () => {
                         </div>
 
                         <div className='m-1 mt-10 z-10'>
-                            <div className='flex justify-center items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
-                                <button className='text-sm cursor-pointer' type='submit'>
+                            <div className='flex justify-center items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
+                                <button
+                                    className='text-sm font-semibold cursor-pointer  relative w-full'
+                                    type='submit'
+                                >
                                     Log In
                                 </button>
                             </div>
                             <div>
-                                <div className='flex mt-1 z-10 justify-center content-center items-center'>
+                                <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
                                     <div
-                                        className='flex cursor-pointer text-xs text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
+                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
                                         onClick={handleGoogleLogin}
                                     >
                                         <img
-                                            className='w-12 h-6 justify-self-center mt-0.5 '
+                                            className='w-12 h-6 justify-self-center mt-0.5 bg-white '
                                             src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                             alt='google button'
                                         />
-                                        <label className='flex flex-col pointer-events-none justify-center p-1 mr-0.5'>
+                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-3 mr-0.5'>
                                             Log in with Google
                                         </label>
                                     </div>
 
                                     <div
-                                        className='flex cursor-pointer text-xs text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
+                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
                                         onClick={handleFacebookLogin}
                                     >
                                         <img
@@ -189,7 +188,7 @@ const LoginScreen = () => {
                                             src='https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
                                             alt='facebook button'
                                         />
-                                        <label className='flex flex-col pointer-events-none content-center justify-center p-1 mr-0.5'>
+                                        <label className='flex flex-col pointer-events-none content-center justify-center p-3 mr-0.5'>
                                             Log in with Facebook
                                         </label>
                                     </div>
@@ -197,15 +196,17 @@ const LoginScreen = () => {
                             </div>
                         </div>
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
-                            <label className='ml-1'>Not a member ? </label>
-                            <Link className='text-secondary ml-2' to='/auth/register'>
+                            <label className='ml-1 font-medium'>Not a member ? </label>
+                            <Link className='text-secondary font-semibold ml-2' to='/auth/register'>
                                 {' '}
                                 Sign up
                             </Link>
                         </div>
                     </form>
                 </div>
-            ) : history.push('/home')}
+            ) : (
+                history.push('/home')
+            )}
         </div>
     );
 };

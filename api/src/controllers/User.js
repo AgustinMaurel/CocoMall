@@ -1,4 +1,5 @@
-const { User, Store, Address } = require('../models/index');
+const { User, Store, Address, Product } = require('../models/index');
+const { Op } = require('sequelize');
 const ModelController = require('./index');
 class UserModel extends ModelController {
     constructor(model) {
@@ -73,6 +74,41 @@ class UserModel extends ModelController {
             res.send(users);
         } catch (err) {
             res.send(err);
+        }
+    };
+
+    updateCart = async (req, res) => {
+        const { userId, cart } = req.body;
+        if (userId) {
+            try {
+                let allIds = await cart.map((item) => {
+                    return item.idProduct;
+                });
+                let allQuantity = await cart.map((item) => {
+                    return item.quantity;
+                });
+                let products = [];
+                for (const [i, id] of allIds.entries()) {
+                    let product = await Product.findByPk(id);
+                    product = {
+                        ...product.dataValues,
+                        quantity: allQuantity[i],
+                    };
+                    products = [...products, product];
+                }
+                const user = await this.model.findOne({
+                    where: {
+                        id: userId,
+                    },
+                });
+                user.Cart = products;
+                await user.save();
+                res.json(products);
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.send('wrong data');
         }
     };
 

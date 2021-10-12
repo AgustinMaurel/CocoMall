@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             },
             LastName: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             Mail: {
                 type: DataTypes.STRING,
@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
                 },
                 allowNull: false,
                 unique: true,
+            },
+            Cart: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+                defaultValue: [],
+                allowNull: false,
             },
         },
         {

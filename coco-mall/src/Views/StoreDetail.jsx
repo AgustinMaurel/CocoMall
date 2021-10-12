@@ -203,9 +203,9 @@ export default function StoreDetail() {
                             className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                             onChange={handleOrder}
                         >
-                            <option value='Mas relevantes'>Mas relevantes</option>
-                            <option value='Barato'>Barato</option>
-                            <option value='Caro'>Caro</option>
+                            <option value='Mas relevantes'>Most Relevant</option>
+                            <option value='Barato'>High Price</option>
+                            <option value='Caro'>Low Price</option>
                         </select>
                     </div>
                 </div>

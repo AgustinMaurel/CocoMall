@@ -24,8 +24,8 @@ export default function ModelTable({
     }, [flag]);
 
     return (
-        <div className='items-center text-center justify-center w-full'>
-            <div>
+        <div className='items-center text-center justify-center  w-full'>
+            <div >
                 <table className='items-center border-separate text-center justify-center w-full'>
                     <thead>
                         <tr>

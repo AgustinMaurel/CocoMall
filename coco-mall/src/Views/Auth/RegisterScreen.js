@@ -41,20 +41,19 @@ const RegisterScreen = () => {
         <div className='overflow-hidden h-screen '>
             <NavBar />
 
-
             {/* BACKGROUND */}
-                <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
-                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
-                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
-                </div>
-                <div
-                    className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
+            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+            </div>
+            <div
+                className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-                ></div>
-                <div
-                    className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
+            ></div>
+            <div
+                className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
-                ></div>
+            ></div>
 
             {/* CONTENT */}
             <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>

@@ -691,7 +691,7 @@ function templateSuccess(orderId, products, price, total, direction) {
 }
 
 function templateFailure() {
-      let text = `
+    let text = `
       <!DOCTYPE html>
       <html>
           <head>
@@ -1056,7 +1056,7 @@ function templateFailure() {
       
   
   `;
-      return text;
-  }
+    return text;
+}
 
-module.exports = {templateSuccess,templateFailure}
+module.exports = { templateSuccess, templateFailure };

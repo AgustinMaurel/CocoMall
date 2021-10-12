@@ -117,9 +117,9 @@ class StoreModel extends ModelController {
                     },
                     //Estoy filtrando por el nombre de la tienda
                     storeName: {
-                        [Op.iLike]: `%${storeToFilter}%`
-                    }
-                }
+                        [Op.iLike]: `%${storeToFilter}%`,
+                    },
+                },
             });
             res.send(filteredStores);
         } catch (error) {
@@ -127,38 +127,43 @@ class StoreModel extends ModelController {
         }
     };
 
-    deleteDeep=async(req,res)=>{
+    deleteDeep = async (req, res) => {
         let id = req.params.id;
-        if(id){
-            try{
+        if (id) {
+            try {
                 // Delete store image, Cloudinary
-                const old = await this.model.findByPk(id)
-                let arr = [old.cloudImage]
-                const deletedImage = await cloudinary.api.delete_resources(arr, {folder: "Stores"});
+                const old = await this.model.findByPk(id);
+                let arr = [old.cloudImage];
+                const deletedImage = await cloudinary.api.delete_resources(
+                    arr,
+                    { folder: 'Stores' }
+                );
 
                 // Delete product images, Cloudinary
-                const allProducts = await Product.findAll({where: {StoreId: id}}) // [ {...} , {...}]
-                const img = allProducts.map(product => product.cloudImage)
-                let deletedImagesCloudinary = []
-                for(let i=0; i<img.length; i++){
-                    deletedImagesCloudinary[i] = await cloudinary.api.delete_resources(img[i], {folder: "Products"});
+                const allProducts = await Product.findAll({
+                    where: { StoreId: id },
+                }); // [ {...} , {...}]
+                const img = allProducts.map((product) => product.cloudImage);
+                let deletedImagesCloudinary = [];
+                for (let i = 0; i < img.length; i++) {
+                    deletedImagesCloudinary[i] =
+                        await cloudinary.api.delete_resources(img[i], {
+                            folder: 'Products',
+                        });
                 }
 
                 // Borro la tienda y sus productos
-                const[ProductDelte,StoreDelte]=await Promise.all([
-                    Product.destroy({where:{StoreId:id}}),
-                    this.model.destroy({where:{id:id}}),
-                ])
+                const [ProductDelte, StoreDelte] = await Promise.all([
+                    Product.destroy({ where: { StoreId: id } }),
+                    this.model.destroy({ where: { id: id } }),
+                ]);
 
-                
-                res.json({ProductDelte, StoreDelte})
-
-            }catch(error){
-                res.status(400).json(error)
-
+                res.json({ ProductDelte, StoreDelte });
+            } catch (error) {
+                res.status(400).json(error);
             }
         }
-    }
+    };
 
     findStoresOfUser = async (req, res) => {
         const id = req.body.id ? req.body.id : null;
@@ -180,7 +185,6 @@ class StoreModel extends ModelController {
             });
         }
     };
-
 
     // UPDATE FUNCIONA PERFECTO --  NO TOCAR MUCHO !
     updateDataStore = async (req, res) => {

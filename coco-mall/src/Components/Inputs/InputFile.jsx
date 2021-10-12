@@ -9,14 +9,14 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch, is
                 className='outline-none p-2 w-full rounded'
                 style={{ display: 'none' }}
                 type={type}
-                accept="image/png, image/jpeg"
+                accept='image/png, image/jpeg'
                 placeholder={name}
                 {...register(name, validate)}
                 onChange={onChange}
             />
             <input
                 type='button'
-                value={isUploaded ? 'Selection OK' :'Select Image'}
+                value={isUploaded ? 'Selection OK' : 'Select Image'}
                 onClick={() => document.getElementById('selectedFile').click()}
                 className={
                     errors[name]
@@ -24,10 +24,8 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch, is
                         : 'border border-gray-200 bg-white text-gray-400 text-left text-sm outline-none p-2 w-full rounded cursor-pointer'
                 }
             />
-            {errors[name]? (
-                <p className='absolute text-red-500 -top-6 left-0'>
-                    {errors[name].message}
-                </p>
+            {errors[name] ? (
+                <p className='absolute text-red-500 -top-6 left-0'>{errors[name].message}</p>
             ) : isUploaded ? (
                 <div>
                     <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
@@ -51,7 +49,9 @@ const InputFile = ({ register, errors, name, type, validate, onChange, watch, is
                     </div>
                 </div>
             ) : (
-                <p className='absolute min-w-max -top-6 left-0'>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
+                <p className='absolute min-w-max -top-6 left-0'>
+                    {name.charAt(0).toUpperCase() + name.slice(1)}
+                </p>
             )}
         </div>
     );

@@ -29,8 +29,6 @@ function Home() {
         searchState: '',
     });
 
-
-
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));

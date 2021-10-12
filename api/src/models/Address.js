@@ -16,8 +16,8 @@ module.exports = (sequelize) => {
             },
             cords: {
                 type: DataTypes.JSON,
-                allowNull: false
-            }
+                allowNull: false,
+            },
         },
         {
             timestamps: false,

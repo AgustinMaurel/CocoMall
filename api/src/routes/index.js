@@ -22,7 +22,7 @@ router.use('/productType', ProductTypeRoutes);
 router.use('/review', ReviewRoutes);
 router.use('/store', StoreRoutes);
 router.use('/user', UserRoutes);
-router.use('/checkout',CheckOutRoutes);
+router.use('/checkout', CheckOutRoutes);
 // router.use('/images', ImagesRoutes);
 
 module.exports = router;

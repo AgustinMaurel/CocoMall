@@ -5,7 +5,7 @@ import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
 import Search from '../Components/Inputs/Search';
-import { SHOPPING_CART} from '../Scripts/constants'
+import { SHOPPING_CART } from '../Scripts/constants';
 import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
@@ -31,8 +31,7 @@ import Arrow from '../Components/Slides/Arrow';
 ReactModal.setAppElement('#root');
 
 export default function StoreDetail() {
-
-    const {uid ,userCart} = useSelector(state => state.auth)
+    const { uid, userCart } = useSelector((state) => state.auth);
 
     //HOOKS
     const dispatch = useDispatch();
@@ -62,8 +61,8 @@ export default function StoreDetail() {
 
     let userCartToBack = {
         userId: uid,
-        cart: []
-    }
+        cart: [],
+    };
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -94,14 +93,12 @@ export default function StoreDetail() {
         };
     }, [dispatch, allStores]);
 
-   
-
     const handleClearCart = () => {
-        dispatch(clearCart())
-        
-        axios.post(SHOPPING_CART.ADD_TO_CART , userCartToBack  )
-    }
-    
+        dispatch(clearCart());
+
+        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+    };
+
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
         setModalIsOpen(true);
@@ -118,9 +115,8 @@ export default function StoreDetail() {
         storeProducts.map((product) => {
             if (!productTypesArr.includes(product.ProductTypeId)) {
                 productTypesArr.push(product.ProductTypeId);
-            
-        }});
-    
+            }
+        });
 
     const typesProductInStore = productTypes.filter((type) => {
         return productTypesArr.includes(type.id);
@@ -218,7 +214,11 @@ export default function StoreDetail() {
             {/* CARDS */}
             <div className='col-span-12 w-2/3 m-auto'>
                 <div>
-                    { storeProducts <= storeProductsFilter ? <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3> : <></> }
+                    {storeProducts <= storeProductsFilter ? (
+                        <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
+                    ) : (
+                        <></>
+                    )}
                 </div>
                 <div className='flex flex-col'>
                     {storeProductsFilter.length && typesProductInStore.length
@@ -226,7 +226,9 @@ export default function StoreDetail() {
                               if (filters.type.includes(type.id)) {
                                   return (
                                       <>
-                                          <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>{type.Name}</h3>
+                                          <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>
+                                              {type.Name}
+                                          </h3>
                                           {storeProductsFilter.map((product) => {
                                               if (type.id === product.ProductTypeId) {
                                                   return (
@@ -253,7 +255,9 @@ export default function StoreDetail() {
                               if (!filters.type.length) {
                                   return (
                                       <div className='flex'>
-                                          <span className='w-24 mt-4 ml-4 font-semibold text-cocoMall-300'>{type.Name.toUpperCase()}</span>
+                                          <span className='w-24 mt-4 ml-4 font-semibold text-cocoMall-300'>
+                                              {type.Name.toUpperCase()}
+                                          </span>
                                           {storeProductsFilter.map((product) => {
                                               if (type.id === product.ProductTypeId) {
                                                   return (
@@ -302,33 +306,32 @@ export default function StoreDetail() {
                 </div>
             </div>
 
-          
-                {/* CART */}
-                <div className=' col-span-12 flex flex-col hidden pl-12 pr-12'>
-                    <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
-                        <div className=' '>
-                            <h3>Carrito</h3>
-                            {userCart.length > 0 ? (
-                                <button
-                                    className='border bg-red-600 text-white shadow p-1'
-                                    onClick={handleClearCart}
-                                >
-                                    Clear cart
-                                </button>
-                            ) : (
-                                false
-                            )}
-                            {userCart?.map((item, index) => (
-                                <CartItem
-                                    key={index}
-                                    data={item}
-                                    deleteFromCart={() => deleteFromCart(item.id)}
-                                    deleteAllFromCart={() => deleteAllFromCart(item.id)}
-                                />
-                            ))}
-                        </div>
+            {/* CART */}
+            <div className=' col-span-12 flex flex-col hidden pl-12 pr-12'>
+                <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
+                    <div className=' '>
+                        <h3>Carrito</h3>
+                        {userCart.length > 0 ? (
+                            <button
+                                className='border bg-red-600 text-white shadow p-1'
+                                onClick={handleClearCart}
+                            >
+                                Clear cart
+                            </button>
+                        ) : (
+                            false
+                        )}
+                        {userCart?.map((item, index) => (
+                            <CartItem
+                                key={index}
+                                data={item}
+                                deleteFromCart={() => deleteFromCart(item.id)}
+                                deleteAllFromCart={() => deleteAllFromCart(item.id)}
+                            />
+                        ))}
                     </div>
                 </div>
+            </div>
         </div>
     );
 }

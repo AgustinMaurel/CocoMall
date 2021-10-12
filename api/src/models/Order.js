@@ -13,12 +13,11 @@ module.exports = (sequelize) => {
             amount: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-               
             },
             orderState: {
                 type: DataTypes.ENUM(
                     'Failure',
-                    'Success',
+                    'Success'
                     /* 'Pending' */
                 ),
                 allowNull: false,

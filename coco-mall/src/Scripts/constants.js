@@ -3,8 +3,8 @@ export const STORE_CREATE_URL = '/store/create';
 export const STORES_URL = '/store';
 export const SEARCH_URL = `/store/filter`;
 
-
-export const IMG_DEFAULT = 'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
+export const IMG_DEFAULT =
+    'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
 
 export const USER_BASE_URL = '/user';
 export const PRODUCT_URL = '/product/create';
@@ -17,17 +17,12 @@ export const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
 
 /*------------- SHOPPING CART ----------------*/
 
-
-
 export const SHOPPING_CART = {
-
     ADD_TO_CART: `${USER_BASE_URL}/update/cart`,
 };
 
-
-export const DELETE_PRODUCT = '/product/delete'
+export const DELETE_PRODUCT = '/product/delete';
 
 export const CREATE_USER_URL = '/user/create';
 
-
-export const UPDATE_PRODUCT = '/product/update'
+export const UPDATE_PRODUCT = '/product/update';

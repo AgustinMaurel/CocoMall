@@ -10,7 +10,7 @@ const StoreState = ({ storeName, description, cloudImage, id }) => {
                         key={id}
                         crop='scale'
                         cloudName='cocomalls'
-                        className='p-3 shadow object-cover'
+                        className='shadow object-cover'
                         publicId={cloudImage}
                         alt='logo'
                     />

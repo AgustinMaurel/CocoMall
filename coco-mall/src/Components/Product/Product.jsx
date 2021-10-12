@@ -7,7 +7,7 @@ export default function Product(props) {
 
     return (
         <div
-            className='flex flex-col justify-between gap-2 p-4 w-48 h-80 bg-white m-4 rounded-md shadow-lg cursor-pointer hover:shadow-xl transition'
+            className='flex flex-col justify-between gap-2 p-4 w-48 h-96 bg-white m-4 rounded-md shadow-lg cursor-pointer hover:shadow-xl transition'
             key={product.id}
         >
             <picture className='w-full h-2/3 rounded-md overflow-hidden'>

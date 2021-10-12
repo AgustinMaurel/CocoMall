@@ -47,7 +47,7 @@ function NavBar() {
                     <nav className='flex  justify-between'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
-                            <img className="w-40 h-24 " src={coco} alt="logo" />
+                            <img className="w-20" src={coco} alt="logo" />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -60,12 +60,12 @@ function NavBar() {
                 </div>
             ) : (
                 <div className='flex top-0 shadow-lg sticky  w-full bg-gray-100 h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
-                    <nav className=' flex align-center items-center h-auto justify-between  w-full'>
+                    <nav className=' flex align-center items-center h-auto   justify-between  w-full'>
                         <div className='flex align-center items-center  gap-5'>
                             <Link to='/'>
                             
 
-                                <img className="w-40 h-24 " src={coco} alt="logo" />
+                                <img className="w-20" src={coco} alt="logo" />
 
                             </Link>
                             <Link to='/home'>

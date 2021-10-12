@@ -6,12 +6,12 @@ function HomeCards({ storeName, description, cloudImage, id }) {
         <article className='h-80 shadow-lg m-4 rounded-md relative'>
             <div className='flex justify-center relative'>
                 <div className='bg-cocoMall-400 rounded-md h-28 w-full'></div>
-                <picture className='flex m-auto h-16 w-16 bg-white rounded-full overflow-hidden shadow-lg absolute -bottom-8'>
+                <picture className='flex h-16 w-16 bg-white rounded-full overflow-hidden shadow-lg absolute -bottom-8'>
                     <Image
                         key={id}
                         crop='scale'
                         cloudName='cocomalls'
-                        className='p-3 shadow object-cover'
+                        className='shadow object-cover'
                         publicId={cloudImage}
                         alt='logo'
                     />

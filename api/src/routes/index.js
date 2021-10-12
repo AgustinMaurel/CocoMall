@@ -26,3 +26,4 @@ router.use('/checkout',CheckOutRoutes);
 // router.use('/images', ImagesRoutes);
 
 module.exports = router;
+

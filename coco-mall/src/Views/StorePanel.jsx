@@ -78,12 +78,12 @@ export default function StorePanel() {
         render === 'Products' ? filterProduct : render === 'Orders' ? filterOrders : [];
 
     return (
-        <div className='grid grid-col-6   grid-rows-8  h-screen '>
+        <div className='grid grid-col-6   grid-rows-8 '>
             <div className=' col-span-6 row-span-1 row-end-1   border-b-2 border-gray-100   '>
                 <NavBar />
             </div>
-            <div className='flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
-                <div className='flex flex-col items-center '>
+            <div className=' overflow-y-hidden flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
+                <div className='flex flex-col items-center h-screen '>
                     <select
                         name='selectStore'
                         onChange={handleStore}
@@ -110,7 +110,7 @@ export default function StorePanel() {
 
                     <h1 className='text-start self-center p-5'>Store Panel</h1>
 
-                    <div className='flex flex-col'>
+                    {selectStore !== "SelectStore" && <div className='flex flex-col'>
                         <button
                             name='Products'
                             value='Products'
@@ -127,12 +127,12 @@ export default function StorePanel() {
                         >
                             Orders{' '}
                         </button>
-                    </div>
+                    </div>}
                 </div>
             </div>
 
             {editState ? (
-                <div className=' col-start-2 col-end-6 row-span-full text-center justify-center items-center overflow-y-hidden p-4 '>
+                <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
                     <IoArrowBack />
 
                     <div className='text-center justify-center items-center'>

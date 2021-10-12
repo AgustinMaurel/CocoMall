@@ -65,7 +65,7 @@ function NavBar() {
                             <Link to='/'>
                             
 
-                                <img className="w-40 h-24 " src={coco} alt="logo" />
+                                <img className="w-20" src={coco} alt="logo" />
 
                             </Link>
                             <Link to='/home'>

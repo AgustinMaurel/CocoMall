@@ -128,7 +128,7 @@ function Home() {
                     {allStores === storesFilters ? (
                         <div className='mt-6'>
                             <h3 className='text-2xl font-bold text-cocoMall-800'>
-                                Stores in "Paraná"
+                                Stores in your city
                             </h3>
                             <Slider {...settingsCards}>
                                 {allStores?.map((e) => (

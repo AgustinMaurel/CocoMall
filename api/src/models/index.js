@@ -57,7 +57,7 @@ let sequelize =
               ssl: true,
           })
         : new Sequelize(
-              `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/cocoMall`,
+              `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/cocomall`,
               {logging: false, native: false}
           );
 

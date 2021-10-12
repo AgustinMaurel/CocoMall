@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
+import coco from '../../Assets/icons/coco_png.png'
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -46,7 +47,7 @@ function NavBar() {
                     <nav className='flex  justify-between'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
-                                <p>Logo</p>
+                            <img className="w-40 h-24 " src={coco} alt="logo" />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -62,7 +63,10 @@ function NavBar() {
                     <nav className=' flex align-center items-center h-auto justify-between  w-full'>
                         <div className='flex align-center items-center  gap-5'>
                             <Link to='/'>
-                                <p>Logo</p>
+                            
+
+                                <img className="w-40 h-24 " src={coco} alt="logo" />
+
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>

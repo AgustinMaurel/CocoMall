@@ -178,19 +178,6 @@ class ProductModel extends ModelController {
         } else {
           res.json({ message: 'Error' });
         }
-
-        const ProductoActualizado = await this.model.update(
-          { ...product },
-          {
-            where: {
-              id: id1,
-            },
-          }
-        );
-        res.json({
-          msg: 'Updated product ok',
-          ProductoActualizado,
-        });
       } catch (e) {
         res.send(e);
       }

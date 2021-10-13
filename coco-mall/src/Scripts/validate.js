@@ -94,7 +94,7 @@ const validate = {
             message: 'Wrong adress type',
         },
     },
-    cp : {
+    cp: {
         required: { value: true, message: 'Area Code is required' },
         minLength: {
             value: 4,
@@ -109,7 +109,7 @@ const validate = {
             message: 'Wrong postal code',
         },
     },
-    descriptionStore : {
+    descriptionStore: {
         required: { value: true, message: 'Description is required' },
         minLength: {
             value: 4,
@@ -117,10 +117,9 @@ const validate = {
         },
         maxLength: {
             value: 255,
-            message:
-                'Description must contain a maximum of 255 characters ',
+            message: 'Description must contain a maximum of 255 characters ',
         },
-    }
+    },
 };
 
 export default validate;

@@ -1,14 +1,13 @@
-export const PRODUCT_CREATE_URL = 'http://localhost:3001/product/create';
-export const STORE_CREATE_URL = 'http://localhost:3001/store/create';
-export const STORES_URL = 'http://localhost:3001/store';
-export const SEARCH_URL = `${STORES_URL}/filter`;
+export const PRODUCT_CREATE_URL = '/product/create';
+export const STORE_CREATE_URL = '/store/create';
+export const STORES_URL = '/store';
+export const SEARCH_URL = `/store/filter`;
 
-export const BASE_URL = 'http://localhost:3001';
+export const IMG_DEFAULT =
+    'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
 
-export const IMG_DEFAULT = 'https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png';
-
-export const USER_BASE_URL = 'http://localhost:3001/user';
-export const PRODUCT_URL = 'http://localhost:3001/product/create';
+export const USER_BASE_URL = '/user';
+export const PRODUCT_URL = '/product/create';
 
 export const LOGO_DEFAULT = 'https://cireasesores.com/wp-content/uploads/2017/01/default_logo.png';
 export const BANNER_DEFAULT =
@@ -18,17 +17,12 @@ export const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
 
 /*------------- SHOPPING CART ----------------*/
 
-
-
 export const SHOPPING_CART = {
-
     ADD_TO_CART: `${USER_BASE_URL}/update/cart`,
 };
 
+export const DELETE_PRODUCT = '/product/delete';
 
-export const DELETE_PRODUCT = 'http://localhost:3001/product/delete'
+export const CREATE_USER_URL = '/user/create';
 
-export const CREATE_USER_URL = 'http://localhost:3001/user/create';
-
-
-export const UPDATE_PRODUCT = 'http://localhost:3001/product/update'
+export const UPDATE_PRODUCT = '/product/update';

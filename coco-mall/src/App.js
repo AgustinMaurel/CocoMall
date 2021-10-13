@@ -12,8 +12,9 @@ import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
 import Home from './Views/Home';
 import ShopCreation from './Views/ShopCreation';
-import StoreDetail from './Views/StoreDetail'
+import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
+import Checkout from './Views/Checkout';
 
 function App() {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function App() {
                 setIsLoggedIn(true);
 
                 axios
-                    .get(`http://localhost:3001/user/${user.uid}`)
+                    .get(`/user/${user.uid}`)
                     .then((res) => {
                         return (
                             res.data.length > 0 &&
@@ -44,9 +45,9 @@ function App() {
     }, [dispatch, setChecking, setIsLoggedIn]);
 
     useEffect(() => {
-        dispatch(getStores())
-        dispatch(getProductTypes())
-    }, [dispatch])
+        dispatch(getStores());
+        dispatch(getProductTypes());
+    }, [dispatch]);
 
     return (
         <>
@@ -54,11 +55,12 @@ function App() {
                 <Route path='/storePanel' component={StorePanel} />
                 <Route path='/home' exact component={Home} />
                 <Route path='/' exact component={Landing} />
-                <Route path='/cart/:id' exact component={Cart} />
+                <Route path='/cart' exact component={Cart} />
                 <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
                 <Route path='/home/store/:id' exact component={StoreDetail} />
+                <Route path='/checkout/:id' exact component={Checkout} />
             </Switch>
         </>
     );

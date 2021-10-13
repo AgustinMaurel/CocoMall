@@ -1,13 +1,41 @@
-import React from 'react';
-
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { SHOPPING_CART } from '../../Scripts/constants';
+import { addToCart } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
-
 
 import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');
 function ProductDetail(props) {
+    const dispatch = useDispatch();
+
     const { product } = props;
+
+    const { userCart, uid } = useSelector((state) => state.auth);
+
+    let userCartToBack = useMemo(() => {
+        return {
+            userId: uid,
+            cart: userCart?.map((item) => {
+                return {
+                    idProduct: item.id,
+                    quantity: item.quantity,
+                };
+            }),
+        };
+    }, [userCart, uid]);
+    console.log(product.id);
+
+    const handleButtonClick = () => {
+        dispatch(addToCart(product.id));
+    };
+
+    useEffect(() => {
+        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+    }, [userCartToBack]);
+
     return (
         <div className='    flex justify-center w-full h-full'>
             <div className='flex justify-center items-center w-2/5 h-full p-6'>
@@ -35,7 +63,12 @@ function ProductDetail(props) {
                     </span>
                     {product.discount > 0 ? <span>{product.discount}</span> : false}
                 </div>
-                <button className='font-bold text-center text-xl text-white bg-cocoMall-300 py-4' onClick={props.addToCart}>Add Cart</button>
+                <button
+                    className='font-bold text-center text-xl text-white bg-cocoMall-300 py-4'
+                    onClick={handleButtonClick}
+                >
+                    Add Cart
+                </button>
             </div>
         </div>
     );

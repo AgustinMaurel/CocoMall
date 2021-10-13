@@ -31,8 +31,8 @@ module.exports = (sequelize) => {
             Cart: {
                 type: DataTypes.ARRAY(DataTypes.JSON),
                 defaultValue: [],
-                allowNull: false
-            }
+                allowNull: false,
+            },
         },
         {
             timestamps: false,

@@ -41,24 +41,23 @@ const RegisterScreen = () => {
         <div className='overflow-hidden h-screen '>
             <NavBar />
 
-
             {/* BACKGROUND */}
-                <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
-                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
-                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
-                </div>
-                <div
-                    className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
+            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
+                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+            </div>
+            <div
+                className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
                                                 xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-                ></div>
-                <div
-                    className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
+            ></div>
+            <div
+                className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
-                ></div>
+            ></div>
 
             {/* CONTENT */}
             <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-                <div className='flex-col text-xl text-left m-5 font-bold z-10'>
+                <div className='flex-col text-2xl text-left  font-bold z-10'>
                     <h1>Register</h1>
                 </div>
 
@@ -67,11 +66,11 @@ const RegisterScreen = () => {
                     onSubmit={handleSubmit(handleRegister)}
                 >
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-xs ml-1 '>Name</label>
+                        <label className='text-gray-500 text-base ml-1 '>Name</label>
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5 w-full'
+                                className='outline-none text-xs z-10 p-2 w-full'
                                 {...register('name', {
                                     required: { value: true, message: 'name is required' },
                                     minLength: {
@@ -101,11 +100,11 @@ const RegisterScreen = () => {
                     </div>
 
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-xs ml-1 '>LastName</label>
+                        <label className='text-gray-500 text-base ml-1 '>LastName</label>
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5 w-full'
+                                className='outline-none text-xs z-10 p-2 w-full'
                                 {...register('lastName', {
                                     required: { value: true, message: 'lastName is required' },
                                     minLength: {
@@ -135,11 +134,11 @@ const RegisterScreen = () => {
                     </div>
 
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-xs ml-1 '>Email Address</label>
+                        <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5 w-full'
+                                className='outline-none text-xs z-10 p-2 w-full'
                                 {...register('email', {
                                     required: { value: true, message: 'email is required' },
                                     pattern: {
@@ -159,11 +158,11 @@ const RegisterScreen = () => {
                         )}
                     </div>
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-xs ml-1 '>Password</label>
+                        <label className='text-gray-500 text-base ml-1 '>Password</label>
 
                         <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5 w-full'
+                                className='outline-none text-xs z-10 p-2 w-full'
                                 {...register('password', {
                                     required: { value: true, message: 'password is required' },
                                     minLength: {
@@ -240,11 +239,11 @@ const RegisterScreen = () => {
                     </div>
 
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-xs ml-1 '>Confirm Password</label>
+                        <label className='text-gray-500 text-base ml-1 '>Confirm Password</label>
 
                         <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
-                                className='outline-none text-xs z-10 p-1.5 w-full'
+                                className='outline-none text-xs z-10 p-2 w-full'
                                 {...register('password2', {
                                     validate: (value) =>
                                         value === getValues('password') || 'Passwords do not match',
@@ -307,13 +306,13 @@ const RegisterScreen = () => {
                         )}
                     </div>
 
-                    <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
-                        <button className='text-sm cursor-pointer' type='submit'>
+                    <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
+                        <button className='text-sm font-semibold cursor-pointer' type='submit'>
                             Register
                         </button>
                     </div>
-                    <div className='flex flex-col mt-10 text-sm z-10 text-center items-center'>
-                        <Link className='text-secondary -mt-5 z-10' to='/auth/login'>
+                    <div className='flex flex-col mt-8 text-sm z-10 text-center items-center'>
+                        <Link className='font-semibold text-secondary -mt-5 z-10' to='/auth/login'>
                             Already registered?
                         </Link>
                     </div>

@@ -5,12 +5,12 @@ const StoreState = ({ storeName, description, cloudImage, id }) => {
     return (
         <article className='flex h-36 w-72 shadow-lg m-4 rounded-md bg-white'>
             <div className='flex items-center w-1/4 bg-cocoMall-600 rounded-md relative'>
-                <picture className='flex m-auto h-16 w-h-16 bg-white rounded-full overflow-hidden shadow-lg absolute -right-6'>
+                <picture className='flex m-auto h-16 w-16 bg-white rounded-full overflow-hidden shadow-lg absolute -right-6'>
                     <Image
                         key={id}
                         crop='scale'
                         cloudName='cocomalls'
-                        className='p-3 shadow object-cover'
+                        className='shadow object-cover'
                         publicId={cloudImage}
                         alt='logo'
                     />

@@ -19,7 +19,7 @@ const SectionStats = () => {
                                 sm:text-4xl
                                 xl:text-5xl'
                     >
-                        See our Stats 
+                        See our Stats
                     </h3>
                     <p className='text-lg xl:text-2xl'>
                         We have been working with clients around the world

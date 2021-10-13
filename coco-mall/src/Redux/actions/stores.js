@@ -8,7 +8,7 @@ import {
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
     ORDER_STORE,
-    SEARCH_BY_NAME
+    SEARCH_BY_NAME,
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -32,8 +32,8 @@ export const filterStores = (payload) => {
     return async (dispatch) => {
         const response = await axios.post(SEARCH_URL, obj);
         dispatch({ type: FILTER_STORE, payload: response.data });
-    }
-}
+    };
+};
 
 export const getStoresByName = () => {
     return async (dispatch) => {
@@ -50,7 +50,7 @@ export const getStoreDetail = (id) => {
 
 export const getProductsStore = (id) => {
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/product/${id}`);
+        const response = await axios.get(`/product/${id}`);
         dispatch({ type: GET_PRODUCT, payload: response.data });
     };
 };
@@ -61,8 +61,8 @@ export const getProductDetail = (id) => {
     };
 };
 
-export const filterProducts = (id, payload) => {  
-console.log(payload)
+export const filterProducts = (id, payload) => {
+    console.log(payload);
     const obj = {
         types: payload.type,
         name: payload.searchProduct,
@@ -71,26 +71,26 @@ console.log(payload)
         discount: payload.discount,
     };
     return async (dispatch) => {
-        const response = await axios.post(`${BASE_URL}/product/filter/${id}`, obj);
+        const response = await axios.post(`/product/filter/${id}`, obj);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };
 
 export const getProductTypes = () => {
     return async (dispatch) => {
-        const response = await axios.get(`${BASE_URL}/productType`);
+        const response = await axios.get(`/productType`);
         await dispatch({ type: GET_PRODUCT_TYPES, payload: response.data });
     };
 };
 
 export const ordersProduct = (payload) => {
     return async (dispatch) => {
-        dispatch({ type: ORDER_PRODUCTS, payload})
-    }
-}
+        dispatch({ type: ORDER_PRODUCTS, payload });
+    };
+};
 
 export const ordersStores = (payload) => {
     return async (dispatch) => {
-        dispatch({ type: ORDER_STORE, payload})
-    }
-}
+        dispatch({ type: ORDER_STORE, payload });
+    };
+};

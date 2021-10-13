@@ -25,8 +25,10 @@ function LandingMobile() {
             </div>
             <div className='fixed flex w-screen justify-evenly bottom-5 z-20  '>
                 <MainButton text='Go Shopping' />
-                
-                {userStore.allStores.find(store => store.id === user.uid) && <SecondaryButton text='My shop' /> }
+
+                {userStore.allStores.find((store) => store.id === user.uid) && (
+                    <SecondaryButton text='My shop' />
+                )}
                 <SecondaryButton text='Create Shop' />
             </div>
 

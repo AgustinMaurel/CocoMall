@@ -52,8 +52,8 @@ const LoginScreen = () => {
 
             {!renderCond.uid && !renderCond.name ? (
                 <div className='flex flex-col gap-10 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
-                    <div className='flex-col text-xl text-left  font-bold z-1 relative'>
-                        <h1 className='relative  pt-10'>Login in to your account</h1>
+                    <div className='flex-col  text-left  font-bold z-1 relative'>
+                        <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
                     <div
                         className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
@@ -66,7 +66,7 @@ const LoginScreen = () => {
 
                     <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
                         <div className='flex flex-col text-left z-10'>
-                            <label className='text-gray-500 text-xs ml-1 '>Email Address</label>
+                            <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 
                             <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
@@ -87,7 +87,7 @@ const LoginScreen = () => {
                         </div>
 
                         <div className='flex flex-col text-left z-10'>
-                            <label className='text-gray-500 text-xs ml-1'>Password</label>
+                            <label className='text-gray-500 text-base ml-1'>Password</label>
 
                             <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
@@ -155,9 +155,9 @@ const LoginScreen = () => {
                         </div>
 
                         <div className='m-1 mt-10 z-10'>
-                            <div className='flex justify-center items-center content-center p-1 bg-secondary rounded text-white text-center z-10'>
+                            <div className='flex justify-center items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
                                 <button
-                                    className='text-sm cursor-pointer  relative w-full'
+                                    className='text-sm font-semibold cursor-pointer  relative w-full'
                                     type='submit'
                                 >
                                     Log In
@@ -166,7 +166,7 @@ const LoginScreen = () => {
                             <div>
                                 <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
                                     <div
-                                        className='flex cursor-pointer text-xs text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
+                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
                                         onClick={handleGoogleLogin}
                                     >
                                         <img
@@ -174,13 +174,13 @@ const LoginScreen = () => {
                                             src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                                             alt='google button'
                                         />
-                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-1 mr-0.5'>
+                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-3 mr-0.5'>
                                             Log in with Google
                                         </label>
                                     </div>
 
                                     <div
-                                        className='flex cursor-pointer text-xs text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
+                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
                                         onClick={handleFacebookLogin}
                                     >
                                         <img
@@ -188,7 +188,7 @@ const LoginScreen = () => {
                                             src='https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
                                             alt='facebook button'
                                         />
-                                        <label className='flex flex-col pointer-events-none content-center justify-center p-1 mr-0.5'>
+                                        <label className='flex flex-col pointer-events-none content-center justify-center p-3 mr-0.5'>
                                             Log in with Facebook
                                         </label>
                                     </div>
@@ -197,7 +197,7 @@ const LoginScreen = () => {
                         </div>
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className='ml-1 font-medium'>Not a member ? </label>
-                            <Link className='text-secondary ml-2' to='/auth/register'>
+                            <Link className='text-secondary font-semibold ml-2' to='/auth/register'>
                                 {' '}
                                 Sign up
                             </Link>

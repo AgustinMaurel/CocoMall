@@ -140,7 +140,6 @@ class ProductModel extends ModelController {
 
 
         if (product.cloudImage) {
-        // Corregir para hacerlo con muchas imagenes
         let img = [];
         for (let i = 0; i < product.cloudImage.length; i++) {
             img[i] = await cloudinary.uploader.upload(product.cloudImage[i], {

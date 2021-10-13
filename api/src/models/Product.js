@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        subCategory:{
+        subCategory: {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: "Others"

@@ -1,4 +1,4 @@
-const { Product, Store, ProductType } = require('../models/index');
+const { Product, Store, ProductType, SubCategory } = require('../models/index');
 const { cloudinary } = require('../utils/cloudinary/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
@@ -10,8 +10,7 @@ class ProductModel extends ModelController {
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
-        const storeId = req.body.storeId;
-        const typeId = req.body.typeId;
+        const { storeId, typeId, subCat } = req.body;
         if (storeId && typeId) {
             try {
                 //Cloudinary
@@ -40,10 +39,17 @@ class ProductModel extends ModelController {
                 await store.addProduct(productId);
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId);
+                console.log(productType)
                 await productType.addProduct(productId);
+                //Attach the new Product with his SubCategory 
+                const [subCategoryProduct, created] = await SubCategory.findOrCreate({
+                    where: {
+                        Name: subCat
+                    }
+                })
+                await subCategoryProduct.addProduct(productId)
                 //Get the updeted product
-                const finalProduct = await this.model.findByPk(productId);
-                res.send(finalProduct);
+                res.send('Created');
             } catch (error) {
                 res.send(error);
             }
@@ -129,15 +135,15 @@ class ProductModel extends ModelController {
                         StoreId: storeId,
                     },
                 });
-                console.log(allProductOfStore)
                 let subCategories = []
-                allProductOfStore.forEach(product => {4
+                allProductOfStore.forEach(product => {
+                    4
                     let category = product.subCategory
-                    if(allProductsWithSub.indexOf(category) === -1){
+                    if (allProductsWithSub.indexOf(category) === -1) {
                         allProductsWithSub.push(category)
                     }
                 });
-                allProductOfStore = {Products: allProductOfStore, subCategories }
+                allProductOfStore = { Products: allProductOfStore, subCategories }
                 res.json(allProductOfStore);
             } catch (error) {
                 res.send(error);

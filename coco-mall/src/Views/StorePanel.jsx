@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import logo from '../Assets/icons/loco_coco.png';
+import { Image } from "cloudinary-react"
 import ModelTable from '../Scripts/modelTable';
 import NavBar from '../Components/NavBar/NavBar';
 import {
@@ -25,6 +25,8 @@ export default function StorePanel() {
     const products = useSelector((state) => state.stores.storeProductsFilter);
 
     const productsTypes = useSelector((state) => state.stores.productTypes);
+
+    console.log(storesUser)
 
     const [flag, setFlag] = useState(false);
     const [idActual, setIdActual] = useState('');
@@ -78,7 +80,7 @@ export default function StorePanel() {
         render === 'Products' ? filterProduct : render === 'Orders' ? filterOrders : [];
 
     return (
-        <div className='grid grid-col-6   grid-rows-8 '>
+        <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
             <div className=' col-span-6 row-span-1 row-end-1   border-b-2 border-gray-100   '>
                 <NavBar />
             </div>
@@ -105,10 +107,21 @@ export default function StorePanel() {
                             );
                         })}
                     </select>
+                        <div className="my-5 text-center">
 
-                    <img className='w-9/12' src={logo} alt='not found' />
+                    <Image
+                     cloudName='cocomalls'
+                     publicId={selectStore !== 'SelectStore' ? storesUser.find(el=> el.storeName === selectStore).cloudImage : false}
+                     width='180'
+                     
+                     alt={selectStore}
+                     crop='scale'
+    
+                    />
 
-                    <h1 className='text-start self-center p-5'>Store Panel</h1>
+                        </div>
+
+                    <h1 className='text-center self-center p-5'>Store Panel</h1>
 
                     {selectStore !== "SelectStore" && <div className='flex flex-col'>
                         <button

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { getAllData , createOrder} = require('../controllers/Order.js');
+const { getAllData, createOrder } = require('../controllers/Order.js');
 
 //all routes start with /order
 router.get('/', getAllData);

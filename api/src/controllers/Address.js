@@ -7,13 +7,13 @@ class AddressModel extends ModelController {
     }
     //Specific Functions for this model
     createAddress = async (req, res) => {
-        const { id, directions, cords } = req.body
+        const { id, directions, cords } = req.body;
         if (id) {
             try {
                 //id of User
                 const address = {
                     directions,
-                    cords
+                    cords,
                 };
                 //Create the Address
                 const newAddress = await this.model.create(address);

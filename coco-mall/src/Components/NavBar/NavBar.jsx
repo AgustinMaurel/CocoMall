@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
+import coco from '../../Assets/icons/coco_png.png'
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -17,10 +17,9 @@ function NavBar() {
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
-    let ITEMS_IN_CART = cartItems.length > 0 && cartItems?.map((el) => el.quantity)
-        .reduce((current, sum) => current + sum, 0);
-        
-
+    let ITEMS_IN_CART =
+        cartItems.length > 0 &&
+        cartItems?.map((el) => el.quantity).reduce((current, sum) => current + sum, 0);
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -48,7 +47,7 @@ function NavBar() {
                     <nav className='flex  justify-between'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
-                                <p>Logo</p>
+                            <img className="w-20" src={coco} alt="logo" />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -61,10 +60,13 @@ function NavBar() {
                 </div>
             ) : (
                 <div className='flex top-0 shadow-lg sticky  w-full bg-gray-100 h-14 pt-4 border-b-2 border-gray-100 px-20 pb-3 z-10 '>
-                    <nav className=' flex align-center items-center h-auto justify-between  w-full'>
+                    <nav className=' flex align-center items-center h-auto   justify-between  w-full'>
                         <div className='flex align-center items-center  gap-5'>
                             <Link to='/'>
-                                <p>Logo</p>
+                            
+
+                                <img className="w-20" src={coco} alt="logo" />
+
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -99,7 +101,7 @@ function NavBar() {
                                                     d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                                                 ></path>
                                             </svg>
-                                        </Link >
+                                        </Link>
                                     </div>
                                     <div className='shadow  flex items-center justify-center align-center bg-primary h-8  w-24  rounded'>
                                         <Link

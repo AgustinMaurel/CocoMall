@@ -10,7 +10,6 @@ function ShopCreation() {
     const [isTrue, setIsTrue] = useState(true);
     const storeCreated = useSelector((state) => state.stores.storeCreated);
 
-
     return (
         <div className='h-screen flex flex-col gap-20'>
             <NavBar />

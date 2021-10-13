@@ -35,92 +35,92 @@ export default function MenuDropDown() {
                 </svg>
             </Menu.Button>
             <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-            <Menu.Items className='absolute right-0 w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                {!userId ? (
-                    <div className='px-1 py-1 '>
-                        <Menu.Item>
-                            <button
-                                onClick={() => history.push('/auth/login')}
-                                className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            >
-                                <LoginIcon
-                                    className='w-5 h-5 mr-2 pointer-events-none'
-                                    aria-hidden='true'
-                                />
-                                Login
-                            </button>
-                        </Menu.Item>
-
-                        <Menu.Item>
-                            <button
-                                onClick={() => history.push('/auth/register')}
-                                className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            >
-                                <SignUpIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                Sign Up
-                            </button>
-                        </Menu.Item>
-                    </div>
-                ) : (
-                    <>
-                        <div className='px-1 py-1'>
+                as={Fragment}
+                enter='transition ease-out duration-100'
+                enterFrom='transform opacity-0 scale-95'
+                enterTo='transform opacity-100 scale-100'
+                leave='transition ease-in duration-75'
+                leaveFrom='transform opacity-100 scale-100'
+                leaveTo='transform opacity-0 scale-95'
+            >
+                <Menu.Items className='absolute right-0 w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                    {!userId ? (
+                        <div className='px-1 py-1 '>
                             <Menu.Item>
                                 <button
+                                    onClick={() => history.push('/auth/login')}
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
-                                    <UserIcon
+                                    <LoginIcon
                                         className='w-5 h-5 mr-2 pointer-events-none'
                                         aria-hidden='true'
                                     />
-                                    {user.name}
+                                    Login
                                 </button>
                             </Menu.Item>
-                        </div>
 
-                        <div className='px-1 py-1'>
                             <Menu.Item>
                                 <button
+                                    onClick={() => history.push('/auth/register')}
                                     className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
-                                    <WishListIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                    My Wishlist
-                                </button>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <button
-                                    className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                >
-                                    <MyShopIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                    My Shop
+                                    <SignUpIcon className='w-5 h-5 mr-2' aria-hidden='true' />
+                                    Sign Up
                                 </button>
                             </Menu.Item>
                         </div>
+                    ) : (
+                        <>
+                            <div className='px-1 py-1'>
+                                <Menu.Item>
+                                    <button
+                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                    >
+                                        <UserIcon
+                                            className='w-5 h-5 mr-2 pointer-events-none'
+                                            aria-hidden='true'
+                                        />
+                                        {user.name}
+                                    </button>
+                                </Menu.Item>
+                            </div>
 
-                        <div className='px-1 py-1'>
-                            <Menu.Item>
-                                <button
-                                    onClick={handleLogout}
-                                    className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                >
-                                    <LogOutIcon
-                                        className='w-5 h-5 mr-2 text-violet-400'
-                                        aria-hidden='true'
-                                    />
-                                    Log Out
-                                </button>
-                            </Menu.Item>
-                        </div>
-                    </>
-                )}
-            </Menu.Items>
+                            <div className='px-1 py-1'>
+                                <Menu.Item>
+                                    <button
+                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                    >
+                                        <WishListIcon className='w-5 h-5 mr-2' aria-hidden='true' />
+                                        My Wishlist
+                                    </button>
+                                </Menu.Item>
+                                <Menu.Item>
+                                    <button
+                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                    >
+                                        <MyShopIcon className='w-5 h-5 mr-2' aria-hidden='true' />
+                                        My Shop
+                                    </button>
+                                </Menu.Item>
+                            </div>
+
+                            <div className='px-1 py-1'>
+                                <Menu.Item>
+                                    <button
+                                        onClick={handleLogout}
+                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                    >
+                                        <LogOutIcon
+                                            className='w-5 h-5 mr-2 text-violet-400'
+                                            aria-hidden='true'
+                                        />
+                                        Log Out
+                                    </button>
+                                </Menu.Item>
+                            </div>
+                        </>
+                    )}
+                </Menu.Items>
             </Transition>
         </Menu>
     );

@@ -39,10 +39,10 @@ export const startGoogleLogin = () => {
                 let aux = {
                     Name: user.displayName,
                     id: user.uid,
-                    Mail: user.email
-                }
-                axios.post(CREATE_USER_URL, aux)
-                dispatch(login( user.uid, user.displayName))
+                    Mail: user.email,
+                };
+                axios.post(CREATE_USER_URL, aux);
+                dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
                 Swal.fire({
@@ -106,4 +106,3 @@ export const logout = () => {
         type: LOGOUT,
     };
 };
-

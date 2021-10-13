@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import NavBar from '../Components/NavBar/NavBar';
 
@@ -7,8 +7,7 @@ const FORM_ID = 'payment-form';
 function Checkout() {
     const { id } = useParams();
 
-
-     useEffect(() => {
+    useEffect(() => {
         if (id) {
             // con el preferenceId en mano, inyectamos el script de mercadoPago
             const script = document.createElement('script');
@@ -22,14 +21,13 @@ function Checkout() {
     }, [id]);
 
     return (
-        
         <div>
-            <NavBar/>
+            <NavBar />
             <div>
-               <form id={FORM_ID} method='GET' />
+                <form id={FORM_ID} method='GET' />
             </div>
         </div>
-    )
+    );
 }
 
-export default Checkout
+export default Checkout;

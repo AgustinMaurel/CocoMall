@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { getAllData, createQuestion} = require('../controllers/Question.js');
+const { getAllData, createQuestion } = require('../controllers/Question.js');
 
 //all routes start with /question
 

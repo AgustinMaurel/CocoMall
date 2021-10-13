@@ -11,7 +11,7 @@ const {
     filterProductsByStore,
 } = require('../controllers/Product.js');
 
-//all routes start with /product
+//all routes start with /product 
 
 //GET's
 router.get('/', getAllData);

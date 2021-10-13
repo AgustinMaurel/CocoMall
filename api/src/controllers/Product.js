@@ -115,7 +115,7 @@ class ProductModel extends ModelController {
         res.status(400).send({ message: 'Wrong parameters' });
         }
     };
-
+    
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
         if (storeId) {
@@ -179,22 +179,22 @@ class ProductModel extends ModelController {
     deleteProduct = async (req, res) => {
         const { id } = req.params;
         if (id) {
-        try {
-            const product = await this.model.findByPk(id);
-            const deletedImages = await cloudinary.api.delete_resources(
-            product.cloudImage,
-            { folder: 'Products' }
-            );
-            const deleted = await this.model.destroy({ where: { id: id } });
-            if (deleted === 1) {
-            res.json({ message: 'Product successfully deleted' });
-            } else {
-                res.status(400).send({ message: 'Wrong parameters' });
+            try {
+                const product = await this.model.findByPk(id);
+                const deletedImages = await cloudinary.api.delete_resources(
+                product.cloudImage,
+                { folder: 'Products' }
+                );
+                const deleted = await this.model.destroy({ where: { id: id } });
+                if (deleted === 1) {
+                    res.json({ message: 'Product successfully deleted' });
+                } else {
+                    res.status(400).send({ message: 'Wrong parameters' });
+                }
+            }catch(e){
+                res.send(e)
             }
-        }catch(e){
-            res.send(e)
         }
-    }
     }
 
     findAllProductsByIds = async (req, res) => {

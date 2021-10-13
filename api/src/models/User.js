@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
                 defaultValue: false
             },
             Orders: {
-                type: DataTypes.ARRAY(DataTypes.JSON),
+                type: DataTypes.ARRAY(DataTypes.STRING),
                 defaultValue: []
             }
         },

@@ -1,10 +1,54 @@
 import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
 
 const initialState = {
-    uid: '',
-    name: '',
+    uid: '7kbFgkPbXmMUgWGP3dEk4gDMSFm2',
+    name: 'Matias Monastirsky',
     storeProducts: [],
-    userCart: [], // mandar este carrito al back para que quede guardado en BD
+    userCart: [
+        {
+            id: 'd7669c4a-9666-4928-a8e9-a2ce242c4fd6',
+            productName: 'Skyrim',
+            price: 3500,
+            stock: 10,
+            sellBy: 'Cuantity',
+            discount: 0,
+            description: 'T.E.S 5',
+            cloudImage:[ "Products/xbrogn9dkucn4dptof5j"],
+            StoreId: "605ca03a-dce7-43c4-8b5b-7e1eb2b9a611",
+            quantity:1
+        },
+        {id: '25d1cc32-b704-4353-a5a3-42aea4aecdff',
+        productName: 'Gta V',
+        price: 3500,
+        stock: 10,
+        sellBy: 'Cuantity',
+        discount: 0,
+        description: 'T.E.S 5',
+        cloudImage:[ "Products/xbrogn9dkucn4dptof5j"],
+        StoreId: "605ca03a-dce7-43c4-8b5b-7e1eb2b9a611",
+        quantity:1},
+
+        {id: '2accb88f-ff5b-4230-968b-f0bf7a2d7002',
+        productName: 'Vegan Burger',
+        price: 3500,
+        stock: 10,
+        sellBy: 'Cuantity',
+        discount: 0,
+        description: 'T.E.S 5',
+        cloudImage:[ "Products/xbrogn9dkucn4dptof5j"],
+        StoreId: "605ca03a-dce7-43c4-8b5b-7e1eb2b9a611",
+        quantity:1},
+        {id: '1f9ea076-adee-4f87-af97-d92f3c136af4',
+        productName: 'Vegan burger',
+        price: 3500,
+        stock: 10,
+        sellBy: 'Cuantity',
+        discount: 0,
+        description: 'T.E.S 5',
+        cloudImage:[ "Products/xbrogn9dkucn4dptof5j"],
+        StoreId: "605ca03a-dce7-43c4-8b5b-7e1eb2b9a611",
+        quantity:1},
+    ], // mandar este carrito al back para que quede guardado en BD
 };
 
 export const authReducer = (state = initialState, { type, payload }) => {
@@ -32,9 +76,15 @@ export const authReducer = (state = initialState, { type, payload }) => {
             };
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            let newItem = state.storeProducts?.find(
-                (item) => item.id === payload || item.idproduct === payload,
-            );
+            if (Array.isArray(state.storeProducts)) {
+                var newItem = state.storeProducts?.find(
+                    (item) => item.id === payload || item.idproduct === payload,
+                );
+            } else {
+                var newItem = state.userCart?.find(
+                    (item) => item.id === payload || item.idproduct === payload,
+                );
+            }
             let repeatedItem = state.userCart?.find(
                 (item) => item.id === newItem.id || item.idproduct === payload,
             );

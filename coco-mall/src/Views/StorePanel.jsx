@@ -77,7 +77,7 @@ export default function StorePanel() {
 
 
     return (
-        <div className='grid grid-col-6   grid-rows-8  h-screen '>
+        <div className='grid grid-col-6   grid-rows-8  h-screen overflow-y-scroll '>
             <div className=' col-span-6 row-span-1 row-end-1   border-b-2 border-gray-100   '>
                 <NavBar />
             </div>

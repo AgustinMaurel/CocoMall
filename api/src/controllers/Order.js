@@ -42,6 +42,24 @@ class OrderModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+    allOrderStore=async(req,res)=>{
+        const {StoreId}=req.params;
+        if(StoreId){
+            try{
+                const Orders = await this.model.findAll({where:{StoreId}})
+                res.send(Orders)
+            }catch(err){
+                res.status(400).send({message:err})
+            }
+        }else{
+            res.status(400).send({message:"Wrong parameter"})
+        }
+        
+    } 
+
+
+
+
 }
 
 const OrderController = new OrderModel(Order);

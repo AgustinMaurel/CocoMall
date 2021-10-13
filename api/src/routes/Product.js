@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const { Router } = require('express');
 const router = Router();
 const {
@@ -32,3 +33,6 @@ router.delete('/delete/:id', deleteProduct);
 router.put('/update/:id', updateDataProduct);
 
 module.exports = router;
+
+
+

@@ -40,6 +40,15 @@ module.exports = (sequelize) => {
             State: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            SuperAdmin: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            },
+            Orders: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+                defaultValue: []
             }
         },
         {   

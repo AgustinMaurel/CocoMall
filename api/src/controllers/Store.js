@@ -49,7 +49,6 @@ class StoreModel extends ModelController {
         }
     };
 
-<<<<<<< HEAD
   getAllData = async (req, res, next) => {
     try {
       //Cloudinary
@@ -89,40 +88,6 @@ class StoreModel extends ModelController {
       res.status(400).send({ message: 'Wrong parameters' });
     }
   };
-=======
-    getAllData = async (req, res, next) => {
-        try {
-            let data = await Store.findAll({
-                include: [{ model: Product }],
-            });
-            res.send(data);
-        } catch (e) {
-            next(e);
-        }
-    };
-
-    postBulkCreate = async (req, res) => {
-        const { store, ids } = req.body;
-        if (typeof store === 'object') {
-            try {
-                let stores = await this.model.bulkCreate(store);
-                stores.forEach(async (store, i) => {
-                    //Get the id of each store
-                    const storeId = store.id;
-                    //Attach the Store with the User ID
-                    const user = await User.findByPk(ids[i]);
-                    await user.addStore(storeId);
-                });
-                //lindo msj
-                res.send('Successfully Created');
-            } catch (error) {
-                res.send(error);
-            }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
-        }
-    };
->>>>>>> 88d2001ad63dbe53e836f92e132c6a60790d86d0
 
     filterStoresByProductTypes = async (req, res) => {
         const stateStore = req.body.state || '';

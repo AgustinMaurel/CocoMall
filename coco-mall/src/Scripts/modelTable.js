@@ -66,11 +66,12 @@ export default function ModelTable({
                                     <td className='border flex justify-center  border-gray-400 py-2'>
                                         <Image
                                             cloudName='cocomalls'
-                                            publicId={el.cloudImage[0]}
+                                            publicId={el.cloudImage[el.cloudImage.length -1]}
                                             width='200'
                                             alt={el.productName}
                                             crop='scale'
                                         />
+                                        
                                     </td>
                                     <td className='border  border-gray-400 py-2'>{el.stock}</td>
                                     <td className='border  border-gray-400 py-2'>

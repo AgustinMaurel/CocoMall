@@ -30,7 +30,7 @@ router.post('/create', createProduct);
 router.delete('/delete/:id', deleteProduct);
 
 //Update Product
-router.put('/update/:id', updateDataProduct);
+router.put('/update/:id', updateDataProduct); 
 
 module.exports = router;
 

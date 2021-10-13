@@ -140,16 +140,15 @@ class ProductModel extends ModelController {
 
 
         if (product.cloudImage) {
-        let img = [];
-        for (let i = 0; i < product.cloudImage.length; i++) {
-            img[i] = await cloudinary.uploader.upload(product.cloudImage[i], {
-            folder: 'Products',
-            });
-        }
-        let public_id = img.map((el) => el.public_id);
-
-        const old = await this.model.findByPk(id1);
-        product.cloudImage = [...old.cloudImage, ...public_id]
+            let img = []; 
+            for (let i = 0; i < product.cloudImage.length; i++) {
+                img[i] = await cloudinary.uploader.upload(product.cloudImage[i], {
+                folder: 'Products',
+                });
+            }
+            let public_id = img.map((el) => el.public_id); 
+            const old = await this.model.findByPk(id1);
+            product.cloudImage = [...old.cloudImage, ...public_id]
         }
 
         const ProductoActualizado = await this.model.update(

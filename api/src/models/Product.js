@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        subCategory:{
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "Others"
+        },
         sellBy: {
             type: DataTypes.ENUM('Cuantity', 'Weight', 'Volume', 'Length'),
             allowNull: false,

@@ -79,11 +79,13 @@ class ProductModel extends ModelController {
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.body.types || [];
-                const nameToFilter = req.body.name || '';
-                const min = req.body.min || 0;
-                const max = req.body.max || Math.pow(99, 99);
-                const discount = req.body.discount || 0;
+                const { types, name, min, max, discount, subCategory } = req.body
+                const allTypes = types || [];
+                const nameToFilter = name || '';
+                const minToFil = min || 0;
+                const maxToFil = max || Math.pow(99, 99);
+                const discountToFil = discount || 0;
+                const subCategToFil = subCategory || []
                 const filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
@@ -96,13 +98,16 @@ class ProductModel extends ModelController {
                             },
                             price: {
                                 [Op.and]: {
-                                    [Op.gte]: min,
-                                    [Op.lte]: max,
+                                    [Op.gte]: minToFil,
+                                    [Op.lte]: maxToFil,
                                 },
                             },
                             discount: {
-                                [Op.gte]: discount,
+                                [Op.gte]: discountToFil,
                             },
+                            subCategory: {
+                                [Op.or]: subCategToFil
+                            }
                         },
                     },
                 });
@@ -119,12 +124,21 @@ class ProductModel extends ModelController {
         const storeId = req.params.id;
         if (storeId) {
             try {
-                const allProductOfStore = await this.model.findAll({
+                let allProductOfStore = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                     },
                 });
-                res.send(allProductOfStore);
+                console.log(allProductOfStore)
+                let subCategories = []
+                allProductOfStore.forEach(product => {4
+                    let category = product.subCategory
+                    if(allProductsWithSub.indexOf(category) === -1){
+                        allProductsWithSub.push(category)
+                    }
+                });
+                allProductOfStore = {Products: allProductOfStore, subCategories }
+                res.json(allProductOfStore);
             } catch (error) {
                 res.send(error);
             }

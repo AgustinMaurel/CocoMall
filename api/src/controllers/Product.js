@@ -149,7 +149,7 @@ class ProductModel extends ModelController {
       let public_id = img.map((el) => el.public_id);
 
       const old = await this.model.findByPk(id1);
-      product.cloudImage = old.cloudImage.concat(public_id); // [...old.cloudImage, ...public_id]
+      product.cloudImage = [...old.cloudImage, ...public_id]
     }
 
     const ProductoActualizado = await this.model.update(
@@ -169,7 +169,7 @@ class ProductModel extends ModelController {
       try {
         const product = await this.model.findByPk(id);
         const deletedImages = await cloudinary.api.delete_resources(
-          product.cloudImage[0],
+          product.cloudImage,
           { folder: 'Products' }
         );
         const deleted = await this.model.destroy({ where: { id: id } });

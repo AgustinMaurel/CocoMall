@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import NavBar from '../../Components/NavBar/NavBar';
 import { useHistory } from 'react-router';
+import LoginGoogleFacebook from './LoginGoogleFacebook';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -163,36 +164,19 @@ const LoginScreen = () => {
                                     Log In
                                 </button>
                             </div>
-                            <div>
-                                <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
-                                    <div
-                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
-                                        onClick={handleGoogleLogin}
-                                    >
-                                        <img
-                                            className='w-12 h-6 justify-self-center mt-0.5 bg-white '
-                                            src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
-                                            alt='google button'
-                                        />
-                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-3 mr-0.5'>
-                                            Log in with Google
-                                        </label>
-                                    </div>
+                            {/* LOGIN GOOGLE & FACEBOOK */}
 
-                                    <div
-                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
-                                        onClick={handleFacebookLogin}
-                                    >
-                                        <img
-                                            className='w-12 h-6 justify-self-center mt-0.5'
-                                            src='https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
-                                            alt='facebook button'
-                                        />
-                                        <label className='flex flex-col pointer-events-none content-center justify-center p-3 mr-0.5'>
-                                            Log in with Facebook
-                                        </label>
-                                    </div>
+                            <div>
+                                <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>
+                                    {/* <AiOutlineLine className='w-full object-fill'/><p> or </p><AiOutlineLine className='w-full'/> */}
+                                    <span className='border w-1/3 mx-2'></span>
+                                    <p className='text-cocoMall-400 w-full'>Or log in with</p>
+                                    <span className='border w-1/3 mx-2'></span>
                                 </div>
+                                <LoginGoogleFacebook
+                                    handleGoogleLogin={handleGoogleLogin}
+                                    handleFacebookLogin={handleFacebookLogin}
+                                />
                             </div>
                         </div>
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>

@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { startRegisterWithEmailPasswordName } from '../../Redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import NavBar from '../../Components/NavBar/NavBar';
 import { useHistory } from 'react-router';
+import {AiOutlineLine} from 'react-icons/ai'
+
+import {
+    startFacebookLogin,
+    startGoogleLogin,
+    startRegisterWithEmailPasswordName,
+} from '../../Redux/actions/auth';
+import NavBar from '../../Components/NavBar/NavBar';
+import LoginGoogleFacebook from './LoginGoogleFacebook';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
@@ -14,6 +21,7 @@ const RegisterScreen = () => {
 
     const [viewPass, setViewPass] = useState('password');
     const [viewPassConfirm, setViewPassConfirm] = useState('password');
+    const renderCond = useSelector((state) => state.auth);
 
     const {
         handleSubmit,
@@ -35,6 +43,14 @@ const RegisterScreen = () => {
         setValue('email', '');
         setValue('password', '');
         setValue('password2', '');
+    };
+
+    const handleGoogleLogin = () => {
+        dispatch(startGoogleLogin());
+    };
+
+    const handleFacebookLogin = () => {
+        dispatch(startFacebookLogin());
     };
 
     return (
@@ -305,7 +321,20 @@ const RegisterScreen = () => {
                             </span>
                         )}
                     </div>
-
+                    {!renderCond.uid && !renderCond.name ? (
+                        <div>
+                            <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>
+                                {/* <AiOutlineLine className='w-full object-fill'/><p> or </p><AiOutlineLine className='w-full'/> */}
+                                <span className='border w-1/3 mx-2'></span><p className='text-cocoMall-400 w-full'>Or register with</p><span className='border w-1/3 mx-2'></span>
+                            </div>
+                            <LoginGoogleFacebook
+                                handleGoogleLogin={handleGoogleLogin}
+                                handleFacebookLogin={handleFacebookLogin}
+                            />
+                        </div>
+                    ) : (
+                        history.push('/home')
+                    )}
                     <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
                         <button className='text-sm font-semibold cursor-pointer' type='submit'>
                             Register

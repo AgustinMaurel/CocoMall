@@ -72,7 +72,14 @@ export const startFacebookLogin = () => {
     };
 };
 
-export const startRegisterWithEmailPasswordName = (email, password, name, lastName) => {
+export const startRegisterWithEmailPasswordName = (
+    email,
+    password,
+    name,
+    lastName,
+    state,
+    country,
+) => {
     return async (dispatch) => {
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
@@ -81,6 +88,8 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Name: name,
                 LastName: lastName,
                 Mail: email,
+                State: state,
+                Country: country,
             };
             axios.post(CREATE_USER_URL, userF);
             await aux.user.sendEmailVerification();

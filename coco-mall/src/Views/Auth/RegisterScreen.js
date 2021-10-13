@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import {AiOutlineLine} from 'react-icons/ai'
+import Autocomplete from 'react-google-autocomplete';
 
 import {
     startFacebookLogin,
@@ -13,6 +13,7 @@ import {
 } from '../../Redux/actions/auth';
 import NavBar from '../../Components/NavBar/NavBar';
 import LoginGoogleFacebook from './LoginGoogleFacebook';
+import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const RegisterScreen = () => {
     const [viewPass, setViewPass] = useState('password');
     const [viewPassConfirm, setViewPassConfirm] = useState('password');
     const renderCond = useSelector((state) => state.auth);
+    const [placeSelected, setPlaceSelected] = useState({});
 
     const {
         handleSubmit,
@@ -33,7 +35,14 @@ const RegisterScreen = () => {
 
     const handleRegister = (data) => {
         dispatch(
-            startRegisterWithEmailPasswordName(data.email, data.password, data.name, data.lastName),
+            startRegisterWithEmailPasswordName(
+                data.email,
+                data.password,
+                data.name,
+                data.lastName,
+                placeSelected.state,
+                placeSelected.country,
+            ),
         );
 
         history.push('/home');
@@ -52,6 +61,9 @@ const RegisterScreen = () => {
     const handleFacebookLogin = () => {
         dispatch(startFacebookLogin());
     };
+
+    //map
+    console.log(placeSelected);
 
     return (
         <div className='overflow-hidden h-screen '>
@@ -150,7 +162,7 @@ const RegisterScreen = () => {
                     </div>
 
                     <div className='flex flex-col text-left'>
-                        <label className='text-gray-500 text-base ml-1 '>Email Address</label>
+                        <label className='text-gray-500 text-base ml-1 '>Email</label>
 
                         <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
                             <input
@@ -173,6 +185,42 @@ const RegisterScreen = () => {
                             </span>
                         )}
                     </div>
+
+                    <div className='flex flex-col text-left'>
+                        <label className='text-gray-500 text-base ml-1 '>Location</label>
+                        <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+                            <Autocomplete
+                                className={'outline-none text-xs z-10 p-2 w-full'}
+                                apiKey={GOOGLE_MAPS_API_KEY}
+                                onPlaceSelected={(place) => {
+                                    setPlaceSelected({
+                                        //place: place,
+                                        state: place.address_components[0]?.long_name,
+                                        country:
+                                            place.address_components[
+                                                place.address_components.length - 1
+                                            ]?.long_name,
+                                        coord: {
+                                            lat: place.geometry.location.lat(),
+                                            lng: place.geometry.location.lng(),
+                                        },
+                                    });
+                                }}
+                                options={{
+                                    fields: [
+                                        'name',
+                                        'address_component',
+                                        'adr_address',
+                                        'formatted_address',
+                                        'geometry',
+                                    ],
+                                    // componentRestrictions: { country: 'ar' },
+                                }}
+                                placeholder=''
+                            />
+                        </div>
+                    </div>
+
                     <div className='flex flex-col text-left'>
                         <label className='text-gray-500 text-base ml-1 '>Password</label>
 
@@ -325,7 +373,9 @@ const RegisterScreen = () => {
                         <div>
                             <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>
                                 {/* <AiOutlineLine className='w-full object-fill'/><p> or </p><AiOutlineLine className='w-full'/> */}
-                                <span className='border w-1/3 mx-2'></span><p className='text-cocoMall-400 w-full'>Or register with</p><span className='border w-1/3 mx-2'></span>
+                                <span className='border w-1/3 mx-2'></span>
+                                <p className='text-cocoMall-400 w-full'>Or register with</p>
+                                <span className='border w-1/3 mx-2'></span>
                             </div>
                             <LoginGoogleFacebook
                                 handleGoogleLogin={handleGoogleLogin}

@@ -2,8 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
+import { Link, useHistory } from 'react-router-dom';
+import { addToCart, deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
 import { SHOPPING_CART } from '../Scripts/constants';
 
 export default function Cart() {
@@ -37,8 +37,8 @@ export default function Cart() {
     const handleDeleteOne = (id) => {
         dispatch(deleteFromCart(id));
     };
-    const handleDeleteAll = (id) => {
-        dispatch(deleteAllFromCart(id));
+    const handleAddButton = (id) => {
+        dispatch(addToCart(id));
     };
 
     useEffect(() => {
@@ -59,25 +59,43 @@ export default function Cart() {
     return (
         <div className='h-screen'>
             <NavBar />
+
             <div className='flex flex-col justify-center relative h-full  '>
                 <div className='flex flex-col items-center align-center justify-between bg-green-200 h-3/4'>
-                    {userCart.length > 0 ? (
+                    
+                    <div className='bg-yellow-300 flex flex-col  w-full relative'>
+                        <h2>Skyrim</h2>
+                        <h2>Price: 1500</h2>
+
+                        <div className='flex flex-row items-center content-center'>
+                            <button className='h-5 w-5 flex items-center content-center justify-center  bg-secondary  rounded-full text-white  cursor-pointer'>
+                                -
+                            </button>
+                            <h2>10</h2>
+
+                            <button className='h-5 w-5 flex items-center content-center justify-center  bg-secondary  rounded-full text-white  cursor-pointer'>
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* {userCart.length > 0 ? (
                         userCart.map((el) => (
-                            <div key={el.id} className='bg-yellow-300 w-96 relative'>
+                            <div key={el.id} className='bg-yellow-300  relative'>
                                 <h2>{el.productName}</h2>
                                 <h2>Price: {el.quantity * el.price}</h2>
                                 <h2>Quantity : {el.quantity}</h2>
                                 <button
                                     onClick={() => handleDeleteOne(el.id)}
-                                    className='my-1 bg-red-200  rounded text-white p-2 mx-2 cursor-pointer'
+                                    className='my-1 bg-secondary  rounded text-white p-2 mx-2 cursor-pointer'
                                 >
-                                    Delete one
+                                    -
                                 </button>
                                 <button
-                                    onClick={() => handleDeleteAll(el.id)}
-                                    className='my-1 bg-red-200  rounded text-white p-2 mx-2 cursor-pointer'
+                                    onClick={() => handleAddButton(el.id)}
+                                    className='my-1 bg-secondary  rounded text-white p-2 mx-2 cursor-pointer'
                                 >
-                                    Delete all
+                                    +
                                 </button>
                             </div>
                         ))
@@ -98,10 +116,7 @@ export default function Cart() {
                                 Go to Home
                             </Link>
                         </div>
-                        </>
-
-                        
-                    )}
+                        </> )}*/}
 
                     {userCart.length > 0 && (
                         <div

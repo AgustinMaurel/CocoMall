@@ -75,7 +75,7 @@ export const startFacebookLogin = () => {
 export const startRegisterWithEmailPasswordName = (email, password, name, lastName) => {
     return async (dispatch) => {
         try {
-            let aux = await auth.createUserWithEmailAndPassword(email, password);
+            let aux = await auth.createUserWithEmailAndPassword(email, password)
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -83,6 +83,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Mail: email,
             };
             axios.post(CREATE_USER_URL, userF);
+            await aux.user.updateProfile({displayName: name})
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({

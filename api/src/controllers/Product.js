@@ -128,7 +128,6 @@ class ProductModel extends ModelController {
                 let subCategories = []
                 let OrderedProducts = {}
                 filteredProducts.forEach((product, i) => {
-                    console.log("llegue")
                     let subCatId = product.dataValues.SubCategoryId
                     let productType = product.dataValues.ProductTypeId
                     //get all the cat ID's
@@ -170,8 +169,7 @@ class ProductModel extends ModelController {
                 });
                 let subCategories = []
                 let OrderedProducts = {}
-                filteredProducts.forEach((product, i) => {
-                    console.log("llegue")
+                allProductOfStore.forEach(product => {
                     let subCatId = product.dataValues.SubCategoryId
                     let productType = product.dataValues.ProductTypeId
                     //get all the cat ID's

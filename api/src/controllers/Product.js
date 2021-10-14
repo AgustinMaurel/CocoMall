@@ -2,7 +2,7 @@ const { Product, Store, ProductType, SubCategory } = require('../models/index');
 const { cloudinary } = require('../utils/cloudinary/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
-// filterProductsByStore
+
 class ProductModel extends ModelController {
     constructor(model) {
         super(model);
@@ -61,6 +61,7 @@ class ProductModel extends ModelController {
     bulkCreateProducts = async (req, res) => {
         const { storeId, allTypes, products } = req.body;
         try {
+            console.log(products)
             const productsDB = await this.model.bulkCreate(products);
             for (const [i, product] of productsDB.entries()) {
                 const productId = product.id;
@@ -71,6 +72,13 @@ class ProductModel extends ModelController {
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(productTpeId);
                 await productType.addProduct(productId);
+                //Attach the new product with his SubCategory
+                const [subCategoryProduct, created] = await SubCategory.findOrCreate({
+                    where: {
+                        Name: "nasheee"
+                    }
+                })
+                await subCategoryProduct.addProduct(productId)
             }
             //lindo msj
             res.send('Successfully Created');
@@ -92,7 +100,7 @@ class ProductModel extends ModelController {
                 const maxToFil = max || Math.pow(99, 99);
                 const discountToFil = discount || 0;
                 const subCategToFil = subCategory || []
-                const filteredProducts = await this.model.findAll({
+                let filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                         [Op.and]: {
@@ -117,7 +125,32 @@ class ProductModel extends ModelController {
                         },
                     },
                 });
-                res.send(filteredProducts);
+                let subCategories = []
+                let OrderedProducts = {}
+                filteredProducts.forEach((product, i) => {
+                    console.log("llegue")
+                    let subCatId = product.dataValues.SubCategoryId
+                    let productType = product.dataValues.ProductTypeId
+                    //get all the cat ID's
+                    subCategories.indexOf(subCatId) === -1 ? subCategories = [...subCategories, subCatId] : null
+                    //Check if the type and cat alredy exist in the orderedProducts
+                    OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
+                        }
+                    } : OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            [subCatId]: [product.dataValues],
+                        }
+                    }
+                });
+                filteredProducts = { subCategories, Products: OrderedProducts }
+                res.json(filteredProducts);
+                // res.send(filteredProducts);
             } catch (error) {
                 res.send(error);
             }
@@ -136,14 +169,29 @@ class ProductModel extends ModelController {
                     },
                 });
                 let subCategories = []
-                allProductOfStore.forEach(product => {
-                    4
-                    let category = product.subCategory
-                    if (allProductsWithSub.indexOf(category) === -1) {
-                        allProductsWithSub.push(category)
+                let OrderedProducts = {}
+                filteredProducts.forEach((product, i) => {
+                    console.log("llegue")
+                    let subCatId = product.dataValues.SubCategoryId
+                    let productType = product.dataValues.ProductTypeId
+                    //get all the cat ID's
+                    subCategories.indexOf(subCatId) === -1 ? subCategories = [...subCategories, subCatId] : null
+                    //Check if the type and cat alredy exist in the orderedProducts
+                    OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
+                        }
+                    } : OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            [subCatId]: [product.dataValues],
+                        }
                     }
                 });
-                allProductOfStore = { Products: allProductOfStore, subCategories }
+                allProductOfStore = { subCategories, Products: OrderedProducts }
                 res.json(allProductOfStore);
             } catch (error) {
                 res.send(error);

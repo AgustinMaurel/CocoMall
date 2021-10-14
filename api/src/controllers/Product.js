@@ -44,7 +44,7 @@ class ProductModel extends ModelController {
                 //Attach the new Product with his SubCategory 
                 const [subCategoryProduct, created] = await SubCategory.findOrCreate({
                     where: {
-                        Name: subCat
+                        Name: subCat || "Others"
                     }
                 })
                 await subCategoryProduct.addProduct(productId)
@@ -125,29 +125,33 @@ class ProductModel extends ModelController {
                         },
                     },
                 });
-                let subCategories = []
+                let allCurrentTypes = []
+                let allsubCat = []
                 let OrderedProducts = {}
-                filteredProducts.forEach((product, i) => {
+                filteredProducts.forEach(product => {
                     let subCatId = product.dataValues.SubCategoryId
                     let productType = product.dataValues.ProductTypeId
                     //get all the cat ID's
-                    subCategories.indexOf(subCatId) === -1 ? subCategories = [...subCategories, subCatId] : null
+                    allCurrentTypes.indexOf(productType) === -1 ? allCurrentTypes = [...allCurrentTypes, productType] : null
+                    allsubCat.indexOf(subCatId) === -1 ? allsubCat = [...allsubCat, subCatId] : null
                     //Check if the type and cat alredy exist in the orderedProducts
                     OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
+                            allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
                             [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
                         }
                     } : OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
+                            allSubCat: [subCatId],
                             [subCatId]: [product.dataValues],
                         }
                     }
                 });
-                filteredProducts = { subCategories, Products: OrderedProducts }
+                filteredProducts = { allCurrentTypes, allsubCat, Products: OrderedProducts }
                 res.json(filteredProducts);
             } catch (error) {
                 res.send(error);
@@ -166,29 +170,33 @@ class ProductModel extends ModelController {
                         StoreId: storeId,
                     },
                 });
-                let subCategories = []
+                let allCurrentTypes = []
+                let allsubCat = []
                 let OrderedProducts = {}
                 allProductOfStore.forEach(product => {
                     let subCatId = product.dataValues.SubCategoryId
                     let productType = product.dataValues.ProductTypeId
                     //get all the cat ID's
-                    subCategories.indexOf(subCatId) === -1 ? subCategories = [...subCategories, subCatId] : null
+                    allCurrentTypes.indexOf(productType) === -1 ? allCurrentTypes = [...allCurrentTypes, productType] : null
+                    allsubCat.indexOf(subCatId) === -1 ? allsubCat = [...allsubCat, subCatId] : null
                     //Check if the type and cat alredy exist in the orderedProducts
                     OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
+                            allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
                             [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
                         }
                     } : OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
+                            allSubCat: [subCatId],
                             [subCatId]: [product.dataValues],
                         }
                     }
                 });
-                allProductOfStore = { subCategories, Products: OrderedProducts }
+                allProductOfStore = { allCurrentTypes, allsubCat, Products: OrderedProducts }
                 res.json(allProductOfStore);
             } catch (error) {
                 res.send(error);

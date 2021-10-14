@@ -27,7 +27,7 @@ const RegisterScreen = () => {
         dispatch(
             startRegisterWithEmailPasswordName(data.email, data.password, data.name, data.lastName),
         );
-
+        //Antes de pusherlo a la home le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
         history.push('/home');
 
         setValue('name', '');

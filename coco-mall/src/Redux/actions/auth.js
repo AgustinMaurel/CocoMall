@@ -10,6 +10,23 @@ export const startLoginEmailPassword = (email, password) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
+                Swal.fire({
+                    title: 'Do you want to stay logged in?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: true
+                      })
+                    } else if (result.isDenied) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: false
+                      })
+                    }
+                  })
             })
             .catch((err) => {
                 Swal.fire({
@@ -23,6 +40,7 @@ export const startLoginEmailPassword = (email, password) => {
 };
 
 export const login = (uid, displayName) => {
+    //Antes de despachar el login le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
     return {
         type: LOGIN,
         payload: {
@@ -30,6 +48,7 @@ export const login = (uid, displayName) => {
             displayName,
         },
     };
+    
 };
 
 export const startGoogleLogin = () => {
@@ -44,6 +63,23 @@ export const startGoogleLogin = () => {
                 };
                 axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
+                Swal.fire({
+                    title: 'Do you want to stay logged in?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: true
+                      })
+                    } else if (result.isDenied) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: false
+                      })
+                    }
+                  })
             })
             .catch((err) =>
                 Swal.fire({
@@ -60,7 +96,31 @@ export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
+                console.log(user)
+                let aux = {
+                    Name: user.displayName,
+                    id: user.uid,
+                    Mail: user.email,
+                };
+                axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
+                Swal.fire({
+                    title: 'Do you want to stay logged in?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: true
+                      })
+                    } else if (result.isDenied) {
+                      axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: false
+                      })
+                    }
+                  })
             })
             .catch((err) =>
                 Swal.fire({
@@ -85,8 +145,26 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 LastName: lastName,
                 Mail: email,
             };
+            Swal.fire({
+                title: 'Do you want to stay logged in?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  axios.put(`http://localhost:3001/user/update/${aux.user.uid}`, {
+                    Remember: true
+                  })
+                } else if (result.isDenied) {
+                  axios.put(`http://localhost:3001/user/update/${aux.user.uid}`, {
+                    Remember: false
+                  })
+                }
+              })
             axios.post(CREATE_USER_URL, userF);
             await aux.user.sendEmailVerification();
+            dispatch(login(aux.user.uid, name))
         } catch (err) {
             Swal.fire({
                 title: 'Error!',

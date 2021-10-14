@@ -45,10 +45,10 @@ class UserModel extends ModelController {
     getUserById = async (req, res) => {
         const id = req.params.id;
         try {
-            let user = await this.model.findAll({
-                where: {
-                    id: id,
-                },
+            let user = await this.model.findByPk(id,{
+                // where: {
+                //     id: id,
+                // },
                 include: [
                     //include the related tables and the specific cloumn that they have attached
                     {
@@ -61,6 +61,7 @@ class UserModel extends ModelController {
                     },
                 ],
             });
+            console.log(user)
             res.send(user);
         } catch (error) {
             res.json(error);

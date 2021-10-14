@@ -33,6 +33,11 @@ module.exports = (sequelize) => {
                 defaultValue: [],
                 allowNull: false,
             },
+            Remember: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
+            }
         },
         {
             timestamps: false,

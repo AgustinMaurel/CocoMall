@@ -149,7 +149,6 @@ class ProductModel extends ModelController {
                 });
                 filteredProducts = { subCategories, Products: OrderedProducts }
                 res.json(filteredProducts);
-                // res.send(filteredProducts);
             } catch (error) {
                 res.send(error);
             }

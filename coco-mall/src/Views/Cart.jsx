@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { addToCart, deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
 import { SHOPPING_CART } from '../Scripts/constants';
+import { Image } from 'cloudinary-react'
 
 export default function Cart() {
     const history = useHistory();
@@ -58,26 +59,49 @@ export default function Cart() {
 
     return (
         <div className='h-screen'>
-            <NavBar />
+            <div className=' sticky bg-white shadow top-0 z-20'>
+                <NavBar />
+            </div>
 
-            <div className='flex flex-col justify-center relative h-full  '>
-                <div className='flex flex-col items-center align-center justify-between bg-green-200 h-3/4'>
+            <div className='flex flex-col justify-center relative h-full  p-2 '>
+                
+                <div className='flex flex-col relative h-full items-center align-center content-center justify-between p-4 bg-gray-100 '>
                     
-                    <div className='bg-yellow-300 flex flex-col  w-full relative'>
-                        <h2>Skyrim</h2>
-                        <h2>Price: 1500</h2>
+                    <div className='bg-white rounded flex flex-col shadow-md py-1 h-36 justify-evenly w-full relative'>
+                        <div className='flex flex-row justify-evenly w-full '>
+                            <div className='justify-self-start self-start '>
+                                <Image
+                                    publicId="Products/xbrogn9dkucn4dptof5j"
+                                    width='125'
+                                    className='object-cover flex-none'
+                                    cloudName='cocomalls'
+                                />
+                            
+                            </div>
+                            <div>
+                                <h2 className='font-bolder text-sm'>Skyrim: The elder Scrolls V</h2>
+                                <p className='text-xs'>Price: 1500</p>
+                                <p className='text-xs'>Stock: 15</p>
+                            </div>
+                        </div>
 
-                        <div className='flex flex-row items-center content-center'>
-                            <button className='h-5 w-5 flex items-center content-center justify-center  bg-secondary  rounded-full text-white  cursor-pointer'>
+                        <div className='flex flex-row items-center w-full content-center justify-center gap-5'>
+                            <button 
+                            onClick={handleDeleteOne}
+                            className='h-7 w-7 flex   items-start justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
                                 -
                             </button>
-                            <h2>10</h2>
+                            <p className='font-bolder'>10</p> 
 
-                            <button className='h-5 w-5 flex items-center content-center justify-center  bg-secondary  rounded-full text-white  cursor-pointer'>
+                            <button 
+                            onClick={handleAddButton}
+                            className='h-7 w-7 flex  items-start justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
                                 +
                             </button>
                         </div>
                     </div>
+
+                    <div className='border border-gray-300 w-full'></div>
 
                     {/* {userCart.length > 0 ? (
                         userCart.map((el) => (

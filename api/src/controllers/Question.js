@@ -10,19 +10,27 @@ class QuestionModel extends ModelController {
         if (req.body.id) {
             try {
                 //id of Product
-                const id = req.body.id;
-                const question = {
+                const {id} = req.body;
+                const { question } = req.body
+                const obj = {
                     question: req.body.question,
-                };
-                //Create the review
-                const newQuestion = await this.model.create(question);
-                const questionId = newQuestion.id;
-                //Search the order and attach the Review
-                const product = await Product.findByPk(id);
-                await product.addReview(questionId);
-                //final question
-                const finalQuestion = await this.model.findByPk(questionId);
-                res.send(finalQuestion);
+                    answer: "null"
+                }
+                if (question){
+                    let aux = ""
+                    //Create the review
+                    const newQuestion = await this.model.create(obj);
+                    aux = newQuestion.id;
+                    //Search the product and attach the Review
+                    const product = await Product.findByPk(id);
+                    await product.addQuestion(aux);
+                      
+                    //final Question
+                    const finalQuestion = await this.model.findByPk(aux);
+                    return res.send(finalQuestion);
+                }else{
+                    return res.send("Oops, something went wrong")
+                }
             } catch (e) {
                 res.send(e);
             }

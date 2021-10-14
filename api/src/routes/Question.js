@@ -6,6 +6,6 @@ const { getAllData, createQuestion } = require('../controllers/Question.js');
 
 router.get('/', getAllData);
 
-router.get('/create', createQuestion);
+router.post('/create', createQuestion);
 
 module.exports = router;

@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 import HomeCard from '../Components/Cards/HomeCards';
-import StoreState from '../Components/Cards/StoreState';
 import NavBar from '../Components/NavBar/NavBar';
-import Arrow from '../Components/Slides/Arrow';
-import HeroCard from '../Components/Cards/HeroCard';
 import Search from '../Components/Inputs/Search';
-import FilterTypeProduct from '../Components/FilterTypeProduct/FilterTypeProduct';
 import { handleOnChange, handleOnSubmit, handleOnChecked } from '../Scripts/handles';
 import coco from '../Assets/icons/coco.png';
 import SearchState from '../Components/Inputs/SearchState';
+import SliderHero from '../Components/Sliders/SliderHero';
+import SliderTypes from '../Components/Sliders/SliderTypes';
+import SlidersCards from '../Components/Sliders/SlidersCards';
 
 function Home() {
     const dispatch = useDispatch();
@@ -32,30 +30,6 @@ function Home() {
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
-    };
-
-    const settingsTypes = {
-        infinite: true,
-        slidesToShow: 9,
-        slidesToScroll: 1,
-        nextArrow: <Arrow />,
-        prevArrow: <Arrow />,
-    };
-
-    const settingsHero = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        // autoplay: true,
-        // autoplaySpeed: 3000,
-        // pauseOnHover: true,
-    };
-
-    const settingsCards = {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        dots: true,
     };
 
     let id;
@@ -80,16 +54,12 @@ function Home() {
             {/* CARDS */}
             <div className='w-full col-span-6 row-span-full p-6 overflow-y-scroll'>
                 {/* --- ADS --- */}
-                <div className='m-auto w-3/4'>
-                    <Slider {...settingsHero}>
-                        <HeroCard img={'/banners/bannerHero-1.png'} />
-                        <HeroCard img={'/banners/bannerHero-2.png'} />
-                        <HeroCard img={'/banners/bannerHero-3.png'} />
-                    </Slider>
+                <div className='m-auto 2xl:w-3/4'>
+                    <SliderHero />
                 </div>
 
                 {/* --- SEARCH & FILTERS --- */}
-                <div className='w-3/4 m-auto mt-16'>
+                <div className='m-auto mt-6 2xl:w-3/4 2xl:mt-16'>
                     <Search
                         typeSearch={typeSearch}
                         setTypeSearch={setTypeSearch}
@@ -99,19 +69,8 @@ function Home() {
                         handleSubmit={handleSubmit}
                     />
 
-                    <div className='w-3/4 h-36 m-auto'>
-                        <Slider {...settingsTypes}>
-                            {productTypes?.map((type, index) => {
-                                return (
-                                    <FilterTypeProduct
-                                        type={type}
-                                        index={index}
-                                        handleChecked={handleChecked}
-                                        check={check}
-                                    />
-                                );
-                            })}
-                        </Slider>
+                    <div className=' h-36 m-auto'>
+                        <SliderTypes productTypes={productTypes} handleChecked={handleChecked} check={check} />
                     </div>
                     <div className='hidden'>Ordenamientos</div>
                     <div className='hidden'>
@@ -123,29 +82,14 @@ function Home() {
                     </div>
                 </div>
 
-                <div className='w-3/4 m-auto mt-4'>
+                <div className='2xl:w-3/4 m-auto mt-4'>
                     {/* --- STORES BY CITY --- */}
                     {allStores === storesFilters ? (
-                        <div className='mt-6'>
-                            <h3 className='text-2xl font-bold text-cocoMall-800'>
+                        <div className='2xl:mt-6'>
+                            <h3 className='text-xl 2xl:text-2xl font-bold text-cocoMall-800'>
                                 Stores in your city
                             </h3>
-                            <Slider {...settingsCards}>
-                                {allStores?.map((e) => (
-                                    <Link
-                                        to={`/home/store/${e.id}`}
-                                        onClick={() => storeDetail(e.id)}
-                                    >
-                                        <StoreState
-                                            id={e.id}
-                                            storeName={e.storeName}
-                                            description={e.description}
-                                            cloudImage={e.cloudImage || coco}
-                                            key={e.id}
-                                        />
-                                    </Link>
-                                ))}
-                            </Slider>
+                            <SlidersCards allStores={allStores} storeDetail={storeDetail} />
                         </div>
                     ) : (
                         <button

@@ -109,8 +109,7 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name.split(' ')[0]}{' '}
-                                                {/* para ver solo nombre */}
+                                                {user.name && user.name.split(' ')[0]}
                                             </button>
                                         </Link>
                                     </div>

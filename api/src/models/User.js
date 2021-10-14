@@ -33,6 +33,14 @@ module.exports = (sequelize) => {
                 defaultValue: [],
                 allowNull: false,
             },
+            Country: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            State: {
+                type: DataTypes.STRING,
+                allowNull: false
+            }
         },
         {
             timestamps: false,

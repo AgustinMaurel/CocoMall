@@ -9,6 +9,7 @@ export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
+                console.log(user);
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
@@ -83,6 +84,13 @@ export const startRegisterWithEmailPasswordName = (
     return async (dispatch) => {
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
+
+            await auth.currentUser.updateProfile({displayName: name});
+
+            //hay que arreglar que hasta no recargar se queda en null el displayName
+            //await aux.user.updateProfile({displayName: name})
+
+            console.log('user: ', aux.user);
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -92,7 +100,11 @@ export const startRegisterWithEmailPasswordName = (
                 Country: country,
             };
             axios.post(CREATE_USER_URL, userF);
+
+
+
             await aux.user.sendEmailVerification();
+            console.log(userF);
         } catch (err) {
             Swal.fire({
                 title: 'Error!',

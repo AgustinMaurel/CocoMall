@@ -32,7 +32,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['address'],
+                        attributes: ['id','address','cords'],
                     },
                 ],
             });

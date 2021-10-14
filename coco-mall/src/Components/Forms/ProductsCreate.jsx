@@ -58,6 +58,7 @@ const ProductsCreate = ({ idStore, product }) => {
             storeId: idStore,
             idImage: [image],
             typeId: types,
+            subCat: data.subCategory ? data.subCategory : "Others"
         };
         console.log(dataProductClean);
         if (product) {
@@ -163,6 +164,14 @@ const ProductsCreate = ({ idStore, product }) => {
                             })}
                         </select>
                     </div>
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='subCategory'
+                        placeholder='Eg: T-shirt'
+                        type='text'
+                        validate={validate.subCategory}
+                    />
                     <InputFile
                         register={register}
                         errors={errors}

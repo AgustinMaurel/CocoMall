@@ -120,6 +120,16 @@ const validate = {
             message: 'Description must contain a maximum of 255 characters ',
         },
     },
+    subCategory: {
+        minLength: {
+            value: 3,
+            message: 'Category must contain at least 2 characters',
+        },
+        maxLength: {
+            value: 25,
+            message: 'Category must contain a maximum of 16 characters ',
+        },
+    },
 };
 
 export default validate;

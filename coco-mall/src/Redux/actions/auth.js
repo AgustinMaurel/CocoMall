@@ -36,6 +36,7 @@ export const startGoogleLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
+                console.log(user)
                 let aux = {
                     Name: user.displayName,
                     id: user.uid,
@@ -76,6 +77,8 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
     return async (dispatch) => {
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password)
+            //hay que arreglar que hasta no recargar se queda en null el displayName
+            await aux.user.updateProfile({displayName: name})
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -83,7 +86,6 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                 Mail: email,
             };
             axios.post(CREATE_USER_URL, userF);
-            await aux.user.updateProfile({displayName: name})
             await aux.user.sendEmailVerification();
         } catch (err) {
             Swal.fire({

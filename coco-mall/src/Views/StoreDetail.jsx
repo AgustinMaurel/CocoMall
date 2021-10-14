@@ -83,6 +83,7 @@ export default function StoreDetail() {
         prevArrow: <Arrow />,
     };
     //by Chris
+    console.log(storeProductsFilter)
 
     useEffect(() => {
         dispatch(getStoreDetail(id));

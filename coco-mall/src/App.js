@@ -40,7 +40,6 @@ function App() {
             .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .then(() => {
                 auth.onAuthStateChanged((user) => {
-                    console.log("entre")
                     if (user?.uid) {
                         dispatch(login(user.uid, user.displayName));
                         setIsLoggedIn(true);
@@ -61,7 +60,6 @@ function App() {
         : setPersistence(auth, browserSessionPersistence)
               .then(() => {
                   auth.onAuthStateChanged((user) => {
-                    console.log("entrEEEEE")
                       if (user?.uid) {
                           dispatch(login(user.uid, user.displayName));
                           setIsLoggedIn(true);

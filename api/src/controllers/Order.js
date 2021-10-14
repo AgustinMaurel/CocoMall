@@ -23,6 +23,14 @@ class OrderModel extends ModelController {
                 // add User to order
                 const user = await User.findByPk(userId);
                 await user.addOrder(orderId);
+
+                // PROBAAAAR
+
+
+                // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
+                // const userNew = await User.update(obj, {where: {id: userId}})
+
+                
                 // add Store to order
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);

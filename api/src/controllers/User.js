@@ -42,26 +42,51 @@ class UserModel extends ModelController {
         }
     };
 
+    funcUpdateCart = async (userId, cart) => {
+        let allIds = await cart.map((item) => {
+            return item.id;
+        });
+        let allQuantity = await cart.map((item) => {
+            return item.quantity;
+        });
+        let products = [];
+        for (const [i, id] of allIds.entries()) {
+            let product = await Product.findByPk(id);
+            product = {
+                ...product.dataValues,
+                quantity: allQuantity[i],
+            };
+            products = [...products, product];
+        }
+        const user = await this.model.findOne({
+            where: {
+                id: userId,
+            },
+            include: [
+                //include the related tables and the specific cloumn that they have attached
+                {
+                    model: Store,
+                    attributes: ['storeName'],
+                },
+                {
+                    model: Address,
+                    attributes: ['directions'],
+                },
+            ],
+        });
+        user.Cart = products;
+        return await user.save();
+    }
+
     getUserById = async (req, res) => {
         const id = req.params.id;
         try {
-            let user = await this.model.findAll({
-                where: {
-                    id: id,
-                },
-                include: [
-                    //include the related tables and the specific cloumn that they have attached
-                    {
-                        model: Store,
-                        attributes: ['storeName'],
-                    },
-                    {
-                        model: Address,
-                        attributes: ['directions'],
-                    },
-                ],
-            });
-            res.send(user);
+            const user = await this.model.findByPk(id)
+            let cart = user.dataValues.Cart.map(el => {
+                return { id: el.id, quantity: el.quantity }
+            })
+            const update = await this.funcUpdateCart(id, cart)
+            res.json(update);
         } catch (error) {
             res.json(error);
         }
@@ -81,29 +106,8 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body;
         if (userId) {
             try {
-                let allIds = await cart.map((item) => {
-                    return item.idProduct;
-                });
-                let allQuantity = await cart.map((item) => {
-                    return item.quantity;
-                });
-                let products = [];
-                for (const [i, id] of allIds.entries()) {
-                    let product = await Product.findByPk(id);
-                    product = {
-                        ...product.dataValues,
-                        quantity: allQuantity[i],
-                    };
-                    products = [...products, product];
-                }
-                const user = await this.model.findOne({
-                    where: {
-                        id: userId,
-                    },
-                });
-                user.Cart = products;
-                await user.save();
-                res.json(products);
+                const user = await this.funcUpdateCart(userId, cart)
+                res.json(user.Cart);
             } catch (error) {
                 res.send(error);
             }

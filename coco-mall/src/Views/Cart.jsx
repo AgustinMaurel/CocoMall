@@ -3,7 +3,7 @@ import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { addToCart, clearCart, deleteAllFromCart, deleteFromCart } from '../Redux/actions/shoppingActions';
+import { addToCart, clearCart, deleteAllFromCart, deleteFromCart, setCart } from '../Redux/actions/shoppingActions';
 import { SHOPPING_CART } from '../Scripts/constants';
 import { Image } from 'cloudinary-react'
 
@@ -23,6 +23,8 @@ export default function Cart() {
         quantity: 1,
     };
 
+    
+
     let userCartToBack = useMemo(() => {
         return {
             userId: uid,
@@ -37,17 +39,26 @@ export default function Cart() {
 
     const handleDeleteOne = (id) => {
         dispatch(deleteFromCart(id));
+        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     };
     const handleAddButton = (id) => {
         dispatch(addToCart(id));
+        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     };
     const handleClearCart = () => {
         dispatch(clearCart());
+        console.log('click')
+
     };
 
     useEffect(() => {
-        return axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    }, [userCartToBack]);
+
+        return () => {
+            axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+        }
+    }, [userCartToBack])
+
+
 
     function handleCheckout() {
         return userCart.length > 0
@@ -70,47 +81,50 @@ export default function Cart() {
 
                 <div className='flex flex-col relative py-5 px-2  w-full h-full items-center align-center content-center justify-around rounded  gap-5  '>
                     {userCart.length > 0 &&
-                        <div className='shadow-lg flex items-center self-start justify-center bg-white  border border-red-600  text-primary  rounded h-8 px-1'>
+                        <div className='shadow-lg flex items-center self-start justify-center bg-white  border border-red-600  text-primary  rounded h-8 px-1 z-50'>
 
-                            <button onClick={handleClearCart} className='text-xs text-red-600 font-semibold'>Clear Cart</button>
+                            <button onClick={handleClearCart} className='text-xs text-red-600 font-semibold h-full w-full z-50'>Clear Cart</button>
 
                         </div>
                     }
 
 
                     {userCart.length > 0 ? (
-                        userCart.map((el) => (
+                        userCart.map((el, index) => (
                             <>
-                                <div className='bg-white  border border-gray-200 rounded w-full flex flex-col shadow-lg py-5 h-36 justify-around  relative gap-2'>
+                                <div key={el.id} className='bg-white  border border-gray-200 rounded w-full flex flex-col shadow-lg py-5 h-36 justify-around  relative gap-2'>
 
-                                    <div className='flex flex-row gap-5 justify-around relative w-full px-5'>
+                                    <div className='flex flex-row   relative w-full px-5 gap-4'>
                                         <div className='justify-self-start self-start shadow '>
                                             <Image
-                                                publicId={el.cloudImage}
-                                                width='100'
-                                                className='object-cover flex-none'
+                                                publicId={el.cloudImage[0]}
+                                                width='125'
+                                                className='object-cover '
                                                 cloudName='cocomalls'
+                                                crop='scale'
                                             />
 
                                         </div>
                                         <div className='flex flex-col flex-none flex-no-wrap'>
-                                            <h2 className='font-bold text-sm'>{el.name}</h2>
-                                            <p className='text-xs'>Price: {el.price * el.quantity}</p>
-                                            <p className='text-xs'>Stock: {el.stock}</p>
+                                            <h2 className='font-bold text-md'>{el.productName}</h2>
+                                            <p className='text-sm'>${el.price * el.quantity}</p>
+                                            <p className='text-xs'>Stock left: {el.stock}</p>
                                         </div>
                                     </div>
 
                                     <div className='flex flex-row items-center w-full content-center justify-center gap-5'>
                                         <button
-                                            onClick={handleDeleteOne(el.id)}
-                                            className='h-7 w-7 flex   items-start justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
+                                            onClick={() => handleDeleteOne(el.id)}
+                                            className='h-6 w-6 flex   items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
                                             -
                                         </button>
-                                        <p className='font-bolder'>10</p>
-
+                                        <p className='font-bolder'>{el.quantity}</p>
+                                        {console.log(el.stock === el.quantity)}
                                         <button
-                                            onClick={handleAddButton(el.id)}
-                                            className='h-7 w-7 flex  items-start justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
+                                            onClick={() => handleAddButton(el.id)}
+                                            disabled={el.stock === el.quantity}
+                                            className={el.stock !== el.quantity ? `h-6 w-6 flex items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer` :
+                                                `h-6 w-6 flex  items-center justify-center bg-gray-200  rounded-full text-white font-bold text-lg cursor-not-allowed`}>
                                             +
                                         </button>
                                     </div>

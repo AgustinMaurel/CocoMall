@@ -39,9 +39,11 @@ class QuestionModel extends ModelController {
     }
   };
   UpdateQuestion = async (req, res) => {
+    // Question Id
     const { id } = req.params;
     if (id) {
       try {
+        // Se puede usar para modificar la question del user tambien, se manda en answer por body y en la linea 48 se pone 'question' en vez de 'answer'
         const finalQuestion = this.model.update(
           { answer: req.body.answer },
           { where: { id: id } }
@@ -51,9 +53,23 @@ class QuestionModel extends ModelController {
         res.send(e);
       }
     } else {
-      res.send('No Question ID provided in params');
+      res.send('No Question ID provided via params');
     }
   };
+  deleteQuestion = async (req, res) => {
+    // Question Id
+    const { id } = req.params
+    if(id){
+      const deletedQuestion = await this.model.destroy({where: {id: id}})
+      if(deletedQuestion===1){
+        res.send("Question deleted")
+      }else{
+        res.send("Oops, something went wrong")
+      }
+    }else{
+      res.send("No id via params")  
+    }
+  }
 }
 
 const QuestionController = new QuestionModel(Question);

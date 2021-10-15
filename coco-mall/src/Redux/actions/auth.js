@@ -41,8 +41,8 @@ export const startGoogleLogin = () => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
-                    State: '',
-                    Country: '',
+                    State: 'Buenos Aires',
+                    Country: 'Argentina',
                 };
                 axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));

@@ -3,6 +3,8 @@ import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/acti
 const initialState = {
     uid: '',
     name: '',
+    state: '',
+    country: '',
     storeProducts: [],
     userCart: [], // mandar este carrito al back para que quede guardado en BD
 };

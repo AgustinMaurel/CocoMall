@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginGoogleFacebook = ({handleGoogleLogin, handleFacebookLogin}) => {
+const LoginGoogleFacebook = ({ handleGoogleLogin, handleFacebookLogin }) => {
     return (
         <div>
             <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>

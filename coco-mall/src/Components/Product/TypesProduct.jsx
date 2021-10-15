@@ -1,22 +1,33 @@
-import React from 'react'
+import React from 'react';
 import SubCat from './SubCat';
+import { useSelector } from 'react-redux';
 
-function TypesProduct({ typeName, SubCategories }) {
-    // console.log(typeName)
-    // console.log(SubCategories)
-    let keysSubCat = Object.keys(SubCategories)
-    let keysNum = keysSubCat.filter((key)=> parseInt(key))
+function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) {
+    const { productTypes } = useSelector((state) => state.stores);
+    let keysSubCat = Object.keys(SubCategories);
+    let keysNum = keysSubCat.filter((key) => parseInt(key));
+
     return (
-                <div>
-                    <h3>{typeName}</h3>
-                    {keysNum.length ? 
-                    keysNum.map((k)=> {
-                        return <SubCat SubCatName={k} Products={SubCategories[k]} />
-                    })
-                    : null
+        <div>
+            {productTypes.map((type) => {
+                if (type.id === parseInt(typeName)) {
+                    return <h3>{type.Name}</h3>;
                 }
-                </div>
-    )
+            })}
+            {keysNum.length
+                ? keysNum.map((k) => {
+                      return (
+                          <SubCat
+                              SubCatName={k}
+                              Products={SubCategories[k]}
+                              modalIsOpen={modalIsOpen}
+                              setModalIsOpen={setModalIsOpen}
+                          />
+                      );
+                  })
+                : null}
+        </div>
+    );
 }
 
-export default TypesProduct
+export default TypesProduct;

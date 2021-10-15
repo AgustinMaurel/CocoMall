@@ -62,7 +62,7 @@ export const getProductsStore = (id) => {
 
 export const getProductDetail = (id) => {
     return async (dispatch) => {
-        const product = axios.get(`/product/find/${id}`)
+        const product = await axios.get(`/product/find/${id}`)
         dispatch({ type: GET_PRODUCT_DETAIL, payload: product.data });
     };
 };
@@ -89,12 +89,9 @@ export const getProductTypes = () => {
     };
 };
 
-export const getProductSubCat = (payload) => {
-    const obj = {
-        allSub: payload.subCategory
-    }
+export const getProductSubCat = () => {
     return async (dispatch) => {
-        const subCategorys = await axios.post('/SubCategory/filter', obj)
+        const subCategorys = await axios.get('/SubCategory')
         await dispatch({ type: GET_PRODUCT_SUBCATEGORY, payload: subCategorys.data})
     }
 }

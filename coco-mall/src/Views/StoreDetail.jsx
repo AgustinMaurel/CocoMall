@@ -7,7 +7,12 @@ import Product from '../Components/Product/Product';
 import TypesProduct from '../Components/Product/TypesProduct';
 import Search from '../Components/Inputs/Search';
 import { SHOPPING_CART } from '../Scripts/constants';
-import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
+import {
+    getProductsStore,
+    getProductDetail,
+    getStoreDetail,
+    getProductSubCat,
+} from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
@@ -33,53 +38,6 @@ ReactModal.setAppElement('#root');
 
 export default function StoreDetail() {
     const { uid, userCart } = useSelector((state) => state.auth);
-
-    // function renderTypeProduct(Type, key) {
-    //     Object.keys(Type).map((subCategory) =>{
-    //         return (
-    //              <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
-    //         );
-    //     })
-    //     for (let subCategory in Type) {
-    //         return <TypesProduct typeName={key} SubCategories={Type[key]} log={"entrando"} />
-    //     }
-    //     console.log(key);
-    //     console.log(Type[key]);
-          
-    // }
-
-    function renderTypeProduct(Type) {
-        // Object.keys(Type).forEach((subCategory) =>{
-        //     console.log(subCategory);
-        //     return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
-            
-        // })
-
-        // for (let subCategory in Type) {
-        //     console.log(Type)
-        //     return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
-        // }
-        let keys = Object.keys(Type)
-        console.log(keys.length)
-        for(let i =0; i < keys.length; i++){
-            console.log(i)
-            if(i<keys.length){
-                
-                    // return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
-                console.log(i)
-            }
-        }
-    }
-
-    // function repeatFunc(func, obj) {
-    //     let i = 0;
-    //     let keys = Object.keys(obj);
-    //     while (i < keys.length) {
-    //         func(obj, keys[i]);
-    //         i++;
-    //     }
-    // }
-
     //HOOKS
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -133,17 +91,17 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
+        dispatch(getProductSubCat());
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
             dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
-    }, []);
+    }, [id]);
 
     const handleClearCart = () => {
         dispatch(clearCart());
-
         axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     };
 
@@ -158,19 +116,9 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
 
-    let productTypesArr = [];
-    storeProducts.length &&
-        storeProducts.map((product) => {
-            if (!productTypesArr.includes(product.ProductTypeId)) {
-                productTypesArr.push(product.ProductTypeId);
-            }
-        });
-    const typesProductInStore = productTypes.filter((type) => {
-        return productTypesArr.includes(type.id);
-    });
     let keysTypes;
-    if(storeProductsFilter.Products) {
-        keysTypes = Object.keys(storeProductsFilter.Products)
+    if (storeProductsFilter.Products) {
+        keysTypes = Object.keys(storeProductsFilter.Products);
     }
 
     return (
@@ -204,13 +152,17 @@ export default function StoreDetail() {
                             defaultValue='All'
                         >
                             <option value='All'>All products</option>
-                            {typesProductInStore?.map((type) => {
-                                return (
-                                    <option key={type.id} value={type.id}>
-                                        {type.Name}
-                                    </option>
-                                );
-                            })}
+
+                            {productTypes.length && storeProducts.allCurrentTypes?.length ?
+                            productTypes?.map((type, i) => {
+                                if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                    return (
+                                        <option key={type.id} value={type.id}>
+                                            {type.Name}
+                                        </option>
+                                    );
+                                }
+                            }): false}
                         </select>
                     </div>
 
@@ -272,7 +224,7 @@ export default function StoreDetail() {
                     )}
                 </div>
                 <div className='flex flex-col'>
-                    {storeProductsFilter.length && typesProductInStore.length
+                    {/* {storeProductsFilter.length && typesProductInStore.length
                         ? typesProductInStore.map((type) => {
                               if (filters.type.includes(type.id)) {
                                   return (
@@ -333,27 +285,7 @@ export default function StoreDetail() {
                                   );
                               }
                           })
-                        : false}
-
-                    {productDetail ? (
-                        <ReactModal
-                            style={{
-                                overlay: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                                },
-                            }}
-                            isOpen={modalIsOpen}
-                            onRequestClose={() => setModalIsOpen(false)}
-                            className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
-                        >
-                            <ProductDetail
-                                product={productDetail}
-                                addToCart={() => addToCart(productDetail.id)}
-                            />
-                        </ReactModal>
-                    ) : (
-                        false
-                    )}
+                        : false} */}
                 </div>
                 <div>
                     {/* {storeProductsFilter.Products
@@ -364,10 +296,17 @@ export default function StoreDetail() {
                         : null} */}
                     {storeProductsFilter.Products
                         ? keysTypes.map((k) => {
-                        return <TypesProduct typeName={k} SubCategories={storeProductsFilter.Products[k]} />
-                        })
+                              return (
+                                  <TypesProduct
+                                      typeName={k}
+                                      SubCategories={storeProductsFilter.Products[k]}
+                                      modalIsOpen={modalIsOpen}
+                                      setModalIsOpen={setModalIsOpen}
+                                  />
+                              );
+                          })
                         : null}
-                        {/* {console.log(storeProductsFilter.Products)} */}
+                    {/* {console.log(storeProductsFilter.Products)} */}
                 </div>
             </div>
 

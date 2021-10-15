@@ -47,7 +47,6 @@ export default function StoreDetail() {
         allStores,
         storeProductsFilter,
         cart,
-        productDetail,
         productTypes,
         storeProducts,
         storeDetail,
@@ -105,11 +104,6 @@ export default function StoreDetail() {
         axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
     };
 
-    const modalFuncion = (id) => {
-        dispatch(getProductDetail(id));
-        setModalIsOpen(true);
-    };
-
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
@@ -120,7 +114,10 @@ export default function StoreDetail() {
     if (storeProductsFilter.Products) {
         keysTypes = Object.keys(storeProductsFilter.Products);
     }
-
+    let keysTypesSinFilter;
+    if (storeProducts.Products) {
+        keysTypesSinFilter = Object.keys(storeProducts.Products);
+    }
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
@@ -217,8 +214,8 @@ export default function StoreDetail() {
             {/* CARDS */}
             <div className='col-span-12 w-2/3 m-auto'>
                 <div>
-                    {storeProducts <= storeProductsFilter ? (
-                        <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
+                    {keysTypesSinFilter?.length <= keysTypes?.length ? (
+                        <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
                     ) : (
                         <></>
                     )}
@@ -288,12 +285,6 @@ export default function StoreDetail() {
                         : false} */}
                 </div>
                 <div>
-                    {/* {storeProductsFilter.Products
-                        ? repeatFunc(renderTypeProduct, storeProductsFilter.Products)
-                        : null} */}
-                    {/* {storeProductsFilter.Products
-                        ? renderTypeProduct(storeProductsFilter.Products)
-                        : null} */}
                     {storeProductsFilter.Products
                         ? keysTypes.map((k) => {
                               return (
@@ -306,7 +297,6 @@ export default function StoreDetail() {
                               );
                           })
                         : null}
-                    {/* {console.log(storeProductsFilter.Products)} */}
                 </div>
             </div>
 

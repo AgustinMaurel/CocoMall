@@ -8,6 +8,7 @@ import ReactModal from 'react-modal';
 ReactModal.setAppElement('#root');
 function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
     const dispatch = useDispatch();
+        //Despues se va a usar el estado de storeProductsFilter.allSubCat para renderizar los nombres de las categorias
     const {productDetail, productSubCat} = useSelector((state) => state.stores)
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -18,7 +19,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
         <div className='flex flex-wrap'>
             {productSubCat.map((cat) => {
                 if (cat.id === parseInt(SubCatName)) {
-                    return <h3>{cat.Name}</h3>;
+                    return <h3 className='w-24 mt-4 ml-4 font-semibold leading-tight text-cocoMall-300'>{cat.Name}</h3>;
                 }
             })}
             {Products?.map((product) => {

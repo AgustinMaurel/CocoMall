@@ -55,7 +55,6 @@ export const getStoreDetail = (id) => {
 export const getProductsStore = (id) => {
     return async (dispatch) => {
         const response = await axios.get(`/product/${id}`);
-        console.log("PROBANDO", response.data)
         dispatch({ type: GET_PRODUCT, payload: response.data });
     };
 };

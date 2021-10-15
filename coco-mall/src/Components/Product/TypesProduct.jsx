@@ -8,10 +8,14 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
     let keysNum = keysSubCat.filter((key) => parseInt(key));
 
     return (
-        <div>
+        <div className='mt-5'>
             {productTypes.map((type) => {
                 if (type.id === parseInt(typeName)) {
-                    return <h3>{type.Name}</h3>;
+                    return (
+                        <span className='w-24 mt-4 ml-4 font-semibold text-cocoMall-800'>
+                            {type.Name.toUpperCase()}
+                        </span>
+                    );
                 }
             })}
             {keysNum.length

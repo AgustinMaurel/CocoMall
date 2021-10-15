@@ -43,6 +43,7 @@ module.exports = (sequelize) => {
             // }
             international: {
                 type: DataTypes.BOOLEAN,
+                defaultValue: false
             }
         },
         {

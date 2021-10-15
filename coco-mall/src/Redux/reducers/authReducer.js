@@ -3,7 +3,7 @@ import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/acti
 const initialState = {
     uid: '7kbFgkPbXmMUgWGP3dEk4gDMSFm2',
     name: 'Matias Monastirsky',
-    storeProducts: [],
+    storeProducts: undefined,
     userCart: [
       
     ], // mandar este carrito al back para que quede guardado en BD
@@ -34,7 +34,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
             };
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
-            if (Array.isArray(state.storeProducts)) {
+            if (Array.isArray(state.storeProducts) ) {
                 var newItem = state.storeProducts?.find(
                     (item) => item.id === payload || item.idproduct === payload,
                 );

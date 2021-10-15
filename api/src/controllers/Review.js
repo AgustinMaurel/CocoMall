@@ -7,26 +7,31 @@ class ReviewModel extends ModelController {
     }
     //Specific Functions for this model
     createReview = async (req, res) => {
-        if (req.body.id) {
+        // Id of the order
+        const { orderId } = req.body
+        // Id of the store
+        const { storeId } = req.params
+        // Id of the user
+        const { userId } = req.body
+        if (id) {
             try {
-                //id of order
-                const id = req.body.id ? req.body.id : null;
-                const review = {
-                    description: req.body.description,
-                    qualification: req.body.qualification,
-                };
+                const review = req.body // obj con description{string} y qualification{ENUM 1 2 3 4 5}
                 //Create the review
-                const newReview = await Review.create(review);
+                const newReview = await this.model.create(review);
                 const reviewId = newReview.id;
                 //Search the order and attach the Review
-                const order = await Order.findByPk(id);
+                const order = await Order.findByPk(orderId);
                 await order.addReview(reviewId);
+                //Search the store and attach the Review
+
+                //Search the user and attach the Review
+                
                 res.send(newReview);
             } catch (e) {
                 res.send(e);
             }
         } else {
-            res.status(400).send({ message: 'Wrong parameters' });
+            res.status(400).send({ message: 'No id' });
         }
     };
 }

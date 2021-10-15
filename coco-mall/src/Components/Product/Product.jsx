@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Image } from 'cloudinary-react';
 
 export default function Product(props) {
+    console.log("SOY PROPS DE PRODUCT", props)
     const { product } = props;
 
     return (

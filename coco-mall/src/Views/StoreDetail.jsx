@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
+import TypesProduct from '../Components/Product/TypesProduct';
 import Search from '../Components/Inputs/Search';
 import { SHOPPING_CART } from '../Scripts/constants';
 import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
@@ -33,6 +34,52 @@ ReactModal.setAppElement('#root');
 export default function StoreDetail() {
     const { uid, userCart } = useSelector((state) => state.auth);
 
+    // function renderTypeProduct(Type, key) {
+    //     Object.keys(Type).map((subCategory) =>{
+    //         return (
+    //              <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
+    //         );
+    //     })
+    //     for (let subCategory in Type) {
+    //         return <TypesProduct typeName={key} SubCategories={Type[key]} log={"entrando"} />
+    //     }
+    //     console.log(key);
+    //     console.log(Type[key]);
+          
+    // }
+
+    function renderTypeProduct(Type) {
+        // Object.keys(Type).forEach((subCategory) =>{
+        //     console.log(subCategory);
+        //     return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
+            
+        // })
+
+        // for (let subCategory in Type) {
+        //     console.log(Type)
+        //     return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
+        // }
+        let keys = Object.keys(Type)
+        console.log(keys.length)
+        for(let i =0; i < keys.length; i++){
+            console.log(i)
+            if(i<keys.length){
+                
+                    // return <TypesProduct typeName={subCategory} SubCategories={Type[subCategory]} />
+                console.log(i)
+            }
+        }
+    }
+
+    // function repeatFunc(func, obj) {
+    //     let i = 0;
+    //     let keys = Object.keys(obj);
+    //     while (i < keys.length) {
+    //         func(obj, keys[i]);
+    //         i++;
+    //     }
+    // }
+
     //HOOKS
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -57,6 +104,7 @@ export default function StoreDetail() {
         min: '',
         max: '',
         discount: 0,
+        subCategory: [],
     });
 
     let userCartToBack = {
@@ -83,7 +131,6 @@ export default function StoreDetail() {
         prevArrow: <Arrow />,
     };
     //by Chris
-    console.log(storeProductsFilter)
 
     useEffect(() => {
         dispatch(getStoreDetail(id));
@@ -92,7 +139,7 @@ export default function StoreDetail() {
             dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
-    }, [dispatch, allStores]);
+    }, []);
 
     const handleClearCart = () => {
         dispatch(clearCart());
@@ -111,7 +158,7 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
 
-    let productTypesArr = []
+    let productTypesArr = [];
     storeProducts.length &&
         storeProducts.map((product) => {
             if (!productTypesArr.includes(product.ProductTypeId)) {
@@ -121,6 +168,10 @@ export default function StoreDetail() {
     const typesProductInStore = productTypes.filter((type) => {
         return productTypesArr.includes(type.id);
     });
+    let keysTypes;
+    if(storeProductsFilter.Products) {
+        keysTypes = Object.keys(storeProductsFilter.Products)
+    }
 
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
@@ -303,6 +354,20 @@ export default function StoreDetail() {
                     ) : (
                         false
                     )}
+                </div>
+                <div>
+                    {/* {storeProductsFilter.Products
+                        ? repeatFunc(renderTypeProduct, storeProductsFilter.Products)
+                        : null} */}
+                    {/* {storeProductsFilter.Products
+                        ? renderTypeProduct(storeProductsFilter.Products)
+                        : null} */}
+                    {storeProductsFilter.Products
+                        ? keysTypes.map((k) => {
+                        return <TypesProduct typeName={k} SubCategories={storeProductsFilter.Products[k]} />
+                        })
+                        : null}
+                        {/* {console.log(storeProductsFilter.Products)} */}
                 </div>
             </div>
 

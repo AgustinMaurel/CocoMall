@@ -15,7 +15,7 @@ const {
 //GET's
 router.get('/', getAllData);
 
-// router.get('/:id', getAllProductsOfStore);
+router.get('/:id', getAllProductsOfStore);
 
 router.post('/filter', filterStoresByProductTypes);
 

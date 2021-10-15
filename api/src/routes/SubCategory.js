@@ -8,6 +8,6 @@ const {
 //all routes start with /subCategory
 router.get('/', getAllData);
 
-router.post('/filtered', filterSubCategories)
+router.post('/filter', filterSubCategories)
 
 module.exports = router;

@@ -9,6 +9,9 @@ import {
     ORDER_PRODUCTS,
     FILTER_STORE,
     ORDER_STORE,
+    GET_PRODUCT_SUBCATEGORY,
+    GET_PRODUCT_STORE_TYPES,
+    GET_PRODUCT_STORE_SUBCATEGORY
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,9 +19,10 @@ const initialState = {
     storesFilters: [],
     storeDetail: {},
     storeProducts: [],
-    storeProductsFilter: [],
+    storeProductsFilter: {},
     productDetail: {}, //deberiamos pasarlo a local
     productTypes: [],
+    productSubCat: [],
     storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
 };
 
@@ -45,9 +49,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case SEARCH_BY_ID:
             return {
                 ...state,
-                storeDetail: state.allStores.find((store) => {
-                    return store.id === payload;
-                }),
+                storeDetail: payload
             };
         case GET_PRODUCT:
             return {
@@ -59,13 +61,10 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: state.storeProductsFilter.find((product) => {
-                    return product.id === payload;
-                }),
+                productDetail: payload,
             };
 
         case FILTER_PRODUCTS:
-            console.log(payload);
             return {
                 ...state,
                 storeProductsFilter: payload,
@@ -76,6 +75,12 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 productTypes: payload,
             };
+            
+        case GET_PRODUCT_SUBCATEGORY:
+            return {
+                ...state,
+                productSubCat: payload
+            }
         //usar .slice() para actualiar el estado en los order
         case ORDER_PRODUCTS:
             if (payload === 'Barato') {

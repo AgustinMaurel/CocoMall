@@ -28,6 +28,7 @@ const ProductsCreate = ({ idStore, product }) => {
         formState: { errors },
     } = useForm({ defaultValues: product });
 
+    console.log(product)
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();

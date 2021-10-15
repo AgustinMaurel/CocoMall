@@ -61,6 +61,7 @@ class UserModel extends ModelController {
                     },
                 ],
             });
+            
             res.send(user);
         } catch (error) {
             res.json(error);

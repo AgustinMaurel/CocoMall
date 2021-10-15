@@ -12,6 +12,8 @@ import {
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function StorePanel() {
     const dispatch = useDispatch();
@@ -26,8 +28,6 @@ export default function StorePanel() {
 
     const productsTypes = useSelector((state) => state.stores.productTypes);
 
-    console.log(storesUser)
-
     const [flag, setFlag] = useState(false);
     const [idActual, setIdActual] = useState('');
     const [product, setProduct] = useState();
@@ -35,15 +35,31 @@ export default function StorePanel() {
     const [render, setRender] = useState('');
     const [editState, setEditState] = useState(true);
     const [renderSec, setRenderSec] = useState(false);
+    const [userAdmin, setUserAdmin] = useState({
+        admin: false
+    })
+    const [allProducts, setAllProducts] = useState()
+
+    const id = user.uid
+  
+    useEffect(()=>{
+        axios.get('/product')
+        .then(res=>setAllProducts(res.data))
+    },[flag])
 
     useEffect(() => {
         dispatch(getStores());
-    }, []);
-
+        axios.get(`/user/${id}`)
+        .then(res=>setUserAdmin({
+            admin: res.data[0].SuperAdmin
+        }))
+    }, [user]);
+   
     useEffect(() => {
         dispatch(getProductsStore(idActual));
     }, [flag]);
 
+    
     function handleStore(e) {
         if (e.target.value !== 'All') {
             setSelectStore(e.target.value);
@@ -58,6 +74,8 @@ export default function StorePanel() {
         setRender(e.target.value);
         setFlag(!flag);
     }
+
+    
 
     function handleTypes(e) {
         let val = parseInt(e.target.value);
@@ -86,44 +104,45 @@ export default function StorePanel() {
             </div>
             <div className=' overflow-y-hidden flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
                 <div className='flex flex-col items-center h-screen '>
-                    <select
-                        name='selectStore'
-                        onChange={handleStore}
-                        className='my-1 bg-primary rounded text-white p-1 cursor-pointer'
-                    >
-                        <option
-                            defaultValue='SelectStore'
-                            selected='SelectStore'
-                            disabled={true}
-                            value='Select Store'
+                    {storesUser.length > 0 && <div className='flex flex-col items-center'>
+                        <select
+                            name='selectStore'
+                            onChange={handleStore}
+                            className='my-1 bg-primary rounded text-white p-1 cursor-pointer'
                         >
-                            Select Store
-                        </option>
-                        {storesUser?.map((e) => {
-                            return (
-                                <option key={e.id} value={e.storeName}>
-                                    {e.storeName}
-                                </option>
-                            );
-                        })}
-                    </select>
+                            <option
+                                defaultValue='SelectStore'
+                                selected='SelectStore'
+                                disabled={true}
+                                value='Select Store'
+                            >
+                                Select Store
+                            </option>
+                            {storesUser?.map((e) => {
+                                return (
+                                    <option key={e.id} value={e.storeName}>
+                                        {e.storeName}
+                                    </option>
+                                );
+                            })}
+                        </select>
                         <div className="my-5 text-center">
 
-                    <Image
-                     cloudName='cocomalls'
-                     publicId={selectStore !== 'SelectStore' ? storesUser.find(el=> el.storeName === selectStore).cloudImage : false}
-                     width='180'
-                     
-                     alt={selectStore}
-                     crop='scale'
-    
-                    />
+                            <Image
+                                cloudName='cocomalls'
+                                publicId={selectStore !== 'SelectStore' ? storesUser.find(el => el.storeName === selectStore).cloudImage : false}
+                                width='180'
+
+                                alt={false}
+                                crop='scale'
+
+                            />
 
                         </div>
-
+                    </div>}
                     <h1 className='text-center self-center p-5'>Store Panel</h1>
 
-                    {selectStore !== "SelectStore" && <div className='flex flex-col'>
+                    {selectStore !== "SelectStore" && <div className="flex flex-col text-start items-center justify-center">
                         <button
                             name='Products'
                             value='Products'
@@ -141,6 +160,21 @@ export default function StorePanel() {
                             Orders{' '}
                         </button>
                     </div>}
+
+                    <div className="flex flex-col text-start items-center justify-center">
+                        <h1 className='text-center self-center p-5'> User Panel</h1>
+                        <button className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>Profile</button>
+
+                    </div>
+                     {userAdmin.admin === true ? <div className="flex flex-col text-start items-center justify-center">
+
+                        <h1 className='text-center self-center p-5'>Admin Panel</h1>
+                        <button value="ProductsAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Products</button>
+                        <button value="OrdersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Orders</button>
+                        <button value="UsersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Users</button>
+                        <button value="StoresAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Stores</button>
+
+                    </div>: false}
                 </div>
             </div>
 
@@ -150,15 +184,17 @@ export default function StorePanel() {
 
                     <div className='text-center justify-center items-center'>
                         {selectStore === 'SelectStore' ? (
-                            <span>Select a Store</span>
+                            <Link to="/create/shop">
+                                <button className='my-1 bg-primary rounded text-white p-1 cursor-pointer'>Create a Store</button>
+                            </Link>
                         ) : (
                             <div>
                                 <h1 className='text-center items-center '>
                                     {render === 'Products'
                                         ? 'Products'
                                         : render === 'Orders'
-                                        ? 'Orders'
-                                        : false}
+                                            ? 'Orders'
+                                            : false}
                                 </h1>
                                 <div className=' flex text-center justify-evenly items-center h-32 '>
                                     {filtersNow.map((el) => (
@@ -190,7 +226,7 @@ export default function StorePanel() {
                                             <label
                                                 onClick={() =>
                                                     dispatch(getProductsStore(idActual)) &&
-                                                    !renderSec
+                                                        !renderSec
                                                         ? setRenderSec(true)
                                                         : setRenderSec(false)
                                                 }
@@ -205,8 +241,8 @@ export default function StorePanel() {
                         )}
 
                         {render === 'Products' &&
-                        selectStore !== 'Select Store' &&
-                        renderSec === false ? (
+                            selectStore !== 'Select Store' &&
+                            renderSec === false ? (
                             <ModelTable
                                 info={products}
                                 setProduct={setProduct}
@@ -230,6 +266,22 @@ export default function StorePanel() {
                         )}
 
                         {render === 'Orders' && selectStore !== 'All' && (
+                            <ModelTable
+                                info={[]}
+                                column_title={['Action', 'State', 'Payment', 'Description']}
+                            />
+                        )}
+                        {render === 'ProductsAdmin' &&
+                        <ModelTable  column_title={[
+                            'Action',
+                            'Name',
+                            'Price',
+                            'Id',
+                            'Image',
+                            'Stock',
+                            'Type',
+                        ]} types={productsTypes} info={allProducts}  setProduct={setProduct} setEditState={setEditState} idStore={idActual}/>}
+                        {render === 'OrdersAdmin' && selectStore !== 'All' && (
                             <ModelTable
                                 info={[]}
                                 column_title={['Action', 'State', 'Payment', 'Description']}

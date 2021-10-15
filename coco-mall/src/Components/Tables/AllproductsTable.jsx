@@ -1,33 +1,18 @@
-import React from 'react';
+/* import React, { useEffect, useState } from 'react'
 import { FiSettings } from 'react-icons/fi';
+import { modalOptions } from '../../Scripts/swalFunction';
 import { Image } from 'cloudinary-react';
-import { modalOptions } from './swalFunction';
-import { useState } from 'react';
+import axios from 'axios';
 
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getProductsStore } from '../Redux/actions/stores';
+export default function AllproductsTable({  column_title, types, setEditState, setProduct}) {
 
-export default function ModelTable({
-    info,
-    column_title,
-    types,
-    idStore,
-    setEditState,
-    setProduct,
-}) {
-    const [flag, setFlag] = useState(false);
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getProductsStore(idStore));
-        
-    }, [flag]);
-
+useEffect(()=>{
+   
+},[])
     return (
         <div className='items-center text-center justify-center  w-full'>
-            <div >
-                <table className='items-center border-separate text-center justify-center w-full'>
+            <table className='items-center border-separate text-center justify-center w-full'>
                     <thead>
                         <tr>
                             {column_title.map((el) => (
@@ -38,8 +23,8 @@ export default function ModelTable({
                         </tr>
                     </thead>
                     <tbody>
-                        {info.length > 0 &&
-                            info?.map((el) => (
+                        {products.length > 0 &&
+                            products?.map((el) => (
                                 <tr key={el}>
                                     <td className='  border text-center justify-center items-center border-gray-400 py-2'>
                                         <div className='flex justify-evenly cursor-pointer'>
@@ -48,8 +33,6 @@ export default function ModelTable({
                                                     modalOptions(
                                                         el.id,
                                                         setEditState,
-                                                        setFlag,
-                                                        flag,
                                                         setProduct,
                                                         el,
                                                     );
@@ -85,7 +68,7 @@ export default function ModelTable({
                             ))}
                     </tbody>
                 </table>
-            </div>
         </div>
-    );
+    )
 }
+ */

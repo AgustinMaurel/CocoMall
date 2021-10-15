@@ -1,4 +1,4 @@
-const { Question, Product } = require('../models/index');
+const { Question, Product, User} = require('../models/index');
 const ModelController = require('./index');
 
 class QuestionModel extends ModelController {
@@ -7,23 +7,30 @@ class QuestionModel extends ModelController {
   }
   //Specific Functions for this model
   createQuestion = async (req, res) => {
-    if (req.body.id) {
+    //id of Product
+    const { productId } = req.body;
+    if (productId) { 
       try {
-        //id of Product
-        const { id } = req.body;
+        // Id of the user
+        const {userId} = req.body
+        // Object question
         const { question } = req.body;
+        // Object for create
         const obj = {
           question: req.body.question,
           answer: 'null',
         };
         if (question) {
           let aux = '';
-          //Create the review
+          //Create the Question
           const newQuestion = await this.model.create(obj);
           aux = newQuestion.id;
-          //Search the product and attach the Review
-          const product = await Product.findByPk(id);
+          //Search the Product and attach the question
+          const product = await Product.findByPk(productId);
           await product.addQuestion(aux);
+          //Search the User and attach the question
+          const user = await User.findByPk(userId)
+          await user.addQuestion(aux)
 
           //final Question
           const finalQuestion = await this.model.findByPk(aux);

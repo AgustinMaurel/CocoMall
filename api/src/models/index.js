@@ -122,6 +122,11 @@ Order.belongsToMany(Product, { through: 'ordersProduct' });
 Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
 Question.belongsTo(Product);
 
+// //---------------------------------
+
+User.hasMany(Question, { foreignKey: { id: 'myUserid' } });
+Question.belongsTo(User);
+
 module.exports = {
     db: sequelize,
     User,

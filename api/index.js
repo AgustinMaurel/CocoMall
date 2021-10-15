@@ -5,6 +5,7 @@ const { PORT } = require('./src/utils/config/index');
 const { ProductType } = require('./src/models/index');
 
 // Syncing all the models at once.
+// {force: true}
 db.sync()
     .then(async () => {
         const productTypes = await ProductType.findAll();

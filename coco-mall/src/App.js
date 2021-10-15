@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { getStores, getProductTypes } from './Redux/actions/stores';
 import StorePanel from './Views/StorePanel';
@@ -21,22 +21,15 @@ function App() {
 
     const [, setChecking] = useState(true);
     const [, setIsLoggedIn] = useState(false);
+    const user = useSelector(state => state.auth)
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user?.uid) {
+               
                 dispatch(login(user.uid, user.displayName));
                 setIsLoggedIn(true);
 
-                axios
-                    .get(`/user/${user.uid}`)
-                    .then((res) => {
-                        return (
-                            res.data.length > 0 &&
-                            res.data[0].Cart.map((el) => dispatch(setCart(el)))
-                        );
-                    })
-                    .catch((err) => console.log(err));
             } else {
                 setIsLoggedIn(false);
             }
@@ -47,6 +40,16 @@ function App() {
     useEffect(() => {
         dispatch(getStores());
         dispatch(getProductTypes());
+        
+        user.uid && axios
+        .get(`/user/${user.uid}`)
+        .then((res) => {
+            return res.data.length > 0 &&
+                res.data[0].Cart.map((el) => dispatch(setCart(el)))
+                
+            
+        })
+        .catch((err) => console.log(err));
     }, [dispatch]);
 
     return (

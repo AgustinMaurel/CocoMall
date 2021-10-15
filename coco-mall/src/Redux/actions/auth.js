@@ -41,6 +41,8 @@ export const startGoogleLogin = () => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
+                    State: '',
+                    Country: '',
                 };
                 axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
@@ -56,6 +58,7 @@ export const startGoogleLogin = () => {
     };
 };
 
+//ver State & Country in Facebook
 export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
@@ -85,12 +88,11 @@ export const startRegisterWithEmailPasswordName = (
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
 
-            await auth.currentUser.updateProfile({displayName: name});
+            await auth.currentUser.updateProfile({ displayName: name });
 
             //hay que arreglar que hasta no recargar se queda en null el displayName
             //await aux.user.updateProfile({displayName: name})
 
-            console.log('user: ', aux.user);
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -101,10 +103,7 @@ export const startRegisterWithEmailPasswordName = (
             };
             axios.post(CREATE_USER_URL, userF);
 
-
-
             await aux.user.sendEmailVerification();
-            console.log(userF);
         } catch (err) {
             Swal.fire({
                 title: 'Error!',

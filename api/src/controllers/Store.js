@@ -127,19 +127,18 @@ class StoreModel extends ModelController {
         }
     };
 
-    // getAllProductsOfStore = async (req, res) => {
-    //     const id = req.params.id
-    //     console.log(id)
-    //     const searchedStore = await this.model.findOne({
-    //         where: {
-    //             id: id
-    //         },
-    //         include: {
-    //             model: Product
-    //         }
-    //     })
-    //     res.send(searchedStore)
-    // }
+    getAllProductsOfStore = async (req, res) => {
+        const id = req.params.id
+        const searchedStore = await this.model.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: Product
+            }
+        })
+        res.send(searchedStore)
+    }
 
     // getAllFilteredProductsOfStore = (req, res) => {
     //     const id = req.params.id

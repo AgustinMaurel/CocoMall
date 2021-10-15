@@ -39,7 +39,6 @@ class ProductModel extends ModelController {
                 await store.addProduct(productId);
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId);
-                console.log(productType)
                 await productType.addProduct(productId);
                 //Attach the new Product with his SubCategory 
                 const [subCategoryProduct, created] = await SubCategory.findOrCreate({
@@ -61,7 +60,6 @@ class ProductModel extends ModelController {
     bulkCreateProducts = async (req, res) => {
         const { storeId, allTypes, products } = req.body;
         try {
-            console.log(products)
             const productsDB = await this.model.bulkCreate(products);
             for (const [i, product] of productsDB.entries()) {
                 const productId = product.id;
@@ -205,6 +203,20 @@ class ProductModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
+    getOneProductById = async (req, res) => {
+        const id = req.params.id
+        if(id){
+            try {          
+                const product = await this.model.findByPk(id)
+                res.send(product)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send("Wrong parameters")
+        }
+    }
 
     updateDataProduct = async (req, res) => {
         const id1 = req.params.id;

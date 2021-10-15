@@ -1,6 +1,7 @@
 const { User, Store, Address, Product } = require('../models/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
+const { Where } = require('sequelize/types/lib/utils');
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
@@ -122,6 +123,19 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
+    putUser=async (req,res,next)=>{
+        const {id,Country,State}=req.body;
+        try{
+            let updateUser=this.model.update({Country,State},{Where:{id}})
+            res.json(updateUser);
+        }catch(error){
+            res.json({
+                errores:error
+            })
+        }
+        
+
+    }
 }
 
 const UserController = new UserModel(User);

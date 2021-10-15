@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { getStores, getProductTypes } from './Redux/actions/stores';
@@ -15,6 +15,7 @@ import ShopCreation from './Views/ShopCreation';
 import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
 import Checkout from './Views/Checkout';
+import OrderProduct from './Components/Forms/OrderProduct';
 
 function App() {
     const dispatch = useDispatch();
@@ -61,6 +62,7 @@ function App() {
                 <Route path='/auth/register' exact component={RegisterScreen} />
                 <Route path='/home/store/:id' exact component={StoreDetail} />
                 <Route path='/checkout/:id' exact component={Checkout} />
+                <Route path='/create/order' exact component={OrderProduct} />
             </Switch>
         </>
     );

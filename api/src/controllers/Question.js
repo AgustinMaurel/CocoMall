@@ -1,4 +1,4 @@
-const { Question, Product, User} = require('../models/index');
+const { Question, Product, User } = require('../models/index');
 const ModelController = require('./index');
 
 class QuestionModel extends ModelController {
@@ -9,10 +9,10 @@ class QuestionModel extends ModelController {
   createQuestion = async (req, res) => {
     //id of Product
     const { productId } = req.body;
-    if (productId) { 
+    if (productId) {
       try {
         // Id of the user
-        const {userId} = req.body
+        const { userId } = req.body;
         // Object question
         const { question } = req.body;
         // Object for create
@@ -29,8 +29,8 @@ class QuestionModel extends ModelController {
           const product = await Product.findByPk(productId);
           await product.addQuestion(aux);
           //Search the User and attach the question
-          const user = await User.findByPk(userId)
-          await user.addQuestion(aux)
+          const user = await User.findByPk(userId);
+          await user.addQuestion(aux);
 
           //final Question
           const finalQuestion = await this.model.findByPk(aux);
@@ -50,12 +50,29 @@ class QuestionModel extends ModelController {
     const { id } = req.params;
     if (id) {
       try {
-        // Se puede usar para modificar la question del user tambien, se manda en answer por body y en la linea 48 se pone 'question' en vez de 'answer'
-        const finalQuestion = this.model.update(
-          { answer: req.body.answer },
-          { where: { id: id } }
-        );
-        res.send("Answer added successfully")
+        const resp = req.body.answer;
+        const pre = req.body.question ? req.body.question : null;
+
+        if (resp) {
+          let obj =  {
+            answer: resp
+          }
+          const finalQuestion = await this.model.update({...obj} , { where: { id: id } });
+
+          res.send("Answer added successfully");
+
+        } else if (pre) {
+          let obj = {
+            question: pre
+          }
+          const finalQuestion = await this.model.update(
+            { ...obj },
+            { where: { id: id } }
+          );
+          res.send('Question updated successfully');
+        } else {
+          res.send('Oops, what???');
+        }
       } catch (e) {
         res.send(e);
       }
@@ -65,18 +82,18 @@ class QuestionModel extends ModelController {
   };
   deleteQuestion = async (req, res) => {
     // Question Id
-    const { id } = req.params
-    if(id){
-      const deletedQuestion = await this.model.destroy({where: {id: id}})
-      if(deletedQuestion===1){
-        res.send("Question deleted")
-      }else{
-        res.send("Oops, something went wrong")
+    const { id } = req.params;
+    if (id) {
+      const deletedQuestion = await this.model.destroy({ where: { id: id } });
+      if (deletedQuestion === 1) {
+        res.send('Question deleted');
+      } else {
+        res.send('Oops, something went wrong');
       }
-    }else{
-      res.send("No id via params")  
+    } else {
+      res.send('No id via params');
     }
-  }
+  };
 }
 
 const QuestionController = new QuestionModel(Question);

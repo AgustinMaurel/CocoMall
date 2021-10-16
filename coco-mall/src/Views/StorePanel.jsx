@@ -311,6 +311,9 @@ export default function StorePanel() {
                             <ModelTable
                                 info={allOrders}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
+                                flag2={flag2}
+                                setFlag2={setFlag2}
+                                swalFunction={ordersOptions}
                             />
                         )}
 

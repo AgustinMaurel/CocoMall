@@ -7,16 +7,16 @@ class AddressModel extends ModelController {
     }
     //Specific Functions for this model
     createAddress = async (req, res) => {
-        const { id, directions, cords } = req.body;
+        const { id, address, cords } = req.body;
         if (id) {
             try {
                 //id of User
-                const address = {
-                    directions,
+                const obj = {
+                    address,
                     cords,
                 };
                 //Create the Address
-                const newAddress = await this.model.create(address);
+                const newAddress = await this.model.create(obj);
                 const addressId = newAddress.id;
                 //Search the User and attach the Address
                 const user = await User.findByPk(id);

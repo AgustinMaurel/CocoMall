@@ -25,6 +25,8 @@ export const SHOPPING_CART = {
 
 export const DELETE_PRODUCT = '/product/delete';
 
+export const DELETE_STORE = '/store/delete'
+
 export const CREATE_USER_URL = '/user/create';
 
 export const UPDATE_PRODUCT = '/product/update';

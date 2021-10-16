@@ -41,11 +41,40 @@ class ReviewModel extends ModelController {
     };
 
     updateReview = async (req,res) => {
-        res.send("Soy el actualizar")
+        // Review Id
+        const { id } = req.params
+
+        if(id && req.body.description){ 
+            try{
+                let obj = {description: req.body.description}
+                // <------- Qualification?
+                const upReview = await this.model.update({...obj} , {where: {id: id}})
+                res.send("Review updated successfully")
+            }catch(e){
+                res.send({error: e})
+            }
+        }else{
+            res.send("No review id")
+        }
     }
 
     deleteReview = async (req,res) => {
-        res.send("Soy el borrar")
+        // Review Id
+        const { id } = req.params
+        if(id){
+            try{
+                const deletedReview = await this.model.destroy({where: {id: id}})
+                if (deletedReview === 1) {
+                    res.send('Review deleted');
+                }else{
+                    res.send('Oops, something went wrong');
+                }
+            }catch(e){
+                res.send({error: e})
+            }
+        }else{
+            res.send("No id provided")
+        }
     }
 }
 

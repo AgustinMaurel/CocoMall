@@ -37,6 +37,12 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 userCart: payload,
             };
+        // case SHOPPING_CART_TYPES.RUTA_SOMO:
+        //     console.log(payload, 'PAYLOAD');
+        //     return {
+        //         ...state,
+        //         userCart: payload,
+        //     };
         //SI ESTOY PARADO EN STORE
         //     if (Array.isArray(state.storeProducts)) {
         //         var newItem = state.storeProducts?.find(

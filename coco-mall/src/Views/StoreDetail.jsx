@@ -12,10 +12,11 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import { AiOutlinePercentage } from 'react-icons/ai';
 import {
-    addToCart,
+    // addToCart,
     deleteFromCart,
     deleteAllFromCart,
     clearCart,
+    addToCartSomo,
 } from '../Redux/actions/shoppingActions';
 import CartItem from '../Components/ShoppingCart/CartItem';
 import ProductDetail from '../Components/Product/ProductDetail';
@@ -66,6 +67,9 @@ export default function StoreDetail() {
         userId: uid,
         cart: [],
     };
+
+    const que = '+';
+    const cant = '1';
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -248,14 +252,13 @@ export default function StoreDetail() {
                                                           >
                                                               <Product
                                                                   product={product}
-                                                                  addToCart={() =>
-                                                                      addToCart(
-                                                                          product.id,
-
-                                                                          userCart,
-                                                                          uid,
-                                                                      )
-                                                                  }
+                                                                  // //   addToCart={() =>
+                                                                  // //       addToCart(
+                                                                  // //           product.id,
+                                                                  // //           userCart,
+                                                                  // //           uid,
+                                                                  // //       )
+                                                                  //   }
                                                               />
                                                           </div>
                                                       </>
@@ -282,14 +285,14 @@ export default function StoreDetail() {
                                                           >
                                                               <Product
                                                                   product={product}
-                                                                  addToCart={() =>
-                                                                      addToCart(
-                                                                          product.id,
+                                                                  //   addToCart={() =>
+                                                                  //       addToCart(
+                                                                  //           product.id,
 
-                                                                          userCart,
-                                                                          uid,
-                                                                      )
-                                                                  }
+                                                                  //           userCart,
+                                                                  //           uid,
+                                                                  //       )
+                                                                  //   }
                                                               />
                                                           </div>
                                                       </>
@@ -315,7 +318,7 @@ export default function StoreDetail() {
                         >
                             <ProductDetail
                                 product={productDetail}
-                                addToCart={() => addToCart(productDetail.id, userCart, uid)}
+                                addToCart={() => addToCartSomo(uid, productDetail.id, que, cant)}
                             />
                         </ReactModal>
                     ) : (

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { SHOPPING_CART } from '../../Scripts/constants';
-import { addToCart } from '../../Redux/actions/shoppingActions';
+import { /*addToCart*/ addToCartSomo } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
 
 import { Image } from 'cloudinary-react';
@@ -14,9 +14,11 @@ function ProductDetail(props) {
     const { product } = props;
     const quantity = 0;
     const { userCart, uid } = useSelector((state) => state.auth);
+    const que = '+';
+    const cant = 1;
 
     const handleButtonClick = (id) => {
-        dispatch(addToCart(id, quantity, userCart, uid));
+        dispatch(addToCartSomo(uid, id, que, cant));
     };
 
     // useEffect(() => {

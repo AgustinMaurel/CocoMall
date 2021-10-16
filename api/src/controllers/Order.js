@@ -7,9 +7,9 @@ class OrderModel extends ModelController {
     }
     //Specific Functions for this model
     createOrder = async (req, res) => {
-        const {userId, storeId, address, cords, amount, orderState} = req.body;
+        const {UserId, StoreId, address, cords, amount, orderState} = req.body;
 
-        if (userId && storeId && address && cords) {
+        if (UserId && StoreId && address && cords) {
             try {
                 const order = {
                     amount,
@@ -20,29 +20,29 @@ class OrderModel extends ModelController {
                 const newOrder = await this.model.create(order);
                 const orderId = newOrder.id;
                 // add User to order
-                const user = await User.findByPk(userId);
+                const user = await User.findByPk(UserId);
                 await user.addOrder(orderId);
 
                 // PROBAAAAR
 
 
                 // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
-                // const userNew = await User.update(obj, {where: {id: userId}})
+                // const userNew = await User.update(obj, {where: {id: UserId}})
 
                 
                 // add Store to order
-                const store = await Store.findByPk(storeId);
+                const store = await Store.findByPk(StoreId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const shipmentAdress = await Address.findOrCreate({
-                    where: {
-                        address,
-                        cords,
-                        UserId: userId,
-                    },
-                });
+                // const shipmentAdress = await Address.findOrCreate({
+                //     where: {
+                //         address,
+                //         cords,
+                //         UserId: UserId,
+                //     },
+                // });
 
-                await shipmentAdress.addOrder(orderId);
+                // await shipmentAdress.addOrder(orderId);
                 res.send(newOrder);
             } catch (err) {
                 res.send(err);

@@ -57,7 +57,7 @@ export default function Cart() {
     }
 
     return (
-        <div className='bg-gray-100 h-screen'>
+        <div className='bg-gray-100 h-screen '>
             <div className=' sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>
@@ -67,28 +67,28 @@ export default function Cart() {
                 <h3 className='text-5xl font-extrabold text-white'>MY CART</h3>
             </div>
 
-            <div className='flex  justify-center relative bg-gray-100     '>
-                <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-around rounded  gap-5 lg:gap-16  '>
+            <div className='flex  justify-center relative  bg-gray-100   2xl:px-20  '>
+                <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
                     {/* CLEAR CART BUTTON */}
                     {userCart.length > 0 && (
-                        <div className=' flex items-center self-start justify-center      text-primary   h-8 mx-2 px-1 z-10'>
+                        <div className='  flex items-center self-start  justify-center   xl:absolute xl:left-0 xl:top-0  h-8 mx-2 px-1 z-10'>
                             <button
                                 onClick={() => handleClearCart(uid)}
-                                className='text-xs text-red-600 font-semibold z-50'
+                                className='text-sm text-red-600 font-semibold z-50 whitespace-nowrap'
                             >
                                 Clear Cart
                             </button>
                         </div>
                     )}
-                    <div className='flex flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
-                        <div className='xl:w-4/6  xl:relative xl:flex-none xl:flex-col'>
+                    <div className='flex 0 2xl:pb-28 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
+                        <div className='xl:w-4/6  xl:relative xl:flex-none xl:flex-col   '>
                             {/* CARDS */}
                             {userCart?.length > 0 ? (
                                 userCart?.map((el) => (
                                     <>
                                         <div
                                             key={el.id}
-                                            className=' bg-white  mt-5  w-full flex flex-col shadow-lg   h-56 xl:h-60 justify-around  relative  '
+                                            className=' bg-white  mt-5 2xl:mt-10  w-full flex flex-col shadow-lg   h-56 xl:h-60 justify-around  relative  '
                                         >
                                             <div className='flex flex-row h-full items-center  relative w-full px-5 gap-10  py-5'>
                                                 <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>
@@ -247,9 +247,10 @@ export default function Cart() {
                                         </h2>
                                     </div>
                                 </div>
+
                                 <div
                                     className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12
-                                            xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
+                                            xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10   '
                                 >
                                     <button
                                         className=' focus:outline-none text-center text-lg font-bold w-full h-full      
@@ -270,7 +271,7 @@ export default function Cart() {
                                             className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
                                         sm:text-sm        
                                         
-                                              xl:text-primary xl:text-xl'
+                                            xl:text-md'
                                         >
                                             Continue Shopping
                                         </button>

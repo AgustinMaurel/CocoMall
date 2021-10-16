@@ -33,9 +33,9 @@ export default function ModelTable ( { info, column_title, types,idStore, setEdi
                     <tbody>
                         {info.length > 0 &&
                             info?.map((el) => (
-                                <tr key={el}>
-                                    <td className='  border text-center justify-center items-center border-gray-400 py-2'>
-                                        <div className='flex justify-evenly cursor-pointer'>
+                                <tr key={el.id}>
+                                    <td key={el.id} className='  border text-center justify-center items-center border-gray-400 py-2'>
+                                        <div key={el.id} className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
                                                     swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
@@ -59,7 +59,7 @@ export default function ModelTable ( { info, column_title, types,idStore, setEdi
                                             cloudName='cocomalls'
                                             publicId={Array.isArray(el.cloudImage) ?  el.cloudImage[el.cloudImage.length -1] : el.cloudImage}
                                             width='200'
-                                            alt={el.productName || false}
+                                            alt={el.productName || "false"}
                                             crop='scale'
                                         /> 
                                         

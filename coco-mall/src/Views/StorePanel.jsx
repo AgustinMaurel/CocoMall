@@ -9,7 +9,7 @@ import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { productOptions, storeOptions } from '../Scripts/swalFunction.js';
+import { productOptions, storeOptions, ordersOptions, userOptions } from '../Scripts/swalFunction.js';
 
 export default function StorePanel() {
 
@@ -315,16 +315,22 @@ export default function StorePanel() {
                         )}
 
                         {render === "UsersAdmin" &&
-                            <ModelTable info={allUsers}
-                                column_title={['Action', 'Name', 'Mail', 'Id', 'Location']} />}
+                            <ModelTable
+                                info={allUsers}
+                                column_title={['Action', 'Name', 'Mail', 'Id', 'Location']}
+                                flag2={flag2}
+                                setFlag2={setFlag2}
+                                swalFunction={userOptions}
+                            />}
 
                         {render === "StoresAdmin" &&
-                            <ModelTable info={allStores}
+                            <ModelTable
+                                info={allStores}
                                 column_title={['Action', 'Name', 'Location', 'Id', 'Logo']}
                                 swalFunction={storeOptions}
                                 flag2={flag2}
                                 setFlag2={setFlag2}
-                                 />}
+                            />}
                     </div>
                 </div>
             ) : (

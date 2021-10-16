@@ -10,11 +10,13 @@ import {
     deleteAllItems,
 } from '../Redux/actions/shoppingActions';
 import { Image, Transformation } from 'cloudinary-react';
+import ReactModal from 'react-modal';
 
 export default function Cart() {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const que = '+';
     const cant = 1;
 
@@ -39,10 +41,15 @@ export default function Cart() {
     };
     const handleClearCart = (id) => {
         dispatch(clearCart(id));
+        setModalIsOpen(false);
     };
 
     const handleDeleteAllItems = (id, cant) => {
         dispatch(deleteAllItems(uid, id, que, cant));
+    };
+
+    const modalFuncion = () => {
+        setModalIsOpen(true);
     };
 
     function handleCheckout() {
@@ -70,16 +77,42 @@ export default function Cart() {
             <div className='flex  justify-center relative  bg-gray-100   2xl:px-20  '>
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
                     {/* CLEAR CART BUTTON */}
-                    {userCart.length > 0 && (
-                        <div className='  flex items-center self-start  justify-center   xl:absolute xl:left-0 xl:top-0  h-8 mx-2 px-1 z-10'>
-                            <button
-                                onClick={() => handleClearCart(uid)}
-                                className='text-sm text-red-600 font-semibold z-50 whitespace-nowrap'
-                            >
-                                Clear Cart
-                            </button>
-                        </div>
+                    {userCart.length > 0 && !modalIsOpen && (
+                        <>
+                            <div className='  flex items-center self-start  justify-center   xl:absolute xl:left-0 xl:top-0  h-8 mx-2 px-1 z-10'>
+                                <button
+                                    onClick={() => modalFuncion()}
+                                    className='text-sm text-red-600 font-semibold z-20 whitespace-nowrap'
+                                >
+                                    Clear Cart
+                                </button>
+                            </div>
+                        </>
                     )}
+                    <ReactModal
+                        style={{
+                            overlay: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                            },
+                        }}
+                        isOpen={modalIsOpen}
+                        onRequestClose={() => setModalIsOpen(false)}
+                        className='flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-2/6 2xl:w-1/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border border-t-4 border-red-700'
+                    >
+                        <h2 className='text-center text-lg'>
+                            Are you sure you want to{' '}
+                            <span className='text-red-600 font-semibold'>delete</span> your cart?
+                        </h2>
+                        <div className='flex w-full justify-evenly '>
+                            <button
+                                className='py-1 px-3 border hover:border-red-600 hover:bg-white transition hover:text-red-600 text-white bg-red-600'
+                                onClick={() => handleClearCart(uid)}
+                            >
+                                Yes
+                            </button>
+                            <button onClick={() => setModalIsOpen(false)}>No</button>
+                        </div>
+                    </ReactModal>
                     <div className='flex 0 2xl:pb-28 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
                         <div className='xl:w-4/6  xl:relative xl:flex-none xl:flex-col   '>
                             {/* CARDS */}

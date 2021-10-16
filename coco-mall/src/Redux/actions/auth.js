@@ -23,12 +23,14 @@ export const startLoginEmailPassword = (email, password) => {
     };
 };
 
-export const login = (uid, displayName) => {
+export const login = (uid, displayName, state, country) => {
     return {
         type: LOGIN,
         payload: {
             uid,
             displayName,
+            state,
+            country
         },
     };
 };
@@ -41,11 +43,11 @@ export const startGoogleLogin = () => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
-                    State: 'Buenos Aires',
-                    Country: 'Argentina',
+                    State: '',
+                    Country: '',
                 };
                 axios.post(CREATE_USER_URL, aux);
-                dispatch(login(user.uid, user.displayName));
+                dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
             })
             .catch((err) =>
                 Swal.fire({

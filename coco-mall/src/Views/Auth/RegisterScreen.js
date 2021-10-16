@@ -18,7 +18,6 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants';
 
 const RegisterScreen = () => {
     const dispatch = useDispatch();
-
     const history = useHistory();
 
     const [viewPass, setViewPass] = useState('password');
@@ -57,7 +56,7 @@ const RegisterScreen = () => {
 
     const handleGoogleLogin = () => {
         setIsOpen(false);
-        dispatch(startGoogleLogin());
+        dispatch(startGoogleLogin(placeSelected.state, placeSelected.country));
     };
 
     const handleFacebookLogin = () => {
@@ -79,10 +78,6 @@ const RegisterScreen = () => {
     function openModal() {
         setIsOpen(true);
     }
-
-    // function closeModal() {
-    //     setIsOpen(false);
-    // }
 
     return (
         <div className='overflow-hidden h-screen '>
@@ -429,7 +424,6 @@ const RegisterScreen = () => {
                     isOpen={modalIsOpen}
                     onRequestClose={handleGoogleLogin}
                     style={customStyles}
-                    contentLabel='Example Modal'
                     className='flex flex-col justify-between rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-1/6 h-2/6 top-0 bottom-0 right-0 left-0 m-auto'
                 >
                     <div className='flex-col text-2xl text-left  font-bold z-10'>

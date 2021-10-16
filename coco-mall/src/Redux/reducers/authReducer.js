@@ -16,6 +16,8 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 uid: payload.uid,
                 name: payload.displayName,
+                state: payload.state,
+                country: payload.country,
 
                 userCart: [],
             };

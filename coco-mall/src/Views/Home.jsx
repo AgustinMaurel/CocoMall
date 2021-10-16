@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { BiCurrentLocation } from 'react-icons/bi';
 
 import HomeCard from '../Components/Cards/HomeCards';
 import NavBar from '../Components/NavBar/NavBar';
@@ -13,10 +14,16 @@ import SearchState from '../Components/Inputs/SearchState';
 import SliderHero from '../Components/Sliders/SliderHero';
 import SliderTypes from '../Components/Sliders/SliderTypes';
 import SlidersCards from '../Components/Sliders/SlidersCards';
+import axios from 'axios';
+import { GOOGLE_MAPS_API_KEY } from '../Scripts/constants';
 
 function Home() {
     const dispatch = useDispatch();
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
+    const { state } = useSelector((state) => state.auth);
+    
+    const [city, setCity] = useState('');
+
     const [typeSearch, setTypeSearch] = useState(false);
     const [checkType, setCheckType] = useState([]);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
@@ -44,6 +51,24 @@ function Home() {
         check,
         setCheck,
     );
+
+    //current position
+    const onCurrentPosition = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+
+            axios
+            .get(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=locality&key=${GOOGLE_MAPS_API_KEY}`,
+            )
+            .then((res) => res.data)
+            .then((city) =>{
+                setCity(city.results[0].formatted_address.split(',')[0])
+                console.log('ciudad encontrada: ', city.results[0].formatted_address.split(',')[0])
+            })
+        })
+    };
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-50'>
@@ -90,10 +115,21 @@ function Home() {
                     {/* --- STORES BY CITY --- */}
                     {allStores === storesFilters ? (
                         <div className='2xl:mt-6'>
-                            <h3 className='text-xl 2xl:text-2xl font-bold text-cocoMall-800'>
-                                Stores in your city
+                            <h3 className='inline-block text-xl 2xl:text-2xl font-bold text-cocoMall-800'>
+                                {state || city ? (
+                                    `Stores in ${state || city}`
+                                ) : (
+                                    <div className='flex gap-2'>
+                                        <span>Stores in your city</span>
+                                        <button className='pointer rounded-full p-1 bg-cocoMall-200 text-white hover:bg-cocoMall-400' onClick={onCurrentPosition}>
+                                            <BiCurrentLocation />
+                                        </button>
+                                    </div>
+                                )}
                             </h3>
-                            <SlidersCards allStores={allStores} storeDetail={storeDetail} />
+                            
+                                <SlidersCards allStores={allStores} storeDetail={storeDetail} />
+                            
                         </div>
                     ) : (
                         <button

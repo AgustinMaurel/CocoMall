@@ -6,10 +6,10 @@ import StoreState from '../Cards/StoreState';
 import coco from '../../Assets/icons/coco.png';
 
 const SlidersCards = ({ allStores, storeDetail }) => {
-    console.log(allStores.length);
+
     const settingsCards = {
         slidesToShow: allStores.length < 4 ? allStores.length : 4,
-        slidesToScroll: 4,
+        slidesToScroll: 2,
         dots: true,
         responsive: [
             {
@@ -47,22 +47,24 @@ const SlidersCards = ({ allStores, storeDetail }) => {
     };
 
     return (
-        <Slider {...settingsCards}>
-        {allStores?.map((e) => (
-            <Link
-                to={`/home/store/${e.id}`}
-                onClick={() => storeDetail(e.id)}
-            >
-                <StoreState
-                    id={e.id}
-                    storeName={e.storeName}
-                    description={e.description}
-                    cloudImage={e.cloudImage || coco}
-                    key={e.id}
-                />
-            </Link>
-        ))}
-    </Slider>
+        <div className={allStores.length < 3 ? 'max-w-2xl' : allStores.length < 4 ? 'max-w-4xl' : ''}>
+            <Slider {...settingsCards}>
+            {allStores?.map((e) => (
+                <Link
+                    to={`/home/store/${e.id}`}
+                    onClick={() => storeDetail(e.id)}
+                >
+                    <StoreState
+                        id={e.id}
+                        storeName={e.storeName}
+                        description={e.description}
+                        cloudImage={e.cloudImage || coco}
+                        key={e.id}
+                    />
+                </Link>
+            ))}
+        </Slider>
+        </div>
     )
 }
 

@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStores } from '../../Redux/actions/stores';
 
-const ProductsCreate = ({ idStore, product }) => {
+const ProductsCreate = ({ idStore, product, setFlag2, flag2 }) => {
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
@@ -66,6 +66,7 @@ const ProductsCreate = ({ idStore, product }) => {
             axios
                 .put(`/product/update/${product.id}`, { product: dataRawProduct })
                 .then(() => {
+                    setFlag2(!flag2)
                     setTypes('');
                     Swal.fire({
                         icon: 'success',
@@ -86,6 +87,7 @@ const ProductsCreate = ({ idStore, product }) => {
             axios
                 .post('/product/create', dataProductClean)
                 .then(() => {
+                    setFlag2(!flag2)
                     dispatch(getStores());
                     Swal.fire({
                         icon: 'success',

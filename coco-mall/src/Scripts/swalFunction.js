@@ -2,7 +2,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { DELETE_PRODUCT } from './constants';
 
-export async function modalOptions(id, setEditState, setFlag, flag) {
+export async function modalOptions(id, setEditState, setFlag, flag, setFlag2, flag2) {
     const inputOptions = new Promise((resolve) => {
         setTimeout(() => {
             resolve({
@@ -43,6 +43,7 @@ export async function modalOptions(id, setEditState, setFlag, flag) {
             axios
                 .delete(`${DELETE_PRODUCT}/${id}`)
                 .then(() => {
+                    setFlag2(!flag2);
                     setFlag(!flag);
                     Swal.fire({
                         icon: 'success',

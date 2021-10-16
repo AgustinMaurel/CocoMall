@@ -15,15 +15,15 @@ export default function ModelTable({
     idStore,
     setEditState,
     setProduct,
+    flag2,
+    setFlag2
 }) {
     const [flag, setFlag] = useState(false);
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getProductsStore(idStore));
-        
     }, [flag]);
-
+    
     return (
         <div className='items-center text-center justify-center  w-full'>
             <div >
@@ -52,35 +52,40 @@ export default function ModelTable({
                                                         flag,
                                                         setProduct,
                                                         el,
+                                                        flag2,
+                                                        setFlag2
                                                     );
                                                     setProduct(el);
                                                 }}
                                             />
-                                            {console.log(el.cloudImage)}
+                                           
                                         </div>
                                     </td>
                                     <td className='border  border-gray-400 py-2'>
-                                        {el.productName}
+                                        {el.productName || el.orderState || el.Name || el.storeName}
                                     </td>
-                                    <td className='border  border-gray-400 py-2'>{el.price}</td>
-                                    <td className='border  border-gray-400 py-2'>{el.id}</td>
-                                    <td className='border flex justify-center  border-gray-400 py-2'>
+                                    <td className='border  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.country +"/"+ el.state }</td>
+                                    <td className='border  border-gray-400 py-2'>{el.id }</td>
+
+                                    {el.Country ? <td className='border  border-gray-400 py-2'>{el.Country +"/"+ el.State }</td> : false}
+
+                                    { el.cloudImage ? <td className='border flex justify-center  border-gray-400 py-2'>
                                         <Image
                                             cloudName='cocomalls'
-                                            publicId={el.cloudImage[el.cloudImage.length -1]}
+                                            publicId={Array.isArray(el.cloudImage) ?  el.cloudImage[el.cloudImage.length -1] : el.cloudImage}
                                             width='200'
-                                            alt={el.productName}
+                                            alt={el.productName || false}
                                             crop='scale'
-                                        />
+                                        /> 
                                         
-                                    </td>
-                                    <td className='border  border-gray-400 py-2'>{el.stock}</td>
-                                    <td className='border  border-gray-400 py-2'>
+                                    </td> : false}
+                                    {el.stock ? <td className='border  border-gray-400 py-2'>{el.stock}</td> : false}
+                                    {el.ProductTypeId ? <td className='border  border-gray-400 py-2'>
                                         {types
                                             ? types.find((type) => type.id === el.ProductTypeId)
                                                   .Name
                                             : false}
-                                    </td>
+                                    </td> : false}
                                 </tr>
                             ))}
                     </tbody>

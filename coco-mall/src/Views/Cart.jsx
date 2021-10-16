@@ -63,12 +63,12 @@ export default function Cart() {
             </div>
 
             {/* BANNER */}
-            <div className='    h-20 flex flex-col items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 gap-2'>
+            <div className='    h-20 flex flex-col items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 '>
                 <h3 className='text-5xl font-extrabold text-white'>MY CART</h3>
             </div>
 
-            <div className='flex  justify-center relative bg-gray-100    py-4 '>
-                <div className='flex flex-col relative py-5  w-full h-full items-center align-center content-center justify-around rounded  gap-3  '>
+            <div className='flex  justify-center relative bg-gray-100     '>
+                <div className='flex flex-col relative py-2  w-full h-full items-center align-center content-center justify-around rounded  gap-5  '>
                     {/* CLEAR CART BUTTON */}
                     {userCart.length > 0 && (
                         <div className=' flex items-center self-start justify-center      text-primary   h-8 mx-2 px-1 z-10'>
@@ -81,6 +81,7 @@ export default function Cart() {
                         </div>
                     )}
 
+                    {/* CARDS */}
                     {userCart?.length > 0 ? (
                         userCart?.map((el) => (
                             <>
@@ -88,22 +89,6 @@ export default function Cart() {
                                     key={el.id}
                                     className=' bg-white    w-full flex flex-col shadow-lg   h-56 justify-around  relative  '
                                 >
-                                    {/* <div className='absolute top-2 right-5'>
-                                        <svg
-                                            xmlns='http://www.w3.org/2000/svg'
-                                            className='h-3 w-3'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            stroke='currentColor'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                strokeWidth={2}
-                                                d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
-                                            />
-                                        </svg>
-                                    </div> */}
                                     <div className='flex flex-row h-full items-center  relative w-full px-5 gap-10  py-5'>
                                         <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>
                                             <Image
@@ -259,6 +244,21 @@ export default function Cart() {
                                 >
                                     Go to checkout
                                 </button>
+                            </div>
+
+                            <div
+                                className=' flex items-center justify-center     
+                                              '
+                            >
+                                <Link to='/home'>
+                                    <button
+                                        className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+                                                md:text-lg
+                                              xl:text-primary xl:text-xl'
+                                    >
+                                        Continue Shopping
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     )}

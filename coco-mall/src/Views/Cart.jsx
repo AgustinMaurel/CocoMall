@@ -70,9 +70,12 @@ export default function Cart() {
             </div>
 
             {/* BANNER */}
-            <div className='    h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 '>
-                <h3 className='text-5xl font-extrabold text-white'>MY CART</h3>
+            <div className='   z-10 h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 '>
+                <h3 className='text-5xl z-10 font-extrabold text-white'>MY CART</h3>
             </div>
+            <div className='absolute h-36 w-36 lg:h-64 lg:w-64  rounded-full bg-primary top-16 right-0 z-0'></div>
+            <div className='absolute h-36 w-36  lg:h-64 lg:w-64 rounded-full bg-primary top-0 left-0 z-0'></div>
+            <div className='absolute md:h-10 md:w-10  rounded-full bg-primary top-20 md:left-96 z-0'></div>
 
             <div className='flex  justify-center relative  bg-gray-100   2xl:px-20  '>
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
@@ -97,7 +100,7 @@ export default function Cart() {
                         }}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className='flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-2/6 2xl:w-1/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border border-t-4 border-red-700'
+                        className='flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-2/6 2xl:w-1/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
                     >
                         <h2 className='text-center text-lg'>
                             Are you sure you want to{' '}
@@ -209,8 +212,8 @@ export default function Cart() {
                                                         disabled={el.stock === el.quantity}
                                                         className={
                                                             el.stock !== el.quantity
-                                                                ? `h-8 w-8 flex items-center justify-center  bg-white rounded-full  font-bold text-xl cursor-pointer`
-                                                                : `h-8 w-8 flex  items-center justify-center bg-cocoMall  rounded-full text-white font-bold text-xl cursor-not-allowed`
+                                                                ? `h-6 w-6 md:h-8 md:w-8 flex items-center justify-center  bg-white rounded-full  font-bold text-xl cursor-pointer`
+                                                                : `h-6 w-6 md:h-8 md:w-8 flex  items-center justify-center bg-cocoMall  rounded-full text-white font-bold text-xl cursor-not-allowed`
                                                         }
                                                     >
                                                         <svg
@@ -315,12 +318,12 @@ export default function Cart() {
                     </div>
                 </div>
             </div>
-            {!userCart.length && (
+            {/* {!userCart.length && (
                 <>
                     <div className='absolute h-14 w-14 rounded-full bg-primary bottom-50 right-20 z-0'></div>
                     <div className='absolute h-32 w-32 rounded-full bg-primary bottom-20 left-10 z-0'></div>
                 </>
-            )}
+            )} */}
         </div>
     );
 }

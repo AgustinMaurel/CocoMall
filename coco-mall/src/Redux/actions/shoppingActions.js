@@ -64,11 +64,11 @@ export const deleteAllItems = (uid, idItem, _que, cant) => {
     };
 };
 
-export const clearCart = () => {
-    // return(dispatch) => {
-    //     axios.post(SHOPPING_CART.ADD_TO_CART, )
-    // }
-    return { type: SHOPPING_CART_TYPES.CLEAR_CART };
+export const clearCart = (id) => {
+    return async (dispatch) => {
+        let result = await axios.post(SHOPPING_CART.CLEAR_CART, { id });
+        return dispatch({ type: SHOPPING_CART_TYPES.CLEAR_CART });
+    };
 };
 
 export const setCart = (payload) => {

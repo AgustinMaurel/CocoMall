@@ -38,7 +38,7 @@ export default function Cart() {
         dispatch(addToCartSomo(uid, id, que, cant));
     };
     const handleClearCart = (id) => {
-        dispatch(clearCart());
+        dispatch(clearCart(id));
     };
 
     const handleDeleteAllItems = (id, cant) => {
@@ -73,7 +73,7 @@ export default function Cart() {
                     {userCart.length > 0 && (
                         <div className=' flex items-center self-start justify-center      text-primary   h-8 mx-2 px-1 z-10'>
                             <button
-                                onClick={handleClearCart}
+                                onClick={() => handleClearCart(uid)}
                                 className='text-xs text-red-600 font-semibold z-50'
                             >
                                 Clear Cart
@@ -109,8 +109,6 @@ export default function Cart() {
                                             <Image
                                                 publicId={el.cloudImage[0]}
                                                 cloudName='cocomalls'
-                                                // crop='thumb'
-                                                // className='object-cover'
                                             >
                                                 <Transformation
                                                     gravity='auto'

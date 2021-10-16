@@ -56,7 +56,7 @@ export const addToCartSomo = (uid, idItem, que, cant) => {
                 id: uid,
                 item: {
                     idProduct: idItem,
-                    quantity: '1',
+                    quantity: 1,
                 },
                 que,
                 cant,
@@ -67,9 +67,31 @@ export const addToCartSomo = (uid, idItem, que, cant) => {
             });
     };
 };
+export const cartDeleteSomo = (uid, idItem) => {
+    return (dispatch) => {
+        axios
+            .post(SHOPPING_CART.RUTA_SOMO, {
+                id: uid,
+                item: {
+                    idProduct: idItem,
+                    quantity: '1',
+                },
+                que: '-',
+                cant: '1',
+            })
+            .then((res) => {
+                console.log(res.data);
+                return dispatch({
+                    type: SHOPPING_CART_TYPES.REMOVE_ONE_FROM_CART,
+                    payload: res.data,
+                }); // RECIBE: id(id usuario), item(itemid), que("+" o "-"), cant(cantidad de items que agrego o saco)
+            });
+    };
+};
 
-export const deleteFromCart = (id, quantity, cartUser, userId) => {
+export const deleteFromCart = (id, quantity, userCart, uid) => {
     quantity--;
+    console.log(quantity, 'quantity');
 
     return (dispatch) => {
         axios
@@ -77,8 +99,8 @@ export const deleteFromCart = (id, quantity, cartUser, userId) => {
                 SHOPPING_CART.ADD_TO_CART,
 
                 {
-                    userId: userId,
-                    cart: cartUser?.map((item) => {
+                    userId: uid,
+                    cart: userCart?.map((item) => {
                         if (item.id === id)
                             return {
                                 id,
@@ -92,6 +114,7 @@ export const deleteFromCart = (id, quantity, cartUser, userId) => {
                 },
             )
             .then((res) => {
+                console.log('res.data', res.data);
                 return dispatch({
                     type: SHOPPING_CART_TYPES.REMOVE_ONE_FROM_CART,
                     payload: res.data,

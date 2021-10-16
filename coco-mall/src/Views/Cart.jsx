@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
     addToCart,
+    addToCartSomo,
+    cartDeleteSomo,
     clearCart,
     deleteAllFromCart,
     deleteFromCart,
@@ -16,6 +18,9 @@ import { Image } from 'cloudinary-react';
 export default function Cart() {
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const que = '+';
+    const cant = 1;
 
     const { userCart, uid } = useSelector((state) => state.auth);
 
@@ -31,32 +36,22 @@ export default function Cart() {
         quantity: 1,
     };
 
-    let storageCart = useMemo(() => {
-        return {
-            userId: uid,
-            cart: userCart?.map((item) => {
-                return {
-                    id: item.id,
-                    quantity: item.quantity,
-                };
-            }),
-        };
-    }, [userCart, uid]);
-
     // let userCartToBack = {};
 
     // console.log(userCartToBack, 'userCartToBack');
 
     // console.log(userCartToBack, 'va al back');
 
-    const handleDeleteOne = (id, quantity) => {
-        dispatch(deleteFromCart(id, quantity, userCart, uid));
+    const handleDeleteOne = (id) => {
+        dispatch(cartDeleteSomo(uid, id));
     };
-    const handleAddButton = (id, quantity) => {
-        dispatch(addToCart(id, quantity, userCart, uid));
+
+    const handleAddButton = (id) => {
+        dispatch(addToCartSomo(uid, id, que, cant));
+        // dispatch(addToCart(id, quantity, userCart, uid));
         // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
     };
-    const handleClearCart = () => {
+    const handleClearCart = (id) => {
         dispatch(clearCart());
     };
 
@@ -70,16 +65,6 @@ export default function Cart() {
     //             };
     //         });
     // }, [userCart]);
-
-    useEffect(() => {
-        axios
-            .get(`/user/${uid}`)
-            .then((res) => {
-                console.log(res.data.Cart);
-                dispatch(setCart(res.data.Cart));
-            })
-            .catch((err) => console.log(err));
-    }, []);
 
     // useEffect(() => {
     //     // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
@@ -162,7 +147,7 @@ export default function Cart() {
                                     <div className='flex flex-row items-center w-full content-center justify-center gap-5'>
                                         <button
                                             id='btn-delete'
-                                            onClick={() => handleDeleteOne(el.id, el.quantity, uid)}
+                                            onClick={() => handleDeleteOne(el.id)}
                                             className='h-6 w-6 flex   items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'
                                         >
                                             -
@@ -170,7 +155,7 @@ export default function Cart() {
                                         <p className='font-bolder'>{el.quantity}</p>
                                         <button
                                             id='btn-add'
-                                            onClick={() => handleAddButton(el.id, el.quantity, uid)}
+                                            onClick={() => handleAddButton(el.id)}
                                             disabled={el.stock === el.quantity}
                                             className={
                                                 el.stock !== el.quantity

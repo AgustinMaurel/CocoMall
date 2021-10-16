@@ -1,8 +1,8 @@
 import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
 
 const initialState = {
-    uid: '7kbFgkPbXmMUgWGP3dEk4gDMSFm2',
-    name: 'Matias Monastirsky',
+    uid: '',
+    name: '',
     storeProducts: undefined,
     userCart: [], // mandar este carrito al back para que quede guardado en BD
 };
@@ -32,7 +32,6 @@ export const authReducer = (state = initialState, { type, payload }) => {
             };
 
         case SHOPPING_CART_TYPES.ADD_TO_CART:
-            console.log(payload, 'PAYLOAD');
             return {
                 ...state,
                 userCart: payload,
@@ -70,16 +69,18 @@ export const authReducer = (state = initialState, { type, payload }) => {
         // }
 
         case SHOPPING_CART_TYPES.REMOVE_ONE_FROM_CART:
-            // let itemToDelete = state.userCart.find((item) => item.id === payload.id);
+            // let itemToDelete = state.userCart.find((item) => item.id === payload[0].id);
 
             // return itemToDelete.quantity > 1
             //     ? {
             //           ...state,
-            //           userCart: state.userCart.map((item) =>
-            //               item.id === payload.id ? { ...item, quantity: payload.quantity } : item,
-            //           ),
+            //           userCart: payload,
             //       }
-            //     : { ...state, userCart: state.userCart.filter((item) => item.id !== payload.id) };
+            //     : {
+            //           ...state,
+            //           userCart: state.userCart.filter((item) => item.id !== payload[0].id),
+            //       };
+            console.log('payload', payload);
             return {
                 ...state,
                 userCart: payload,

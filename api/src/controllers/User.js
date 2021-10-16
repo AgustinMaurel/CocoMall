@@ -81,19 +81,20 @@ class UserModel extends ModelController {
         let Cart;
         try {
             const { id, item, que, cant } = req.body;
+
             let result = await this.model.findOne({ where: { id } });
+
             if (result) {
                 Cart = result.Cart;
             }
-            if (Cart?.length > 0) {
-                const result =
-                    Cart.length > 0 && Cart?.find((el) => el.idProduct === item.idProduct);
+            if (Cart.length > 0) {
+                const result = Cart.find((el) => el.id === item.idProduct);
                 if (!result) {
-                    pint;
-                    Cart.push();
+                    const producto = await Product.findOne({ where: { id: item.idProduct } });
+                    Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
                 } else {
                     Cart = Cart.map((el) => {
-                        if (el.idProduct === item.idProduct) {
+                        if (el.id === item.idProduct) {
                             if (que === '+') {
                                 return {
                                     ...el,
@@ -111,11 +112,14 @@ class UserModel extends ModelController {
                     });
                 }
                 Cart = Cart.filter((el) => el.quantity > 0);
+
                 await this.model.update({ Cart }, { where: { id } });
                 const user = await this.model.findOne({ where: { id } });
                 res.json([...user.Cart]);
             } else {
-                Cart.push({ ...item, quantity: Number(item.quantity) });
+                const producto = await Product.findOne({ where: { id: item.idProduct } });
+                Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+
                 await this.model.update({ Cart }, { where: { id } });
                 const user = await this.model.findOne({ where: { id } });
                 res.json([...user.Cart]);

@@ -21,13 +21,20 @@ function App() {
 
     const [, setChecking] = useState(true);
     const [, setIsLoggedIn] = useState(false);
-    const user = useSelector((state) => state.auth);
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
                 setIsLoggedIn(true);
+
+                user.uid &&
+                    axios
+                        .get(`/user/${user.uid}`)
+                        .then((res) => {
+                            dispatch(setCart(res.data.Cart));
+                        })
+                        .catch((err) => console.log(err));
             } else {
                 setIsLoggedIn(false);
             }
@@ -38,15 +45,6 @@ function App() {
     useEffect(() => {
         dispatch(getStores());
         dispatch(getProductTypes());
-
-        user.uid &&
-            axios
-                .get(`/user/${user.uid}`)
-                .then((res) => {
-                    console.log(res.data.Cart);
-                    dispatch(setCart(res.data.Cart));
-                })
-                .catch((err) => console.log(err));
     }, [dispatch]);
 
     return (

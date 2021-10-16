@@ -32,7 +32,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['id', 'address', 'cords'],
+                        attributes: ['directions'],
                     },
                 ],
             });
@@ -129,12 +129,13 @@ class UserModel extends ModelController {
         }
     };
 
-    clearCart2 = async (req, res) => {
-        const { id } = req.body;
-        await this.model.update({ Cart: [] }, { where: { id } });
-        const user = this.model.findOne({ where: { id } });
-        res.json({ user });
-    };
+    clearCart2=async(req,res)=>{
+        const {id}=req.body;
+        await this.model.update({Cart:[]},{where:{id}})
+        const user =this.model.findOne({where:{id}})
+        res.json({user})
+    }
+
 
     getUserById = async (req, res) => {
         const id = req.params.id;

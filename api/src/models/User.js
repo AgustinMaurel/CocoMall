@@ -33,25 +33,8 @@ module.exports = (sequelize) => {
                 defaultValue: [],
                 allowNull: false,
             },
-            Country: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            State: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            SuperAdmin: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false
-            },
-            OrdersHistory: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
-                defaultValue: []
-            }
         },
-        {   
+        {
             timestamps: false,
             createdAt: false,
         }

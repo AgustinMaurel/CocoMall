@@ -41,10 +41,6 @@ module.exports = (sequelize) => {
             // payment_account: {
             //PENDING
             // }
-            international: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: false
-            }
         },
         {
             timestamps: false,

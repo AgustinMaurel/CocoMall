@@ -95,12 +95,12 @@ Order.belongsTo(Address);
 // //---------------------------------
 
 Order.hasOne(Review, { foreignKey: { id: 'myOrderid' } });
-Review.belongsTo(Order); 
+Review.belongsTo(Order);
 
 // //---------------------------------
 
 Store.hasMany(Order, { foreignKey: { id: 'myStoreid' } });
-Order.belongsTo(Store); 
+Order.belongsTo(Store);
 
 // //---------------------------------
 
@@ -120,22 +120,7 @@ Order.belongsToMany(Product, { through: 'ordersProduct' });
 // //---------------------------------
 
 Product.hasMany(Question, { foreignKey: { id: 'myProductid' } });
-Question.belongsTo(Product); // H
-
-// //---------------------------------
-
-User.hasMany(Question, { foreignKey: { id: 'myUserid' } });
-Question.belongsTo(User); // H
-
-// //---------------------------------
-
-Store.hasMany(Review, { foreignKey: { id: 'myStoreid' }});
-Review.belongsTo(Store) // H
-
-// //---------------------------------
-
-User.hasMany(Review, { foreignKey: { id: 'myUserid' }})
-Review.belongsTo(User)  // H
+Question.belongsTo(Product);
 
 module.exports = {
     db: sequelize,

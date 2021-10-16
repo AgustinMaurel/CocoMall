@@ -9,7 +9,6 @@ import {
     ORDER_PRODUCTS,
     ORDER_STORE,
     SEARCH_BY_NAME,
-    ALL_PRODUCTS
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -21,12 +20,6 @@ export const getStores = () => {
     };
 };
 
-export const getAllProducts = ()=> {
-    return async (dispatch) => {
-        const response = await axios.get('/product');
-        dispatch({type: ALL_PRODUCTS, payload:response.data})
-    }
-}
 export const filterStores = (payload) => {
     const obj = {
         state: payload.state,

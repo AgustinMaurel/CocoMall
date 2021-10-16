@@ -8,7 +8,7 @@ import {
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
     FILTER_STORE,
-    ALL_PRODUCTS
+    ORDER_STORE,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -20,16 +20,10 @@ const initialState = {
     productDetail: {}, //deberiamos pasarlo a local
     productTypes: [],
     storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
-    allProducts:[]
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case ALL_PRODUCTS:
-            return {
-                ...state,
-                allProducts: payload
-            }
         case GET_STORES:
             return {
                 ...state,

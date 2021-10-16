@@ -39,7 +39,8 @@ export default function ModelTable ( { info, column_title, types,idStore, setEdi
                                             <FiSettings
                                                 onClick={() => {
                                                     swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
-                                                    setProduct(el);
+                                                    console.log(el)
+                                                    setProduct && setProduct(el) ;
                                                 }}
                                             />
                                            

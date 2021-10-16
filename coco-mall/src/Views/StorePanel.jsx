@@ -9,9 +9,10 @@ import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { modalOptions } from '../Scripts/swalFunction.js';
+import { productOptions, storeOptions } from '../Scripts/swalFunction.js';
 
 export default function StorePanel() {
+
     const dispatch = useDispatch();
 
     const stores = useSelector((state) => state.stores);
@@ -275,7 +276,7 @@ export default function StorePanel() {
                                 ]}
                                 flag2={flag2}
                                 setFlag2={setFlag2}
-                                swalFunction={modalOptions}
+                                swalFunction={productOptions}
                             />
                         ) : renderSec === true ? (
                             <ProductsCreate idStore={idActual} />
@@ -301,7 +302,7 @@ export default function StorePanel() {
                                 column_title={['Action', 'Name', 'Price', 'Id', 'Image', 'Stock', 'Type',]}
                                 flag2={flag2}
                                 setFlag2={setFlag2}
-                                swalFunction={modalOptions}
+                                swalFunction={productOptions}
 
 
                             />}
@@ -319,7 +320,11 @@ export default function StorePanel() {
 
                         {render === "StoresAdmin" &&
                             <ModelTable info={allStores}
-                                column_title={['Action', 'Name', 'Location', 'Id', 'Logo']} />}
+                                column_title={['Action', 'Name', 'Location', 'Id', 'Logo']}
+                                swalFunction={storeOptions}
+                                flag2={flag2}
+                                setFlag2={setFlag2}
+                                 />}
                     </div>
                 </div>
             ) : (

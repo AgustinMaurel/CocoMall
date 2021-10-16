@@ -26,7 +26,6 @@ function ProductDetail(props) {
             }),
         };
     }, [userCart, uid]);
-    console.log(product.id);
 
     const handleButtonClick = () => {
         dispatch(addToCart(product.id));

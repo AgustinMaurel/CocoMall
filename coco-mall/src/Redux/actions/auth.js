@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT } from './actionTypes.js';
+import { LOGIN, LOGOUT, USER_INFO } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
@@ -9,7 +9,6 @@ export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
-                console.log(user);
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) => {
@@ -122,6 +121,13 @@ export const startLogout = () => {
         await auth.signOut().then(dispatch(logout()));
     };
 };
+
+export const userInfo = (uid) => {
+    return async (dispatch) => {
+        const response = await axios.get(`/user/${uid}`)
+        dispatch({type: USER_INFO, payload: response.data})
+    }
+}
 
 export const logout = () => {
     return {

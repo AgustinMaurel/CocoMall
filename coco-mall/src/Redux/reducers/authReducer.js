@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT } from '../actions/actionTypes';
+import { LOGIN, LOGOUT, SHOPPING_CART_TYPES, GET_PRODUCT, USER_INFO } from '../actions/actionTypes';
 
 const initialState = {
     uid: '',
@@ -7,6 +7,7 @@ const initialState = {
     country: '',
     storeProducts: [],
     userCart: [], // mandar este carrito al back para que quede guardado en BD
+    userInfoDB: []
 };
 
 export const authReducer = (state = initialState, { type, payload }) => {
@@ -27,6 +28,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 name: '',
                 storeProducts: [],
                 userCart: [],
+                userInfoDB: []
             };
 
         case GET_PRODUCT:
@@ -34,6 +36,12 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 storeProducts: payload,
             };
+        
+        case USER_INFO: 
+        return {
+            ...state,
+            userInfoDB: payload
+        }
 
         case SHOPPING_CART_TYPES.ADD_TO_CART: {
             let newItem = state.storeProducts?.find(

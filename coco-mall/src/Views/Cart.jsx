@@ -237,8 +237,8 @@ export default function Cart() {
                                             xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
                             >
                                 <button
-                                    className=' focus:outline-none text-center text-lg font-bold w-full h-full
-                                                md:text-lg
+                                    className=' focus:outline-none text-center text-lg font-bold w-full h-full      
+                                                sm:text-xl
                                               xl:text-primary xl:text-xl'
                                     onClick={handleCheckout}
                                 >
@@ -253,7 +253,8 @@ export default function Cart() {
                                 <Link to='/home'>
                                     <button
                                         className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
-                                                md:text-lg
+                                        sm:text-sm        
+                                        
                                               xl:text-primary xl:text-xl'
                                     >
                                         Continue Shopping

@@ -41,7 +41,22 @@ class ReviewModel extends ModelController {
     };
 
     updateReview = async (req,res) => {
-        res.send("Soy el actualizar")
+
+        const { id } = req.params
+
+        if(id && req.body.description){ 
+            try{
+                let obj = {description: req.body.description}
+                // <------- Qualification?
+                const upReview = await this.model.update({...obj}, {where: {id: id}})
+                res.send("Review updated successfully")
+            }catch(e){
+                res.send({error: e})
+            }
+        }else{
+            res.send("No review id")
+        }
+        // res.send("Soy el actualizar")
     }
 
     deleteReview = async (req,res) => {

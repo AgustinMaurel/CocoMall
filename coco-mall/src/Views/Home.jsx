@@ -70,7 +70,11 @@ function Home() {
                     />
 
                     <div className=' h-36 m-auto'>
-                        <SliderTypes productTypes={productTypes} handleChecked={handleChecked} check={check} />
+                        <SliderTypes
+                            productTypes={productTypes}
+                            handleChecked={handleChecked}
+                            check={check}
+                        />
                     </div>
                     <div className='hidden'>Ordenamientos</div>
                     <div className='hidden'>

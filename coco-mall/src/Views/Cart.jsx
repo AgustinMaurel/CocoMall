@@ -3,16 +3,7 @@ import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import {
-    addToCart,
-    addToCartSomo,
-    cartDeleteSomo,
-    clearCart,
-    deleteAllFromCart,
-    deleteFromCart,
-    setCart,
-} from '../Redux/actions/shoppingActions';
-import { SHOPPING_CART } from '../Scripts/constants';
+import { addToCartSomo, cartDeleteSomo, clearCart } from '../Redux/actions/shoppingActions';
 import { Image } from 'cloudinary-react';
 
 export default function Cart() {
@@ -24,8 +15,6 @@ export default function Cart() {
 
     const { userCart, uid } = useSelector((state) => state.auth);
 
-    // console.log(cart, 'es el userCart con el local storage añadido');
-
     let total =
         userCart.length > 0 &&
         Object.values(userCart).reduce((previous, key) => previous + key.price * key.quantity, 0);
@@ -36,59 +25,16 @@ export default function Cart() {
         quantity: 1,
     };
 
-    // let userCartToBack = {};
-
-    // console.log(userCartToBack, 'userCartToBack');
-
-    // console.log(userCartToBack, 'va al back');
-
     const handleDeleteOne = (id) => {
         dispatch(cartDeleteSomo(uid, id));
     };
 
     const handleAddButton = (id) => {
         dispatch(addToCartSomo(uid, id, que, cant));
-        // dispatch(addToCart(id, quantity, userCart, uid));
-        // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
     };
     const handleClearCart = (id) => {
         dispatch(clearCart());
     };
-
-    // useEffect(() => {
-    //     return () =>
-    //         userCart.length > 0 &&
-    //         axios.post(SHOPPING_CART.ADD_TO_CART, storageCart).then((res) => {
-    //             return {
-    //                 ...userCart,
-    //                 quantity: res.data.quantity,
-    //             };
-    //         });
-    // }, [userCart]);
-
-    // useEffect(() => {
-    //     // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
-    // }, [storageCart]);
-
-    // let productCarts;
-    // useEffect(() => {
-    //     productCarts = cart?.map((el) => el);
-    // }, [userCart]);
-
-    // console.log(async () => await cart?.map((el) => el.productName), 'storage cart');
-    // console.log(productCarts, 'soy product carts (locale storage)');
-
-    // useEffect(() => {
-    //     const data = localStorage.getItem('user-cart');
-    //     if (data) {
-    //         setCart([...JSON.parse(data)]);
-    //     }
-    // }, [userCart]);
-
-    // useEffect(() => {
-    //     localStorage.setItem('user-cart', JSON.stringify(userCart));
-    //     // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
-    // }, [userCart]);
 
     function handleCheckout() {
         return userCart.length > 0

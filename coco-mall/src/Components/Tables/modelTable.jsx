@@ -1,28 +1,21 @@
 import React from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'cloudinary-react';
-import { modalOptions } from './swalFunction';
+
 import { useState } from 'react';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductsStore } from '../Redux/actions/stores';
+import { getProductsStore } from '../../Redux/actions/stores';
 
-export default function ModelTable({
-    info,
-    column_title,
-    types,
-    idStore,
-    setEditState,
-    setProduct,
-    flag2,
-    setFlag2
-}) {
-    const [flag, setFlag] = useState(false);
+export default function ModelTable ( { info, column_title, types,idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
+
+    const [flag3, setFlag3] = useState(false);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getProductsStore(idStore));
-    }, [flag]);
+    }, [flag3]);
     
     return (
         <div className='items-center text-center justify-center  w-full'>
@@ -45,16 +38,7 @@ export default function ModelTable({
                                         <div className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
-                                                    modalOptions(
-                                                        el.id,
-                                                        setEditState,
-                                                        setFlag,
-                                                        flag,
-                                                        setProduct,
-                                                        el,
-                                                        flag2,
-                                                        setFlag2
-                                                    );
+                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
                                                     setProduct(el);
                                                 }}
                                             />

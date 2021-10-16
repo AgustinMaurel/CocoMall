@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image } from "cloudinary-react"
-import ModelTable from '../Scripts/modelTable';
+import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import { filterProducts, getProductsStore, getStores, ordersProduct, } from '../Redux/actions/stores';
+import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { modalOptions } from '../Scripts/swalFunction.js';
 export default function StorePanel() {
     const dispatch = useDispatch();
 
@@ -23,6 +23,8 @@ export default function StorePanel() {
 
     const productsTypes = useSelector((state) => state.stores.productTypes);
 
+    const allProducts = useSelector(state => state.stores.allProducts)
+
     const [flag, setFlag] = useState(false);
     const [flag2, setFlag2] = useState(false);
     const [idActual, setIdActual] = useState('');
@@ -31,46 +33,49 @@ export default function StorePanel() {
     const [render, setRender] = useState('');
     const [editState, setEditState] = useState(true);
     const [renderSec, setRenderSec] = useState(false);
-    const [userAdmin, setUserAdmin] = useState({
-        admin: false
-    })
-    const [allProducts, setAllProducts] = useState()
+
+    const [userAdmin, setUserAdmin] = useState(false)
+
     const [ordersStore, setOrdersStore] = useState()
     const [allOrders, setAllOrders] = useState()
     const [allUsers, setAllUsers] = useState()
     const [allStores, setAllStores] = useState()
 
-    const id = user.uid
-  
-    useEffect(()=>{
-        axios.get('/product')
-        .then(res=>setAllProducts(res.data))
-        axios.get('/order')
-        .then(res=> setAllOrders(res.data))
-        axios.get('/store')
-        .then(res=>setAllStores(res.data))
-    },[flag2])
-
-    useEffect(()=>{
-        axios.get(`/order/${idActual}`)
-        .then(res=>setOrdersStore(res.data))
-    },[idActual])
-
-    useEffect(()=>{
-        axios.get('/user')
-        .then(res=>setAllUsers(res.data))
-    },[])
 
     useEffect(() => {
         dispatch(getStores());
-        axios.get(`/user/${id}`)
-        .then(res=>setUserAdmin({
-            admin: res.data[0]?.SuperAdmin
-        }))
-    }, []);
+        axios.get(`/user/`)
+            .then(res => {
+                let aux = res.data.find(el => el.id === user.uid)
+                setUserAdmin(aux?.SuperAdmin)
+            })
+    }, [user]);
 
-  
-   
+
+    useEffect(() => {
+        dispatch(getAllProducts())
+        axios.get('/order')
+            .then(res => setAllOrders(res.data))
+        axios.get('/store')
+            .then(res => setAllStores(res.data))
+    }, [flag2])
+
+
+    useEffect(() => {
+        axios.get(`/order/${idActual}`)
+            .then(res => setOrdersStore(res.data))
+    }, [idActual])
+
+
+    useEffect(() => {
+        axios.get('/user')
+            .then(res => setAllUsers(res.data))
+    }, [])
+
+
+
+
+
     useEffect(() => {
         dispatch(getProductsStore(idActual));
     }, [flag]);
@@ -106,9 +111,9 @@ export default function StorePanel() {
 
     const filterOrders = ['All', 'Rejected', 'Completed'];
 
-console.log(allStores)
+
     const filtersNow =
-        render === 'Products' ? filterProduct : render === 'Orders' ? filterOrders : [];
+        render === 'Products' || render === "ProductsAdmin" ? filterProduct : render === 'Orders' || render === 'OrdersAdmin' ? filterOrders : [];
 
     return (
         <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
@@ -178,15 +183,16 @@ console.log(allStores)
                         <button className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>Profile</button>
 
                     </div>
-                     {userAdmin.admin === true ? <div className="flex flex-col text-start items-center justify-center">
+                    {userAdmin ?
+                        <div className="flex flex-col text-start items-center justify-center">
 
-                        <h1 className='text-center self-center p-5'>Admin Panel</h1>
-                        <button value="ProductsAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Products</button>
-                        <button value="OrdersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Orders</button>
-                        <button value="UsersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Users</button>
-                        <button value="StoresAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Stores</button>
+                            <h1 className='text-center self-center p-5'>Admin Panel</h1>
+                            <button value="ProductsAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Products</button>
+                            <button value="OrdersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Orders</button>
+                            <button value="UsersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Users</button>
+                            <button value="StoresAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Stores</button>
 
-                    </div> : false}
+                        </div> : null}
                 </div>
             </div>
 
@@ -195,7 +201,7 @@ console.log(allStores)
                     <IoArrowBack />
 
                     <div className='text-center justify-center items-center'>
-                        {selectStore === 'SelectStore' ? (
+                        {selectStore === 'SelectStore' && render === '' ? (
                             <Link to="/create/shop">
                                 <button className='my-1 bg-primary rounded text-white p-1 cursor-pointer'>Create a Store</button>
                             </Link>
@@ -266,9 +272,10 @@ console.log(allStores)
                                     'Stock',
                                     'Type',
                                 ]}
+                                swalFunction={modalOptions}
                             />
                         ) : renderSec === true ? (
-                            <ProductsCreate idStore={idActual} setFlag2={setFlag2} flag2={flag2}/>
+                            <ProductsCreate idStore={idActual} />
                         ) : (
                             false
                         )}
@@ -280,29 +287,44 @@ console.log(allStores)
                             />
                         )}
                         {render === 'ProductsAdmin' &&
-                        <ModelTable  column_title={[
-                            'Action',
-                            'Name',
-                            'Price',
-                            'Id',
-                            'Image',
-                            'Stock',
-                            'Type',
-                        ]} types={productsTypes} info={allProducts} flag2={flag2} setFlag2={setFlag2} setProduct={setProduct} setEditState={setEditState} idStore={idActual}/>}
-                        {render === 'OrdersAdmin' && selectStore !== 'All' && (
+
+
+                            <ModelTable
+                                info={allProducts}
+                                setProduct={setProduct}
+                                setEditState={setEditState}
+                                idStore={idActual}
+                                types={productsTypes}
+                                column_title={['Action', 'Name', 'Price', 'Id', 'Image', 'Stock', 'Type',]}
+                                flag2={flag2}
+                                setFlag2={setFlag2}
+                                swalFunction={modalOptions}
+
+
+                            />}
+
+                        {render === 'OrdersAdmin' && (
                             <ModelTable
                                 info={allOrders}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
                             />
                         )}
-                        {render === "UsersAdmin" && 
-                        <ModelTable info={allUsers}  column_title={['Action', 'Name', 'Mail', 'Id', 'Location']}/>}
-                        {render === "StoresAdmin" && <ModelTable info={allStores}  column_title={['Action', 'Name', 'Location', 'Id', 'Logo']}/>}
+
+                        {render === "UsersAdmin" &&
+                            <ModelTable info={allUsers}
+                                column_title={['Action', 'Name', 'Mail', 'Id', 'Location']} />}
+
+                        {render === "StoresAdmin" &&
+                            <ModelTable info={allStores}
+                                column_title={['Action', 'Name', 'Location', 'Id', 'Logo']} />}
                     </div>
                 </div>
             ) : (
                 <div>
-                    <IoArrowBack onClick={() => setEditState(true)} />
+                    <IoArrowBack onClick={() => {
+                        setRender('')
+                        setEditState(true)
+                    }} />
                     <ProductsCreate idStore={idActual} product={product} />
                 </div>
             )}

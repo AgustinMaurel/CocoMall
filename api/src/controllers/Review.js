@@ -39,6 +39,14 @@ class ReviewModel extends ModelController {
             res.status(400).send({ message: 'No id' });
         }
     };
+
+    updateReview = async (req,res) => {
+        res.send("Soy el actualizar")
+    }
+
+    deleteReview = async (req,res) => {
+        res.send("Soy el borrar")
+    }
 }
 
 const ReviewController = new ReviewModel(Review);

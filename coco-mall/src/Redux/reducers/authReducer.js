@@ -80,7 +80,6 @@ export const authReducer = (state = initialState, { type, payload }) => {
             //           ...state,
             //           userCart: state.userCart.filter((item) => item.id !== payload[0].id),
             //       };
-            console.log('payload', payload);
             return {
                 ...state,
                 userCart: payload,

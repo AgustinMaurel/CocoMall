@@ -80,7 +80,7 @@ class UserModel extends ModelController {
     updateCart2 = async (req, res) => {
         const { id, item, que, cant } = req.body;
         let { Cart } = await this.model.findOne({ where: { id } });
-        const result = await Cart?.find((el) => el.idProduct === item.idProduct);
+        const result = Cart.length > 0 && Cart?.find((el) => el.idProduct === item.idProduct);
         if (!result) {
             Cart.push(item);
         } else {

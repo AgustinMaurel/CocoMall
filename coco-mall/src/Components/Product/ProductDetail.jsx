@@ -12,29 +12,16 @@ function ProductDetail(props) {
     const dispatch = useDispatch();
 
     const { product } = props;
-
+    const quantity = 0;
     const { userCart, uid } = useSelector((state) => state.auth);
 
-    let userCartToBack = useMemo(() => {
-        return {
-            userId: uid,
-            cart: userCart?.map((item) => {
-                return {
-                    idProduct: item.id,
-                    quantity: item.quantity,
-                };
-            }),
-        };
-    }, [userCart, uid]);
-    console.log(product.id);
-
-    const handleButtonClick = () => {
-        dispatch(addToCart(product.id));
+    const handleButtonClick = (id) => {
+        dispatch(addToCart(id, quantity, userCart, uid));
     };
 
-    useEffect(() => {
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    }, [userCartToBack]);
+    // useEffect(() => {
+    //     axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+    // }, [userCartToBack]);
 
     return (
         <div className='    flex justify-center w-full h-full'>
@@ -65,7 +52,7 @@ function ProductDetail(props) {
                 </div>
                 <button
                     className='font-bold text-center text-xl text-white bg-cocoMall-300 py-4'
-                    onClick={handleButtonClick}
+                    onClick={() => handleButtonClick(product.id)}
                 >
                     Add Cart
                 </button>

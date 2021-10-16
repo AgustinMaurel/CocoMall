@@ -59,6 +59,9 @@ export default function StoreDetail() {
         discount: 0,
     });
 
+    // const [Cart, setCart] = useState();
+    // console.log(Cart, 'LOCAL STORAGE');
+
     let userCartToBack = {
         userId: uid,
         cart: [],
@@ -93,11 +96,16 @@ export default function StoreDetail() {
         };
     }, [dispatch, allStores]);
 
-    const handleClearCart = () => {
-        dispatch(clearCart());
+    // useEffect(() => {
+    //     const data = localStorage.getItem('user-cart');
+    //     if (data) {
+    //         setCart(JSON.parse(data));
+    //     }
+    // }, [userCart]);
 
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    };
+    // useEffect(() => {
+    //     localStorage.setItem('user-cart', JSON.stringify(userCart));
+    // }, [userCart]);
 
     const modalFuncion = (id) => {
         dispatch(getProductDetail(id));
@@ -241,7 +249,12 @@ export default function StoreDetail() {
                                                               <Product
                                                                   product={product}
                                                                   addToCart={() =>
-                                                                      addToCart(product.id)
+                                                                      addToCart(
+                                                                          product.id,
+
+                                                                          userCart,
+                                                                          uid,
+                                                                      )
                                                                   }
                                                               />
                                                           </div>
@@ -270,7 +283,12 @@ export default function StoreDetail() {
                                                               <Product
                                                                   product={product}
                                                                   addToCart={() =>
-                                                                      addToCart(product.id)
+                                                                      addToCart(
+                                                                          product.id,
+
+                                                                          userCart,
+                                                                          uid,
+                                                                      )
                                                                   }
                                                               />
                                                           </div>
@@ -297,39 +315,12 @@ export default function StoreDetail() {
                         >
                             <ProductDetail
                                 product={productDetail}
-                                addToCart={() => addToCart(productDetail.id)}
+                                addToCart={() => addToCart(productDetail.id, userCart, uid)}
                             />
                         </ReactModal>
                     ) : (
                         false
                     )}
-                </div>
-            </div>
-
-            {/* CART */}
-            <div className=' col-span-12 flex flex-col hidden pl-12 pr-12'>
-                <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
-                    <div className=' '>
-                        <h3>Carrito</h3>
-                        {userCart.length > 0 ? (
-                            <button
-                                className='border bg-red-600 text-white shadow p-1'
-                                onClick={handleClearCart}
-                            >
-                                Clear cart
-                            </button>
-                        ) : (
-                            false
-                        )}
-                        {userCart?.map((item, index) => (
-                            <CartItem
-                                key={index}
-                                data={item}
-                                deleteFromCart={() => deleteFromCart(item.id)}
-                                deleteAllFromCart={() => deleteAllFromCart(item.id)}
-                            />
-                        ))}
-                    </div>
                 </div>
             </div>
         </div>

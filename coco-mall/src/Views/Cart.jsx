@@ -1,17 +1,25 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { addToCart, clearCart, deleteAllFromCart, deleteFromCart, setCart } from '../Redux/actions/shoppingActions';
+import {
+    addToCart,
+    clearCart,
+    deleteAllFromCart,
+    deleteFromCart,
+    setCart,
+} from '../Redux/actions/shoppingActions';
 import { SHOPPING_CART } from '../Scripts/constants';
-import { Image } from 'cloudinary-react'
+import { Image } from 'cloudinary-react';
 
 export default function Cart() {
     const history = useHistory();
     const dispatch = useDispatch();
 
     const { userCart, uid } = useSelector((state) => state.auth);
+
+    // console.log(cart, 'es el userCart con el local storage añadido');
 
     let total =
         userCart.length > 0 &&
@@ -23,77 +31,117 @@ export default function Cart() {
         quantity: 1,
     };
 
-    
-
-    let userCartToBack = useMemo(() => {
+    let storageCart = useMemo(() => {
         return {
             userId: uid,
             cart: userCart?.map((item) => {
                 return {
-                    idProduct: item.id,
+                    id: item.id,
                     quantity: item.quantity,
                 };
             }),
         };
     }, [userCart, uid]);
 
-    const handleDeleteOne = (id) => {
-        dispatch(deleteFromCart(id));
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+    // let userCartToBack = {};
+
+    // console.log(userCartToBack, 'userCartToBack');
+
+    // console.log(userCartToBack, 'va al back');
+
+    const handleDeleteOne = (id, quantity) => {
+        dispatch(deleteFromCart(id, quantity, userCart, uid));
     };
-    const handleAddButton = (id) => {
-        dispatch(addToCart(id));
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
+    const handleAddButton = (id, quantity) => {
+        dispatch(addToCart(id, quantity, userCart, uid));
+        // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
     };
     const handleClearCart = () => {
         dispatch(clearCart());
-        console.log('click')
-
     };
 
+    // useEffect(() => {
+    //     return () =>
+    //         userCart.length > 0 &&
+    //         axios.post(SHOPPING_CART.ADD_TO_CART, storageCart).then((res) => {
+    //             return {
+    //                 ...userCart,
+    //                 quantity: res.data.quantity,
+    //             };
+    //         });
+    // }, [userCart]);
+
     useEffect(() => {
+        axios
+            .get(`/user/${uid}`)
+            .then((res) => {
+                console.log(res.data.Cart);
+                dispatch(setCart(res.data.Cart));
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
-        return () => {
-            axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-        }
-    }, [userCartToBack])
+    // useEffect(() => {
+    //     // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
+    // }, [storageCart]);
 
+    // let productCarts;
+    // useEffect(() => {
+    //     productCarts = cart?.map((el) => el);
+    // }, [userCart]);
 
+    // console.log(async () => await cart?.map((el) => el.productName), 'storage cart');
+    // console.log(productCarts, 'soy product carts (locale storage)');
+
+    // useEffect(() => {
+    //     const data = localStorage.getItem('user-cart');
+    //     if (data) {
+    //         setCart([...JSON.parse(data)]);
+    //     }
+    // }, [userCart]);
+
+    // useEffect(() => {
+    //     localStorage.setItem('user-cart', JSON.stringify(userCart));
+    //     // axios.post(SHOPPING_CART.ADD_TO_CART, storageCart);
+    // }, [userCart]);
 
     function handleCheckout() {
         return userCart.length > 0
             ? axios
-                .post('/checkout/mercadopago', objectToCheckout)
-                .then((order) => {
-                    history.push(`/checkout/${order.data.response}`);
-                })
-                .catch((err) => console.log(err))
+                  .post('/checkout/mercadopago', objectToCheckout)
+                  .then((order) => {
+                      history.push(`/checkout/${order.data.response}`);
+                  })
+                  .catch((err) => console.log(err))
             : false;
     }
 
     return (
-        <div className='' >
+        <div className=''>
             <div className=' sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>
 
             <div className='flex  justify-center relative   py-4 px-1 '>
-
                 <div className='flex flex-col relative py-5 px-2  w-full h-full items-center align-center content-center justify-around rounded  gap-5  '>
-                    {userCart.length > 0 &&
+                    {userCart.length > 0 && (
                         <div className='shadow-lg flex items-center self-start justify-center bg-white  border border-red-600  text-primary  rounded h-8 px-1 z-50'>
-
-                            <button onClick={handleClearCart} className='text-xs text-red-600 font-semibold h-full w-full z-50'>Clear Cart</button>
-
+                            <button
+                                onClick={handleClearCart}
+                                className='text-xs text-red-600 font-semibold h-full w-full z-50'
+                            >
+                                Clear Cart
+                            </button>
                         </div>
-                    }
+                    )}
 
-
-                    {userCart.length > 0 ? (
-                        userCart.map((el, index) => (
+                    {userCart?.length > 0 ? (
+                        userCart?.map((el) => (
                             <>
-                                <div key={el.id} className='bg-white  border border-gray-200 rounded w-full flex flex-col shadow-lg py-5 h-36 justify-around  relative gap-2'>
-
+                                <div
+                                    key={el.id}
+                                    className='bg-white  border border-gray-200 rounded w-full flex flex-col shadow-lg py-5 h-36 justify-around  relative gap-2'
+                                >
                                     <div className='flex flex-row   relative w-full px-5 gap-4'>
                                         <div className='justify-self-start self-start shadow '>
                                             <Image
@@ -103,7 +151,6 @@ export default function Cart() {
                                                 cloudName='cocomalls'
                                                 crop='scale'
                                             />
-
                                         </div>
                                         <div className='flex flex-col flex-none flex-no-wrap'>
                                             <h2 className='font-bold text-md'>{el.productName}</h2>
@@ -114,23 +161,30 @@ export default function Cart() {
 
                                     <div className='flex flex-row items-center w-full content-center justify-center gap-5'>
                                         <button
-                                            onClick={() => handleDeleteOne(el.id)}
-                                            className='h-6 w-6 flex   items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'>
+                                            id='btn-delete'
+                                            onClick={() => handleDeleteOne(el.id, el.quantity, uid)}
+                                            className='h-6 w-6 flex   items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer'
+                                        >
                                             -
                                         </button>
                                         <p className='font-bolder'>{el.quantity}</p>
-                                        {console.log(el.stock === el.quantity)}
                                         <button
-                                            onClick={() => handleAddButton(el.id)}
+                                            id='btn-add'
+                                            onClick={() => handleAddButton(el.id, el.quantity, uid)}
                                             disabled={el.stock === el.quantity}
-                                            className={el.stock !== el.quantity ? `h-6 w-6 flex items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer` :
-                                                `h-6 w-6 flex  items-center justify-center bg-gray-200  rounded-full text-white font-bold text-lg cursor-not-allowed`}>
+                                            className={
+                                                el.stock !== el.quantity
+                                                    ? `h-6 w-6 flex items-center justify-center bg-secondary  rounded-full text-white font-bold text-lg cursor-pointer`
+                                                    : `h-6 w-6 flex  items-center justify-center bg-gray-200  rounded-full text-white font-bold text-lg cursor-not-allowed`
+                                            }
+                                        >
                                             +
                                         </button>
                                     </div>
                                 </div>
                                 <div className='border border-gray-100 w-full'></div>
-                            </>))
+                            </>
+                        ))
                     ) : (
                         <>
                             <div className=' absolute -bottom-40 flex flex-col gap-4'>
@@ -141,22 +195,19 @@ export default function Cart() {
                                 className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8     absolute -bottom-60        
                                     xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
                             >
-                                <Link to='/home'
+                                <Link
+                                    to='/home'
                                     className=' focus:outline-none text-center text-base 
                                         md:text-lg
                                       xl:text-primary xl:text-xl'
-
                                 >
                                     Go to Home
                                 </Link>
                             </div>
+                        </>
+                    )}
 
-
-
-                        </>)}
-
-                    {userCart.length > 0 &&
-
+                    {userCart.length > 0 && (
                         <div
                             className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8 
                                         xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
@@ -169,15 +220,16 @@ export default function Cart() {
                             >
                                 Go to checkout
                             </button>
-
-                        </div>}
+                        </div>
+                    )}
                 </div>
             </div>
-            {!userCart.length &&
+            {!userCart.length && (
                 <>
                     <div className='absolute h-14 w-14 rounded-full bg-primary bottom-50 right-20 z-0'></div>
                     <div className='absolute h-32 w-32 rounded-full bg-primary bottom-20 left-10 z-0'></div>
-                </>}
+                </>
+            )}
         </div>
     );
 }

@@ -45,6 +45,7 @@ export async function modalOptions(id, setEditState, setFlag3, flag3, setFlag2, 
                 .delete(`${DELETE_PRODUCT}/${id}`)
                 .then(() => {
                     setFlag2(!flag2);
+                    setFlag3(!flag3);
                     Swal.fire({
                         icon: 'success',
                         title: 'Successfully deleted',

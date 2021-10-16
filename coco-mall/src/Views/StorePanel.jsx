@@ -10,6 +10,7 @@ import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { modalOptions } from '../Scripts/swalFunction.js';
+
 export default function StorePanel() {
     const dispatch = useDispatch();
 
@@ -33,8 +34,8 @@ export default function StorePanel() {
     const [render, setRender] = useState('');
     const [editState, setEditState] = useState(true);
     const [renderSec, setRenderSec] = useState(false);
-
     const [userAdmin, setUserAdmin] = useState(false)
+
 
     const [ordersStore, setOrdersStore] = useState()
     const [allOrders, setAllOrders] = useState()
@@ -272,6 +273,8 @@ export default function StorePanel() {
                                     'Stock',
                                     'Type',
                                 ]}
+                                flag2={flag2}
+                                setFlag2={setFlag2}
                                 swalFunction={modalOptions}
                             />
                         ) : renderSec === true ? (

@@ -1,6 +1,7 @@
 const { User, Store, Address, Product } = require('../models/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
+
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
@@ -57,7 +58,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['directions'],
+                        attributes: ['id','address','cords'],
                     },
                 ],
             });
@@ -123,6 +124,19 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
+    putUser=async (req,res,next)=>{
+        const {id,Country,State}=req.body;
+        try{
+            let updateUser=this.model.update({Country,State},{where:{id}})
+            res.json(updateUser);
+        }catch(error){
+            res.json({
+                errores:error
+            })
+        }
+        
+
+    }
 }
 
 const UserController = new UserModel(User);

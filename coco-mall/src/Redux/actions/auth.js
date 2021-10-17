@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, LOGOUT } from './actionTypes.js';
+import { LOGIN, LOGOUT, USER_INFO } from './actionTypes.js';
 import { auth, googleProvider, facebookProvider } from '../../firebase/firebaseConfig.js';
 import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
@@ -27,6 +27,7 @@ export const startLoginEmailPassword = (email, password) => {
                       })
                     }
                   })
+                dispatch(userInfo(user.uid));
             })
             .catch((err) => {
                 Swal.fire({
@@ -39,13 +40,14 @@ export const startLoginEmailPassword = (email, password) => {
     };
 };
 
-export const login = (uid, displayName) => {
-    //Antes de despachar el login le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
+export const login = (uid, displayName, state, country) => {
     return {
         type: LOGIN,
         payload: {
             uid,
             displayName,
+            state,
+            country,
         },
     };
     
@@ -60,6 +62,8 @@ export const startGoogleLogin = () => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
+                    State: '',
+                    Country: '',
                 };
                 axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
@@ -80,6 +84,7 @@ export const startGoogleLogin = () => {
                       })
                     }
                   })
+                dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
             })
             .catch((err) =>
                 Swal.fire({
@@ -92,6 +97,7 @@ export const startGoogleLogin = () => {
     };
 };
 
+//ver State & Country in Facebook
 export const startFacebookLogin = () => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
@@ -133,17 +139,26 @@ export const startFacebookLogin = () => {
     };
 };
 
-export const startRegisterWithEmailPasswordName = (email, password, name, lastName) => {
+export const startRegisterWithEmailPasswordName = ( 
+    email,
+    password,
+    name,
+    lastName,
+    state,
+    country,
+) => {
     return async (dispatch) => {
         try {
-            let aux = await auth.createUserWithEmailAndPassword(email, password)
-            //hay que arreglar que hasta no recargar se queda en null el displayName
-            await aux.user.updateProfile({displayName: name})
+            let aux = await auth.createUserWithEmailAndPassword(email, password);
+            await auth.currentUser.updateProfile({ displayName: name });
+
             let userF = {
                 id: aux.user.uid,
                 Name: name,
                 LastName: lastName,
                 Mail: email,
+                State: state,
+                Country: country,
             };
             Swal.fire({
                 title: 'Do you want to stay logged in?',
@@ -161,10 +176,24 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
                     Remember: false
                   })
                 }
-              })
-            axios.post(CREATE_USER_URL, userF);
+              }) 
+            axios
+                .post(CREATE_USER_URL, userF)
+                .then((res) => res.data)
+                .then((userCreated) => {
+                    dispatch(
+                        login(
+                            userCreated.id,
+                            userCreated.Name,
+                            userCreated.State,
+                            userCreated.Country,
+                        ),
+                    );
+                    console.log('user creado en DB: ', userCreated);
+                });
+
             await aux.user.sendEmailVerification();
-            dispatch(login(aux.user.uid, name))
+            dispatch(userInfo(userF.id));
         } catch (err) {
             Swal.fire({
                 title: 'Error!',
@@ -179,6 +208,13 @@ export const startRegisterWithEmailPasswordName = (email, password, name, lastNa
 export const startLogout = () => {
     return async (dispatch) => {
         await auth.signOut().then(dispatch(logout()));
+    };
+};
+
+export const userInfo = (uid) => {
+    return async (dispatch) => {
+        const response = await axios.get(`/user/${uid}`);
+        dispatch({ type: USER_INFO, payload: response.data });
     };
 };
 

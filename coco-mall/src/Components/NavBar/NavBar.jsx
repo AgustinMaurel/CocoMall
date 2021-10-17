@@ -71,6 +71,9 @@ function NavBar() {
                             <Link to='/home'>
                                 <p>Home</p>
                             </Link>
+                            <Link to='/create/order'>
+                                <p>Order</p>
+                            </Link>
                         </div>
                         <div className='flex gap-x-5 items-center'>
                             {user.uid ? (
@@ -78,11 +81,11 @@ function NavBar() {
                                     <div className='relative cursor-pointer'>
                                         <Link to='/cart'>
                                             {cartItems.length > 0 ? (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     {ITEMS_IN_CART}
                                                 </div>
                                             ) : (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     0
                                                 </div>
                                             )}
@@ -109,8 +112,7 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name?.split(' ')[0]}{' '}
-                                                {/* para ver solo nombre */}
+                                                {user.name && user.name.split(' ')[0]}
                                             </button>
                                         </Link>
                                     </div>

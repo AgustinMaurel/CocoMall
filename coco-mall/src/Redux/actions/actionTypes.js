@@ -26,6 +26,7 @@ export const GET_PRODUCT_DETAIL_ORDER_ZA = 'GET_PRODUCT_DETAIL_ORDER_ZA';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const FIREBASE_ERR = 'FIREBASE_ERR';
+export const USER_INFO= 'USER_INFO';
 
 //STORE
 

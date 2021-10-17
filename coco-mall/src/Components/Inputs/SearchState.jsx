@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { BsSearch } from 'react-icons/bs';
 
 const SearchState = ({ searchState, handleChange, handleSubmit }) => {
-    console.log(searchState);
+
     return (
         <div className='flex flex-col w-1/5 m-auto mb-10'>
             <form

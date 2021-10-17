@@ -12,7 +12,7 @@ const Search = ({
         setTypeSearch(!typeSearch);
     };
     return (
-        <div className='flex flex-col w-3/4 m-auto mb-4'>
+        <div className='flex flex-col 2xl:w-3/4 m-auto mb-4'>
             <form
                 className='bg-white flex items-center rounded-full shadow-md'
                 onSubmit={handleSubmit}
@@ -20,7 +20,7 @@ const Search = ({
                 {typeSearch !== undefined && !typeSearch ? (
                     <>
                         <input
-                            className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none'
+                            className='rounded-l-full w-full py-3 px-4 xl:py-4 xl:px-6 text-gray-700 focus:outline-none'
                             type='text'
                             name='searchStore'
                             placeholder='Search stores..'
@@ -31,7 +31,7 @@ const Search = ({
                 ) : (
                     <>
                         <input
-                            className='rounded-l-full w-full py-4 px-6 text-gray-700 focus:outline-none placeholder-cocoMall-400'
+                            className='rounded-l-full w-full py-3 px-4 xl:py-4 xl:px-6 text-gray-700 focus:outline-none placeholder-cocoMall-400'
                             type='text'
                             name='searchProduct'
                             placeholder='Search products..'
@@ -44,7 +44,7 @@ const Search = ({
                 {searchStore !== undefined ? (
                     <div className='relative inline-block w-12 mr-6 align-middle select-none'>
                         <input
-                            className='toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer'
+                            className='toggle-checkbox absolute block w-5 h-5 2xl:w-6 2xl:h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer'
                             type='checkbox'
                             name='searchType'
                             id='searchType'
@@ -53,7 +53,7 @@ const Search = ({
                         />
                         <label
                             for='searchType'
-                            className='toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer'
+                            className='toggle-label block overflow-hidden h-5 2xl:h-6 rounded-full bg-gray-300 cursor-pointer'
                         ></label>
                     </div>
                 ) : (

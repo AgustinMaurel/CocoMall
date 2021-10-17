@@ -29,6 +29,21 @@ class AddressModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+    getIdData = async (req, res) => {
+        //lo hice al pedo creo
+        const {id} = req.params
+        if (id) {
+            try {
+                let data = await this.model.findByPk(id);
+                console.log(data)
+                res.send(data);
+            } catch (error) {
+                res.send(error);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
 }
 
 const AddressController = new AddressModel(Address);

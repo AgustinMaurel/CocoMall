@@ -123,7 +123,7 @@ export default function Cart() {
                         }}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
+                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/4 lg:h-2/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
                     >
                         <div className='absolute top-2 mx-auto'>
                             <svg
@@ -307,7 +307,7 @@ export default function Cart() {
                                               xl:text-primary xl:text-xl'
                                         onClick={handleCheckout}
                                     >
-                                        Go to checkout
+                                        Continue
                                     </button>
                                 </div>
 
@@ -322,7 +322,7 @@ export default function Cart() {
                                         
                                             xl:text-md'
                                         >
-                                            Continue Shopping
+                                            I want to keep shopping
                                         </button>
                                     </Link>
                                 </div>

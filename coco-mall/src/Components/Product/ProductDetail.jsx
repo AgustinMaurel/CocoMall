@@ -1,29 +1,22 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { SHOPPING_CART } from '../../Scripts/constants';
 import { /*addToCart*/ addToCartSomo } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
 
 import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');
-function ProductDetail(props) {
+export default function ProductDetail(props) {
     const dispatch = useDispatch();
 
     const { product } = props;
-    const quantity = 0;
-    const { userCart, uid } = useSelector((state) => state.auth);
+    const { uid } = useSelector((state) => state.auth);
     const que = '+';
     const cant = 1;
 
     const handleButtonClick = (id) => {
         dispatch(addToCartSomo(uid, id, que, cant));
     };
-
-    // useEffect(() => {
-    //     axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    // }, [userCartToBack]);
 
     return (
         <div className='    flex justify-center w-full h-full'>
@@ -62,5 +55,3 @@ function ProductDetail(props) {
         </div>
     );
 }
-
-export default ProductDetail;

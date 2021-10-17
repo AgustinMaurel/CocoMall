@@ -70,14 +70,37 @@ export default function Cart() {
             </div>
 
             {/* BANNER */}
-            <div className='   z-10 h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 '>
+            <div className='  relative z-10 h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 overflow-hidden '>
                 <h3 className='text-5xl z-10 font-extrabold text-white'>MY CART</h3>
+                <div className='absolute h-36 w-36 lg:h-64 lg:w-64  rounded-full bg-primary bottom-0 right-10 z-0'></div>
+                <div className='absolute h-36 w-36  lg:h-64 lg:w-64 rounded-full bg-primary top-0 left-0 z-0'></div>
+                <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
             </div>
-            <div className='absolute h-36 w-36 lg:h-64 lg:w-64  rounded-full bg-primary top-16 right-0 z-0'></div>
-            <div className='absolute h-36 w-36  lg:h-64 lg:w-64 rounded-full bg-primary top-0 left-0 z-0'></div>
-            <div className='absolute md:h-10 md:w-10  rounded-full bg-primary top-20 md:left-96 z-0'></div>
 
-            <div className='flex  justify-center relative  bg-gray-100   2xl:px-20  '>
+            {!userCart.length && (
+                <div className='h-3/5     px-5'>
+                    <div className=' flex flex-col gap-4 items-center justify-center relative h-full w-full '>
+                        <h2 className='text-2xl font-bold'>Your cart is empty :(</h2>
+                        <p>Take a look at our stores and search for what you need!</p>
+
+                        <div
+                            className='shadow-lg flex items-center absolute bottom-0 bg-white  border border-primary  text-primary w-40 rounded h-8 z-20 
+                         xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
+                        >
+                            <Link
+                                to='/home'
+                                className=' focus:outline-none text-center text-base w-full h-full
+                     md:text-lg
+                   xl:text-primary xl:text-xl'
+                            >
+                                Go to Home
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className='flex  justify-center   bg-gray-100   2xl:px-20  '>
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
                     {/* CLEAR CART BUTTON */}
                     {userCart.length > 0 && !modalIsOpen && (
@@ -132,16 +155,16 @@ export default function Cart() {
                     </ReactModal>
 
                     <div className='flex 0 2xl:pb-28   md:w-4/5 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
-                        <div className='xl:w-4/6  xl:relative xl:flex-none xl:flex-col   '>
+                        <div className='xl:w-4/6 xl:flex      xl:flex-col xl:items-center xl:justify-center   '>
                             {/* CARDS */}
-                            {userCart?.length > 0 ? (
+                            {userCart?.length > 0 &&
                                 userCart?.map((el) => (
                                     <>
                                         <div
                                             key={el.id}
-                                            className=' bg-white   mt-5 2xl:mt-10  w-full flex flex-col shadow-lg   h-56 xl:h-60 justify-around  relative  '
+                                            className=' bg-white   mt-5 2xl:mt-10  w-full flex flex-col shadow   h-56 xl:h-60 justify-around xl:flex-none relative  '
                                         >
-                                            <div className='flex flex-row h-full items-center  relative w-full px-5 gap-10  py-5'>
+                                            <div className='flex flex-row h-full items-center xl:flex-none relative w-full px-5 gap-10  py-5'>
                                                 <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>
                                                     <Image
                                                         publicId={el.cloudImage[0]}
@@ -255,35 +278,10 @@ export default function Cart() {
                                             </div>
                                         </div>
                                     </>
-                                ))
-                            ) : (
-                                <>
-                                    <div className='  flex flex-col gap-4 justify-center relative h-full w-full '>
-                                        <h2 className='text-2xl font-bold'>
-                                            Your cart is empty :(
-                                        </h2>
-                                        <p>
-                                            Take a look at our stores and search for what you need!
-                                        </p>
-                                    </div>
-                                    <div
-                                        className='shadow-lg flex items-center justify-center bg-white  border border-primary  text-primary w-40 rounded-md h-8     absolute -bottom-60         z-20
-                                    xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
-                                    >
-                                        <Link
-                                            to='/home'
-                                            className=' focus:outline-none text-center text-base w-full h-full
-                                        md:text-lg
-                                      xl:text-primary xl:text-xl'
-                                        >
-                                            Go to Home
-                                        </Link>
-                                    </div>
-                                </>
-                            )}
+                                ))}
                         </div>
                         {userCart.length > 0 && (
-                            <div className='w-full  py-10 flex flex-col gap-5'>
+                            <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
                                 <div className='flex flex-col gap-5 px-2'>
                                     <div className='flex flex-col  gap-1'>
                                         <h2 className='text-gray-600 font-bold text-lg'>

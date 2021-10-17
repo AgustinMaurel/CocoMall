@@ -130,7 +130,8 @@ export default function Cart() {
                             <button onClick={() => setModalIsOpen(false)}>No</button>
                         </div>
                     </ReactModal>
-                    <div className='flex 0 2xl:pb-28 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
+
+                    <div className='flex 0 2xl:pb-28   md:w-4/5 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
                         <div className='xl:w-4/6  xl:relative xl:flex-none xl:flex-col   '>
                             {/* CARDS */}
                             {userCart?.length > 0 ? (
@@ -138,7 +139,7 @@ export default function Cart() {
                                     <>
                                         <div
                                             key={el.id}
-                                            className=' bg-white  mt-5 2xl:mt-10  w-full flex flex-col shadow-lg   h-56 xl:h-60 justify-around  relative  '
+                                            className=' bg-white   mt-5 2xl:mt-10  w-full flex flex-col shadow-lg   h-56 xl:h-60 justify-around  relative  '
                                         >
                                             <div className='flex flex-row h-full items-center  relative w-full px-5 gap-10  py-5'>
                                                 <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>

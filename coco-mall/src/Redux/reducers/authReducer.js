@@ -14,7 +14,6 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 uid: payload.uid,
                 name: payload.displayName,
-
                 userCart: [],
             };
         case LOGOUT:
@@ -24,7 +23,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 storeProducts: [],
                 userCart: [],
             };
-
+        
         case GET_PRODUCT:
             return {
                 ...state,

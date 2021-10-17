@@ -10,12 +10,15 @@ const {
     deleteDataById,
     deleteProduct,
     filterProductsByStore,
+    getOneProductById
 } = require('../controllers/Product.js');
 
 //all routes start with /product 
 
 //GET's
 router.get('/', getAllData);
+
+router.get('/find/:id', getOneProductById)
 
 router.get('/:id', findAllProductsOfStore);
 

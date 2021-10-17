@@ -12,10 +12,10 @@ const {
 //all routes start with /user
 
 //GET's
+
 router.get('/', getAllData);
 
 router.get('/:id', getUserById);
-
 //POST's
 router.post('/create', createUser);
 

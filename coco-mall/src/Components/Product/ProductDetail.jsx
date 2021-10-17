@@ -10,6 +10,7 @@ import { Image } from 'cloudinary-react';
 ReactModal.setAppElement('#root');
 function ProductDetail(props) {
     const dispatch = useDispatch();
+    console.log(props)
 
     const { product } = props;
 
@@ -26,7 +27,6 @@ function ProductDetail(props) {
             }),
         };
     }, [userCart, uid]);
-    console.log(product.id);
 
     const handleButtonClick = () => {
         dispatch(addToCart(product.id));

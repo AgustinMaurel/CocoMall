@@ -4,9 +4,15 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import Product from '../Components/Product/Product';
+import TypesProduct from '../Components/Product/TypesProduct';
 import Search from '../Components/Inputs/Search';
 import { SHOPPING_CART } from '../Scripts/constants';
-import { getProductsStore, getProductDetail, getStoreDetail } from '../Redux/actions/stores';
+import {
+    getProductsStore,
+    getProductDetail,
+    getStoreDetail,
+    getProductSubCat,
+} from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
@@ -32,7 +38,6 @@ ReactModal.setAppElement('#root');
 
 export default function StoreDetail() {
     const { uid, userCart } = useSelector((state) => state.auth);
-
     //HOOKS
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -42,7 +47,6 @@ export default function StoreDetail() {
         allStores,
         storeProductsFilter,
         cart,
-        productDetail,
         productTypes,
         storeProducts,
         storeDetail,
@@ -57,6 +61,7 @@ export default function StoreDetail() {
         min: '',
         max: '',
         discount: 0,
+        subCategory: [],
     });
 
     let userCartToBack = {
@@ -85,23 +90,18 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
+        dispatch(getProductSubCat());
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
             dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
-    }, [dispatch, allStores]);
+    }, [id]);
 
     const handleClearCart = () => {
         dispatch(clearCart());
-
         axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    };
-
-    const modalFuncion = (id) => {
-        dispatch(getProductDetail(id));
-        setModalIsOpen(true);
     };
 
     const handleChange = handleOnChange(setFilters);
@@ -110,18 +110,14 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
 
-    let productTypesArr = [];
-    storeProducts.length &&
-        storeProducts.map((product) => {
-            if (!productTypesArr.includes(product.ProductTypeId)) {
-                productTypesArr.push(product.ProductTypeId);
-            }
-        });
-
-    const typesProductInStore = productTypes.filter((type) => {
-        return productTypesArr.includes(type.id);
-    });
-
+    let keysTypes;
+    if (storeProductsFilter.Products) {
+        keysTypes = Object.keys(storeProductsFilter.Products);
+    }
+    let keysTypesSinFilter;
+    if (storeProducts.Products) {
+        keysTypesSinFilter = Object.keys(storeProducts.Products);
+    }
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
@@ -153,13 +149,17 @@ export default function StoreDetail() {
                             defaultValue='All'
                         >
                             <option value='All'>All products</option>
-                            {typesProductInStore?.map((type) => {
-                                return (
-                                    <option key={type.id} value={type.id}>
-                                        {type.Name}
-                                    </option>
-                                );
-                            })}
+
+                            {productTypes.length && storeProducts.allCurrentTypes?.length ?
+                            productTypes?.map((type, i) => {
+                                if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                    return (
+                                        <option key={type.id} value={type.id}>
+                                            {type.Name}
+                                        </option>
+                                    );
+                                }
+                            }): false}
                         </select>
                     </div>
 
@@ -214,14 +214,14 @@ export default function StoreDetail() {
             {/* CARDS */}
             <div className='col-span-12 w-2/3 m-auto'>
                 <div>
-                    {storeProducts <= storeProductsFilter ? (
-                        <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
+                    {keysTypesSinFilter?.length <= keysTypes?.length ? (
+                        <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
                     ) : (
                         <></>
                     )}
                 </div>
                 <div className='flex flex-col'>
-                    {storeProductsFilter.length && typesProductInStore.length
+                    {/* {storeProductsFilter.length && typesProductInStore.length
                         ? typesProductInStore.map((type) => {
                               if (filters.type.includes(type.id)) {
                                   return (
@@ -282,27 +282,21 @@ export default function StoreDetail() {
                                   );
                               }
                           })
-                        : false}
-
-                    {productDetail ? (
-                        <ReactModal
-                            style={{
-                                overlay: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                                },
-                            }}
-                            isOpen={modalIsOpen}
-                            onRequestClose={() => setModalIsOpen(false)}
-                            className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
-                        >
-                            <ProductDetail
-                                product={productDetail}
-                                addToCart={() => addToCart(productDetail.id)}
-                            />
-                        </ReactModal>
-                    ) : (
-                        false
-                    )}
+                        : false} */}
+                </div>
+                <div>
+                    {storeProductsFilter.Products
+                        ? keysTypes.map((k) => {
+                              return (
+                                  <TypesProduct
+                                      typeName={k}
+                                      SubCategories={storeProductsFilter.Products[k]}
+                                      modalIsOpen={modalIsOpen}
+                                      setModalIsOpen={setModalIsOpen}
+                                  />
+                              );
+                          })
+                        : null}
                 </div>
             </div>
 

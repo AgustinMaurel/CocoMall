@@ -49,6 +49,11 @@ module.exports = (sequelize) => {
             OrdersHistory: {
                 type: DataTypes.ARRAY(DataTypes.STRING),
                 defaultValue: []
+            },
+            Remember: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
             }
         },
         {   

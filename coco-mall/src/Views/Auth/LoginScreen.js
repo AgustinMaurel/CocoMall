@@ -5,6 +5,7 @@ import {
     startLoginEmailPassword,
     startGoogleLogin,
     startFacebookLogin,
+    rememberAction
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';

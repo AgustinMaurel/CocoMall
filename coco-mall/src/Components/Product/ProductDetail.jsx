@@ -4,16 +4,17 @@ import axios from 'axios';
 import { SHOPPING_CART } from '../../Scripts/constants';
 import { addToCart } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
+import {Redirect } from 'react-router-dom'
 
 import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');
 function ProductDetail(props) {
     const dispatch = useDispatch();
-
     const { product } = props;
 
     const { userCart, uid } = useSelector((state) => state.auth);
+    
 
     let userCartToBack = useMemo(() => {
         return {
@@ -28,7 +29,10 @@ function ProductDetail(props) {
     }, [userCart, uid]);
 
     const handleButtonClick = () => {
-        dispatch(addToCart(product.id));
+        
+            dispatch(addToCart(product.id));
+        
+        
     };
 
     useEffect(() => {
@@ -36,6 +40,7 @@ function ProductDetail(props) {
     }, [userCartToBack]);
 
     return (
+      
         <div className='    flex justify-center w-full h-full'>
             <div className='flex justify-center items-center w-2/5 h-full p-6'>
                 <Image

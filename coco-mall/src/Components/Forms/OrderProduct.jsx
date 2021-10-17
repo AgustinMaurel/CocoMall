@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import NavBar from '../NavBar/NavBar';
-import { Image } from 'cloudinary-react';
+import { Image, Transformation } from 'cloudinary-react';
 import { useHistory } from 'react-router-dom';
 import { userInfo } from '../../Redux/actions/auth';
 import axios from 'axios';
@@ -16,6 +16,7 @@ const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [placeSelected, setPlaceSelected] = useState({});
     const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
+    const { allStores } = useSelector((state) => state.stores);
 
     const [addressSelect, setAddressSelect] = useState({
         address: '',
@@ -56,18 +57,6 @@ const OrderProduct = () => {
                   .catch((err) => console.log(err))
             : false;
     }
-
-    /*
-      hacer un post con esta data:
-        {
-            "userId":"1",
-            "storeId":"29af68ca-2a6e-45b1-8934-93107beca099",
-            "address":"La esquina de Gloria",
-            "cords":{"altura": 132132, "latitud":13132},
-            "amount":100,
-            "orderState":"Success"
-        }    
-    */
 
     const storeOrders = userCart.reduce((accArr, value) => {
         if (accArr.indexOf(value.StoreId) < 0) {
@@ -123,18 +112,17 @@ const OrderProduct = () => {
     };
     //tengo que tener 2 useEffect porque sino rompe
     useEffect(() => {
-        userAddressFunc()
-    }, [userAddress?.length])
+        userAddressFunc();
+    }, [userAddress?.length]);
 
     useEffect(() => {
         dispatch(userInfo(uid));
-        // userAddressFunc();
-    }, [uid, modalIsOpen]);
+    }, [uid, modalIsOpen, userCart.length]);
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
-        postOrder()
-        handleCheckout()
-    }
+        postOrder();
+        handleCheckout();
+    };
     const postOrder = () => {
         for (let storeId of storeOrders) {
             let totalStore = userCart
@@ -152,27 +140,29 @@ const OrderProduct = () => {
         }
     };
 
-    const addressModal = () => {
-        setModalIsOpen(true);
-        dispatch(userInfo(uid));
-    };
-
     return (
-        <div className='w-full flex flex-col justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
-            
-            <div className='w-full flex bg-gray-200 shadow mb-10'>
+        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0 bg-gray-100 '>
+            <div className='sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>
-            <div className='flex justify-center m-auto w-3/4 h-full'>
-                <div
-                    className='w-full flex flex-col justify-top items-center'
-                >
-                    <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>Order Product</h3>
-                    <div>
-                        <h4>Enviar a</h4>
-                        <div>
+            <div className='  relative z-10 h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 overflow-hidden '>
+                <h3 className='text-5xl z-10 font-extrabold text-white'>MY ORDER</h3>
+                <div className='absolute h-36 w-36 lg:h-64 lg:w-64  rounded-full bg-primary bottom-0 right-10 z-0'></div>
+                <div className='absolute h-36 w-36  lg:h-64 lg:w-64 rounded-full bg-primary top-0 left-0 z-0'></div>
+                <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
+            </div>
+
+            <div className='flex  justify-center   bg-gray-100   2xl:px-20 '>
+                <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
+                    <div className='flex flex-col w-full justify-start bg-white'>
+                        <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
+                            Shipping options to
+                        </h2>
+                        <div className=' flex flex-col gap-4 relative h-full w-full '>
                             {addressSelect?.address ? (
-                                <span>{addressSelect.address}</span>
+                                <span className='text-cocoMall-800 text-lg md:text-xl'>
+                                    {addressSelect.address}
+                                </span>
                             ) : (
                                 <>
                                     <div className='w-4/5 flex flex-col 2xl:w-3/5'>
@@ -231,8 +221,17 @@ const OrderProduct = () => {
                                     </div>
                                 </>
                             )}
+                            <div>
+                                <button
+                                    className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+                                        sm:text-sm        
+                                        xl:text-md'
+                                    onClick={() => setModalIsOpen(true)}
+                                >
+                                    Edit or choose another
+                                </button>
+                            </div>
                         </div>
-                        <button onClick={() => setModalIsOpen(true)}>Editar o elegir otro</button>
                     </div>
                     <ReactModal
                         style={{
@@ -254,43 +253,86 @@ const OrderProduct = () => {
                         />
                     </ReactModal>
 
-                    <div>
+                    <div className='flex flex-col w-full m-auto'>
                         {userCart.length
-                            ? userCart.map((item) => {
-                                  //hacer que se divida por tiendas
+                            ? storeOrders.map((storeOrders, index) => {
                                   return (
                                       <div>
-                                          <h3>{item.StoreId}</h3>
-                                          <div className='flex'>
-                                              <picture className='w-full h-1/3 rounded-md overflow-hidden'>
-                                                  <Image
-                                                      key={item.id}
-                                                      cloudName='cocomalls'
-                                                      publicId={item.cloudImage[0]}
-                                                      width='150'
-                                                      crop='scale'
-                                                      className='object-cover h-44'
-                                                  />
-                                              </picture>
-                                              <h4>{item.productName}</h4>
-                                              <span>Quantity: {item.quantity}</span>
-                                              <span>Price: {item.price}</span>
-                                          </div>
+                                          <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
+                                              {allStores[index].storeName}
+                                          </h2>
+                                          {userCart.map((item) => {
+                                              if (item.StoreId === storeOrders) {
+                                                  return (
+                                                      <div className='flex flex-row bg-white h-full items-center xl:flex-none relative w-5/6 px-5 gap-10  py-5'>
+                                                          <picture>
+                                                              <Image
+                                                                  key={item.id}
+                                                                  cloudName='cocomalls'
+                                                                  publicId={item.cloudImage[0]}
+                                                              >
+                                                                  <Transformation
+                                                                      gravity='auto'
+                                                                      height='180'
+                                                                      width='200'
+                                                                      crop='fill'
+                                                                  />
+                                                              </Image>
+                                                          </picture>
+                                                          <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
+                                                              <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                                  {item.productName}
+                                                              </h4>
+                                                              <div className=' h-full  w-full flex-col items-between justify-between'>
+                                                                  <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                      Quantity: {item.quantity}
+                                                                  </p>
+                                                                  <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                      Price: {item.price}
+                                                                  </p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              }
+                                          })}
                                       </div>
                                   );
                               })
                             : false}
                     </div>
-                    <button onClick={() => handleSubmitOrder()}>
-                        Continuar lleva a elegir metodo de pago
-                    </button>
                 </div>
 
-                <div className='bg-gray-300 h-screen flex flex-col justify-top items-center -mt-10'>
-                    <h2>Resumen de compra</h2>
-                    <h4>Product's({itemsCart})</h4>
-                    <span>Price: {total}</span>
-                    <span>Total price: {total}</span>
+                <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
+                    <div className='flex flex-col gap-5 px-2'>
+                        <div className='flex flex-col  gap-1'>
+                            <h2 className='text-gray-600 font-bold text-2xl'>Purchase summary</h2>
+                            <hr className='border-1 border-gray-300' />
+                        </div>
+                        <h4 className='text-gray-600 font-bold text-lg'>Products({itemsCart})</h4>
+                        <span className='text-gray-600 font-bold text-lg'>Price: {total}</span>
+                        <span className='text-gray-600 font-bold text-lg'>
+                            Total price: {total}
+                        </span>
+                    </div>
+                    <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
+                        <button
+                            onClick={() => handleSubmitOrder()}
+                            className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
+                        >
+                            Go To Checkout
+                        </button>
+                    </div>
+                    <div className=' flex items-center justify-center '>
+                        <button
+                            onClick={() => history.goBack()}
+                            className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+                                        sm:text-sm        
+                                            xl:text-md'
+                        >
+                            Go Back
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

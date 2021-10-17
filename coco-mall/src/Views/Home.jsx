@@ -135,6 +135,14 @@ function Home() {
                         <button
                             onClick={() => {
                                 dispatch(getStores());
+                                setFilters({
+                                    searchStore: '',
+                                    searchProduct: '',
+                                    type: [],
+                                    searchState: '',
+                                })
+                                setCheckType([])
+                                setCheck(Array(productTypes.length).fill(false))
                             }}
                             className='flex items-center gap-2 text-cocoMall-200 mb-2 cursor-pointer hover:text-cocoMall-400'
                         >

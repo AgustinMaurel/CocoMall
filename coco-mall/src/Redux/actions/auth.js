@@ -10,6 +10,7 @@ export const startLoginEmailPassword = (email, password) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
+                dispatch(userInfo(user.uid));
             })
             .catch((err) => {
                 Swal.fire({
@@ -29,7 +30,7 @@ export const login = (uid, displayName, state, country) => {
             uid,
             displayName,
             state,
-            country
+            country,
         },
     };
 };
@@ -77,7 +78,7 @@ export const startFacebookLogin = () => {
     };
 };
 
-export const startRegisterWithEmailPasswordName = (
+export const startRegisterWithEmailPasswordName = ( 
     email,
     password,
     name,
@@ -88,11 +89,7 @@ export const startRegisterWithEmailPasswordName = (
     return async (dispatch) => {
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
-
             await auth.currentUser.updateProfile({ displayName: name });
-
-            //hay que arreglar que hasta no recargar se queda en null el displayName
-            //await aux.user.updateProfile({displayName: name})
 
             let userF = {
                 id: aux.user.uid,
@@ -102,9 +99,24 @@ export const startRegisterWithEmailPasswordName = (
                 State: state,
                 Country: country,
             };
-            axios.post(CREATE_USER_URL, userF);
+            console.log('user enviado al back', userF);
+            axios
+                .post(CREATE_USER_URL, userF)
+                .then((res) => res.data)
+                .then((userCreated) => {
+                    dispatch(
+                        login(
+                            userCreated.id,
+                            userCreated.Name,
+                            userCreated.State,
+                            userCreated.Country,
+                        ),
+                    );
+                    console.log('user creado en DB: ', userCreated);
+                });
 
             await aux.user.sendEmailVerification();
+            dispatch(userInfo(userF.id));
         } catch (err) {
             Swal.fire({
                 title: 'Error!',
@@ -124,10 +136,10 @@ export const startLogout = () => {
 
 export const userInfo = (uid) => {
     return async (dispatch) => {
-        const response = await axios.get(`/user/${uid}`)
-        dispatch({type: USER_INFO, payload: response.data})
-    }
-}
+        const response = await axios.get(`/user/${uid}`);
+        dispatch({ type: USER_INFO, payload: response.data });
+    };
+};
 
 export const logout = () => {
     return {

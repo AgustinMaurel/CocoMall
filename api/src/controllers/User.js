@@ -32,7 +32,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['id', 'address', 'cords'],
+                        attributes: ['id','address','cords'],
                     },
                 ],
             });
@@ -44,26 +44,24 @@ class UserModel extends ModelController {
 
     getUserById = async (req, res) => {
         const id = req.params.id;
-        // console.log(id)
         try {
-            let user = await this.model.findByPk(id)
-            // let user = await this.model.findOne({
-            //     where: {
-            //         id: id
-            //     },
-            //     include: [
-            //         //include the related tables and the specific cloumn that they have attached
-            //         {
-            //             model: Store,
-            //             attributes: ['storeName'],
-            //         },
-            //         {
-            //             model: Address,
-            //             attributes: ['directions'],
-            //         },
-            //     ],
-            // });
-            // console.log(user)
+            let user = await this.model.findAll({
+                where: {
+                    id: id,
+                },
+                include: [
+                    //include the related tables and the specific cloumn that they have attached
+                    {
+                        model: Store,
+                        attributes: ['storeName'],
+                    },
+                    {
+                        model: Address,
+                        attributes: ['directions'],
+                    },
+                ],
+            });
+            
             res.send(user);
         } catch (error) {
             res.json(error);
@@ -125,90 +123,6 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
-
-    deleteUser = async (req, res) => {
-        const id = req.params.id
-        const user = await this.model.findByPk(id)
-        user.Active = "False"
-        res.send(await user.save())
-    }
-    
-    activateUser = async (req, res) => {
-        const id = req.params.id
-        const user = await this.model.findByPk(id)
-        user.Active = "True"
-        res.send(await user.save())
-    }
-
-    // deleteUser = async (req, res) => {
-    //     const id = req.params.id
-    //     const DbUser = await this.model.findOne({
-    //         where: {
-    //             id: id
-    //         },
-    //         include: [
-    //             //include the related tables and the specific cloumn that they have attached
-    //             {
-    //                 model: Store,
-    //                 attributes: ['id'],
-    //                 include: [{
-    //                     model: Product,
-    //                     attributes: ["id"]
-    //                 }]
-    //             },
-    //             {
-    //                 model: Address,
-    //                 attributes: ['id'],
-    //             },
-    //         ]
-    //     })
-    //     const user = DbUser.dataValues
-    //     //get all the id of the stores to delete and their Products
-    //     if (user.Stores.length) {
-    //         let prodcutsToDelete = []
-    //         const stor = await user.Stores.map(async store => {
-    //             const products = store.dataValues.Products
-    //             await products?.map(products => {
-    //                 prodcutsToDelete = [...prodcutsToDelete, products.dataValues.id]
-    //             })
-    //             return store.dataValues.id
-    //         })
-    //         console.log(prodcutsToDelete)
-    //         console.log(stor)
-    //         await Store.destroy({
-    //             where: {
-    //                 id: {
-    //                     [Op.in]: stor
-    //                 }
-    //             }
-    //         })
-    //         await Product.destroy({
-    //             where: {
-    //                 id: {
-    //                     [Op.in]: prodcutsToDelete
-    //                 }
-    //             }
-    //         })
-    //     }
-    //     if (user.Addresses.length) {
-    //         const addresses = user.Addresses.map(address => {
-    //             return address.dataValues.id
-    //         })
-    //         await Address.destroy({
-    //             where: {
-    //                 id: {
-    //                     [Op.in]: addresses
-    //                 }
-    //             }
-    //         })
-    //     }
-    //     await this.model.destroy({
-    //         where: {
-    //             id: id
-    //         }
-    //     })
-    //     res.send("deleted")
-    // }
 }
 
 const UserController = new UserModel(User);

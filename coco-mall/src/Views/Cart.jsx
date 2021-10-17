@@ -100,8 +100,22 @@ export default function Cart() {
                         }}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className='flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-2/6 2xl:w-1/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
+                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
                     >
+                        <div className='absolute top-2 mx-auto'>
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                className='h-6 w-6'
+                                viewBox='0 0 20 20'
+                                fill='#dc2626'
+                            >
+                                <path
+                                    fillRule='evenodd'
+                                    d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z'
+                                    clipRule='evenodd'
+                                />
+                            </svg>
+                        </div>
                         <h2 className='text-center text-lg'>
                             Are you sure you want to{' '}
                             <span className='text-red-600 font-semibold'>delete</span> your cart?
@@ -134,7 +148,7 @@ export default function Cart() {
                                                     >
                                                         <Transformation
                                                             gravity='auto'
-                                                            height='200'
+                                                            height='180'
                                                             width='200'
                                                             crop='fill'
                                                         />
@@ -232,7 +246,7 @@ export default function Cart() {
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <div className='w-24'>
+                                                <div className='min-w-max'>
                                                     <p className='text-2xl font-bold text-white'>
                                                         $ {el.price * el.quantity}
                                                     </p>

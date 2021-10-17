@@ -34,7 +34,7 @@ class OrderModel extends ModelController {
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const shipmentAdress = await Address.findOrCreate({
+                const [shipmentAdress, created] = await Address.findOrCreate({
                     where: {
                         address,
                         cords,

@@ -8,13 +8,19 @@ import { userInfo } from '../../Redux/actions/auth';
 import axios from 'axios';
 import Autocomplete from 'react-google-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
-import Address from '../Cards/Address'
+import Address from '../Cards/Address';
 import InputMaps from '../Inputs/InputMaps';
 import ReactModal from 'react-modal';
 
 const OrderProduct = () => {
-    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [placeSelected, setPlaceSelected] = useState({});
+    const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
+
+    const [addressSelect, setAddressSelect] = useState({
+        address: '',
+        cords: {},
+    });
     const history = useHistory();
     const dispatch = useDispatch();
     const {
@@ -24,16 +30,10 @@ const OrderProduct = () => {
         formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
-   
-    const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
-
-    let priceCart;
     let itemsCart;
     if (userCart.length) {
         let itemsQuantity = userCart?.map((item) => item.quantity);
         itemsCart = itemsQuantity.reduce((a, b) => a + b);
-        let itemsPrice = userCart?.map((item) => item.quantity * item.price);
-        priceCart = itemsPrice.reduce((a, b) => a + b);
     }
 
     let total =
@@ -57,17 +57,6 @@ const OrderProduct = () => {
             : false;
     }
 
-    useEffect(() => {
-        dispatch(userInfo(uid));
-    }, [dispatch, uid]);
-
-    //hay que mostrar las direcciones al usuario que estan en la DB,
-    //para que el usuario pueda seleccionar donde quiere que le llegue el envio (este es un array)
-    //hay que darle la opcion de poner una direccion nueva (Cuando llegue aca le aviso a Chris)
-    //el user id del usuario actual se lo paso por params
-    //los datos del usuario los saco del usuario
-    //el monto y los productos estan en el cart
-
     /*
       hacer un post con esta data:
         {
@@ -80,102 +69,188 @@ const OrderProduct = () => {
         }    
     */
 
-    const userAddress = userInfoDB[0]?.Addresses;
+    const storeOrders = userCart.reduce((accArr, value) => {
+        if (accArr.indexOf(value.StoreId) < 0) {
+            accArr.push(value.StoreId);
+        }
+        return accArr;
+    }, []);
+
+    userCart.sort((a, b) => {
+        if (a.StoreId > b.StoreId) return 1;
+        if (a.StoreId < b.StoreId) return -1;
+        return 0;
+    });
+
     const postAddressCreate = () => {
         const obj = {
             id: uid,
             address: placeSelected.name,
-            cords: placeSelected.coord
-        }
-         axios.post(`/address/create`, obj)
-    }
-    const onSubmit = (data) => {
-        postAddressCreate()
+            cords: placeSelected.coord,
+        };
+        axios.post(`/address/create`, obj);
     };
+    const onSubmit = (e) => {
+        postAddressCreate();
+        setModalIsOpen(false);
+    };
+
+    const userAddress = userInfoDB[0]?.Addresses;
+    const userAddressFunc = (i) => {
+        if (!i) {
+            if (userAddress?.length) {
+                setAddressSelect((prevData) => {
+                    const state = {
+                        ...prevData,
+                    };
+                    state.address = userAddress[0].address;
+                    state.cords = userAddress[0].cords;
+                    return state;
+                });
+            }
+        } else {
+            if (userAddress?.length) {
+                setAddressSelect((prevData) => {
+                    const state = {
+                        ...prevData,
+                    };
+                    state.address = userAddress[i].address;
+                    state.cords = userAddress[i].cords;
+                    return state;
+                });
+            }
+        }
+    };
+    //tengo que tener 2 useEffect porque sino rompe
+    useEffect(() => {
+        userAddressFunc()
+    }, [userAddress?.length])
+
+    useEffect(() => {
+        dispatch(userInfo(uid));
+        // userAddressFunc();
+    }, [uid, modalIsOpen]);
+    //uid, userInfoDB.length, modalIsOpen
+
+    const postOrder = () => {
+        for (let storeId of storeOrders) {
+            let totalStore = userCart
+                .filter((filterStore) => filterStore.StoreId === storeId)
+                .reduce((previous, key) => previous + key.price * key.quantity, 0);
+            const obj = {
+                userId: uid,
+                storeId: storeId,
+                address: addressSelect.address,
+                cords: addressSelect.cords,
+                amount: totalStore,
+                orderState: 'Success',
+            };
+            axios.post('/order/create', obj);
+        }
+    };
+
+    const addressModal = () => {
+        setModalIsOpen(true);
+        dispatch(userInfo(uid));
+    };
+
     return (
         <div className='w-full flex flex-col justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
+            
             <div className='w-full flex bg-gray-200 shadow mb-10'>
                 <NavBar />
             </div>
             <div className='flex justify-center m-auto w-3/4 h-full'>
-                <form
+                <div
                     className='w-full flex flex-col justify-top items-center'
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>Order Product</h3>
                     <div>
                         <h4>Enviar a</h4>
-                        <span>
-                            {userAddress?.length ? (
-                                userAddress[0].address
+                        <div>
+                            {addressSelect?.address ? (
+                                <span>{addressSelect.address}</span>
                             ) : (
                                 <>
                                     <div className='w-4/5 flex flex-col 2xl:w-3/5'>
-                                        <div className='relative my-4'>
-                                            <Autocomplete
-                                                className={
-                                                    'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
-                                                }
-                                                apiKey={GOOGLE_MAPS_API_KEY}
-                                                onPlaceSelected={(place) => {
-                                                    setPlaceSelected({
-                                                        place: place,
-                                                        name: place.name,
-                                                        address: place.formatted_address,
-                                                        state: place.address_components[4]
-                                                            ?.long_name,
-                                                        country:
-                                                            place.address_components[5]?.long_name,
-                                                        cp:
-                                                            place.address_components[6]
-                                                                ?.long_name || 'C3100',
-                                                        coord: {
-                                                            lat: place.geometry.location.lat(),
-                                                            lng: place.geometry.location.lng(),
-                                                        },
-                                                    });
-                                                }}
-                                                options={{
-                                                    fields: [
-                                                        'name',
-                                                        'address_component',
-                                                        'adr_address',
-                                                        'formatted_address',
-                                                        'geometry',
-                                                    ],
-                                                    types: ['address'],
-                                                    // componentRestrictions: { country: 'ar' },
-                                                }}
-                                                placeholder='Eg: Av. Belgrano 3200'
-                                            />
-                                            <div>
-                                                <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
-                                                    <p className='min-w-max'> Address</p>
+                                        <button onClick={() => userAddressFunc()}>Clickk</button>
+                                        <form onSubmit={handleSubmit(onSubmit)}>
+                                            <div className='relative my-4'>
+                                                <Autocomplete
+                                                    className={
+                                                        'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
+                                                    }
+                                                    apiKey={GOOGLE_MAPS_API_KEY}
+                                                    onPlaceSelected={(place) => {
+                                                        setPlaceSelected({
+                                                            place: place,
+                                                            name: place.name,
+                                                            address: place.formatted_address,
+                                                            state: place.address_components[4]
+                                                                ?.long_name,
+                                                            country:
+                                                                place.address_components[5]
+                                                                    ?.long_name,
+                                                            cp:
+                                                                place.address_components[6]
+                                                                    ?.long_name || 'C3100',
+                                                            coord: {
+                                                                lat: place.geometry.location.lat(),
+                                                                lng: place.geometry.location.lng(),
+                                                            },
+                                                        });
+                                                    }}
+                                                    options={{
+                                                        fields: [
+                                                            'name',
+                                                            'address_component',
+                                                            'adr_address',
+                                                            'formatted_address',
+                                                            'geometry',
+                                                        ],
+                                                        types: ['address'],
+                                                        // componentRestrictions: { country: 'ar' },
+                                                    }}
+                                                    placeholder='Eg: Av. Belgrano 3200'
+                                                />
+                                                <div>
+                                                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
+                                                        <p className='min-w-max'> Address</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className='h-36 mb-8'>
-                                            <InputMaps coord={placeSelected.coord} />
-                                        </div>
+                                            <div className='h-36 mb-8'>
+                                                <InputMaps coord={placeSelected.coord} />
+                                            </div>
+                                            <button type='submit'>Crear direccion</button>
+                                        </form>
                                     </div>
                                 </>
                             )}
-                        </span>
-                        <button onClick={()=> setModalIsOpen(true)}>Editar o elegir otro</button>
+                        </div>
+                        <button onClick={() => setModalIsOpen(true)}>Editar o elegir otro</button>
                     </div>
                     <ReactModal
-                            style={{
-                                overlay: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                                },
-                            }}
-                            isOpen={modalIsOpen}
-                            onRequestClose={() => setModalIsOpen(false)}
-                            className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
-                        >
-                            <Address address={userAddress} placeSelected={placeSelected} setPlaceSelected={setPlaceSelected} />
-                        </ReactModal>
+                        style={{
+                            overlay: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                            },
+                        }}
+                        isOpen={modalIsOpen}
+                        onRequestClose={() => setModalIsOpen(false)}
+                        className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
+                    >
+                        <Address
+                            address={userAddress}
+                            placeSelected={placeSelected}
+                            setPlaceSelected={setPlaceSelected}
+                            onSubmit={onSubmit}
+                            setAddressSelect={setAddressSelect}
+                            userAddressFunc={userAddressFunc}
+                        />
+                    </ReactModal>
 
                     <div>
                         {userCart.length
@@ -204,14 +279,16 @@ const OrderProduct = () => {
                               })
                             : false}
                     </div>
-                    <button type="submit">Continuar lleva a elegir metodo de pago</button>
-                </form>
+                    <button onClick={() => postOrder()}>
+                        Continuar lleva a elegir metodo de pago
+                    </button>
+                </div>
 
                 <div className='bg-gray-300 h-screen flex flex-col justify-top items-center -mt-10'>
                     <h2>Resumen de compra</h2>
                     <h4>Product's({itemsCart})</h4>
-                    <span>Price: {priceCart}</span>
-                    <span>Total price: {priceCart}</span>
+                    <span>Price: {total}</span>
+                    <span>Total price: {total}</span>
                 </div>
             </div>
         </div>

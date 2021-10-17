@@ -1,4 +1,63 @@
 const validate = {
+    name: {
+        required: { value: true, message: 'name is required' },
+        minLength: {
+            value: 4,
+            message: 'name must contain at least 4 characters',
+        },
+        maxLength: {
+            value: 15,
+            message: 'name must contain a maximum of 15 characters ',
+        },
+        pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'name can only be letters',
+        },
+    },
+
+    lastname: {
+        required: { value: true, message: 'lastName is required' },
+        minLength: {
+            value: 4,
+            message: 'lastName must contain at least 4 characters',
+        },
+        maxLength: {
+            value: 15,
+            message:
+                'lastName must contain a maximum of 15 characters ',
+        },
+        pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'lastName can only be letters',
+        },
+    },
+
+    email: {
+        required: { value: true, message: 'email is required' },
+        pattern: {
+            value: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
+            message: 'email is invalid',
+        },
+    },
+
+    password: {
+        required: { value: true, message: 'password is required' },
+        minLength: {
+            value: 6,
+            message: 'password must contain at least 8 characters',
+        },
+        maxLength: {
+            value: 16,
+            message:
+                'password must contain a maximum of 16 characters ',
+        },
+        pattern: {
+            value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
+            message:
+                'Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters',
+        },
+    },
+
     product: {
         required: { value: true, message: 'Product is required' },
         minLength: {

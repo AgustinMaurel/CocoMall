@@ -16,6 +16,7 @@ import StoreDetail from './Views/StoreDetail';
 import Cart from './Views/Cart';
 import Checkout from './Views/Checkout';
 import OrderProduct from './Components/Forms/OrderProduct';
+import EditUser from './Components/Forms/EditUser';
 
 function App() {
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
                 <Route path='/home/store/:id' exact component={StoreDetail} />
                 <Route path='/checkout/:id' exact component={Checkout} />
                 <Route path='/create/order' exact component={OrderProduct} />
+                <Route path='/profile' exact component={EditUser} />
             </Switch>
         </>
     );

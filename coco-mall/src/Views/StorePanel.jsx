@@ -10,7 +10,8 @@ import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { productOptions, storeOptions, ordersOptions, userOptions } from '../Scripts/swalFunction.js';
-
+import { BsBox, BsCardList } from "react-icons/bs";
+import { BiEditAlt } from "react-icons/bi";
 export default function StorePanel() {
 
     const dispatch = useDispatch();
@@ -115,7 +116,7 @@ export default function StorePanel() {
 
 
     const filtersNow =
-        render === 'Products' || render === "ProductsAdmin" ? filterProduct : render === 'Orders' || render === 'OrdersAdmin' ? filterOrders : [];
+        render === 'Products' || render === "All Products" ? filterProduct : render === 'Orders' || render === 'All Orders' ? filterOrders : [];
 
     return (
         <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
@@ -160,39 +161,54 @@ export default function StorePanel() {
                         </div>
                     </div>}
 
-                    {selectStore !== "SelectStore" && 
-                    <div className="flex w-full flex-col text-start items-start justify-start">
-                        <h2 className='text-primary text-lg font-bold'>Store Panel</h2>
-                        <button
-                            name='Products'
-                            value='Products'
-                            onClick={handleRender}
-                            className=''
-                        >
-                            Products{' '}
-                        </button>
-                        <button
-                            name='Orders'
-                            value='Orders'
-                            onClick={handleRender}
-                            className=''
-                        >
-                            Orders{' '}
-                        </button>
-                    </div>}
+                    {selectStore !== "SelectStore" &&
+                        <div className="flex w-full flex-col text-start items-start justify-start">
+                            <h2 className='text-primary text-lg font-bold'>Store Panel</h2>
+                            <div className="flex">
+
+                                <BsBox className="mt-1 ml-1" />
+                                <button
+                                    name='Products'
+                                    value='Products'
+                                    onClick={handleRender}
+                                    className='ml-1'
+                                >
+                                    Products
+                                </button>
+
+                            </div>
+                            <div className="flex">
+                                <BsCardList className="mt-1 ml-1" />
+                                <button
+                                    name='Orders'
+                                    value='Orders'
+                                    onClick={handleRender}
+                                    className='ml-1'
+                                >
+                                    Orders
+                                </button>
+
+                            </div>
+                        </div>}
 
                     <div className="flex w-full flex-col text-start items-start justify-start">
                         <h2 className='text-primary text-lg font-bold'> User Panel</h2>
-                        <h2 className=''>Profile</h2>
+                        <div className="flex">
+                            <BiEditAlt className="mt-1 ml-1" />
+                            <button className='ml-1'>Edit Profile</button>
+                        </div>
                     </div>
                     {userAdmin ?
                         <div className="flex w-full flex-col text-start items-start justify-start">
 
                             <h2 className='text-primary text-lg font-bold'>Admin Panel</h2>
-                            <button value="ProductsAdmin" onClick={handleRender} >All Products</button>
-                            <button value="OrdersAdmin" onClick={handleRender} >All Orders</button>
-                            <button value="UsersAdmin" onClick={handleRender} >All Users</button>
-                            <button value="StoresAdmin" onClick={handleRender}>All Stores</button>
+                            <div className="flex">
+                                <BsBox className="mt-1" />
+                                <button className="ml-1" value="All Products" onClick={handleRender} >All Products</button>
+                            </div>
+                            <button value="All Orders" onClick={handleRender} >All Orders</button>
+                            <button value="All Users" onClick={handleRender} >All Users</button>
+                            <button value="All Stores" onClick={handleRender}>All Stores</button>
 
                         </div> : null}
                 </div>
@@ -290,9 +306,7 @@ export default function StorePanel() {
                                 column_title={['Action', 'State', 'Payment', 'Description']}
                             />
                         )}
-                        {render === 'ProductsAdmin' &&
-
-
+                        {render === 'All Products' &&
                             <ModelTable
                                 info={allProducts}
                                 setProduct={setProduct}
@@ -307,7 +321,7 @@ export default function StorePanel() {
 
                             />}
 
-                        {render === 'OrdersAdmin' && (
+                        {render === 'All Orders' && (
                             <ModelTable
                                 info={allOrders}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
@@ -317,7 +331,7 @@ export default function StorePanel() {
                             />
                         )}
 
-                        {render === "UsersAdmin" &&
+                        {render === "All Users" &&
                             <ModelTable
                                 info={allUsers}
                                 column_title={['Action', 'Name', 'Mail', 'Id', 'Location']}
@@ -326,7 +340,7 @@ export default function StorePanel() {
                                 swalFunction={userOptions}
                             />}
 
-                        {render === "StoresAdmin" &&
+                        {render === "All Stores" &&
                             <ModelTable
                                 info={allStores}
                                 column_title={['Action', 'Name', 'Location', 'Id', 'Logo']}

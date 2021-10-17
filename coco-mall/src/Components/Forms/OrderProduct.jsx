@@ -131,7 +131,10 @@ const OrderProduct = () => {
         // userAddressFunc();
     }, [uid, modalIsOpen]);
     //uid, userInfoDB.length, modalIsOpen
-
+    const handleSubmitOrder = () => {
+        postOrder()
+        handleCheckout()
+    }
     const postOrder = () => {
         for (let storeId of storeOrders) {
             let totalStore = userCart
@@ -163,7 +166,6 @@ const OrderProduct = () => {
             <div className='flex justify-center m-auto w-3/4 h-full'>
                 <div
                     className='w-full flex flex-col justify-top items-center'
-                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>Order Product</h3>
                     <div>
@@ -279,7 +281,7 @@ const OrderProduct = () => {
                               })
                             : false}
                     </div>
-                    <button onClick={() => postOrder()}>
+                    <button onClick={() => handleSubmitOrder()}>
                         Continuar lleva a elegir metodo de pago
                     </button>
                 </div>

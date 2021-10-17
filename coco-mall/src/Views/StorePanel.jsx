@@ -123,7 +123,7 @@ export default function StorePanel() {
                 <NavBar />
             </div>
             <div className=' overflow-y-hidden flex w-64 flex-col col-span-1 row-span-full relative pl-10 border-r bg-gray-100 border-gray-200 p-5  '>
-                <div className='flex flex-col items-center h-screen '>
+                <div className='flex flex-col gap-10 items-center h-screen '>
                     {storesUser.length > 0 && <div className='flex flex-col items-center'>
                         <select
                             name='selectStore'
@@ -159,14 +159,15 @@ export default function StorePanel() {
 
                         </div>
                     </div>}
-                    <h1 className='text-center self-center p-5'>Store Panel</h1>
 
-                    {selectStore !== "SelectStore" && <div className="flex flex-col text-start items-center justify-center">
+                    {selectStore !== "SelectStore" && 
+                    <div className="flex w-full flex-col text-start items-start justify-start">
+                        <h2 className='text-primary text-lg font-bold'>Store Panel</h2>
                         <button
                             name='Products'
                             value='Products'
                             onClick={handleRender}
-                            className='my-1 bg-primary rounded text-white p-1 cursor-pointer'
+                            className=''
                         >
                             Products{' '}
                         </button>
@@ -174,25 +175,24 @@ export default function StorePanel() {
                             name='Orders'
                             value='Orders'
                             onClick={handleRender}
-                            className=' my-1 bg-primary rounded text-white p-1 cursor-pointer'
+                            className=''
                         >
                             Orders{' '}
                         </button>
                     </div>}
 
-                    <div className="flex flex-col text-start items-center justify-center">
-                        <h1 className='text-center self-center p-5'> User Panel</h1>
-                        <button className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>Profile</button>
-
+                    <div className="flex w-full flex-col text-start items-start justify-start">
+                        <h2 className='text-primary text-lg font-bold'> User Panel</h2>
+                        <h2 className=''>Profile</h2>
                     </div>
                     {userAdmin ?
-                        <div className="flex flex-col text-start items-center justify-center">
+                        <div className="flex w-full flex-col text-start items-start justify-start">
 
-                            <h1 className='text-center self-center p-5'>Admin Panel</h1>
-                            <button value="ProductsAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Products</button>
-                            <button value="OrdersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Orders</button>
-                            <button value="UsersAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Users</button>
-                            <button value="StoresAdmin" onClick={handleRender} className='my-5  bg-primary rounded text-white p-1 cursor-pointer'>All Stores</button>
+                            <h2 className='text-primary text-lg font-bold'>Admin Panel</h2>
+                            <button value="ProductsAdmin" onClick={handleRender} >All Products</button>
+                            <button value="OrdersAdmin" onClick={handleRender} >All Orders</button>
+                            <button value="UsersAdmin" onClick={handleRender} >All Users</button>
+                            <button value="StoresAdmin" onClick={handleRender}>All Stores</button>
 
                         </div> : null}
                 </div>
@@ -209,9 +209,9 @@ export default function StorePanel() {
                             </Link>
                         ) : (
                             <div>
-                                <h1 className='text-center items-center '>
+                                <h2 className='text-center items-center text-xl font-bold '>
                                     {render}
-                                </h1>
+                                </h2>
                                 <div className=' flex text-center justify-evenly items-center h-32 '>
                                     {filtersNow.map((el) => (
                                         <label

@@ -35,11 +35,11 @@ module.exports = (sequelize) => {
             },
             Country: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             State: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             SuperAdmin: {
                 type: DataTypes.BOOLEAN,

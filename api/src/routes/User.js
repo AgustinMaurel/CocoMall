@@ -7,14 +7,16 @@ const {
     getUserById,
     updateData,
     updateCart,
+    deleteUser,
+    activateUser
 } = require('../controllers/User.js');
-
+const { validation } = require('../utils/middlewares/validation')
 //all routes start with /user
 
 //GET's
 router.get('/', getAllData);
 
-router.get('/:id', getUserById);
+router.get('/:id', validation, getUserById);
 
 //POST's
 router.post('/create', createUser);
@@ -24,6 +26,11 @@ router.post('/bulkCreate', bulkCreateUser);
 //PUT's
 router.put('/update/:id', updateData);
 
-router.post('/update/cart', updateCart); // body id usuario , y cart:[{idProduct, cantidad}]
+router.post('/update/cart', updateCart); // body id usuario , y cart:[{id, cantidad}]
+
+//DELETE's
+router.delete('/delete/:id', deleteUser)
+
+router.put('/active/:id', activateUser)
 
 module.exports = router;

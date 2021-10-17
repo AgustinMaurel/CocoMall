@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { getStores, getProductTypes } from './Redux/actions/stores';
 import StorePanel from './Views/StorePanel';
 import { auth } from './firebase/firebaseConfig';
@@ -20,7 +20,7 @@ function App() {
     const dispatch = useDispatch();
 
     const [, setChecking] = useState(true);
-    const [, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -57,7 +57,9 @@ function App() {
                 <Route path='/create/shop' exact component={ShopCreation} />
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
-                <Route path='/home/store/:id' exact component={StoreDetail} />
+                <Route path='/home/store/:id' exact>
+                    {isLoggedIn ? <StoreDetail /> : <Redirect to='/auth/login' />}
+                </Route>
                 <Route path='/checkout/:id' exact component={Checkout} />
             </Switch>
         </>

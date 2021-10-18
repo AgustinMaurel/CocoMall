@@ -7,7 +7,7 @@ class OrderModel extends ModelController {
     }
     //Specific Functions for this model
     createOrder = async (req, res) => {
-        const {userId, storeId, address, cords, amount, orderState} = req.body;
+        const { userId, storeId, address, cords, amount, orderState } = req.body;
 
         if (userId && storeId && address && cords) {
             try {
@@ -29,7 +29,7 @@ class OrderModel extends ModelController {
                 // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
                 // const userNew = await User.update(obj, {where: {id: userId}})
 
-                
+
                 // add Store to order
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
@@ -51,6 +51,20 @@ class OrderModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
+    deleteOrder = async (req, res) => {
+        const id = req.params.id
+        if(id){
+            await this.model.destroy({
+                where: {
+                    id: id
+                }
+            })
+            res.send("Order Deleted")
+        } else {
+            res.status(400).send("Wrong params")
+        }
+    }
 }
 
 const OrderController = new OrderModel(Order);

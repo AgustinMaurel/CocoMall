@@ -66,7 +66,7 @@ export async function storeOptions(id, setEditState, setFlag3, flag3, setFlag2, 
             input: 'checkbox',
             icon: 'warning',
             inputValue: 1,
-            inputPlaceholder: 'Are you sure you want to delete this product',
+            inputPlaceholder: 'Are you sure you want to delete this store',
             confirmButtonText: 'Delete',
             inputValidator: (result) => {
                 return !result && 'You need to agree';
@@ -110,8 +110,9 @@ export async function ordersOptions(id, setEditState, setFlag3, flag3, setFlag2,
 
     if (accept) {
         axios
-            .delete(`${DELETE_STORE}/${id}`)
+            .delete(`${DELETE_ORDER}/${id}`)
             .then(() => {
+                console.log("hoaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 setFlag2(!flag2);
                 setFlag3(!flag3);
                 Swal.fire({
@@ -127,7 +128,6 @@ export async function ordersOptions(id, setEditState, setFlag3, flag3, setFlag2,
                 })},
             );
     }
-
 }
 
 export async function userOptions(id, setEditState, setFlag3, flag3, setFlag2, flag2) {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from "cloudinary-react"
 import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, } from '../Redux/actions/stores';
+import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
@@ -40,12 +40,10 @@ export default function StorePanel() {
     const [renderSec, setRenderSec] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false)
 
-
     const [ordersStore, setOrdersStore] = useState()
     const [allOrders, setAllOrders] = useState()
     const [allUsers, setAllUsers] = useState()
     const [allStores, setAllStores] = useState()
-
 
     useEffect(() => {
         dispatch(getStores());
@@ -63,33 +61,21 @@ export default function StorePanel() {
             .then(res => setAllOrders(res.data))
         axios.get('/store')
             .then(res => setAllStores(res.data))
-    }, [flag2])
-
-
-    useEffect(() => {
         axios.get(`/order/${idActual}`)
             .then(res => setOrdersStore(res.data))
-    }, [idActual])
-
-
-    useEffect(() => {
         axios.get('/user')
             .then(res => setAllUsers(res.data))
     }, [flag2])
 
-
-
-
-
     useEffect(() => {
-        dispatch(getProductsStore(idActual));
+        dispatch(getProductsStorePanel(idActual));
     }, []);
 
     function handleStore(e) {
         if (e.target.value !== 'All') {
             setSelectStore(e.target.value);
             const aux = stores.allStores.find((store) => store.storeName === e.target.value);
-            dispatch(getProductsStore(aux.id));
+            dispatch(getProductsStorePanel(aux.id));
             setIdActual(aux.id);
         }
         return false;
@@ -315,7 +301,11 @@ export default function StorePanel() {
                         {render === 'Orders' && selectStore !== 'All' && (
                             <ModelTable
                                 info={ordersStore}
-                                column_title={['Action', 'State', 'Payment', 'Description']}
+                                column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
+                                flag2={flag2}
+                                idStore={idActual}
+                                setFlag2={setFlag2}
+                                swalFunction={ordersOptions}
                             />
                         )}
                         {render === 'All Products' &&

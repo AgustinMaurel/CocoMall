@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProductsStorePanel } from '../../Redux/actions/stores';
+import axios from 'axios';
 
-export default function ModelTable ( { info, column_title, types,idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
+export default function ModelTable ( { info, column_title, types, idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
 
     const [flag3, setFlag3] = useState(false);
 

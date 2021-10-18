@@ -24,12 +24,6 @@ export const getStores = () => {
     };
 };
 
-export const getAllProducts = ()=> {
-    return async (dispatch) => {
-        const response = await axios.get('/product');
-        dispatch({type: ALL_PRODUCTS, payload:response.data})
-    }
-}
 export const filterStores = (payload) => {
     const obj = {
         state: payload.state,

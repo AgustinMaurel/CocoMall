@@ -1,4 +1,4 @@
-const { Review, Order, Store, User } = require('../models/index');
+const { Review, Order } = require('../models/index');
 const ModelController = require('./index');
 
 class ReviewModel extends ModelController {
@@ -7,36 +7,26 @@ class ReviewModel extends ModelController {
     }
     //Specific Functions for this model
     createReview = async (req, res) => {
-        // Id of the order
-        const { OrderId } = req.body
-        // Id of the store
-        const { StoreId } = req.body
-        // Id of the user
-        const { UserId } = req.body
-        if (OrderId) {
+        if (req.body.id) {
             try {
-                const { review } = req.body // obj con description{string} y qualification{ENUM 1 2 3 4 5}
+                //id of order
+                const id = req.body.id ? req.body.id : null;
+                const review = {
+                    description: req.body.description,
+                    qualification: req.body.qualification,
+                };
                 //Create the review
-                const newReview = await this.model.create(review);
+                const newReview = await Review.create(review);
                 const reviewId = newReview.id;
                 //Search the order and attach the Review
-                const order = await Order.findByPk(OrderId);
-                await order.setReview(reviewId);
-                //Search the store and attach the Review
-                const store = await Store.findByPk(StoreId)
-                await store.addReview(reviewId)
-                //Search the user and attach the Review
-                const user = await User.findByPk(UserId)
-                await user.addReview(reviewId)
-
-                const finalReview = await this.model.findByPk(reviewId)
-
-                res.send(finalReview);
+                const order = await Order.findByPk(id);
+                await order.addReview(reviewId);
+                res.send(newReview);
             } catch (e) {
-                res.send("Error");
+                res.send(e);
             }
         } else {
-            res.status(400).send({ message: 'No id' });
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 

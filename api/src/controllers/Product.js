@@ -7,8 +7,7 @@ class ProductModel extends ModelController {
     constructor(model) {
         super(model);
     }
-
-
+    //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
         const { storeId, typeId, subCat } = req.body;
@@ -82,7 +81,7 @@ class ProductModel extends ModelController {
             //lindo msj
             res.send('Successfully Created');
         } catch (error) {
-        res.send(error);
+            res.send(error);
         }
     };
 
@@ -156,10 +155,10 @@ class ProductModel extends ModelController {
                 res.send(error);
             }
         } else {
-        res.status(400).send({ message: 'Wrong parameters' });
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
-    
+
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
         if (storeId) {
@@ -201,7 +200,7 @@ class ProductModel extends ModelController {
                 res.send(error);
             }
         } else {
-        res.status(400).send({ message: 'Wrong parameters' });
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 
@@ -223,40 +222,32 @@ class ProductModel extends ModelController {
         const id1 = req.params.id;
         const { product } = req.body;
 
-
         if (product.cloudImage) {
-            let img = []; 
+            // Corregir para hacerlo con muchas imagenes
+            let img = [];
             for (let i = 0; i < product.cloudImage.length; i++) {
-                img[i] = await cloudinary.uploader.upload(product.cloudImage[i], {
-                folder: 'Products',
-                });
+                img[i] = await cloudinary.uploader.upload(
+                    product.cloudImage[i],
+                    {
+                        folder: 'Products',
+                    }
+                );
             }
-            let public_id = img.map((el) => el.public_id); 
+            let public_id = img.map((el) => el.public_id);
+
             const old = await this.model.findByPk(id1);
-            product.cloudImage = [...old.cloudImage, ...public_id]
+            product.cloudImage = old.cloudImage.concat(public_id); // [...old.cloudImage, ...public_id]
         }
 
         const ProductoActualizado = await this.model.update(
-        { ...product },
-        { where: { id: id1 } }
+            { ...product },
+            { where: { id: id1 } }
         );
 
         res.json({
-        msg: 'Updated product ok',
-        ProductoActualizado,
+            msg: 'Updated product ok',
+            ProductoActualizado,
         });
-    };
-
-    findAllProductsByIds = async (req, res) => {
-        const { allIds } = req.body;
-        const allProducts = await this.model.findAll({
-        where: {
-            id: {
-            [Op.or]: allIds,
-            },
-        },
-        });
-        res.send(allProducts);
     };
 
     deleteProduct = async (req, res) => {
@@ -265,20 +256,20 @@ class ProductModel extends ModelController {
             try {
                 const product = await this.model.findByPk(id);
                 const deletedImages = await cloudinary.api.delete_resources(
-                product.cloudImage,
-                { folder: 'Products' }
+                    product.cloudImage[0],
+                    { folder: 'Products' }
                 );
                 const deleted = await this.model.destroy({ where: { id: id } });
                 if (deleted === 1) {
                     res.json({ message: 'Product successfully deleted' });
                 } else {
-                    res.status(400).send({ message: 'Wrong parameters' });
+                    res.json({ message: 'Error' });
                 }
-            }catch(e){
-                res.send(e)
+            } catch (e) {
+                res.send(e);
             }
         }
-    }
+    };
 
     findAllProductsByIds = async (req, res) => {
         const { allIds } = req.body;

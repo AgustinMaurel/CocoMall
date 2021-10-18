@@ -1,5 +1,5 @@
-const {Order, User, Store, Address} = require("../models/index");
-const ModelController = require("./index");
+const { Order, User, Store, Address } = require('../models/index');
+const ModelController = require('./index');
 
 class OrderModel extends ModelController {
     constructor(model) {
@@ -48,21 +48,7 @@ class OrderModel extends ModelController {
                 res.send(err);
             }
         } else {
-            res.status(400).send({message: "Wrong parameters"});
-        }
-    };
-
-    allOrderStore = async (req, res) => {
-        const {StoreId} = req.params;
-        if (StoreId) {
-            try {
-                const Orders = await this.model.findAll({where: {StoreId}});
-                res.send(Orders);
-            } catch (err) {
-                res.status(400).send({message: err});
-            }
-        } else {
-            res.status(400).send({message: "Wrong parameter"});
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 }

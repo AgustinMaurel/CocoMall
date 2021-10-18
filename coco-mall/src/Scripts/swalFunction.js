@@ -1,9 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { DELETE_PRODUCT, DELETE_STORE } from './constants';
+import { DELETE_PRODUCT } from './constants';
 
-export async function productOptions(id, setEditState, setFlag3, flag3, setFlag2, flag2) {
-
+export async function modalOptions(id, setEditState, setFlag, flag) {
     const inputOptions = new Promise((resolve) => {
         setTimeout(() => {
             resolve({
@@ -44,19 +43,17 @@ export async function productOptions(id, setEditState, setFlag3, flag3, setFlag2
             axios
                 .delete(`${DELETE_PRODUCT}/${id}`)
                 .then(() => {
-                    setFlag2(!flag2);
-                    setFlag3(!flag3);
+                    setFlag(!flag);
                     Swal.fire({
                         icon: 'success',
                         title: 'Successfully deleted',
                     });
                 })
-                .catch((err) =>{
-                console.log(err)
+                .catch((err) =>
                     Swal.fire({
                         icon: 'error',
                         title: 'error',
-                    })},
+                    }),
                 );
         }
     }

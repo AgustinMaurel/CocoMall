@@ -2,7 +2,7 @@
 export const POST_STORE = 'POST_STORE';
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const GET_PRODUCT = 'GET_PRODUCT';
-export const ALL_PRODUCTS = 'ALL_PRODUCTS'
+
 //PRODUCT FILTERS
 
 export const ORDER_PRODUCTS = 'ORDER_PRODUCTS';

@@ -33,7 +33,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['id','address','cords'],
+                        attributes: ['directions'],
                     },
                 ],
             });
@@ -42,6 +42,101 @@ class UserModel extends ModelController {
             res.send(error);
         }
     };
+
+    funcUpdateCart = async (userId, cart) => {
+        let allIds = await cart.map((item) => {
+            return item.id;
+        });
+        let allQuantity = await cart.map((item) => {
+            return item.quantity;
+        });
+        let products = [];
+        for (const [i, id] of allIds.entries()) {
+            let product = await Product.findByPk(id);
+            product = {
+                ...product.dataValues,
+                quantity: allQuantity[i],
+            };
+            products = [...products, product];
+        }
+        const user = await this.model.findOne({
+            where: {
+                id: userId,
+            },
+            include: [
+                //include the related tables and the specific cloumn that they have attached
+                {
+                    model: Store,
+                    attributes: ['storeName'],
+                },
+                {
+                    model: Address,
+                    attributes: ['directions'],
+                },
+            ],
+        });
+        user.Cart = products;
+        return await user.save();
+    };
+    updateCart2 = async (req, res) => {
+        let Cart;
+        try {
+            const { id, item, que, cant } = req.body;
+
+            let result = await this.model.findOne({ where: { id } });
+
+            if (result) {
+                Cart = result.Cart;
+            }
+            if (Cart.length > 0) {
+                const result = Cart.find((el) => el.id === item.idProduct);
+                if (!result) {
+                    const producto = await Product.findOne({ where: { id: item.idProduct } });
+                    Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+                } else {
+                    Cart = Cart.map((el) => {
+                        if (el.id === item.idProduct) {
+                            if (que === '+') {
+                                return {
+                                    ...el,
+                                    quantity: Number(el.quantity) + Number(cant),
+                                };
+                            } else {
+                                return {
+                                    ...el,
+                                    quantity: Number(el.quantity) - Number(cant),
+                                };
+                            }
+                        } else {
+                            return el;
+                        }
+                    });
+                }
+                Cart = Cart.filter((el) => el.quantity > 0);
+
+                await this.model.update({ Cart }, { where: { id } });
+                const user = await this.model.findOne({ where: { id } });
+                res.json([...user.Cart]);
+            } else {
+                const producto = await Product.findOne({ where: { id: item.idProduct } });
+                Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+
+                await this.model.update({ Cart }, { where: { id } });
+                const user = await this.model.findOne({ where: { id } });
+                res.json([...user.Cart]);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    clearCart2=async(req,res)=>{
+        const {id}=req.body;
+        await this.model.update({Cart:[]},{where:{id}})
+        const user =this.model.findOne({where:{id}})
+        res.json({user})
+    }
+
 
     getUserById = async (req, res) => {
         const id = req.params.id;
@@ -61,9 +156,12 @@ class UserModel extends ModelController {
                         attributes: ['id','address','cords'],
                     },
                 ],
+            })
+            let cart = user.dataValues.Cart.map((el) => {
+                return { id: el.id, quantity: el.quantity };
             });
-            
-            res.send(user);
+            const update = await this.funcUpdateCart(id, cart);
+            res.json(update);
         } catch (error) {
             res.json(error);
         }
@@ -83,29 +181,8 @@ class UserModel extends ModelController {
         const { userId, cart } = req.body;
         if (userId) {
             try {
-                let allIds = await cart.map((item) => {
-                    return item.idProduct;
-                });
-                let allQuantity = await cart.map((item) => {
-                    return item.quantity;
-                });
-                let products = [];
-                for (const [i, id] of allIds.entries()) {
-                    let product = await Product.findByPk(id);
-                    product = {
-                        ...product.dataValues,
-                        quantity: allQuantity[i],
-                    };
-                    products = [...products, product];
-                }
-                const user = await this.model.findOne({
-                    where: {
-                        id: userId,
-                    },
-                });
-                user.Cart = products;
-                await user.save();
-                res.json(products);
+                const user = await this.funcUpdateCart(userId, cart);
+                res.json(user.Cart);
             } catch (error) {
                 res.send(error);
             }

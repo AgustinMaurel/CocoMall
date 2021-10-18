@@ -25,16 +25,10 @@ const initialState = {
     productTypes: [],
     productSubCat: [],
     storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
-    allProducts:[]
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case ALL_PRODUCTS:
-            return {
-                ...state,
-                allProducts: payload
-            }
         case GET_STORES:
             return {
                 ...state,

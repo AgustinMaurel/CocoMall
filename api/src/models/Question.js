@@ -10,13 +10,10 @@ module.exports = (sequelize) => {
         },
         question: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         answer: {
             type: DataTypes.STRING,
         },
-    },
-    {   
-        timestamps: false,
-        createdAt: false,
     });
 };

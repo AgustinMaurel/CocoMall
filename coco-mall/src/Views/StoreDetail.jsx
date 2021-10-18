@@ -18,10 +18,11 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import { AiOutlinePercentage } from 'react-icons/ai';
 import {
-    addToCart,
+    // addToCart,
     deleteFromCart,
     deleteAllFromCart,
     clearCart,
+    addToCartSomo,
 } from '../Redux/actions/shoppingActions';
 import CartItem from '../Components/ShoppingCart/CartItem';
 import ProductDetail from '../Components/Product/ProductDetail';
@@ -64,10 +65,16 @@ export default function StoreDetail() {
         subCategory: [],
     });
 
+    // const [Cart, setCart] = useState();
+    // console.log(Cart, 'LOCAL STORAGE');
+
     let userCartToBack = {
         userId: uid,
         cart: [],
     };
+
+    const que = '+';
+    const cant = '1';
 
     //SLIDER HERO configuraciones
     const settingsHero = {
@@ -99,10 +106,6 @@ export default function StoreDetail() {
         };
     }, [id]);
 
-    const handleClearCart = () => {
-        dispatch(clearCart());
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    };
 
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
@@ -221,68 +224,6 @@ export default function StoreDetail() {
                     )}
                 </div>
                 <div className='flex flex-col'>
-                    {/* {storeProductsFilter.length && typesProductInStore.length
-                        ? typesProductInStore.map((type) => {
-                              if (filters.type.includes(type.id)) {
-                                  return (
-                                      <>
-                                          <h3 className='text-2xl font-bold text-cocoMall-800 ml-4'>
-                                              {type.Name}
-                                          </h3>
-                                          {storeProductsFilter.map((product) => {
-                                              if (type.id === product.ProductTypeId) {
-                                                  return (
-                                                      <>
-                                                          <div
-                                                              onClick={() =>
-                                                                  modalFuncion(product.id)
-                                                              }
-                                                          >
-                                                              <Product
-                                                                  product={product}
-                                                                  addToCart={() =>
-                                                                      addToCart(product.id)
-                                                                  }
-                                                              />
-                                                          </div>
-                                                      </>
-                                                  );
-                                              }
-                                          })}
-                                      </>
-                                  );
-                              }
-                              if (!filters.type.length) {
-                                  return (
-                                      <div className='flex'>
-                                          <span className='w-24 mt-4 ml-4 font-semibold text-cocoMall-300'>
-                                              {type.Name.toUpperCase()}
-                                          </span>
-                                          {storeProductsFilter.map((product) => {
-                                              if (type.id === product.ProductTypeId) {
-                                                  return (
-                                                      <>
-                                                          <div
-                                                              onClick={() =>
-                                                                  modalFuncion(product.id)
-                                                              }
-                                                          >
-                                                              <Product
-                                                                  product={product}
-                                                                  addToCart={() =>
-                                                                      addToCart(product.id)
-                                                                  }
-                                                              />
-                                                          </div>
-                                                      </>
-                                                  );
-                                              }
-                                          })}
-                                      </div>
-                                  );
-                              }
-                          })
-                        : false} */}
                 </div>
                 <div>
                     {storeProductsFilter.Products
@@ -299,77 +240,8 @@ export default function StoreDetail() {
                         : null}
                 </div>
             </div>
-
-            {/* CART */}
-            <div className=' col-span-12 flex flex-col hidden pl-12 pr-12'>
-                <div className=' bg-green-300 relative h-full flex row-span-14 col-span-2 border-r border-gray-200 '>
-                    <div className=' '>
-                        <h3>Carrito</h3>
-                        {userCart.length > 0 ? (
-                            <button
-                                className='border bg-red-600 text-white shadow p-1'
-                                onClick={handleClearCart}
-                            >
-                                Clear cart
-                            </button>
-                        ) : (
-                            false
-                        )}
-                        {userCart?.map((item, index) => (
-                            <CartItem
-                                key={index}
-                                data={item}
-                                deleteFromCart={() => deleteFromCart(item.id)}
-                                deleteAllFromCart={() => deleteAllFromCart(item.id)}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
 
-//RENDERS FILTERS
 
-// {
-//     filters.searchProduct ||
-//     filters.type.length ||
-//     filters.min ||
-//     filters.max ||
-//     filters.discount ? (
-//         <div className='border'>
-//             <span>Render Filters </span>
-//             <br />
-//             <span>Resultados</span> <span>{storeProductsFilter.length}</span>
-//             {/* Agregar cantidad de resultados al buscar productos */}
-//             {filters.searchProduct !== '' ? (
-//                 <li>{filters.searchProduct}</li>
-//             ) : (
-//                 false
-//             )}
-//             {filters.type.length ? <li>{filters.type}</li> : false}
-//             {filters.min !== '' ? <li>{filters.min}</li> : false}
-//             {filters.max !== '' ? <li>{filters.max}</li> : false}
-//             {filters.discount !== 0 ? <li>Discount</li> : false}
-//     </div>
-// ) : (
-//     false
-// )}
-
-/* <Slider {...settingsTypes}>
-    {typesProductInStore?.map((type, index) => {
-        return (
-            <FilterTypeProduct
-                type={type}
-                index={index}
-                handleChecked={handleChecked}
-                check={check}
-            />
-        );
-    })}
-</Slider> */
-
-// {
-//     storeProductsFilter[0].ProductTypeId === type?.id ? <h2>{type.Name}</h2> : <></>
-// }

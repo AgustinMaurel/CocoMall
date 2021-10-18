@@ -8,7 +8,7 @@ import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts, getStores } from '../../Redux/actions/stores';
+import { getStores } from '../../Redux/actions/stores';
 
 const ProductsCreate = ({ idStore, product }) => {
     //STATES
@@ -28,7 +28,6 @@ const ProductsCreate = ({ idStore, product }) => {
         formState: { errors },
     } = useForm({ defaultValues: product });
 
-    console.log(product)
     //LOAD IMAGE
     const handleImageChange = (e) => {
         const reader = new FileReader();
@@ -47,13 +46,12 @@ const ProductsCreate = ({ idStore, product }) => {
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
-            productName: data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
+            productName:
+                data.productName.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase(),
             description: data.description,
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
-            ProductTypeId: Number(types),
-            cloudImage: [image]
         };
         let dataProductClean = {
             product: dataRawProduct,
@@ -65,9 +63,8 @@ const ProductsCreate = ({ idStore, product }) => {
         console.log(dataProductClean);
         if (product) {
             axios
-                .put(`/product/update/${product.id}`, { product: dataRawProduct })
+                .put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
-                    dispatch(getAllProducts())
                     setTypes('');
                     Swal.fire({
                         icon: 'success',
@@ -88,7 +85,6 @@ const ProductsCreate = ({ idStore, product }) => {
             axios
                 .post('/product/create', dataProductClean)
                 .then(() => {
-                    dispatch(getAllProducts())
                     dispatch(getStores());
                     Swal.fire({
                         icon: 'success',
@@ -110,10 +106,9 @@ const ProductsCreate = ({ idStore, product }) => {
 
     //TODO get de categorias -> hacer input SELECT
     return (
-        <>
-         
+        <div className='w-full flex justify-center items-center m-auto'>
             {/* --CONTAINER-- */}
-            <div className='w-full flex h-full justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
+            <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
                 <form className='w-full xl:w-1/3 flex flex-col' onSubmit={handleSubmit(onSubmit)}>
                     <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>
                         {product ? 'Edit your Product' : 'Create your Product'}
@@ -196,13 +191,10 @@ const ProductsCreate = ({ idStore, product }) => {
 
                 {/* --PREVIEW-- */}
                 <div
-                    className='flex flex-col flex-none relative h-full border border-gray-100     shadow-xl rounded py-8 ml-4 w-80 text-center content-center justify-center items-center
+                    className='hidden bg-white shadow-md rounded py-8 ml-4 w-80 text-center
                                 xl:block overflow-hidden'
                 >
-                    <div className="flex items-center justify-center content-center relative h-80 ">
-                        <img className="self-center content-center align-middle text-center justify-self-center" src={isUploaded ? image : IMG_DEFAULT} alt='img' />
-
-                    </div>
+                    <img src={isUploaded ? image : IMG_DEFAULT} alt='img' />
                     <p className='font-bold mt-5 text-2xl'>
                         {watch('productName') ? watch('productName').toUpperCase() : 'PRODUCT'}
                     </p>
@@ -212,8 +204,7 @@ const ProductsCreate = ({ idStore, product }) => {
                     <p className='text-xl'>{watch('price') ? `$ ${watch('price')}` : '$0.00'}</p>
                 </div>
             </div>
-        {/* </div> */}
-        </>
+        </div>
     );
 };
 

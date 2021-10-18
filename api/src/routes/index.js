@@ -30,4 +30,3 @@ router.use('/subCategory', SubCategoyRoutes);
 
 
 module.exports = router;
-

@@ -12,6 +12,7 @@ import {
     getProductDetail,
     getStoreDetail,
     getProductSubCat,
+    clearProducts
 } from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
@@ -101,8 +102,7 @@ export default function StoreDetail() {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
-            dispatch(getProductsStore());
-            dispatch(getStoreDetail());
+            dispatch(clearProducts());
         };
     }, [id]);
 
@@ -114,7 +114,7 @@ export default function StoreDetail() {
     const handleTypes = handleOnTypes(dispatch, id, filters);
 
     let keysTypes;
-    if (storeProductsFilter.Products) {
+    if (storeProductsFilter?.Products) {
         keysTypes = Object.keys(storeProductsFilter.Products);
     }
     let keysTypesSinFilter;
@@ -226,7 +226,7 @@ export default function StoreDetail() {
                 <div className='flex flex-col'>
                 </div>
                 <div>
-                    {storeProductsFilter.Products
+                    {storeProductsFilter?.Products
                         ? keysTypes.map((k) => {
                               return (
                                   <TypesProduct

@@ -12,7 +12,8 @@ import {
     ORDER_STORE,
     GET_PRODUCT_SUBCATEGORY,
     GET_PRODUCT_STORE_TYPES,
-    GET_PRODUCT_STORE_SUBCATEGORY
+    GET_PRODUCT_STORE_SUBCATEGORY,
+    CLEAR_PRODUCTS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -42,7 +43,13 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 allProducts: payload
             }
+        case CLEAR_PRODUCTS :
+            return {
+                ...state,
+                storesProducts: payload,
+                storeProductsFilter: payload
 
+            }
         case POST_STORE:
             return {
                 ...state,

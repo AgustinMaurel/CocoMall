@@ -53,7 +53,15 @@ class OrderModel extends ModelController {
     findOrderId = async (req, res) => {
         const id = req.params.id;
         if (id) {
-            const orderId = await this.model.findByPk(id);
+            const orderId = await this.model.findAll({
+                where:{
+                    StoreId: id
+                },
+                // include: {
+                //     model: Order,
+                //     attributes: ['id', 'amount', 'orderState', "UserId", "AddressId"],
+                // },
+            });
             res.send(orderId);
         } else {
             res.status(400).send('Wrong params');

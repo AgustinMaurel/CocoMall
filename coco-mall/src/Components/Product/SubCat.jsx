@@ -4,6 +4,7 @@ import ProductDetail from './ProductDetail';
 import {useDispatch, useSelector} from 'react-redux'
 import {getProductDetail} from '../../Redux/actions/stores'
 import ReactModal from 'react-modal';
+import {addToCartSomo} from '../../Redux/actions/shoppingActions';
 
 ReactModal.setAppElement('#root');
 function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
@@ -43,7 +44,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                         >
                             <ProductDetail
                                 product={productDetail}
-                                // addToCart={() => addToCart(productDetail.id)}
+                                addToCart={() => addToCartSomo(uid, productDetail.id, que, cant)}
                             />
                         </ReactModal>
                     ) : (

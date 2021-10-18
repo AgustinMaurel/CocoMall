@@ -226,10 +226,10 @@ class UserModel extends ModelController {
                 {
                     model: Store,
                     attributes: ['id'],
-                    include: [{
-                        model: Product,
-                        attributes: ["id"]
-                    }]
+                    // include: [{
+                    //     model: Product,
+                    //     attributes: ["id"]
+                    // }]
                 },
                 {
                     model: Address,
@@ -240,40 +240,26 @@ class UserModel extends ModelController {
         const user = DbUser.dataValues
         //get all the id of the stores to delete and their Products
         if (user.Stores.length) {
-            let prodcutsToDelete = []
-            const stor = await user.Stores.map(async store => {
-                const products = store.dataValues.Products
-                await products?.map(products => {
-                    prodcutsToDelete = [...prodcutsToDelete, products.dataValues.id]
-                })
+            const stor = await user.Stores.map(store => {
                 return store.dataValues.id
             })
-            console.log(prodcutsToDelete)
-            console.log(stor)
+            for (const storeId of stor) {
+                await Product.destroy({
+                    where: {
+                        StoreId: storeId
+                    }
+                })
+            }
             await Store.destroy({
                 where: {
-                    id: {
-                        [Op.or]: stor
-                    }
-                }
-            })
-            await Product.destroy({
-                where: {
-                    id: {
-                        [Op.or]: prodcutsToDelete
-                    }
+                    UserId: id
                 }
             })
         }
         if (user.Addresses.length) {
-            const addresses = user.Addresses.map(address => {
-                return address.dataValues.id
-            })
             await Address.destroy({
                 where: {
-                    id: {
-                        [Op.or]: addresses
-                    }
+                    Usersid: id
                 }
             })
         }

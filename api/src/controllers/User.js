@@ -78,6 +78,7 @@ class UserModel extends ModelController {
         user.Cart = products;
         return await user.save();
     };
+
     updateCart2 = async (req, res) => {
         let Cart;
         try {
@@ -130,21 +131,21 @@ class UserModel extends ModelController {
         }
     };
 
-    clearCart2=async(req,res)=>{
-        const {id}=req.body;
-        await this.model.update({Cart:[]},{where:{id}})
-        const user =this.model.findOne({where:{id}})
-        res.json({user})
+    clearCart2 = async (req, res) => {
+        const { id } = req.body;
+        await this.model.update({ Cart: [] }, { where: { id } })
+        const user = this.model.findOne({ where: { id } })
+        res.json({ user })
     }
 
 
     getUserById = async (req, res) => {
         const id = req.params.id;
         try {
-            let user = await this.model.findByPk(id,{
-                // where: {
-                //     id: id,
-                // },
+            const user = await this.model.findOne({
+                where: {
+                    id: id,
+                },
                 include: [
                     //include the related tables and the specific cloumn that they have attached
                     {
@@ -153,7 +154,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['id','address','cords'],
+                        attributes: ['id', 'directions', 'cords'],
                     },
                 ],
             })
@@ -201,18 +202,87 @@ class UserModel extends ModelController {
             return res.status(404).json(false);
         }
     };
-    putUser=async (req,res,next)=>{
-        const {id,Country,State}=req.body;
-        try{
-            let updateUser=this.model.update({Country,State},{where:{id}})
+
+    putUser = async (req, res, next) => {
+        const { id, Country, State } = req.body;
+        try {
+            let updateUser = this.model.update({ Country, State }, { where: { id } })
             res.json(updateUser);
-        }catch(error){
+        } catch (error) {
             res.json({
-                errores:error
+                errores: error
             })
         }
-        
+    }
 
+    deleteUser = async (req, res) => {
+        const id = req.params.id
+        const DbUser = await this.model.findOne({
+            where: {
+                id: id
+            },
+            include: [
+                //include the related tables and the specific cloumn that they have attached
+                {
+                    model: Store,
+                    attributes: ['id'],
+                    include: [{
+                        model: Product,
+                        attributes: ["id"]
+                    }]
+                },
+                {
+                    model: Address,
+                    attributes: ['id'],
+                },
+            ]
+        })
+        const user = DbUser.dataValues
+        //get all the id of the stores to delete and their Products
+        if (user.Stores.length) {
+            let prodcutsToDelete = []
+            const stor = await user.Stores.map(async store => {
+                const products = store.dataValues.Products
+                await products?.map(products => {
+                    prodcutsToDelete = [...prodcutsToDelete, products.dataValues.id]
+                })
+                return store.dataValues.id
+            })
+            console.log(prodcutsToDelete)
+            console.log(stor)
+            await Store.destroy({
+                where: {
+                    id: {
+                        [Op.or]: stor
+                    }
+                }
+            })
+            await Product.destroy({
+                where: {
+                    id: {
+                        [Op.or]: prodcutsToDelete
+                    }
+                }
+            })
+        }
+        if (user.Addresses.length) {
+            const addresses = user.Addresses.map(address => {
+                return address.dataValues.id
+            })
+            await Address.destroy({
+                where: {
+                    id: {
+                        [Op.or]: addresses
+                    }
+                }
+            })
+        }
+        await this.model.destroy({
+            where: {
+                id: id
+            }
+        })
+        res.send("deleted")
     }
 }
 

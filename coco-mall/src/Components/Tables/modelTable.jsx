@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductsStore } from '../../Redux/actions/stores';
+import { getProductsStorePanel } from '../../Redux/actions/stores';
 
 export default function ModelTable ( { info, column_title, types,idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
 
@@ -14,7 +14,7 @@ export default function ModelTable ( { info, column_title, types,idStore, setEdi
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getProductsStore(idStore));
+        dispatch(getProductsStorePanel(idStore));
     }, [flag3]);
     
     return (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from "cloudinary-react"
 import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, } from '../Redux/actions/stores';
+import { filterProductsPanel, getAllProducts, getProductsStorePanel, getStores, ordersProduct, } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
@@ -80,14 +80,14 @@ export default function StorePanel() {
 
 
     useEffect(() => {
-        dispatch(getProductsStore(idActual));
+        dispatch(getProductsStorePanel(idActual));
     }, [flag]);
 
     function handleStore(e) {
         if (e.target.value !== 'All') {
             setSelectStore(e.target.value);
             const aux = stores.allStores.find((store) => store.storeName === e.target.value);
-            dispatch(getProductsStore(aux.id));
+            dispatch(getProductsStorePanel(aux.id));
             setIdActual(aux.id);
         }
         return false;
@@ -105,9 +105,9 @@ export default function StorePanel() {
         };
         if (e.target.value !== 'All') {
             aux.type = [val];
-            dispatch(filterProducts(idActual, aux));
+            dispatch(filterProductsPanel(idActual, aux));
         } else {
-            dispatch(filterProducts(idActual, aux));
+            dispatch(filterProductsPanel(idActual, aux));
         }
     }
     const filterProduct = ['A-Z', 'Z-A', 'Price', 'Stock'];
@@ -257,7 +257,7 @@ export default function StorePanel() {
 
                                             <label
                                                 onClick={() =>
-                                                    dispatch(getProductsStore(idActual)) &&
+                                                    dispatch(getProductsStorePanel(idActual)) &&
                                                         !renderSec
                                                         ? setRenderSec(true)
                                                         : setRenderSec(false)

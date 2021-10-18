@@ -66,6 +66,13 @@ export const getProductsStore = (id) => {
     };
 };
 
+export const getProductsStorePanel = (id) => {
+    return async (dispatch) => {
+        const response = await axios.get(`/product/panel/${id}`);
+        dispatch({ type: GET_PRODUCT, payload: response.data });
+    };
+};
+
 export const getProductDetail = (id) => {
     return async (dispatch) => {
         const product = await axios.get(`/product/find/${id}`)
@@ -80,10 +87,24 @@ export const filterProducts = (id, payload) => {
         min: payload.min,
         max: payload.max,
         discount: payload.discount,
-        subCategory: payload.subCategory
     };
     return async (dispatch) => {
         const response = await axios.post(`/product/filter/${id}`, obj);
+        await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
+    };
+};
+
+export const filterProductsPanel = (id, payload) => {
+    const obj = {
+        types: payload.type,
+        name: payload.searchProduct,
+        min: payload.min,
+        max: payload.max,
+        discount: payload.discount,
+        subCategory: payload.subCategory
+    };
+    return async (dispatch) => {
+        const response = await axios.post(`/panel/filter/${id}`, obj);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };

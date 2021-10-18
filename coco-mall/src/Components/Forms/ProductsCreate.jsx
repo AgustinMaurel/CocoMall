@@ -8,7 +8,7 @@ import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStores } from '../../Redux/actions/stores';
+import { getAllProducts, getStores } from '../../Redux/actions/stores';
 
 const ProductsCreate = ({ idStore, product }) => {
     //STATES
@@ -58,6 +58,7 @@ const ProductsCreate = ({ idStore, product }) => {
             storeId: idStore,
             idImage: [image],
             typeId: types,
+            subCat: data.subCategory ? data.subCategory : "Others"
         };
         console.log(dataProductClean);
         if (product) {
@@ -65,6 +66,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
                     setTypes('');
+                    dispatch(getAllProducts())
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -85,6 +87,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .post('/product/create', dataProductClean)
                 .then(() => {
                     dispatch(getStores());
+                    dispatch(getAllProducts())
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Created!',
@@ -163,6 +166,14 @@ const ProductsCreate = ({ idStore, product }) => {
                             })}
                         </select>
                     </div>
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='subCategory'
+                        placeholder='Eg: T-shirt'
+                        type='text'
+                        validate={validate.subCategory}
+                    />
                     <InputFile
                         register={register}
                         errors={errors}

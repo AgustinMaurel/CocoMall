@@ -1,42 +1,25 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { SHOPPING_CART } from '../../Scripts/constants';
-import { addToCart } from '../../Redux/actions/shoppingActions';
+import { /*addToCart*/ addToCartSomo } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
+import {Redirect } from 'react-router-dom'
 
 import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');
-function ProductDetail(props) {
+export default function ProductDetail(props) {
     const dispatch = useDispatch();
-
     const { product } = props;
+    const { uid } = useSelector((state) => state.auth);
+    const que = '+';
+    const cant = 1;
 
-    const { userCart, uid } = useSelector((state) => state.auth);
-
-    let userCartToBack = useMemo(() => {
-        return {
-            userId: uid,
-            cart: userCart?.map((item) => {
-                return {
-                    idProduct: item.id,
-                    quantity: item.quantity,
-                };
-            }),
-        };
-    }, [userCart, uid]);
-    console.log(product.id);
-
-    const handleButtonClick = () => {
-        dispatch(addToCart(product.id));
+    const handleButtonClick = (id) => {
+        dispatch(addToCartSomo(uid, id, que, cant));
     };
 
-    useEffect(() => {
-        axios.post(SHOPPING_CART.ADD_TO_CART, userCartToBack);
-    }, [userCartToBack]);
-
     return (
+      
         <div className='    flex justify-center w-full h-full'>
             <div className='flex justify-center items-center w-2/5 h-full p-6'>
                 <Image
@@ -65,7 +48,7 @@ function ProductDetail(props) {
                 </div>
                 <button
                     className='font-bold text-center text-xl text-white bg-cocoMall-300 py-4'
-                    onClick={handleButtonClick}
+                    onClick={() => handleButtonClick(product.id)}
                 >
                     Add Cart
                 </button>
@@ -73,5 +56,3 @@ function ProductDetail(props) {
         </div>
     );
 }
-
-export default ProductDetail;

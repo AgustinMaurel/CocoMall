@@ -21,9 +21,25 @@ class AddressModel extends ModelController {
                 //Search the User and attach the Address
                 const user = await User.findByPk(id);
                 await user.addAddress(addressId);
+                
                 res.send(newAddress);
             } catch (e) {
                 res.send(e);
+            }
+        } else {
+            res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+    getIdData = async (req, res) => {
+        //lo hice al pedo creo
+        const {id} = req.params
+        if (id) {
+            try {
+                let data = await this.model.findByPk(id);
+                console.log(data)
+                res.send(data);
+            } catch (error) {
+                res.send(error);
             }
         } else {
             res.status(400).send({ message: 'Wrong parameters' });

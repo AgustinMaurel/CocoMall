@@ -98,6 +98,16 @@ class StoreModel extends ModelController {
         const max = req.body.max || 99 ^ 9999;
         try {
             const filteredStores = await this.model.findAll({
+                //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
+                where: {
+                    state: {
+                        [Op.iLike]: `%${stateStore}%`,
+                    },
+                    //Estoy filtrando por el nombre de la tienda
+                    storeName: {
+                        [Op.iLike]: `%${storeToFilter}%`,
+                    },
+                },
                 include: {
                     model: Product,
                     attributes: ['ProductTypeId', 'productName', 'price'],
@@ -117,22 +127,67 @@ class StoreModel extends ModelController {
                         // },
                     },
                 },
-                //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
-                where: {
-                    state: {
-                        [Op.iLike]: `%${stateStore}%`,
-                    },
-                    //Estoy filtrando por el nombre de la tienda
-                    storeName: {
-                        [Op.iLike]: `%${storeToFilter}%`,
-                    },
-                },
             });
             res.send(filteredStores);
         } catch (error) {
             res.send(error);
         }
     };
+
+    getAllProductsOfStore = async (req, res) => {
+        const id = req.params.id
+        const searchedStore = await this.model.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: Product
+            }
+        })
+        res.send(searchedStore)
+    }
+
+    // getAllFilteredProductsOfStore = (req, res) => {
+    //     const id = req.params.id
+    //     const { types, name, min, max, discount, subCategory } = req.body
+    //     const allTypes = types || [];
+    //     const nameToFilter = name || '';
+    //     const minToFil = min || 0;
+    //     const maxToFil = max || Math.pow(99, 99);
+    //     const discountToFil = discount || 0;
+    //     const subCategToFil = subCategory || []
+    //     const searchedStore = this.model.findOne({
+    //         where: {
+    //             id: id
+    //         },
+    //         include: {
+    //             model: Product,
+    //             where: {
+    //                 [Op.and]: {
+    //                     ProductTypeId: {
+    //                         [Op.or]: allTypes,
+    //                     },
+    //                     productName: {
+    //                         [Op.iLike]: `%${nameToFilter}%`,
+    //                     },
+    //                     price: {
+    //                         [Op.and]: {
+    //                             [Op.gte]: minToFil,
+    //                             [Op.lte]: maxToFil,
+    //                         },
+    //                     },
+    //                     discount: {
+    //                         [Op.gte]: discountToFil,
+    //                     },
+    //                     subCategory: {
+    //                         [Op.or]: subCategToFil
+    //                     }
+    //                 },
+    //             },
+    //         }
+    //     })
+    //     res.send(searchedStore)
+    // }
 
     deleteDeep = async (req, res) => {
         let id = req.params.id;

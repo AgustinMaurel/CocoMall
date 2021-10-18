@@ -9,8 +9,13 @@ import {
     ORDER_PRODUCTS,
     ORDER_STORE,
     SEARCH_BY_NAME,
+    ALL_PRODUCTS,
+    GET_PRODUCT_SUBCATEGORY,
+    GET_PRODUCT_STORE_TYPES,
+    GET_PRODUCT_STORE_SUBCATEGORY,
+    CLEAR_PRODUCTS
 } from './actionTypes';
-import { STORES_URL, SEARCH_URL, BASE_URL } from '../../Scripts/constants';
+import { STORES_URL, SEARCH_URL } from '../../Scripts/constants';
 import axios from 'axios';
 
 export const getStores = () => {
@@ -20,6 +25,12 @@ export const getStores = () => {
     };
 };
 
+export const getAllProducts = ()=> {
+    return async (dispatch) => {
+        const response = await axios.get('/product');
+        dispatch({type: ALL_PRODUCTS, payload:response.data})
+    }
+}
 export const filterStores = (payload) => {
     const obj = {
         state: payload.state,
@@ -44,9 +55,11 @@ export const getStoresByName = () => {
 
 export const getStoreDetail = (id) => {
     return async (dispatch) => {
-        dispatch({ type: SEARCH_BY_ID, payload: id });
+        const store = await axios.get(`/store/${id}`)
+        dispatch({ type: SEARCH_BY_ID, payload: store.data });
     };
 };
+
 
 export const getProductsStore = (id) => {
     return async (dispatch) => {
@@ -55,14 +68,21 @@ export const getProductsStore = (id) => {
     };
 };
 
+export const getProductsStorePanel = (id) => {
+    return async (dispatch) => {
+        const response = await axios.get(`/product/panel/${id}`);
+        dispatch({ type: GET_PRODUCT, payload: response.data });
+    };
+};
+
 export const getProductDetail = (id) => {
     return async (dispatch) => {
-        dispatch({ type: GET_PRODUCT_DETAIL, payload: id });
+        const product = await axios.get(`/product/find/${id}`)
+        dispatch({ type: GET_PRODUCT_DETAIL, payload: product.data });
     };
 };
 
 export const filterProducts = (id, payload) => {
-    console.log(payload);
     const obj = {
         types: payload.type,
         name: payload.searchProduct,
@@ -76,12 +96,34 @@ export const filterProducts = (id, payload) => {
     };
 };
 
+export const filterProductsPanel = (id, payload) => {
+    const obj = {
+        types: payload.type,
+        name: payload.searchProduct,
+        min: payload.min,
+        max: payload.max,
+        discount: payload.discount,
+        subCategory: payload.subCategory
+    };
+    return async (dispatch) => {
+        const response = await axios.post(`/panel/filter/${id}`, obj);
+        await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
+    };
+};
+
 export const getProductTypes = () => {
     return async (dispatch) => {
         const response = await axios.get(`/productType`);
         await dispatch({ type: GET_PRODUCT_TYPES, payload: response.data });
     };
 };
+
+export const getProductSubCat = () => {
+    return async (dispatch) => {
+        const subCategorys = await axios.get('/SubCategory')
+        await dispatch({ type: GET_PRODUCT_SUBCATEGORY, payload: subCategorys.data})
+    }
+}
 
 export const ordersProduct = (payload) => {
     return async (dispatch) => {
@@ -94,3 +136,10 @@ export const ordersStores = (payload) => {
         dispatch({ type: ORDER_STORE, payload });
     };
 };
+
+export const clearProducts = (payload) => {
+    return {
+        type: CLEAR_PRODUCTS,
+        payload
+    }
+}

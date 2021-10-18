@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
-import coco from '../../Assets/icons/coco_png.png'
+import coco from '../../Assets/icons/coco_png.png';
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -17,9 +17,13 @@ function NavBar() {
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
-    let ITEMS_IN_CART =
-        cartItems.length > 0 &&
-        cartItems?.map((el) => el.quantity).reduce((current, sum) => current + sum, 0);
+    let ITEMS_IN_CART;
+
+    if (cartItems && cartItems.length > 0) {
+        ITEMS_IN_CART = cartItems
+            ?.map((el) => el.quantity)
+            .reduce((current, sum) => current + sum, 0);
+    }
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -43,11 +47,11 @@ function NavBar() {
     return (
         <>
             {width < breakpoint ? (
-                <div className='p-5'>
+                <div className='p-5 bg-gray-100 border-gray-100 shadow'>
                     <nav className='flex  justify-between'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
-                            <img className="w-20" src={coco} alt="logo" />
+                                <img className='w-20' src={coco} alt='logo' />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -63,13 +67,13 @@ function NavBar() {
                     <nav className=' flex align-center items-center h-auto   justify-between  w-full'>
                         <div className='flex align-center items-center  gap-5'>
                             <Link to='/'>
-                            
-
-                                <img className="w-20" src={coco} alt="logo" />
-
+                                <img className='w-20' src={coco} alt='logo' />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
+                            </Link>
+                            <Link to='/create/order'>
+                                <p>Order</p>
                             </Link>
                         </div>
                         <div className='flex gap-x-5 items-center'>
@@ -78,11 +82,11 @@ function NavBar() {
                                     <div className='relative cursor-pointer'>
                                         <Link to='/cart'>
                                             {cartItems.length > 0 ? (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     {ITEMS_IN_CART}
                                                 </div>
                                             ) : (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     0
                                                 </div>
                                             )}
@@ -109,8 +113,7 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name.split(' ')[0]}{' '}
-                                                {/* para ver solo nombre */}
+                                                {user.name && user.name.split(' ')[0]}
                                             </button>
                                         </Link>
                                     </div>

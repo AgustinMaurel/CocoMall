@@ -1,8 +1,8 @@
-const { Product, Store, ProductType } = require('../models/index');
+const { Product, Store, ProductType, SubCategory } = require('../models/index');
 const { cloudinary } = require('../utils/cloudinary/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
-// filterProductsByStore
+
 class ProductModel extends ModelController {
   constructor(model) {
     super(model);
@@ -10,8 +10,7 @@ class ProductModel extends ModelController {
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
-        const storeId = req.body.storeId;
-        const typeId = req.body.typeId;
+        const { storeId, typeId, subCat } = req.body;
         if (storeId && typeId) {
             try {
                 //Cloudinary
@@ -41,9 +40,15 @@ class ProductModel extends ModelController {
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(typeId);
                 await productType.addProduct(productId);
+                //Attach the new Product with his SubCategory 
+                const [subCategoryProduct, created] = await SubCategory.findOrCreate({
+                    where: {
+                        Name: subCat || "Others"
+                    }
+                })
+                await subCategoryProduct.addProduct(productId)
                 //Get the updeted product
-                const finalProduct = await this.model.findByPk(productId);
-                res.send(finalProduct);
+                res.send('Created');
             } catch (error) {
                 res.send(error);
             }
@@ -65,6 +70,13 @@ class ProductModel extends ModelController {
                 //Attach the new product with his Type
                 const productType = await ProductType.findByPk(productTpeId);
                 await productType.addProduct(productId);
+                //Attach the new product with his SubCategory
+                const [subCategoryProduct, created] = await SubCategory.findOrCreate({
+                    where: {
+                        Name: "SubCategory"
+                    }
+                })
+                await subCategoryProduct.addProduct(productId)
             }
             //lindo msj
             res.send('Successfully Created');
@@ -79,12 +91,14 @@ class ProductModel extends ModelController {
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
-                const allTypes = req.body.types || [];
-                const nameToFilter = req.body.name || '';
-                const min = req.body.min || 0;
-                const max = req.body.max || Math.pow(99, 99);
-                const discount = req.body.discount || 0;
-                const filteredProducts = await this.model.findAll({
+                const { types, name, min, max, discount, subCategory } = req.body
+                const allTypes = types || [];
+                const nameToFilter = name || '';
+                const minToFil = min || 0;
+                const maxToFil = max || Math.pow(99, 99);
+                const discountToFil = discount || 0;
+                const subCategToFil = subCategory || []
+                let filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                         [Op.and]: {
@@ -96,17 +110,47 @@ class ProductModel extends ModelController {
                             },
                             price: {
                                 [Op.and]: {
-                                    [Op.gte]: min,
-                                    [Op.lte]: max,
+                                    [Op.gte]: minToFil,
+                                    [Op.lte]: maxToFil,
                                 },
                             },
                             discount: {
-                                [Op.gte]: discount,
+                                [Op.gte]: discountToFil,
                             },
+                            subCategory: {
+                                [Op.or]: subCategToFil
+                            }
                         },
                     },
                 });
-                res.send(filteredProducts);
+                let allCurrentTypes = []
+                let allsubCat = []
+                let OrderedProducts = {}
+                filteredProducts.forEach(product => {
+                    let subCatId = product.dataValues.SubCategoryId
+                    let productType = product.dataValues.ProductTypeId
+                    //get all the cat ID's
+                    allCurrentTypes.indexOf(productType) === -1 ? allCurrentTypes = [...allCurrentTypes, productType] : null
+                    allsubCat.indexOf(subCatId) === -1 ? allsubCat = [...allsubCat, subCatId] : null
+                    //Check if the type and cat alredy exist in the orderedProducts
+                    OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            // allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
+                            [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
+                        }
+                    } : OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            // allSubCat: [subCatId],
+                            [subCatId]: [product.dataValues],
+                        }
+                    }
+                });
+                filteredProducts = { allCurrentTypes, allsubCat, Products: OrderedProducts }
+                res.json(filteredProducts);
             } catch (error) {
                 res.send(error);
             }
@@ -115,16 +159,86 @@ class ProductModel extends ModelController {
         }
     };
 
-    findAllProductsOfStore = async (req, res) => {
+    filterProductsByStoreAgus = async (req, res) => {
+        //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {
+        try {
+            //Array of the Types of products (on ID forms) that i need
+            const allTypes = req.body.types || [];
+            const nameToFilter = req.body.name || '';
+            const min = req.body.min || 0;
+            const max = req.body.max || Math.pow(99, 99);
+            const discount = req.body.discount || 0;
+            const filteredProducts = await this.model.findAll({
+            where: {
+                StoreId: storeId,
+                [Op.and]: {
+                ProductTypeId: {
+                    [Op.or]: allTypes,
+                },
+                productName: {
+                    [Op.iLike]: `%${nameToFilter}%`,
+                },
+                price: {
+                    [Op.and]: {
+                    [Op.gte]: min,
+                    [Op.lte]: max,
+                    },
+                },
+                discount: {
+                    [Op.gte]: discount,
+                },
+                },
+            },
+            });
+            res.send(filteredProducts);
+        } catch (error) {
+            res.send(error);
+        }
+        } else {
+        res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+
+    findAllProductsOfStore = async (req, res) => {
+        const storeId = req.params.id;
+        
+        if (storeId !== undefined && storeId) {
             try {
-                const allProductOfStore = await this.model.findAll({
+                let allProductOfStore = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                     },
                 });
-                res.send(allProductOfStore);
+                let allCurrentTypes = []
+                let allsubCat = []
+                let OrderedProducts = {}
+                allProductOfStore.forEach(product => {
+                    let subCatId = product.dataValues.SubCategoryId
+                    let productType = product.dataValues.ProductTypeId
+                    //get all the cat ID's
+                    allCurrentTypes.indexOf(productType) === -1 ? allCurrentTypes = [...allCurrentTypes, productType] : null
+                    allsubCat.indexOf(subCatId) === -1 ? allsubCat = [...allsubCat, subCatId] : null
+                    //Check if the type and cat alredy exist in the orderedProducts
+                    OrderedProducts[productType] && OrderedProducts[productType][subCatId] ? OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
+                            [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
+                        }
+                    } : OrderedProducts = {
+                        ...OrderedProducts,
+                        [productType]: {
+                            ...OrderedProducts[productType],
+                            allSubCat: [subCatId],
+                            [subCatId]: [product.dataValues],
+                        }
+                    }
+                });
+                allProductOfStore = { allCurrentTypes, allsubCat, Products: OrderedProducts }
+                res.json(allProductOfStore);
             } catch (error) {
                 res.send(error);
             }
@@ -132,6 +246,38 @@ class ProductModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
+    findAllProductsOfStoreAgus = async (req, res) => {
+        const storeId = req.params.id;
+        if (storeId) {
+        try {
+            const allProductOfStore = await this.model.findAll({
+            where: {
+                StoreId: storeId,
+            },
+            });
+            res.send(allProductOfStore);
+        } catch (error) {
+            res.send(error);
+        }
+        } else {
+        res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+
+    getOneProductById = async (req, res) => {
+        const id = req.params.id
+        if(id){
+            try {          
+                const product = await this.model.findByPk(id)
+                res.send(product)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send("Wrong parameters")
+        }
+    }
 
     updateDataProduct = async (req, res) => {
         const id1 = req.params.id;

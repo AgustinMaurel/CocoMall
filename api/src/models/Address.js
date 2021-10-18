@@ -18,6 +18,11 @@ module.exports = (sequelize) => {
                 type: DataTypes.JSON,
                 allowNull: false,
             },
+            // choose:{
+            //     type: DataTypes.BOOLEAN,
+            //     allowNull: false,
+            //     defaultValue: false
+            // }
         },
         {
             timestamps: false,

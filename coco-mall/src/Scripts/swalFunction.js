@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { DELETE_PRODUCT } from './constants';
+import { DELETE_PRODUCT, DELETE_STORE } from './constants';
 
-export async function modalOptions(id, setEditState, setFlag, flag) {
+
+export async function productOptions(id, setEditState, setFlag, flag) {
     const inputOptions = new Promise((resolve) => {
         setTimeout(() => {
             resolve({

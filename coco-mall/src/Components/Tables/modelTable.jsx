@@ -1,28 +1,22 @@
 import React from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { Image } from 'cloudinary-react';
-import { modalOptions } from './swalFunction';
+
 import { useState } from 'react';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductsStore } from '../Redux/actions/stores';
+import { getProductsStore } from '../../Redux/actions/stores';
 
-export default function ModelTable({
-    info,
-    column_title,
-    types,
-    idStore,
-    setEditState,
-    setProduct,
-}) {
-    const [flag, setFlag] = useState(false);
+export default function ModelTable ( { info, column_title, types,idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
+
+    const [flag3, setFlag3] = useState(false);
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getProductsStore(idStore));
-    }, [flag]);
-
+    }, [flag3]);
+    
     return (
         <div className='items-center text-center justify-center  w-full'>
             <div >
@@ -44,18 +38,12 @@ export default function ModelTable({
                                         <div key={el.id} className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
-                                                    modalOptions(
-                                                        el.id,
-                                                        setEditState,
-                                                        setFlag,
-                                                        flag,
-                                                        setProduct,
-                                                        el,
-                                                    );
-                                                    setProduct(el);
+                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
+                                                    console.log(el)
+                                                    setProduct && setProduct(el) ;
                                                 }}
                                             />
-                                            {console.log(el.cloudImage)}
+                                           
                                         </div>
                                     </td>
                                     <td className='border-b  border-gray-400 py-2'>
@@ -69,7 +57,7 @@ export default function ModelTable({
                                     { el.cloudImage ? <td className='border-b flex justify-center  border-gray-400 py-2'>
                                         <Image
                                             cloudName='cocomalls'
-                                            publicId={el.cloudImage[0]}
+                                            publicId={Array.isArray(el.cloudImage) ?  el.cloudImage[el.cloudImage.length -1] : el.cloudImage}
                                             width='200'
                                             alt={el.productName || "false"}
                                             crop='scale'
@@ -82,7 +70,7 @@ export default function ModelTable({
                                             ? types.find((type) => type.id === el.ProductTypeId)
                                                   .Name
                                             : false}
-                                    </td>:false}
+                                    </td> : false}
                                 </tr>
                             ))}
                     </tbody>

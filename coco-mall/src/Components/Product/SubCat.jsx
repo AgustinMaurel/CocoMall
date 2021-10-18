@@ -15,7 +15,11 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
         dispatch(getProductDetail(id));
         setModalIsOpen(true);
     };
-    
+    const { uid } = useSelector((state) => state.auth);
+
+    const que = '+';
+    const cant = 1;
+
     return (
         <div className='flex flex-wrap'>
             {productSubCat.map((cat) => {

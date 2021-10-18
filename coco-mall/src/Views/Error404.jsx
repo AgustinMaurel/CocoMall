@@ -7,9 +7,9 @@ function Error404() {
             <NavBar />
 
             <div className=' h-full px-5 relative'>
-                <div className='absolute h-28 w-28 lg:h-64 lg:w-64  rounded-full bg-primary bottom-0 right-0 z-0'></div>
-                <div className='absolute h-36 w-36 mix-blend-screen  lg:h-64 lg:w-64 rounded-full bg-primary top-20 -left-10 z-0'></div>
-                <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
+                <div className='absolute h-28 w-28 lg:h-64 lg:w-64  rounded-full bg-primary bottom-0 -right-10 z-0'></div>
+                <div className='absolute h-36 w-36 mix-blend-screen   rounded-full bg-primary top-20 -left-10 z-0'></div>
+                <div className='absolute h-10 w-10  rounded-full bg-primary  right-10 top-16 z-0'></div>
 
                 <div className='flex flex-col  justify-evenly  h-3/4'>
                     <div className='z-10'>

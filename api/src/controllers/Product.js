@@ -159,6 +159,48 @@ class ProductModel extends ModelController {
         }
     };
 
+    filterProductsByStoreAgus = async (req, res) => {
+        //Id of the store from which i need products
+        const storeId = req.params.id;
+        if (storeId) {
+        try {
+            //Array of the Types of products (on ID forms) that i need
+            const allTypes = req.body.types || [];
+            const nameToFilter = req.body.name || '';
+            const min = req.body.min || 0;
+            const max = req.body.max || Math.pow(99, 99);
+            const discount = req.body.discount || 0;
+            const filteredProducts = await this.model.findAll({
+            where: {
+                StoreId: storeId,
+                [Op.and]: {
+                ProductTypeId: {
+                    [Op.or]: allTypes,
+                },
+                productName: {
+                    [Op.iLike]: `%${nameToFilter}%`,
+                },
+                price: {
+                    [Op.and]: {
+                    [Op.gte]: min,
+                    [Op.lte]: max,
+                    },
+                },
+                discount: {
+                    [Op.gte]: discount,
+                },
+                },
+            },
+            });
+            res.send(filteredProducts);
+        } catch (error) {
+            res.send(error);
+        }
+        } else {
+        res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
         if (storeId) {
@@ -201,6 +243,24 @@ class ProductModel extends ModelController {
             }
         } else {
             res.status(400).send({ message: 'Wrong parameters' });
+        }
+    };
+
+    findAllProductsOfStoreAgus = async (req, res) => {
+        const storeId = req.params.id;
+        if (storeId) {
+        try {
+            const allProductOfStore = await this.model.findAll({
+            where: {
+                StoreId: storeId,
+            },
+            });
+            res.send(allProductOfStore);
+        } catch (error) {
+            res.send(error);
+        }
+        } else {
+        res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 

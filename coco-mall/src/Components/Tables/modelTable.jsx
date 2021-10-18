@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductsStorePanel } from '../../Redux/actions/stores';
-import axios from 'axios';
+import { getProductsStorePanel, getAllProducts, getOrdersStore} from '../../Redux/actions/stores';
+
 
 export default function ModelTable ( { info, column_title, types, idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
 
@@ -15,7 +15,8 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getProductsStorePanel(idStore));
+       idStore && dispatch(getProductsStorePanel(idStore));
+        
     }, [flag3]);
     
     return (
@@ -40,7 +41,8 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                             <FiSettings
                                                 onClick={() => {
                                                     swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
-                                                    setProduct && setProduct(el) ;
+                                                    setProduct && setProduct(el);
+                                                    console.log(el)
                                                 }}
                                             />
                                            

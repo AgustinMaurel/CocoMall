@@ -54,7 +54,7 @@ export default function StoreDetail() {
         storeDetail,
     } = useSelector((state) => state.stores);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [checkType, setCheckType] = useState([]);
+    
     const [infoModal, setInfoModal] = useState(false);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
@@ -104,10 +104,15 @@ export default function StoreDetail() {
     }, [id]);
 
     const handleChange = handleOnChange(setFilters);
-    const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
+    const handleSubmit = handleOnSubmit(filters, filters.type, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
+
+    const handleDouble = (e) =>{
+        handleChange(e)
+        handleTypes(e)
+    }
 
     let keysTypes;
     if (storeProductsFilter?.Products) {
@@ -144,7 +149,7 @@ export default function StoreDetail() {
                             className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                             name='category'
                             id='category'
-                            onChange={handleTypes}
+                            onChange={handleDouble}
                             defaultValue='All'
                         >
                             <option value='All'>All products</option>

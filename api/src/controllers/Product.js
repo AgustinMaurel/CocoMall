@@ -203,6 +203,7 @@ class ProductModel extends ModelController {
 
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
+        
         if (storeId !== undefined && storeId) {
             try {
                 let allProductOfStore = await this.model.findAll({

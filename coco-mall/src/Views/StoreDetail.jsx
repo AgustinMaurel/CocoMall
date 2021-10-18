@@ -73,9 +73,6 @@ export default function StoreDetail() {
         cart: [],
     };
 
-    const que = '+';
-    const cant = '1';
-
     //SLIDER HERO configuraciones
     const settingsHero = {
         dots: true,
@@ -101,11 +98,10 @@ export default function StoreDetail() {
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
-            dispatch(getProductsStore());
+            // dispatch(getProductsStore());
             dispatch(getStoreDetail());
         };
     }, [id]);
-
 
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);

@@ -21,6 +21,7 @@ class AddressModel extends ModelController {
                 //Search the User and attach the Address
                 const user = await User.findByPk(id);
                 await user.addAddress(addressId);
+                
                 res.send(newAddress);
             } catch (e) {
                 res.send(e);

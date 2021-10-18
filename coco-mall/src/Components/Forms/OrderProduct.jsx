@@ -74,36 +74,34 @@ const OrderProduct = () => {
     const postAddressCreate = () => {
         const obj = {
             id: uid,
-            address: placeSelected.name,
+            directions: placeSelected.name,
             cords: placeSelected.coord,
         };
         axios.post(`/address/create`, obj);
     };
-    const onSubmit = (e) => {
+    const onSubmit = () => {
         postAddressCreate();
         setModalIsOpen(false);
     };
 
-    const userAddress = userInfoDB[0]?.Addresses;
+    const userAddress = userInfoDB?.Addresses;
     const userAddressFunc = (i) => {
-        if (!i) {
-            if (userAddress?.length) {
+        if (!i && userAddress?.length) {
                 setAddressSelect((prevData) => {
                     const state = {
                         ...prevData,
                     };
-                    state.address = userAddress[0].address;
+                    state.address = userAddress[0].directions;
                     state.cords = userAddress[0].cords;
                     return state;
                 });
-            }
         } else {
-            if (userAddress?.length) {
+            if (i && userAddress?.length) {
                 setAddressSelect((prevData) => {
                     const state = {
                         ...prevData,
                     };
-                    state.address = userAddress[i].address;
+                    state.address = userAddress[i].directions;
                     state.cords = userAddress[i].cords;
                     return state;
                 });
@@ -117,12 +115,14 @@ const OrderProduct = () => {
 
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [uid, modalIsOpen, userCart.length]);
+    }, [uid, modalIsOpen, userCart.length, userInfoDB.length]);
+
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
         postOrder();
         handleCheckout();
     };
+
     const postOrder = () => {
         for (let storeId of storeOrders) {
             let totalStore = userCart

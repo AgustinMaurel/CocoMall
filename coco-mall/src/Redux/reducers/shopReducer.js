@@ -20,7 +20,7 @@ const initialState = {
     storesFilters: [],
     storeDetail: {},
     storeProducts: [],
-    storeProductsFilter: {},
+    storeProductsFilter: [],
     productDetail: {}, //deberiamos pasarlo a local
     productTypes: [],
     productSubCat: [],

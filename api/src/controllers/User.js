@@ -33,7 +33,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['directions'],
+                        attributes: ['id', 'directions', 'cords'],
                     },
                 ],
             });
@@ -71,7 +71,7 @@ class UserModel extends ModelController {
                 },
                 {
                     model: Address,
-                    attributes: ['directions'],
+                    attributes: ['id', 'directions', 'cords'],
                 },
             ],
         });
@@ -154,7 +154,7 @@ class UserModel extends ModelController {
                     },
                     {
                         model: Address,
-                        attributes: ['id', 'directions', 'cords'],
+                        // attributes: ['id', 'directions', 'cords'],
                     },
                 ],
             })

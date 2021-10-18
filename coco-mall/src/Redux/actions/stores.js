@@ -12,7 +12,8 @@ import {
     ALL_PRODUCTS,
     GET_PRODUCT_SUBCATEGORY,
     GET_PRODUCT_STORE_TYPES,
-    GET_PRODUCT_STORE_SUBCATEGORY
+    GET_PRODUCT_STORE_SUBCATEGORY,
+    CLEAR_PRODUCTS
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -58,6 +59,7 @@ export const getStoreDetail = (id) => {
         dispatch({ type: SEARCH_BY_ID, payload: store.data });
     };
 };
+
 
 export const getProductsStore = (id) => {
     return async (dispatch) => {
@@ -134,3 +136,10 @@ export const ordersStores = (payload) => {
         dispatch({ type: ORDER_STORE, payload });
     };
 };
+
+export const clearProducts = (payload) => {
+    return {
+        type: CLEAR_PRODUCTS,
+        payload
+    }
+}

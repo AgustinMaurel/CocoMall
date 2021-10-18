@@ -10,8 +10,10 @@ import { GrAdd } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { productOptions, storeOptions, ordersOptions, userOptions } from '../Scripts/swalFunction.js';
+import { FiUsers } from "react-icons/fi";
 import { BsBox, BsCardList } from "react-icons/bs";
-import { BiEditAlt } from "react-icons/bi";
+import { BiEditAlt, BiStore } from "react-icons/bi";
+import { GrUserSettings } from "react-icons/gr"
 export default function StorePanel() {
 
     const dispatch = useDispatch();
@@ -163,8 +165,8 @@ export default function StorePanel() {
 
                     {selectStore !== "SelectStore" &&
                         <div className="flex w-full flex-col text-start items-start justify-start">
-                            <h2 className='text-primary text-lg font-bold'>Store Panel</h2>
-                            <div className="flex">
+                            <h2 className='text-primary text-xl  font-bold'>Store Panel</h2>
+                            <div className="flex text-lg pt-1">
 
                                 <BsBox className="mt-1 ml-1" />
                                 <button
@@ -177,7 +179,7 @@ export default function StorePanel() {
                                 </button>
 
                             </div>
-                            <div className="flex">
+                            <div className="flex text-lg pt-1">
                                 <BsCardList className="mt-1 ml-1" />
                                 <button
                                     name='Orders'
@@ -192,23 +194,34 @@ export default function StorePanel() {
                         </div>}
 
                     <div className="flex w-full flex-col text-start items-start justify-start">
-                        <h2 className='text-primary text-lg font-bold'> User Panel</h2>
-                        <div className="flex">
-                            <BiEditAlt className="mt-1 ml-1" />
+                        <h2 className='text-primary text-xl  font-bold'> User Panel</h2>
+                        <div className="flex text-lg pt-1">
+                            <GrUserSettings className="mt-1 ml-1" />
                             <button className='ml-1'>Edit Profile</button>
                         </div>
                     </div>
                     {userAdmin ?
                         <div className="flex w-full flex-col text-start items-start justify-start">
 
-                            <h2 className='text-primary text-lg font-bold'>Admin Panel</h2>
-                            <div className="flex">
+                            <h2 className='text-primary text-xl font-bold'>Admin Panel</h2>
+                            <div className="flex text-lg pt-1">
                                 <BsBox className="mt-1" />
                                 <button className="ml-1" value="All Products" onClick={handleRender} >All Products</button>
                             </div>
-                            <button value="All Orders" onClick={handleRender} >All Orders</button>
-                            <button value="All Users" onClick={handleRender} >All Users</button>
-                            <button value="All Stores" onClick={handleRender}>All Stores</button>
+                            <div className="flex text-lg pt-1">
+                                <BsCardList className="mt-1" />
+                                <button className="ml-1" value="All Orders" onClick={handleRender} >All Orders</button>
+
+                            </div>
+                            <div className="flex text-lg pt-1">
+                                <FiUsers className="mt-1" />
+                                <button className="ml-1" value="All Users" onClick={handleRender} >All Users</button>
+
+                            </div>
+                            <div className="flex text-lg pt-1">
+                                <BiStore className="mt-1" />
+                                <button className="ml-1" value="All Stores" onClick={handleRender}>All Stores</button>
+                            </div>
 
                         </div> : null}
                 </div>

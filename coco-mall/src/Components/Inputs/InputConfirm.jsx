@@ -5,7 +5,7 @@ const InputConfirm = ({ register, errors, getValues, name }) => {
 
     return (
         <div className='mt-1'>
-            <label className='text-gray-500 text-sm lg:text-base 2xl:text-lg'>
+            <label className='text-gray-500 text-xs sm:text-sm lg:text-base 2xl:text-lg'>
                 Confirm Password
             </label>
             <div className='flex justify-between border bg-white border-gray-200 shadow-md rounded z-10'>

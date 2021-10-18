@@ -5,7 +5,7 @@ import {
     startLoginEmailPassword,
     startGoogleLogin,
     startFacebookLogin,
-    rememberAction
+    rememberAction,
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -156,17 +156,8 @@ const LoginScreen = () => {
                             )}
                         </div>
 
-                        <div className='m-1 mt-10 z-10'>
-                            <div className='flex justify-center items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
-                                <button
-                                    className='text-sm font-semibold cursor-pointer  relative w-full'
-                                    type='submit'
-                                >
-                                    Log In
-                                </button>
-                            </div>
+                        <div className='m-1 z-10'>
                             {/* LOGIN GOOGLE & FACEBOOK */}
-
                             <div>
                                 <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>
                                     {/* <AiOutlineLine className='w-full object-fill'/><p> or </p><AiOutlineLine className='w-full'/> */}
@@ -179,7 +170,29 @@ const LoginScreen = () => {
                                     handleFacebookLogin={handleFacebookLogin}
                                 />
                             </div>
+                            {/* LOGIN */}
+                            <div className='flex justify-center items-center content-center py-2 mt-6 bg-secondary rounded text-white text-center z-10'>
+                                <button
+                                    className='text-sm font-semibold cursor-pointer  relative w-full'
+                                    type='submit'
+                                >
+                                    Log In
+                                </button>
+                            </div>
+                            {/* TOOGLE BUTTON SESSION ACTIVE*/}
+                            <div className='flex items-center justify-between m-2'>
+                                <p className='text-cocoMall-400 text-sm'>Do you want to stay logged in?</p>                   
+                                <div className='relative inline-block w-8 align-middle select-none'>
+                                    <input
+                                        className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
+                                        type='checkbox'
+                                    />
+                                    <label className='toggle-label block overflow-hidden h-3 rounded-full bg-gray-300 cursor-pointer'></label>
+                                </div>
+                            </div>
                         </div>
+
+
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className='ml-1 font-medium'>Not a member ? </label>
                             <Link className='text-secondary font-semibold ml-2' to='/auth/register'>

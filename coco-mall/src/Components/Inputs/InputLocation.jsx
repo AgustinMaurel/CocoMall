@@ -5,7 +5,7 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants';
 const InputLocation = ({ setPlaceSelected, defaultValue }) => {
     return (
         <div className='mt-1'>
-            <label className='text-gray-500 text-sm lg:text-base 2xl:text-lg'>Location</label>
+            <label className='text-gray-500 text-xs sm:text-sm lg:text-base 2xl:text-lg'>Location</label>
             <div className='flex justify-between border bg-white border-gray-200 shadow-md rounded z-10'>
                 <Autocomplete
                     defaultValue={defaultValue}

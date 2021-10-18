@@ -9,7 +9,7 @@ const InputPassword = ({ register, errors, name, validate }) => {
 
     return (
         <div className='mt-1'>
-            <label className='text-gray-500 text-sm lg:text-base 2xl:text-lg'>{finalResult}</label>
+            <label className='text-gray-500 text-xs sm:text-sm lg:text-base 2xl:text-lg'>{finalResult}</label>
             <div className='flex justify-between border bg-white border-gray-200 shadow-md rounded z-10'>
                 <input
                     className='outline-none text-xs z-10 p-2 w-full'

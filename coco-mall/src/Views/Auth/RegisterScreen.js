@@ -64,7 +64,6 @@ const RegisterScreen = () => {
     return (
         <div className='overflow-hidden h-screen'>
             <NavBar />
-
             {/* BACKGROUND */}
             <div>
                 <div className='absolute right-0 -top-72 z-0'>
@@ -82,82 +81,91 @@ const RegisterScreen = () => {
             </div>
 
             {/* CONTENT */}
-
-                <div className='flex flex-col z-10 m-auto px-4 h-full max-w-md justify-center items-center'>
-                    <div className='hidden sm:flex mb-4 text-2xl font-bold z-10'>
-                        <h1>Register</h1>
-                    </div>
-
-                    <form className='w-full mb-6' onSubmit={handleSubmit(handleRegister)}>
-                        <InputAuth
-                            register={register}
-                            errors={errors}
-                            name='name'
-                            type='text'
-                            validate={validate.name}
-                        />
-
-                        <InputAuth
-                            register={register}
-                            errors={errors}
-                            name='lastName'
-                            type='text'
-                            validate={validate.lastName}
-                        />
-
-                        <InputAuth
-                            register={register}
-                            errors={errors}
-                            name='email'
-                            type='text'
-                            validate={validate.email}
-                        />
-
-                        <InputLocation setPlaceSelected={setPlaceSelected} />
-
-                        <InputPassword
-                            register={register}
-                            errors={errors}
-                            name='password'
-                            validate={validate.password}
-                        />
-
-                        <InputConfirm
-                            register={register}
-                            errors={errors}
-                            name='password'
-                            getValues={getValues}
-                        />
-
-                        {!renderCond.uid && !renderCond.name ? (
-                            <div>
-                                <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>                                    <span className='border w-1/3 mx-2'></span>
-                                    <p className='text-cocoMall-400 w-full'>Or register with</p>
-                                    <span className='border w-1/3 mx-2'></span>
-                                </div>
-                                <LoginGoogleFacebook
-                                    handleGoogleLogin={handleGoogleLogin}
-                                    handleFacebookLogin={handleFacebookLogin}
-                                />
-                            </div>
-                        ) : (
-                            history.push('/home')
-                        )}
-                        <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
-                            <button className='text-sm font-semibold cursor-pointer' type='submit'>
-                                Register
-                            </button>
-                        </div>
-                        <div className='flex flex-col mt-8 text-sm z-10 text-center items-center'>
-                            <Link
-                                className='font-semibold text-secondary -mt-5 z-10'
-                                to='/auth/login'
-                            >
-                                Already registered?
-                            </Link>
-                        </div>
-                    </form>
+            <div className='flex flex-col z-10 m-auto px-4 h-full max-w-md justify-start sm:justify-center items-center'>
+                <div className='hidden sm:flex md:mb-4 text-2xl font-bold z-10'>
+                    <h1>Register</h1>
                 </div>
+
+                <form className='w-full mb-6' onSubmit={handleSubmit(handleRegister)}>
+                    <InputAuth
+                        register={register}
+                        errors={errors}
+                        name='name'
+                        type='text'
+                        validate={validate.name}
+                    />
+
+                    <InputAuth
+                        register={register}
+                        errors={errors}
+                        name='lastName'
+                        type='text'
+                        validate={validate.lastName}
+                    />
+
+                    <InputAuth
+                        register={register}
+                        errors={errors}
+                        name='email'
+                        type='text'
+                        validate={validate.email}
+                    />
+
+                    <InputLocation setPlaceSelected={setPlaceSelected} />
+
+                    <InputPassword
+                        register={register}
+                        errors={errors}
+                        name='password'
+                        validate={validate.password}
+                    />
+
+                    <InputConfirm
+                        register={register}
+                        errors={errors}
+                        name='password'
+                        getValues={getValues}
+                    />
+
+                    {!renderCond.uid && !renderCond.name ? (
+                        <div>
+                            <div className='hidden sm:flex items-center justify-between text-center text-cocoMall-100 my-3'>
+                                {' '}
+                                <span className='border w-1/3 mx-2'></span>
+                                <p className='text-cocoMall-400 w-full'>Or register with</p>
+                                <span className='border w-1/3 mx-2'></span>
+                            </div>
+                            <LoginGoogleFacebook
+                                handleGoogleLogin={handleGoogleLogin}
+                                handleFacebookLogin={handleFacebookLogin}
+                            />
+                        </div>
+                    ) : (
+                        history.push('/home')
+                    )}
+                    <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
+                        <button className='text-sm font-semibold cursor-pointer' type='submit'>
+                            Register
+                        </button>
+                    </div>
+                    {/* TOOGLE BUTTON SESSION ACTIVE*/}
+                    <div className='flex items-center justify-between m-2'>
+                        <p className='text-cocoMall-400 text-sm'>Do you want to stay logged in?</p>
+                        <div className='relative inline-block w-8 align-middle select-none'>
+                            <input
+                                className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
+                                type='checkbox'
+                            />
+                            <label className='toggle-label block overflow-hidden h-3 rounded-full bg-gray-300 cursor-pointer'></label>
+                        </div>
+                    </div>
+                    <div className='flex flex-col mt-8 text-sm z-10 text-center items-center'>
+                        <Link className='font-medium -mt-5 z-10' to='/auth/login'>
+                            Already registered?
+                        </Link>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

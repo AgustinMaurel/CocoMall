@@ -7,7 +7,7 @@ const InputAuth = ({ register, errors, name, type, validate, defaultValue }) => 
 
     return (
         <div className='mt-1'>
-            <label className='text-gray-500 text-sm lg:text-base 2xl:text-lg'>{finalResult}</label>
+            <label className='text-gray-500 text-xs sm:text-sm lg:text-base 2xl:text-lg'>{finalResult}</label>
             <div className='flex border bg-white border-gray-200 shadow-md rounded z-10'>
                 <input
                     autoComplete='off'

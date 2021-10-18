@@ -99,18 +99,22 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         //usar .slice() para actualiar el estado en los order
         case ORDER_PRODUCTS:
             if (payload === 'Barato') {
-                let copy = state.storeProductsFilter
+                // roto pasarlo al back
+                let copy = state.storeProductsFilter.Products.map((types, i) => {
+                    types[i]
                     .sort(function (a, b) {
                         return a.price - b.price;
                     })
                     .slice();
+                })
                 return {
                     ...state,
                     storeProductsFilter: copy,
                 };
             }
             if (payload === 'Caro') {
-                let copy = state.storeProductsFilter
+                //roto ahcerlo desde el back
+                let copy = state.storeProductsFilter.Products
                     .sort(function (a, b) {
                         return b.price - a.price;
                     })

@@ -75,7 +75,7 @@ export default function StorePanel() {
     useEffect(() => {
         axios.get('/user')
             .then(res => setAllUsers(res.data))
-    }, [])
+    }, [flag2])
 
 
 

@@ -30,3 +30,7 @@ export const DELETE_STORE = '/store/delete';
 export const CREATE_USER_URL = '/user/create';
 
 export const UPDATE_PRODUCT = '/product/update';
+
+export const DELETE_USER = '/user/delete'
+
+export const DELETE_ORDER = '/order/delete'

@@ -87,14 +87,14 @@ const OrderProduct = () => {
     const userAddress = userInfoDB?.Addresses;
     const userAddressFunc = (i) => {
         if (!i && userAddress?.length) {
-                setAddressSelect((prevData) => {
-                    const state = {
-                        ...prevData,
-                    };
-                    state.address = userAddress[0].directions;
-                    state.cords = userAddress[0].cords;
-                    return state;
-                });
+            setAddressSelect((prevData) => {
+                const state = {
+                    ...prevData,
+                };
+                state.address = userAddress[0].directions;
+                state.cords = userAddress[0].cords;
+                return state;
+            });
         } else {
             if (i && userAddress?.length) {
                 setAddressSelect((prevData) => {
@@ -154,7 +154,7 @@ const OrderProduct = () => {
 
             <div className='flex  justify-center   bg-gray-100   2xl:px-20 '>
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
-                    <div className='flex flex-col w-full justify-start bg-white'>
+                    <div className='flex flex-col w-full justify-start bg-gray-100'>
                         <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
                             Shipping options to
                         </h2>
@@ -253,11 +253,11 @@ const OrderProduct = () => {
                         />
                     </ReactModal>
 
-                    <div className='flex flex-col w-full m-auto'>
+                    <div className='flex flex-col w-full m-auto bg-gray-100'>
                         {userCart.length
                             ? storeOrders.map((storeOrders, index) => {
                                   return (
-                                      <div>
+                                      <div className='bg-gray-100'>
                                           <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
                                               {allStores[index].storeName}
                                           </h2>

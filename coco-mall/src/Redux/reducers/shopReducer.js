@@ -8,7 +8,12 @@ import {
     GET_PRODUCT_TYPES,
     ORDER_PRODUCTS,
     FILTER_STORE,
+    ALL_PRODUCTS,
     ORDER_STORE,
+    GET_PRODUCT_SUBCATEGORY,
+    GET_PRODUCT_STORE_TYPES,
+    GET_PRODUCT_STORE_SUBCATEGORY,
+    CLEAR_PRODUCTS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -19,7 +24,9 @@ const initialState = {
     storeProductsFilter: [],
     productDetail: {}, //deberiamos pasarlo a local
     productTypes: [],
-    storeCreated: {}, // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
+    productSubCat: [],
+    storeCreated: {},
+    allProducts:[] // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
@@ -30,7 +37,19 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 allStores: payload,
                 storesFilters: payload,
             };
+            case ALL_PRODUCTS : 
+            console.log(payload)
+            return {
+                ...state,
+                allProducts: payload
+            }
+        case CLEAR_PRODUCTS :
+            return {
+                ...state,
+                storesProducts: payload,
+                storeProductsFilter: payload
 
+            }
         case POST_STORE:
             return {
                 ...state,
@@ -45,9 +64,7 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case SEARCH_BY_ID:
             return {
                 ...state,
-                storeDetail: state.allStores.find((store) => {
-                    return store.id === payload;
-                }),
+                storeDetail: payload
             };
         case GET_PRODUCT:
             return {
@@ -59,13 +76,10 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: state.storeProductsFilter.find((product) => {
-                    return product.id === payload;
-                }),
+                productDetail: payload,
             };
 
         case FILTER_PRODUCTS:
-            console.log(payload);
             return {
                 ...state,
                 storeProductsFilter: payload,
@@ -76,6 +90,12 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 productTypes: payload,
             };
+            
+        case GET_PRODUCT_SUBCATEGORY:
+            return {
+                ...state,
+                productSubCat: payload
+            }
         //usar .slice() para actualiar el estado en los order
         case ORDER_PRODUCTS:
             if (payload === 'Barato') {

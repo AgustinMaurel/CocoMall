@@ -38,7 +38,7 @@ function Address({
                                     value={i}
                                     onChange={handleChangeI}
                                 />
-                                <h3>{direc.address}</h3>
+                                <h3>{direc.directions}</h3>
                             </div>
                         );
                     })}
@@ -48,7 +48,7 @@ function Address({
             <h3>Agregar direccion</h3>
             <form
                 className='w-3/5 h-3/5 flex flex-col 2xl:w-3/5'
-                handleSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <div className='relative my-4'>
                     <Autocomplete

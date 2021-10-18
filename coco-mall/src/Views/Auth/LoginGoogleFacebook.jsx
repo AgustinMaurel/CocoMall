@@ -5,7 +5,7 @@ const LoginGoogleFacebook = ({ handleGoogleLogin, handleFacebookLogin }) => {
         <div>
             <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
                 <div
-                    className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10 w-1/2'
+                    className='flex cursor-pointer text-sm text-center items-center bg-white border rounded shadow-sm border-gray-200 m-0.5 z-10 w-1/2'
                     onClick={handleGoogleLogin}
                 >
                     <img
@@ -19,7 +19,7 @@ const LoginGoogleFacebook = ({ handleGoogleLogin, handleFacebookLogin }) => {
                 </div>
 
                 <div
-                    className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10 w-1/2'
+                    className='flex cursor-pointer text-sm text-center items-center bg-white border rounded shadow-sm border-gray-200 m-0.5 z-10 w-1/2'
                     onClick={handleFacebookLogin}
                 >
                     <img

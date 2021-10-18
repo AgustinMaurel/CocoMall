@@ -6,12 +6,12 @@ const InputAuth = ({ register, errors, name, type, validate, defaultValue }) => 
     let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
 
     return (
-        <div>
-            <label className='text-gray-500 text-base ml-1 '>{finalResult}</label>
-            <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+        <div className='mt-1'>
+            <label className='text-gray-500 text-xs sm:text-sm lg:text-base 2xl:text-lg'>{finalResult}</label>
+            <div className='flex border bg-white border-gray-200 shadow-md rounded z-10'>
                 <input
                     autoComplete='off'
-                    className='outline-none text-xs z-10 p-2 w-full'
+                    className='outline-none text-xs z-10 p-2 w-full rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent'
                     {...register(name, validate)}
                     type={type}
                     name={name}

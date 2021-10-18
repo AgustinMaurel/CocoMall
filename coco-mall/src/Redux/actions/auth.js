@@ -5,11 +5,23 @@ import { CREATE_USER_URL } from '../../Scripts/constants.js';
 
 import Swal from 'sweetalert2';
 
-export const startLoginEmailPassword = (email, password) => {
+export const startLoginEmailPassword = (email, password, rememberForm) => {
     return (dispatch) => {
         auth.signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
+                /* Read more about isConfirmed, isDenied below */
+                console.log(rememberForm)
+                if (rememberForm) {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: rememberForm,
+                    });
+                } else {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: rememberForm,
+                    });
+                }
+
                 dispatch(userInfo(user.uid));
             })
             .catch((err) => {
@@ -35,7 +47,7 @@ export const login = (uid, displayName, state, country) => {
     };
 };
 
-export const startGoogleLogin = () => {
+export const startGoogleLogin = (remember) => {
     return (dispatch) => {
         auth.signInWithPopup(googleProvider)
             .then(({ user }) => {
@@ -45,8 +57,10 @@ export const startGoogleLogin = () => {
                     Mail: user.email,
                     State: '',
                     Country: '',
+                    Remember: remember
                 };
                 axios.post(CREATE_USER_URL, aux);
+                dispatch(login(user.uid, user.displayName));
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
             })
             .catch((err) =>
@@ -61,10 +75,18 @@ export const startGoogleLogin = () => {
 };
 
 //ver State & Country in Facebook
-export const startFacebookLogin = () => {
+export const startFacebookLogin = (remember) => {
     return (dispatch) => {
         auth.signInWithPopup(facebookProvider)
             .then(({ user }) => {
+                console.log(user);
+                let aux = {
+                    Name: user.displayName,
+                    id: user.uid,
+                    Mail: user.email,
+                    Remember: remember
+                };
+                axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -78,19 +100,20 @@ export const startFacebookLogin = () => {
     };
 };
 
-export const startRegisterWithEmailPasswordName = ( 
+export const startRegisterWithEmailPasswordName = (
     email,
     password,
     name,
     lastName,
     state,
     country,
+    rememberForm,
 ) => {
     return async (dispatch) => {
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
             await auth.currentUser.updateProfile({ displayName: name });
-
+            console.log(rememberForm)
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -98,8 +121,8 @@ export const startRegisterWithEmailPasswordName = (
                 Mail: email,
                 State: state,
                 Country: country,
+                Remember: rememberForm
             };
-            console.log('user enviado al back', userF);
             axios
                 .post(CREATE_USER_URL, userF)
                 .then((res) => res.data)
@@ -114,7 +137,6 @@ export const startRegisterWithEmailPasswordName = (
                     );
                     console.log('user creado en DB: ', userCreated);
                 });
-
             await aux.user.sendEmailVerification();
             dispatch(userInfo(userF.id));
         } catch (err) {

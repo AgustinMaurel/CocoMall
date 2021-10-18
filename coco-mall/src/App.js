@@ -24,6 +24,7 @@ import Cart from './Views/Cart';
 import Checkout from './Views/Checkout';
 import OrderProduct from './Components/Forms/OrderProduct';
 import EditUser from './Components/Forms/EditUser';
+import Error404 from './Views/Error404';
 
 function App() {
     const dispatch = useDispatch();
@@ -114,6 +115,7 @@ function App() {
                 <Route path='/profile' exact component={EditUser}>
                     {isLoggedIn ? <EditUser /> : <Redirect to='/auth/login' />}
                 </Route>
+                <Route path='*' component={Error404}></Route>
             </Switch>
         </>
     );

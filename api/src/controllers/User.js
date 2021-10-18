@@ -142,22 +142,7 @@ class UserModel extends ModelController {
     getUserById = async (req, res) => {
         const id = req.params.id;
         try {
-            const user = await this.model.findOne({
-                where: {
-                    id: id,
-                },
-                include: [
-                    //include the related tables and the specific cloumn that they have attached
-                    {
-                        model: Store,
-                        attributes: ['storeName'],
-                    },
-                    {
-                        model: Address,
-                        // attributes: ['id', 'directions', 'cords'],
-                    },
-                ],
-            })
+            const user = await this.model.findByPk(id)
             let cart = user.dataValues.Cart.map((el) => {
                 return { id: el.id, quantity: el.quantity };
             });

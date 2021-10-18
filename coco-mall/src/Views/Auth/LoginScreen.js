@@ -46,25 +46,25 @@ const LoginScreen = () => {
 
     return (
         <div className='h-screen overflow-hidden '>
+            <NavBar />
             <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
-            <NavBar />
+            <div
+                className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
+                        xl:flex xl: xl:h-16 xl:w-16'
+            ></div>
+            <div
+                className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
+                                        xl:h-28 xl:w-28 xl:left-52 xl:top-32'
+            ></div>
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col gap-10 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                <div className='flex flex-col gap-10 mt-10 sm:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
-                    <div
-                        className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
-                                xl:flex xl: xl:h-16 xl:w-16'
-                    ></div>
-                    <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
-                                                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-                    ></div>
 
                     <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
                         <div className='flex flex-col text-left z-10'>

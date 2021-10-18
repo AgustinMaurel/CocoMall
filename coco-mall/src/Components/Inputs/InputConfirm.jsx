@@ -4,10 +4,11 @@ const InputConfirm = ({ register, errors, getValues, name }) => {
     const [viewPassConfirm, setViewPassConfirm] = useState('password');
 
     return (
-        <div>
-            <label className='text-gray-500 text-base ml-1 '>Confirm Password</label>
-
-            <div className='flex justify-between m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+        <div className='mt-1'>
+            <label className='text-gray-500 text-sm lg:text-base 2xl:text-lg'>
+                Confirm Password
+            </label>
+            <div className='flex justify-between border bg-white border-gray-200 shadow-md rounded z-10'>
                 <input
                     className='outline-none text-xs z-10 p-2 w-full'
                     {...register(name, {
@@ -23,7 +24,7 @@ const InputConfirm = ({ register, errors, getValues, name }) => {
                             ? setViewPassConfirm('password')
                             : setViewPassConfirm('text')
                     }
-                    className='flex flex-col justify-center text-center cursor-pointer z-10 pr-2'
+                    className='flex flex-col justify-center text-center cursor-pointer z-10 pr-2 '
                 >
                     {viewPassConfirm === 'text' ? (
                         <svg

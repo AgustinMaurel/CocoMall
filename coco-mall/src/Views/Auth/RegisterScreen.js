@@ -23,6 +23,7 @@ const RegisterScreen = () => {
     const history = useHistory();
     const renderCond = useSelector((state) => state.auth);
     const [placeSelected, setPlaceSelected] = useState({});
+    const [remember, setRemember] = useState(false);
 
     const {
         handleSubmit,
@@ -30,7 +31,11 @@ const RegisterScreen = () => {
         register,
         setValue,
         getValues,
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            rememberForm: false,
+        },
+    });
 
     const handleRegister = (data) => {
         dispatch(
@@ -41,6 +46,7 @@ const RegisterScreen = () => {
                 data.lastName,
                 placeSelected.state,
                 placeSelected.country,
+                data.rememberForm
             ),
         );
         //Antes de pusherlo a la home le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
@@ -51,14 +57,20 @@ const RegisterScreen = () => {
         setValue('email', '');
         setValue('password', '');
         setValue('password2', '');
+        setValue('rememberForm', false);
     };
 
     const handleGoogleLogin = () => {
-        dispatch(startGoogleLogin(placeSelected.state, placeSelected.country));
+        dispatch(startGoogleLogin(placeSelected.state, placeSelected.country, remember));
     };
 
     const handleFacebookLogin = () => {
-        dispatch(startFacebookLogin());
+        dispatch(startFacebookLogin(remember));
+    };
+
+    const handleChecked = () => {
+        setRemember(!remember);
+        setValue('rememberForm', !remember);
     };
 
     return (
@@ -153,8 +165,13 @@ const RegisterScreen = () => {
                         <p className='text-cocoMall-400 text-sm'>Do you want to stay logged in?</p>
                         <div className='relative inline-block w-8 align-middle select-none'>
                             <input
+                                {...register('rememberForm')}
+                                autoComplete='off'
                                 className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
                                 type='checkbox'
+                                name='remember'
+                                value={remember}
+                                onChange={handleChecked}
                             />
                             <label className='toggle-label block overflow-hidden h-3 rounded-full bg-gray-300 cursor-pointer'></label>
                         </div>

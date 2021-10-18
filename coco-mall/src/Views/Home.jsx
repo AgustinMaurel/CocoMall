@@ -21,7 +21,7 @@ function Home() {
     const dispatch = useDispatch();
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
     const { state } = useSelector((state) => state.auth);
-    
+
     const [city, setCity] = useState('');
 
     const [typeSearch, setTypeSearch] = useState(false);
@@ -59,19 +59,22 @@ function Home() {
             let lng = position.coords.longitude;
 
             axios
-            .get(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=locality&key=${GOOGLE_MAPS_API_KEY}`,
-            )
-            .then((res) => res.data)
-            .then((city) =>{
-                setCity(city.results[0].formatted_address.split(',')[0])
-                console.log('ciudad encontrada: ', city.results[0].formatted_address.split(',')[0])
-            })
-        })
+                .get(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=locality&key=${GOOGLE_MAPS_API_KEY}`,
+                )
+                .then((res) => res.data)
+                .then((city) => {
+                    setCity(city.results[0].formatted_address.split(',')[0]);
+                    console.log(
+                        'ciudad encontrada: ',
+                        city.results[0].formatted_address.split(',')[0],
+                    );
+                });
+        });
     };
 
     return (
-        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-50'>
+        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200 bg-opacity-80'>
             <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
@@ -121,15 +124,17 @@ function Home() {
                                 ) : (
                                     <div className='flex gap-2'>
                                         <span>Stores in your city</span>
-                                        <button className='pointer rounded-full p-1 bg-cocoMall-200 text-white hover:bg-cocoMall-400' onClick={onCurrentPosition}>
+                                        <button
+                                            className='pointer rounded-full p-1 bg-cocoMall-200 text-white hover:bg-cocoMall-400'
+                                            onClick={onCurrentPosition}
+                                        >
                                             <BiCurrentLocation />
                                         </button>
                                     </div>
                                 )}
                             </h3>
-                            
-                                <SlidersCards allStores={allStores} storeDetail={storeDetail} />
-                            
+
+                            <SlidersCards allStores={allStores} storeDetail={storeDetail} />
                         </div>
                     ) : (
                         <button
@@ -140,9 +145,9 @@ function Home() {
                                     searchProduct: '',
                                     type: [],
                                     searchState: '',
-                                })
-                                setCheckType([])
-                                setCheck(Array(productTypes.length).fill(false))
+                                });
+                                setCheckType([]);
+                                setCheck(Array(productTypes.length).fill(false));
                             }}
                             className='flex items-center gap-2 text-cocoMall-200 mb-2 cursor-pointer hover:text-cocoMall-400'
                         >

@@ -58,7 +58,7 @@ const ProductsCreate = ({ idStore, product }) => {
             storeId: idStore,
             idImage: [image],
             typeId: types,
-            subCat: data.subCategory ? data.subCategory.charAt(0).toUpperCase() + data.productName.slice(1).toLowerCase() : "Others"
+            subCat: data.subCategory ? data.subCategory.charAt(0).toUpperCase() + data.subCategory.slice(1).toLowerCase() : "Others"
         };
         console.log(dataProductClean);
         if (product) {

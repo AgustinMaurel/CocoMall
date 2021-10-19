@@ -114,7 +114,7 @@ export async function ordersOptions(id, setEditState, setFlag3, flag3, setFlag2,
             .then(() => {
                 console.log("hoaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 setFlag2(!flag2);
-                setFlag3(!flag3);
+                console.log("pepe 2")
                 Swal.fire({
                     icon: 'success',
                     title: 'Successfully deleted',

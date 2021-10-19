@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from "cloudinary-react"
 import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel } from '../Redux/actions/stores';
+import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel, getOrdersStore } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
@@ -30,6 +30,8 @@ export default function StorePanel() {
 
     const allProducts = useSelector(state => state.stores.allProducts)
 
+    const ordersStore = useSelector(state => state.stores.orderStore)
+
     const [flag, setFlag] = useState(false);
     const [flag2, setFlag2] = useState(false);
     const [idActual, setIdActual] = useState('');
@@ -40,10 +42,11 @@ export default function StorePanel() {
     const [renderSec, setRenderSec] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false)
 
-    const [ordersStore, setOrdersStore] = useState()
     const [allOrders, setAllOrders] = useState()
     const [allUsers, setAllUsers] = useState()
     const [allStores, setAllStores] = useState()
+
+    console.log(idActual)
 
     useEffect(() => {
         dispatch(getStores());
@@ -54,15 +57,13 @@ export default function StorePanel() {
             })
     }, [user]);
 
-
     useEffect(() => {
         dispatch(getAllProducts())
+        dispatch(getOrdersStore(idActual))
         axios.get('/order')
             .then(res => setAllOrders(res.data))
         axios.get('/store')
             .then(res => setAllStores(res.data))
-        axios.get(`/order/${idActual}`)
-            .then(res => setOrdersStore(res.data))
         axios.get('/user')
             .then(res => setAllUsers(res.data))
     }, [flag2])
@@ -302,10 +303,10 @@ export default function StorePanel() {
                             <ModelTable
                                 info={ordersStore}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
-                                flag2={flag2}
-                                idStore={idActual}
+                                flag2={flag2}                                
                                 setFlag2={setFlag2}
                                 swalFunction={ordersOptions}
+                                idStore={idActual}
                             />
                         )}
                         {render === 'All Products' &&

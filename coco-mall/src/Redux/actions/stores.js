@@ -13,7 +13,8 @@ import {
     GET_PRODUCT_SUBCATEGORY,
     GET_PRODUCT_STORE_TYPES,
     GET_PRODUCT_STORE_SUBCATEGORY,
-    CLEAR_PRODUCTS
+    CLEAR_PRODUCTS,
+    ORDERS_STORE
 } from './actionTypes';
 import { STORES_URL, SEARCH_URL } from '../../Scripts/constants';
 import axios from 'axios';
@@ -30,6 +31,17 @@ export const getAllProducts = ()=> {
         const response = await axios.get('/product');
         dispatch({type: ALL_PRODUCTS, payload:response.data})
     }
+}
+
+export const getOrdersStore = (id) => {
+    try{
+    return async (dispatch) => {
+        const response = await axios.get(`/order/${id}`);
+        dispatch({type: ORDERS_STORE, payload: response.data })
+    }
+}catch(err){
+    console.log(err)
+} 
 }
 export const filterStores = (payload) => {
     const obj = {

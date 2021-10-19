@@ -7,7 +7,7 @@ class QuestionModel extends ModelController {
     }
     //Specific Functions for this model
     createQuestion = async (req, res) => {
-        const {productId, userId} = req.body
+        const { productId, userId } = req.body
         if (productId) {
             try {
                 const question = {
@@ -35,13 +35,14 @@ class QuestionModel extends ModelController {
     };
 
     updateQuestion = async (req, res) => {
-        if (req.body.id) {
+        const { id, answer } = req.body.id
+        if (id) {
             try {
-                const finalQuestion = this.model.update(
-                    { answer: req.body.answer },
+                const finalQuestion = await this.model.update(
+                    { answer: answer },
                     {
                         where: {
-                            id: req.body.id,
+                            id: id
                         },
                     }
                 );
@@ -57,20 +58,20 @@ class QuestionModel extends ModelController {
     deleteQuestion = async (req, res) => {
         const { id } = req.params;
         if (id) {
-          try {
-            const deleted = await this.model.destroy({ where: { id: id } });
-            if (deleted === 1) {
-              res.send('Question deleted');
-            } else {
-              res.send('Oops, something went wrong');
+            try {
+                const deleted = await this.model.destroy({ where: { id: id } });
+                if (deleted === 1) {
+                    res.send('Question deleted');
+                } else {
+                    res.send('Oops, something went wrong');
+                }
+            } catch (e) {
+                res.send(e);
             }
-          } catch (e) {
-            res.send(e);
-          }
         } else {
-          res.json({ error: 'No id in params' });
+            res.json({ error: 'No id in params' });
         }
-      };
+    };
 }
 
 const QuestionController = new QuestionModel(Question);

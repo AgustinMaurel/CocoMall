@@ -126,6 +126,11 @@ Question.belongsTo(Product);
 
 // //---------------------------------
 
+User.hasMany(Question, {foreignKey: {id: 'myUserid'}})
+Question.belongsTo(User)
+
+// //---------------------------------
+
 SubCategory.hasMany(Product, { foreignKey: { id: 'mySubCategoryid' } });
 Product.belongsTo(SubCategory);
 

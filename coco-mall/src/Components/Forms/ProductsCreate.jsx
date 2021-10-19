@@ -15,7 +15,12 @@ const ProductsCreate = ({ idStore, product }) => {
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [types, setTypes] = useState('');
+    const [subCategories, setSubCategories] = useState([])
 
+    useEffect(() => {
+        const subCategory = axios.get(`/subCategory/${el.Input.Que.Pablo.No.Sabe.Como.Acceder}`)
+        setSubCategories(subCategory)
+    }, [el.Input.Que.Pablo.No.Sabe.Como.Acceder])
     //--HOOKS--
     const dispatch = useDispatch();
 

@@ -41,15 +41,15 @@ export function handleOnChecked(checkType, setCheckType, filters, dispatch, id, 
     };
 }
 
-export function handleOnSubmit(filters, checkType, dispatch, id) {
+export function handleOnSubmit(filters, types, dispatch, id) {
     return (e) => {
         e.preventDefault();
-        filters.type = [...checkType];
+        filters.type = [...types];
         if (
             filters.searchProduct ||
             filters.searchStore ||
             filters.searchState ||
-            checkType.length ||
+            types.length ||
             filters.min ||
             filters.max
         ) {
@@ -65,6 +65,7 @@ export function handleOnSubmit(filters, checkType, dispatch, id) {
 export function handleOnChange(setFilters) {
     return (e) => {
         setFilters((prevData) => {
+            console.log(prevData)
             const state = {
                 ...prevData,
                 [e.target.name]: e.target.value,

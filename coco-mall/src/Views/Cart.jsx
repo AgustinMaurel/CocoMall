@@ -52,17 +52,6 @@ export default function Cart() {
         setModalIsOpen(true);
     };
 
-    function handleCheckout() {
-        return userCart.length > 0
-            ? axios
-                  .post('/checkout/mercadopago', objectToCheckout)
-                  .then((order) => {
-                      history.push(`/checkout/${order.data.response}`);
-                  })
-                  .catch((err) => console.log(err))
-            : false;
-    }
-
     return (
         <div className='bg-gray-100 h-screen '>
             <div className=' sticky bg-white shadow top-0 z-20'>
@@ -301,14 +290,15 @@ export default function Cart() {
                                     className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12
                                             xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10   '
                                 >
-                                    <button
-                                        className=' focus:outline-none text-center text-lg font-bold w-full h-full      
+                                    <Link to='create/order'>
+                                        <button
+                                            className=' focus:outline-none text-center text-lg font-bold w-full h-full      
                                                 sm:text-xl
                                               xl:text-primary xl:text-xl'
-                                        onClick={handleCheckout}
-                                    >
-                                        Continue
-                                    </button>
+                                        >
+                                            Continue
+                                        </button>
+                                    </Link>
                                 </div>
 
                                 <div
@@ -331,12 +321,6 @@ export default function Cart() {
                     </div>
                 </div>
             </div>
-            {/* {!userCart.length && (
-                <>
-                    <div className='absolute h-14 w-14 rounded-full bg-primary bottom-50 right-20 z-0'></div>
-                    <div className='absolute h-32 w-32 rounded-full bg-primary bottom-20 left-10 z-0'></div>
-                </>
-            )} */}
         </div>
     );
 }

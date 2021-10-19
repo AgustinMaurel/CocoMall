@@ -15,6 +15,7 @@ import { clearCart } from '../../Redux/actions/shoppingActions';
 
 const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [addressStatus, setAddressStatus] = useState(false);
     const [placeSelected, setPlaceSelected] = useState({});
     const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
     const { allStores } = useSelector((state) => state.stores);
@@ -109,14 +110,16 @@ const OrderProduct = () => {
         }
     };
     //tengo que tener 2 useEffect porque sino rompe
+
     useEffect(() => {
         userAddressFunc();
-    }, [userAddress?.length]);
+    }, [userAddress?.length, addressStatus]);
 
     //revisar useEffect porque rompio
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [uid, modalIsOpen, userCart.length, userAddress?.length]);
+        
+    }, [uid, modalIsOpen, userCart.length, addressStatus]);
 
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
@@ -135,7 +138,6 @@ const OrderProduct = () => {
                     quantity: product.quantity,
                 };
             });
-            console.log(storeProducts);
             const obj = {
                 userId: uid,
                 storeId: storeId,
@@ -145,7 +147,6 @@ const OrderProduct = () => {
                 orderState: 'Success',
                 arrayIdProducts: storeProducts,
             };
-            console.log(obj);
             axios.post('/order/create', obj);
         }
     };
@@ -182,9 +183,6 @@ const OrderProduct = () => {
                                 ) : (
                                     <>
                                         <div className='w-4/5 flex flex-col 2xl:w-3/5'>
-                                            <button onClick={() => userAddressFunc()}>
-                                                Clickk
-                                            </button>
                                             <form onSubmit={handleSubmit(onSubmit)}>
                                                 <div className='relative my-4'>
                                                     <Autocomplete
@@ -234,7 +232,7 @@ const OrderProduct = () => {
                                                 <div className='h-36 mb-8'>
                                                     <InputMaps coord={placeSelected.coord} />
                                                 </div>
-                                                <button type='submit'>Crear direccion</button>
+                                                <button type='submit' onClick={() => setAddressStatus(!addressStatus)}>Crear direccion</button>
                                             </form>
                                         </div>
                                     </>

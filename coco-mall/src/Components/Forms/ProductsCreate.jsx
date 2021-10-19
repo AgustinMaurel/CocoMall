@@ -25,7 +25,7 @@ const ProductsCreate = ({ idStore, product }) => {
     } = useForm({ defaultValues: product });
 
     useEffect(async () => {
-        let subCategory = await axios.get(`/subCategory/${watch('subCategory')}`);
+        let subCategory = await axios.get(`/subCategory/match/${watch('subCategory')}`);
         if (subCategory?.data) {
             setSubCategories(subCategory);
         }

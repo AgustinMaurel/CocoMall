@@ -52,10 +52,10 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                     <td className='border-b  border-gray-400 py-2'>
                                         {el.productName || el.orderState || el.Name || el.storeName}
                                     </td>
-                                    <td className=' border-b  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.country +"/"+ el.state }</td>
+                                    <td className=' border-b  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.state }</td>
                                     <td className='border-b  border-gray-400 py-2'>{el.id }</td>
 
-                                    {el.Country ? <td className='border  border-gray-400 py-2'>{el.Country +"/"+ el.State }</td> : false}
+                                    {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> : false}
 
                                     { el.cloudImage ? <td className='border-b flex justify-center  border-gray-400 py-2'>
                                         <Image

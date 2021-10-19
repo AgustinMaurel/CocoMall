@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-
+import axios from 'axios';
 import { startRegisterWithEmailPasswordName, userInfo } from '../../Redux/actions/auth';
 import InputAuth from '../../Components/Inputs/InputAuth';
 import validate from '../../Scripts/validate';
@@ -27,18 +27,15 @@ const EditUser = () => {
         dispatch(userInfo(uid));
     }, [dispatch, uid]);
 
-    const handleRegister = (data) => {
-        dispatch(
-            startRegisterWithEmailPasswordName(
-                data.email,
-                data.password,
-                data.name,
-                data.lastName,
-                placeSelected.state,
-                placeSelected.country,
-            ),
-        );
-
+    const handleUpdate = (data) => {
+       let dataUpdateUser = {
+           Name: data.name,
+           LastName : data.lastName,
+           Mail: data.email,
+           Country : placeSelected?.country,
+           State : placeSelected?.state
+       }
+    axios.put()
         setValue('name', '');
         setValue('lastName', '');
         setValue('email', '');
@@ -54,22 +51,16 @@ const EditUser = () => {
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
             </div>
             <div
-                className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-16 top-3/4
-                                                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
-            <div
                 className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
                                 xl:flex xl: xl:h-16 xl:w-16'
             ></div>
             {/* CONTENT */}
             <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-                <div className='flex-col text-2xl text-left  font-bold z-10'>
-                    <h1>Profile Edit</h1>
-                </div>
+                
 
                 <form
                     className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-3/12'
-                    onSubmit={handleSubmit(handleRegister)}
+                    onSubmit={handleSubmit(handleUpdate)}
                 >
                     <div className='flex flex-col text-left'>
                         <InputAuth
@@ -78,7 +69,7 @@ const EditUser = () => {
                             name='name'
                             type='text'
                             validate={validate.name}
-                            defaultValue={userInfoDB[0]?.Name}
+                            defaultValue={userInfoDB?.Name}
                         />
                     </div>
 
@@ -89,7 +80,7 @@ const EditUser = () => {
                             name='lastName'
                             type='text'
                             validate={validate.lastName}
-                            defaultValue={userInfoDB[0]?.LastName}
+                            defaultValue={userInfoDB?.LastName}
                         />
                     </div>
 
@@ -100,14 +91,14 @@ const EditUser = () => {
                             name='email'
                             type='text'
                             validate={validate.email}
-                            defaultValue={userInfoDB[0]?.Mail}
+                            defaultValue={userInfoDB?.Mail}
                         />
                     </div>
 
                     <div className='flex flex-col text-left'>
                         <InputLocation
                             setPlaceSelected={setPlaceSelected}
-                            defaultValue={userInfoDB[0]?.State}
+                            defaultValue={userInfoDB?.State}
                         />
                     </div>
 

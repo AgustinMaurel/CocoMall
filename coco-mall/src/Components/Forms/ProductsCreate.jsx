@@ -14,8 +14,7 @@ const ProductsCreate = ({ idStore, product }) => {
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [types, setTypes] = useState('');
-
+    const [types, setTypes] = useState(product ? product.ProductTypeId : '');
     //--HOOKS--
     const dispatch = useDispatch();
 

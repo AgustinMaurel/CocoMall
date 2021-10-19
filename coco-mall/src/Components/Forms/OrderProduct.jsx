@@ -113,9 +113,10 @@ const OrderProduct = () => {
         userAddressFunc();
     }, [userAddress?.length]);
 
+    //revisar useEffect porque rompio 
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [uid, modalIsOpen, userCart.length, userInfoDB.length]);
+    }, [uid, modalIsOpen, userCart.length, userAddress?.length]);
 
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
@@ -128,6 +129,13 @@ const OrderProduct = () => {
             let totalStore = userCart
                 .filter((filterStore) => filterStore.StoreId === storeId)
                 .reduce((previous, key) => previous + key.price * key.quantity, 0);
+            let storeProducts = userCart.map((product) => {
+                return {
+                    id: product.id,
+                    quantity: product.quantity,
+                }
+            })
+            console.log(storeProducts)
             const obj = {
                 userId: uid,
                 storeId: storeId,
@@ -135,7 +143,9 @@ const OrderProduct = () => {
                 cords: addressSelect.cords,
                 amount: totalStore,
                 orderState: 'Success',
+                arrayIdProducts: storeProducts
             };
+            console.log(obj)
             axios.post('/order/create', obj);
         }
     };

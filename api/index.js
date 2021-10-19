@@ -11,7 +11,7 @@ db.sync()
         if (productTypes.length < 1) {
             let typess = {
                 types: [
-                {
+                    {
                         Name: 'Technology',
                         NameEs: 'Tecnologia',
                     },

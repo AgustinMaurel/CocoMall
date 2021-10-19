@@ -117,7 +117,7 @@ class ProductModel extends ModelController {
                             discount: {
                                 [Op.gte]: discountToFil,
                             },
-                            subCategory: {
+                            SubCategoryId: {
                                 [Op.or]: subCategToFil
                             }
                         },
@@ -137,14 +137,14 @@ class ProductModel extends ModelController {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
-                            // allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
+                            allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
                             [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
                         }
                     } : OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
-                            // allSubCat: [subCatId],
+                            allSubCat: [subCatId],
                             [subCatId]: [product.dataValues],
                         }
                     }
@@ -204,7 +204,7 @@ class ProductModel extends ModelController {
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
         
-        if (storeId !== undefined && storeId) {
+        if (storeId) {
             try {
                 let allProductOfStore = await this.model.findAll({
                     where: {

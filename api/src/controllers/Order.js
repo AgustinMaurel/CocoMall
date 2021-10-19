@@ -1,4 +1,5 @@
-const { Order, User, Store, Address } = require('../models/index');
+const e = require('express');
+const { Order, User, Store, Address, Product } = require('../models/index');
 const ModelController = require('./index');
 
 class OrderModel extends ModelController {
@@ -7,16 +8,46 @@ class OrderModel extends ModelController {
     }
     //Specific Functions for this model
     createOrder = async (req, res) => {
-        const { userId, storeId, address, cords, amount, orderState } = req.body;
-
-        if (userId && storeId && address && cords) {
+        const { userId, storeId, address, cords, amount, orderState, arrayIdProducts } = req.body;
+        if (userId && storeId && address && cords && arrayIdProducts) {
             try {
+                let stock=[]
+                const idProducts = arrayIdProducts.map(e => e.id)
+                const quantity = arrayIdProducts.map(e=>e.quantity)
+                let products = await Product.findAll({
+                    where: {
+                        id:idProducts
+                    }
+                })
+                products = products.map(e => e.dataValues);
+                // add quantity, total purchase
+                products.map((e, i) => {
+                    e.quantity = quantity[i]
+                    e.totalPurchase = quantity[i] * e.price
+                    stock.push(e.stock)
+                })
+               // create order
                 const order = {
                     amount,
                     orderState,
+                    arrayIdProducts:products,
                 };
+                // rest quantity in the stock
+                let stockUpdate = stock.map((e, i) => {             
+                    let rest = e - quantity[i]
+                    return rest
+                })
+                // search the product and asign the new stock
+                for (let i = 0; i < idProducts.length; i++){
+                   let modificado = await Product.update(
+                        { stock: stockUpdate[i] },
+                        {where:{id:idProducts[i]}}
+                    )
+                }
+                
                 // create Order
                 const newOrder = await this.model.create(order);
+               
                 const orderId = newOrder.id;
                 // add User to order
                 const user = await User.findByPk(userId);
@@ -31,14 +62,13 @@ class OrderModel extends ModelController {
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const [shipmentAdress, created] = await Address.findOrCreate({
+                const [shipmentAdress] = await Address.findOrCreate({
                     where: {
-                        address,
+                        directions:address,
                         cords,
                         UserId: userId,
                     },
                 });
-
                 await shipmentAdress.addOrder(orderId);
                 res.send(newOrder);
             } catch (err) {

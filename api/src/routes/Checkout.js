@@ -4,10 +4,7 @@ const { stripe } = require('../models/index');
 const mercadopago = require('mercadopago');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const {
-    templateSuccess,
-    templateFailure,
-} = require('../utils/Templates/emailTemplates');
+const { templateSuccess, templateFailure } = require('../utils/Templates/emailTemplates');
 
 //all this routes strart with checkout
 router.post('/stripe', async (req, res) => {
@@ -29,8 +26,7 @@ router.post('/stripe', async (req, res) => {
 router.post('/mercadopago', async (req, res) => {
     const { title, total } = req.body;
     mercadopago.configure({
-        access_token:
-            'TEST-4584026682195569-100518-6865fd891a74a50438b28e4a07dae8f4-835549336',
+        access_token: 'TEST-4584026682195569-100518-6865fd891a74a50438b28e4a07dae8f4-835549336',
     });
 
     let preference = {
@@ -43,9 +39,9 @@ router.post('/mercadopago', async (req, res) => {
         ],
 
         back_urls: {
-            success: 'http://localhost:3001/checkout/feedback',
-            failure: 'http://localhost:3001/checkout/feedback',
-            pending: 'http://localhost:3001/checkout/feedback',
+            success: 'http://localhost:3000/home',
+            failure: 'http://localhost:3000/create/order',
+            pending: 'http://localhost:3000/home',
         },
         auto_return: 'approved',
     };
@@ -83,7 +79,7 @@ router.get('/feedback', async function (req, res) {
                 'Remera, condones, tennis',
                 1000,
                 1000,
-                'Avenida Siempre Viva 123'
+                'Avenida Siempre Viva 123',
             ), // html body
         });
     }

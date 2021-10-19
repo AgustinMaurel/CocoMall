@@ -11,12 +11,14 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import Address from '../Cards/Address';
 import InputMaps from '../Inputs/InputMaps';
 import ReactModal from 'react-modal';
+import { clearCart } from '../../Redux/actions/shoppingActions';
 
 const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [placeSelected, setPlaceSelected] = useState({});
     const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
     const { allStores } = useSelector((state) => state.stores);
+    const [link, setLink] = useState('');
 
     const [addressSelect, setAddressSelect] = useState({
         address: '',
@@ -43,20 +45,18 @@ const OrderProduct = () => {
 
     let objectToCheckout = {
         title: 'Cart Products',
-        total: total,
+        total: total || 1,
         quantity: 1,
     };
 
-    function handleCheckout() {
-        return userCart.length > 0
-            ? axios
-                  .post('/checkout/mercadopago', objectToCheckout)
-                  .then((order) => {
-                      history.push(`/checkout/${order.data.response}`);
-                  })
-                  .catch((err) => console.log(err))
-            : false;
-    }
+    useEffect(() => {
+        axios
+            .post('/checkout/mercadopago', objectToCheckout)
+            .then((order) => {
+                setLink(order.data.init_points);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
     const storeOrders = userCart.reduce((accArr, value) => {
         if (accArr.indexOf(value.StoreId) < 0) {
@@ -113,14 +113,15 @@ const OrderProduct = () => {
         userAddressFunc();
     }, [userAddress?.length]);
 
+    //revisar useEffect porque rompio 
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [uid, modalIsOpen, userCart.length, userInfoDB.length]);
+    }, [uid, modalIsOpen, userCart.length, userAddress?.length]);
 
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
         postOrder();
-        handleCheckout();
+        dispatch(clearCart(uid));
     };
 
     const postOrder = () => {
@@ -128,6 +129,13 @@ const OrderProduct = () => {
             let totalStore = userCart
                 .filter((filterStore) => filterStore.StoreId === storeId)
                 .reduce((previous, key) => previous + key.price * key.quantity, 0);
+            let storeProducts = userCart.map((product) => {
+                return {
+                    id: product.id,
+                    quantity: product.quantity,
+                }
+            })
+            console.log(storeProducts)
             const obj = {
                 userId: uid,
                 storeId: storeId,
@@ -135,13 +143,15 @@ const OrderProduct = () => {
                 cords: addressSelect.cords,
                 amount: totalStore,
                 orderState: 'Success',
+                arrayIdProducts: storeProducts
             };
+            console.log(obj)
             axios.post('/order/create', obj);
         }
     };
 
     return (
-        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0 bg-gray-100 '>
+        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0  bg-gray-100 '>
             <div className='sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>
@@ -154,184 +164,194 @@ const OrderProduct = () => {
 
             <div className='flex  justify-center   bg-gray-100   2xl:px-20 '>
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
-                    <div className='flex flex-col w-full justify-start bg-gray-100'>
-                        <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
-                            Shipping options to
-                        </h2>
-                        <div className=' flex flex-col gap-4 relative h-full w-full '>
-                            {addressSelect?.address ? (
-                                <span className='text-cocoMall-800 text-lg md:text-xl'>
-                                    {addressSelect.address}
-                                </span>
-                            ) : (
-                                <>
-                                    <div className='w-4/5 flex flex-col 2xl:w-3/5'>
-                                        <button onClick={() => userAddressFunc()}>Clickk</button>
-                                        <form onSubmit={handleSubmit(onSubmit)}>
-                                            <div className='relative my-4'>
-                                                <Autocomplete
-                                                    className={
-                                                        'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
-                                                    }
-                                                    apiKey={GOOGLE_MAPS_API_KEY}
-                                                    onPlaceSelected={(place) => {
-                                                        setPlaceSelected({
-                                                            place: place,
-                                                            name: place.name,
-                                                            address: place.formatted_address,
-                                                            state: place.address_components[4]
-                                                                ?.long_name,
-                                                            country:
-                                                                place.address_components[5]
+                    <div className='flex flex-col bg-gray-100 h-full xl:flex-none relative w-5/6 px-5 gap-10  py-5 justify-start m-auto'>
+                        <div className='flex flex-col w-full justify-start bg-gray-100'>
+                            <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
+                                Shipping options to
+                            </h2>
+                            <div className=' flex flex-col gap-4 relative h-full w-full '>
+                                {addressSelect?.address ? (
+                                    <span className='text-cocoMall-800 text-lg md:text-xl'>
+                                        {addressSelect.address}
+                                    </span>
+                                ) : (
+                                    <>
+                                        <div className='w-4/5 flex flex-col 2xl:w-3/5'>
+                                            <button onClick={() => userAddressFunc()}>
+                                                Clickk
+                                            </button>
+                                            <form onSubmit={handleSubmit(onSubmit)}>
+                                                <div className='relative my-4'>
+                                                    <Autocomplete
+                                                        className={
+                                                            'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
+                                                        }
+                                                        apiKey={GOOGLE_MAPS_API_KEY}
+                                                        onPlaceSelected={(place) => {
+                                                            setPlaceSelected({
+                                                                place: place,
+                                                                name: place.name,
+                                                                address: place.formatted_address,
+                                                                state: place.address_components[4]
                                                                     ?.long_name,
-                                                            cp:
-                                                                place.address_components[6]
-                                                                    ?.long_name || 'C3100',
-                                                            coord: {
-                                                                lat: place.geometry.location.lat(),
-                                                                lng: place.geometry.location.lng(),
-                                                            },
-                                                        });
-                                                    }}
-                                                    options={{
-                                                        fields: [
-                                                            'name',
-                                                            'address_component',
-                                                            'adr_address',
-                                                            'formatted_address',
-                                                            'geometry',
-                                                        ],
-                                                        types: ['address'],
-                                                        // componentRestrictions: { country: 'ar' },
-                                                    }}
-                                                    placeholder='Eg: Av. Belgrano 3200'
-                                                />
-                                                <div>
-                                                    <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
-                                                        <p className='min-w-max'> Address</p>
+                                                                country:
+                                                                    place.address_components[5]
+                                                                        ?.long_name,
+                                                                cp:
+                                                                    place.address_components[6]
+                                                                        ?.long_name || 'C3100',
+                                                                coord: {
+                                                                    lat: place.geometry.location.lat(),
+                                                                    lng: place.geometry.location.lng(),
+                                                                },
+                                                            });
+                                                        }}
+                                                        options={{
+                                                            fields: [
+                                                                'name',
+                                                                'address_component',
+                                                                'adr_address',
+                                                                'formatted_address',
+                                                                'geometry',
+                                                            ],
+                                                            types: ['address'],
+                                                            // componentRestrictions: { country: 'ar' },
+                                                        }}
+                                                        placeholder='Eg: Av. Belgrano 3200'
+                                                    />
+                                                    <div>
+                                                        <div className='flex align-center items-center  gap-2 content-center justify-center absolute -top-6 left-0'>
+                                                            <p className='min-w-max'> Address</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div className='h-36 mb-8'>
-                                                <InputMaps coord={placeSelected.coord} />
-                                            </div>
-                                            <button type='submit'>Crear direccion</button>
-                                        </form>
-                                    </div>
-                                </>
-                            )}
-                            <div>
-                                <button
-                                    className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+                                                <div className='h-36 mb-8'>
+                                                    <InputMaps coord={placeSelected.coord} />
+                                                </div>
+                                                <button type='submit'>Crear direccion</button>
+                                            </form>
+                                        </div>
+                                    </>
+                                )}
+                                <div>
+                                    <button
+                                        className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
                                         sm:text-sm        
                                         xl:text-md'
-                                    onClick={() => setModalIsOpen(true)}
-                                >
-                                    Edit or choose another
-                                </button>
+                                        onClick={() => setModalIsOpen(true)}
+                                    >
+                                        Edit or choose another
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <ReactModal
-                        style={{
-                            overlay: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                            },
-                        }}
-                        isOpen={modalIsOpen}
-                        onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
-                    >
-                        <Address
-                            address={userAddress}
-                            placeSelected={placeSelected}
-                            setPlaceSelected={setPlaceSelected}
-                            onSubmit={onSubmit}
-                            setAddressSelect={setAddressSelect}
-                            userAddressFunc={userAddressFunc}
-                        />
-                    </ReactModal>
+                        <ReactModal
+                            style={{
+                                overlay: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+                                },
+                            }}
+                            isOpen={modalIsOpen}
+                            onRequestClose={() => setModalIsOpen(false)}
+                            className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/6 h-3/6 top-0 bottom-0 right-0 left-0 m-auto'
+                        >
+                            <Address
+                                address={userAddress}
+                                placeSelected={placeSelected}
+                                setPlaceSelected={setPlaceSelected}
+                                onSubmit={onSubmit}
+                                setAddressSelect={setAddressSelect}
+                                userAddressFunc={userAddressFunc}
+                            />
+                        </ReactModal>
 
-                    <div className='flex flex-col w-full m-auto bg-gray-100'>
-                        {userCart.length
-                            ? storeOrders.map((storeOrders, index) => {
-                                  return (
-                                      <div className='bg-gray-100'>
-                                          <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
-                                              {allStores[index].storeName}
-                                          </h2>
-                                          {userCart.map((item) => {
-                                              if (item.StoreId === storeOrders) {
-                                                  return (
-                                                      <div className='flex flex-row bg-white h-full items-center xl:flex-none relative w-5/6 px-5 gap-10  py-5'>
-                                                          <picture>
-                                                              <Image
-                                                                  key={item.id}
-                                                                  cloudName='cocomalls'
-                                                                  publicId={item.cloudImage[0]}
-                                                              >
-                                                                  <Transformation
-                                                                      gravity='auto'
-                                                                      height='180'
-                                                                      width='200'
-                                                                      crop='fill'
-                                                                  />
-                                                              </Image>
-                                                          </picture>
-                                                          <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
-                                                              <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
-                                                                  {item.productName}
-                                                              </h4>
-                                                              <div className=' h-full  w-full flex-col items-between justify-between'>
-                                                                  <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                                      Quantity: {item.quantity}
-                                                                  </p>
-                                                                  <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                                      Price: {item.price}
-                                                                  </p>
+                        <div className='flex flex-col w-full m-auto bg-gray-100'>
+                            {userCart.length
+                                ? storeOrders.map((storeOrders, index) => {
+                                      return (
+                                          <div className='bg-gray-100'>
+                                              <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
+                                                  {allStores[index].storeName}
+                                              </h2>
+                                              {userCart.map((item) => {
+                                                  if (item.StoreId === storeOrders) {
+                                                      return (
+                                                          <div className='flex flex-row bg-white h-full items-center xl:flex-none relative w-5/6 px-5 gap-10  py-5'>
+                                                              <picture>
+                                                                  <Image
+                                                                      key={item.id}
+                                                                      cloudName='cocomalls'
+                                                                      publicId={item.cloudImage[0]}
+                                                                  >
+                                                                      <Transformation
+                                                                          gravity='auto'
+                                                                          height='180'
+                                                                          width='200'
+                                                                          crop='fill'
+                                                                      />
+                                                                  </Image>
+                                                              </picture>
+                                                              <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
+                                                                  <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                                      {item.productName}
+                                                                  </h4>
+                                                                  <div className=' h-full  w-full flex-col items-between justify-between'>
+                                                                      <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                          Quantity: {item.quantity}
+                                                                      </p>
+                                                                      <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                          Price: {item.price}
+                                                                      </p>
+                                                                  </div>
                                                               </div>
                                                           </div>
-                                                      </div>
-                                                  );
-                                              }
-                                          })}
-                                      </div>
-                                  );
-                              })
-                            : false}
-                    </div>
-                </div>
-
-                <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
-                    <div className='flex flex-col gap-5 px-2'>
-                        <div className='flex flex-col  gap-1'>
-                            <h2 className='text-gray-600 font-bold text-2xl'>Purchase summary</h2>
-                            <hr className='border-1 border-gray-300' />
+                                                      );
+                                                  }
+                                              })}
+                                          </div>
+                                      );
+                                  })
+                                : false}
                         </div>
-                        <h4 className='text-gray-600 font-bold text-lg'>Products({itemsCart})</h4>
-                        <span className='text-gray-600 font-bold text-lg'>Price: {total}</span>
-                        <span className='text-gray-600 font-bold text-lg'>
-                            Total price: {total}
-                        </span>
                     </div>
-                    <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
-                        <button
-                            onClick={() => handleSubmitOrder()}
-                            className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
-                        >
-                            Go To Checkout
-                        </button>
-                    </div>
-                    <div className=' flex items-center justify-center '>
-                        <button
-                            onClick={() => history.goBack()}
-                            className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+
+                    <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
+                        <div className='flex flex-col gap-5 px-2'>
+                            <div className='flex flex-col  gap-1'>
+                                <h2 className='text-gray-600 font-bold text-2xl'>
+                                    Purchase summary
+                                </h2>
+                                <hr className='border-1 border-gray-300' />
+                            </div>
+                            <h4 className='text-gray-600 font-bold text-lg'>
+                                Products({itemsCart})
+                            </h4>
+                            <span className='text-gray-600 font-bold text-lg'>Price: {total}</span>
+                            <span className='text-gray-600 font-bold text-lg'>
+                                Total price: {total}
+                            </span>
+                        </div>
+                        <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
+                            <a
+                                href={link}
+                                target='_blank'
+                                onClick={() => handleSubmitOrder()}
+                                className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
+                            >
+                                Go To Checkout
+                            </a>
+                        </div>
+                        <div className=' flex items-center justify-center '>
+                            <button
+                                onClick={() => history.goBack()}
+                                className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
                                         sm:text-sm        
                                             xl:text-md'
-                        >
-                            Go Back
-                        </button>
+                            >
+                                Go Back
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

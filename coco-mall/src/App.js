@@ -93,6 +93,7 @@ function App() {
                 <Route path='/auth/login' exact component={LoginScreen} />
                 <Route path='/auth/register' exact component={RegisterScreen} />
                 <Route path='/home' exact component={Home} />
+                <Route path='/home/store/:id' exact component={StoreDetail}></Route>
 
                 <Route path='/storePanel'>
                     {isLoggedIn ? <StorePanel /> : <Redirect to='/auth/login' />}
@@ -102,9 +103,6 @@ function App() {
                 </Route>
                 <Route path='/create/shop' exact>
                     {isLoggedIn ? <ShopCreation /> : <Redirect to='/auth/login' />}
-                </Route>
-                <Route path='/home/store/:id' exact>
-                    {isLoggedIn ? <StoreDetail /> : <Redirect to='/auth/login' />}
                 </Route>
                 <Route path='/checkout/:id' exact component={Checkout}>
                     {isLoggedIn ? <Checkout /> : <Redirect to='/auth/login' />}

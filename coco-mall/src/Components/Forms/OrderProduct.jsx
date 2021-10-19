@@ -113,7 +113,7 @@ const OrderProduct = () => {
         userAddressFunc();
     }, [userAddress?.length]);
 
-    //revisar useEffect porque rompio 
+    //revisar useEffect porque rompio
     useEffect(() => {
         dispatch(userInfo(uid));
     }, [uid, modalIsOpen, userCart.length, userAddress?.length]);
@@ -133,9 +133,9 @@ const OrderProduct = () => {
                 return {
                     id: product.id,
                     quantity: product.quantity,
-                }
-            })
-            console.log(storeProducts)
+                };
+            });
+            console.log(storeProducts);
             const obj = {
                 userId: uid,
                 storeId: storeId,
@@ -143,18 +143,20 @@ const OrderProduct = () => {
                 cords: addressSelect.cords,
                 amount: totalStore,
                 orderState: 'Success',
-                arrayIdProducts: storeProducts
+                arrayIdProducts: storeProducts,
             };
-            console.log(obj)
+            console.log(obj);
             axios.post('/order/create', obj);
         }
     };
 
     return (
-        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0  bg-gray-100 '>
-            <div className='sticky bg-white shadow top-0 z-20'>
+        <div className=' xl:w-screen bg-gray-200  '>
+            <div className=' sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>
+
+            {/* BANNER */}
             <div className='  relative z-10 h-20 flex flex-col  items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 overflow-hidden '>
                 <h3 className='text-5xl z-10 font-extrabold text-white'>MY ORDER</h3>
                 <div className='absolute h-36 w-36 lg:h-64 lg:w-64  rounded-full bg-primary bottom-0 right-10 z-0'></div>
@@ -162,10 +164,13 @@ const OrderProduct = () => {
                 <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
             </div>
 
-            <div className='flex  justify-center   bg-gray-100   2xl:px-20 '>
-                <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
-                    <div className='flex flex-col bg-gray-100 h-full xl:flex-none relative w-5/6 px-5 gap-10  py-5 justify-start m-auto'>
-                        <div className='flex flex-col w-full justify-start bg-gray-100'>
+            <div className='flex  justify-center   bg-gray-200   2xl:px-20 '>
+                <div className='flex flex-col xl:flex-row relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
+                    <div
+                        className='flex flex-col w-6/6 xl:w-4/6
+                     bg-gray-200 h-full xl:flex-none relative   gap-10  py-5 justify-start m-auto'
+                    >
+                        <div className='flex flex-col  justify-start bg-gray-200'>
                             <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
                                 Shipping options to
                             </h2>
@@ -266,49 +271,59 @@ const OrderProduct = () => {
                             />
                         </ReactModal>
 
-                        <div className='flex flex-col w-full m-auto bg-gray-100'>
+                        <div className='flex flex-col w-full m-auto bg-blue-500'>
                             {userCart.length
                                 ? storeOrders.map((storeOrders, index) => {
                                       return (
-                                          <div className='bg-gray-100'>
+                                          <div className='bg-gray-200 w-full  '>
                                               <h2 className='font-bold text-cocoMall-800 text-lg md:text-2xl'>
                                                   {allStores[index].storeName}
                                               </h2>
-                                              {userCart.map((item) => {
-                                                  if (item.StoreId === storeOrders) {
-                                                      return (
-                                                          <div className='flex flex-row bg-white h-full items-center xl:flex-none relative w-5/6 px-5 gap-10  py-5'>
-                                                              <picture>
-                                                                  <Image
-                                                                      key={item.id}
-                                                                      cloudName='cocomalls'
-                                                                      publicId={item.cloudImage[0]}
-                                                                  >
-                                                                      <Transformation
-                                                                          gravity='auto'
-                                                                          height='180'
-                                                                          width='200'
-                                                                          crop='fill'
-                                                                      />
-                                                                  </Image>
-                                                              </picture>
-                                                              <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
-                                                                  <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
-                                                                      {item.productName}
-                                                                  </h4>
-                                                                  <div className=' h-full  w-full flex-col items-between justify-between'>
-                                                                      <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                                          Quantity: {item.quantity}
-                                                                      </p>
-                                                                      <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                                          Price: {item.price}
-                                                                      </p>
+                                              <div className='xl:w-6/6 xl:flex  bg-gray-200  xl:flex-col xl:items-center xl:justify-evenly   '>
+                                                  {userCart.map((item) => {
+                                                      if (item.StoreId === storeOrders) {
+                                                          return (
+                                                              <div
+                                                                  key={item.id}
+                                                                  className=' bg-white  mt-5 xl:mt-10   flex flex-col shadow   h-56 xl:h-60 xl:flex-none relative  '
+                                                              >
+                                                                  <div className='flex flex-row  h-full items-center xl:flex-none relative  px-5 gap-10  py-5'>
+                                                                      <div className=' flex  justify-self-start items-center flex-none w-2/4 h-full '>
+                                                                          <Image
+                                                                              publicId={
+                                                                                  item.cloudImage[0]
+                                                                              }
+                                                                              cloudName='cocomalls'
+                                                                          >
+                                                                              <Transformation
+                                                                                  gravity='auto'
+                                                                                  height='180'
+                                                                                  width='200'
+                                                                                  crop='fill'
+                                                                              />
+                                                                          </Image>
+                                                                      </div>
+                                                                      <div className=' flex flex-col gap-2 flex-none   h-full  pr-2 '>
+                                                                          <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                                              {item.productName}
+                                                                          </h4>
+                                                                          <div className=' h-full  w-full flex-col items-between justify-between'>
+                                                                              <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                                  Quantity:{' '}
+                                                                                  {item.quantity}
+                                                                              </p>
+                                                                              <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                                  Price:{' '}
+                                                                                  {item.price}
+                                                                              </p>
+                                                                          </div>
+                                                                      </div>
                                                                   </div>
                                                               </div>
-                                                          </div>
-                                                      );
-                                                  }
-                                              })}
+                                                          );
+                                                      }
+                                                  })}
+                                              </div>
                                           </div>
                                       );
                                   })
@@ -316,7 +331,7 @@ const OrderProduct = () => {
                         </div>
                     </div>
 
-                    <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
+                    <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5 bg-gray-200'>
                         <div className='flex flex-col gap-5 px-2'>
                             <div className='flex flex-col  gap-1'>
                                 <h2 className='text-gray-600 font-bold text-2xl'>
@@ -332,12 +347,12 @@ const OrderProduct = () => {
                                 Total price: {total}
                             </span>
                         </div>
-                        <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
+                        <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
                             <a
                                 href={link}
                                 target='_blank'
                                 onClick={() => handleSubmitOrder()}
-                                className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
+                                className=' focus:outline-none max-h-full flex iltems-center justify-center content-center   text-lg font-bold w-full       sm:text-xl xl:text-primary xl:text-xl'
                             >
                                 Go To Checkout
                             </a>

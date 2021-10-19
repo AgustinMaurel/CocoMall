@@ -137,14 +137,14 @@ class ProductModel extends ModelController {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
-                            allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
+                            // allSubCat: OrderedProducts[productType].allSubCat.includes(subCatId) ? OrderedProducts[productType].allSubCat : [...OrderedProducts[productType].allSubCat, subCatId],
                             [subCatId]: [...OrderedProducts[productType][subCatId], product.dataValues],
                         }
                     } : OrderedProducts = {
                         ...OrderedProducts,
                         [productType]: {
                             ...OrderedProducts[productType],
-                            allSubCat: [subCatId],
+                            // allSubCat: [subCatId],
                             [subCatId]: [product.dataValues],
                         }
                     }

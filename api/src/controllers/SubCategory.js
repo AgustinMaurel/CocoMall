@@ -28,8 +28,8 @@ class SubCategoryModel extends ModelController {
     }
 
     getSubCategoriesFiltered = async (req, res) => {
-        const word  = req.params.word
-        if (word) {
+        const word = req.params.word
+        if (word && word.length >= 3) {
             try {
                 const filteredSubCat = await this.model.findAll({
                     where: {
@@ -44,7 +44,7 @@ class SubCategoryModel extends ModelController {
                 res.send(error)
             }
         } else {
-            res.status(400).send('Wrond params')
+            res.send([])
         }
     }
 }

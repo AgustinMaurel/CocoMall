@@ -73,6 +73,19 @@ class ReviewModel extends ModelController {
             res.send("No id provided")
         }
     }
+
+    getStoreReview = async (req,res) => {
+        const { id } = req.body
+        if(id){
+            try {
+                const 
+            } catch (e) {
+                res.json({error: e})
+            }
+        }else{
+            res.json({error: "No Store id provided"})
+        }
+    }
 }
 
 const ReviewController = new ReviewModel(Review);

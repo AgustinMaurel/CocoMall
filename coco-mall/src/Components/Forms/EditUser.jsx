@@ -10,12 +10,16 @@ import InputPassword from '../../Components/Inputs/InputPassword';
 import InputConfirm from '../../Components/Inputs/InputConfirm';
 import InputLocation from '../Inputs/InputLocation';
 import { UPDATE_USER, UPDATE_FIREBASE} from '../../Scripts/constants'
+import { auth } from '../../firebase/firebaseConfig';
 
 const EditUser = () => {
     const dispatch = useDispatch();
     const { uid, userInfoDB } = useSelector((state) => state.auth);
     const [placeSelected, setPlaceSelected] = useState({});
+
     const [flag, setFlag] = useState(false)
+
+    const [statePass, setStatePass] = useState("")
 
     const {
         handleSubmit,
@@ -27,9 +31,12 @@ const EditUser = () => {
 
     useEffect(() => {
         dispatch(userInfo(uid));
+        setStatePass(auth.currentUser?._delegate.providerData[0].providerId)
     }, [dispatch, uid, flag]);
 
+
     const handleUpdate = (data) => {
+
         let dataUpdateUser = {
             Name: data.name,
             LastName: data.lastName,
@@ -37,10 +44,13 @@ const EditUser = () => {
             Country: placeSelected?.country,
             State: placeSelected?.state
         }
-        console.log(dataUpdateUser)
+        auth.currentUser.updateProfile({ displayName: data.name })
+        /* console.log(dataUpdateUser) */
         axios.put(`${UPDATE_USER}/${uid}`, {...dataUpdateUser})
-        axios.put(UPDATE_FIREBASE, {id:uid, act:{password:data.password, email:data.email}})
         .then(()=> setFlag(!flag))
+        
+        axios.put(UPDATE_FIREBASE, {id:uid, act:{password:data.password, email:data.email}})
+        
 
         setValue('name', '');
         setValue('lastName', '');
@@ -48,9 +58,9 @@ const EditUser = () => {
         setValue('password', '');
         setValue('password2', '');
     };
-
+    console.log(placeSelected)
     return (
-        <div className='overflow-hidden h-screen '>
+        <div className='overflow-hidden  '>
             {/* BACKGROUND */}
             <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  '>
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
@@ -61,14 +71,12 @@ const EditUser = () => {
                                 xl:flex xl: xl:h-16 xl:w-16'
             ></div>
             {/* CONTENT */}
-            <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-
-
+            
                 <form
-                    className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-3/12'
+                   className='flex flex-col w-12/12 z-1 items-center'
                     onSubmit={handleSubmit(handleUpdate)}
                 >
-                    <div className='flex flex-col text-left'>
+                    <div className='flex flex-col w-4/12 text-left'>
                         <InputAuth
                             register={register}
                             errors={errors}
@@ -79,7 +87,7 @@ const EditUser = () => {
                         />
                     </div>
 
-                    <div className='flex flex-col text-left'>
+                    <div className='flex flex-col w-4/12 text-left'>
                         <InputAuth
                             register={register}
                             errors={errors}
@@ -90,7 +98,8 @@ const EditUser = () => {
                         />
                     </div>
 
-                    <div className='flex flex-col text-left'>
+                    { statePass === 'password' ?
+                    <div className='flex flex-col w-4/12 text-left'>
                         <InputAuth
                             register={register}
                             errors={errors}
@@ -99,16 +108,18 @@ const EditUser = () => {
                             validate={validate.email}
                             defaultValue={userInfoDB?.Mail}
                         />
-                    </div>
+                    </div> : false}
 
-                    <div className='flex flex-col text-left'>
+                    <div className='flex flex-col w-4/12 text-left '>
                         <InputLocation
                             setPlaceSelected={setPlaceSelected}
                             defaultValue={userInfoDB?.State}
                         />
                     </div>
-
-                    <div className='flex flex-col text-left'>
+                    
+                   { statePass === 'password' ?
+                   <>
+                    <div className='flex flex-col w-4/12 text-left'>
                         <InputPassword
                             register={register}
                             errors={errors}
@@ -117,7 +128,7 @@ const EditUser = () => {
                         />
                     </div>
 
-                    <div className='flex flex-col text-left'>
+                    <div className='flex flex-col w-4/12 text-left'>
                         <InputConfirm
                             register={register}
                             errors={errors}
@@ -125,6 +136,7 @@ const EditUser = () => {
                             getValues={getValues}
                         />
                     </div>
+                    </> : false}
 
                     <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
                         <button className='text-sm font-semibold cursor-pointer' type='submit'>
@@ -132,7 +144,7 @@ const EditUser = () => {
                         </button>
                     </div>
                 </form>
-            </div>
+            
         </div>
     );
 };

@@ -110,7 +110,7 @@ export default function StorePanel() {
 
 
     const filtersNow =
-        render === 'Products' || render === "All Products" ? filterProduct : render === 'Orders' || render === 'All Orders' ? filterOrders : [];
+        render === 'Products'  ? filterProduct : [];
 
     return (
         <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
@@ -235,12 +235,7 @@ export default function StorePanel() {
             {editState ? (
                 <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
 
-                    {render === 'Products' || render === 'All Products' ?
-                        <IoArrowBack onClick={() => {
-                            setRender('')
-                            setEditState(true)
-
-                        }} /> : false}
+                   
                     <div className='text-center justify-center items-center'>
                         {selectStore === 'SelectStore' && render === '' ? (
                             <Link to="/create/shop">
@@ -379,7 +374,12 @@ export default function StorePanel() {
                 </div>
             ) : (
                 <div>
+ {render === 'Products' || render === 'All Products' ?
+                        <IoArrowBack onClick={() => {
+                            setRender('')
+                            setEditState(true)
 
+                        }} /> : false}
                     <ProductsCreate idStore={idActual} product={product} />
                 </div>
             )}

@@ -6,8 +6,8 @@ const { ProductType } = require('./src/models/index');
 
 // Syncing all the models at once.
 db.sync()
-.then(async () => {
-const productTypes = await ProductType.findAll();
+    .then(async () => {
+        const productTypes = await ProductType.findAll();
         if (productTypes.length < 1) {
             let typess = {
                 types: [

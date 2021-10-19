@@ -1,4 +1,4 @@
-const { Review, Order, Store } = require('../models/index');
+const { Review, Order, Store, User} = require('../models/index');
 const ModelController = require('./index');
 
 class ReviewModel extends ModelController {
@@ -21,6 +21,10 @@ class ReviewModel extends ModelController {
                 //Search the store and attach the Review
                 const store = await Store.findByPk(storeId)
                 await store.addReview(reviewId)
+                //Search the user and attach the Review
+                const user = await User.findByPk(userId)
+                await user.addReview(reviewId)
+
 
                 const finalRev = await this.model.findByPk(reviewId)
 

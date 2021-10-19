@@ -9,7 +9,7 @@ class OrderModel extends ModelController {
     createOrder = async (req, res) => {
         const { userId, storeId, address, cords, amount, orderState } = req.body;
 
-        if (userId && storeId && address && cords) {
+        if (userId && storeId) {
             try {
                 const order = {
                     amount,

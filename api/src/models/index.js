@@ -139,6 +139,11 @@ Product.belongsTo(SubCategory);
 Store.hasMany(Review, { foreignKey: { id: 'myStoreid' } })
 Review.belongsTo(Store)
 
+// //---------------------------------
+
+User.hasMany(Review, {foreignKey: {id: 'myUserid'}})
+Review.belongsTo(User)
+
 module.exports = {
     db: sequelize,
     User,

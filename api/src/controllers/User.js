@@ -265,6 +265,30 @@ banUser =async(req,res,next)=>{
     let resultado=await  admin.auth().updateUser(id,{disabled:boolean})
     res.json(resultado);
 }
+updatePassworEmail=async(req,res,next)=>{
+    try{
+        const {act,id} =req.body;
+        await admin.auth().updateUser(id,{...act});
+        const updatedData = await this.model.update(
+            { ...act },
+            {
+                where: {
+                    id,
+                },
+            }
+        )
+        res.json({
+            msg:"se modifico con exito",
+            updatedData
+        })
+
+    }catch(e){
+        error
+    }
+}
+
+
+
 }
 
 const UserController = new UserModel(User);

@@ -112,9 +112,7 @@ function App() {
                 <Route path='/create/order' exact>
                     {isLoggedIn ? <OrderProduct /> : <Redirect to='/auth/login' />}
                 </Route>
-                <Route path='/profile' exact component={EditUser}>
-                    {isLoggedIn ? <EditUser /> : <Redirect to='/auth/login' />}
-                </Route>
+                <Route path='/profile' exact component={EditUser} />
                 <Route path='*' component={Error404}></Route>
             </Switch>
         </>

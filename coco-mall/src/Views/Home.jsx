@@ -65,6 +65,7 @@ function Home() {
                 .then((res) => res.data)
                 .then((city) => {
                     setCity(city.results[0].formatted_address.split(',')[0]);
+                    //pasarle la ciudad al filtro para que renderice
                     console.log(
                         'ciudad encontrada: ',
                         city.results[0].formatted_address.split(',')[0],

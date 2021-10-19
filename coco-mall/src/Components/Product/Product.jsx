@@ -22,13 +22,13 @@ export default function Product(props) {
             </picture>
 
             <div className='w-full h-1/3 flex flex-col'>
-                <h3 className='font-medium text-lg text-cocoMall-800'>
+                <h3 className='font-medium text-base leading-tight text-cocoMall-800'>
                     {product.productName.toUpperCase()}
                 </h3>
                 {/* <p className='text-xs text-cocoMall-600'>{product.description}</p> */}
-                <p className='text-xs text-cocoMall-600'>{product.stock} unidades</p>
             </div>
-                <div className='font-bold mt-4 text-center text-xl text-white bg-cocoMall-300 rounded-md'>
+                <p className='text-xs text-cocoMall-600'>{product.stock} unidades</p>
+                <div className='font-bold text-center text-xl text-white bg-cocoMall-300 rounded-md'>
                     <span>${product.price}</span>
                 </div>
         </div>

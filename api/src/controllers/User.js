@@ -269,14 +269,16 @@ updatePassworEmail=async(req,res,next)=>{
     try{
         const {act,id} =req.body;
         await admin.auth().updateUser(id,{...act});
-        const updatedData = await this.model.update(
-            { ...act },
+        act.email!==null?await this.model.update(
+            { Mail:act.email
+            },
             {
                 where: {
                     id,
                 },
             }
-        )
+        ):null;
+        
         res.json({
             msg:"se modifico con exito",
             updatedData

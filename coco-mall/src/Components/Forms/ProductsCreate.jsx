@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
@@ -15,11 +15,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [types, setTypes] = useState('');
-
-    //--HOOKS--
-    const dispatch = useDispatch();
-
-    const allTypes = useSelector((state) => state.stores.productTypes);
+    const [subCategories, setSubCategories] = useState([]);
 
     const {
         register,
@@ -27,6 +23,18 @@ const ProductsCreate = ({ idStore, product }) => {
         watch,
         formState: { errors },
     } = useForm({ defaultValues: product });
+
+    useEffect(async () => {
+        let subCategory = await axios.get(`/subCategory/${watch('subCategory')}`);
+        if (subCategory?.data) {
+            setSubCategories(subCategory);
+        }
+    }, [watch('subCategory')]);
+
+    //--HOOKS--
+    const dispatch = useDispatch();
+
+    const allTypes = useSelector((state) => state.stores.productTypes);
 
     //LOAD IMAGE
     const handleImageChange = (e) => {
@@ -58,7 +66,9 @@ const ProductsCreate = ({ idStore, product }) => {
             storeId: idStore,
             idImage: [image],
             typeId: types,
-            subCat: data.subCategory ? data.subCategory : "Others"
+            subCat: data.subCategory
+                ? data.subCategory.charAt(0).toUpperCase() + data.subCategory.slice(1).toLowerCase()
+                : 'Others',
         };
         console.log(dataProductClean);
         if (product) {
@@ -66,7 +76,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
                     setTypes('');
-                    dispatch(getAllProducts())
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -87,7 +97,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .post('/product/create', dataProductClean)
                 .then(() => {
                     dispatch(getStores());
-                    dispatch(getAllProducts())
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Created!',
@@ -174,6 +184,16 @@ const ProductsCreate = ({ idStore, product }) => {
                         type='text'
                         validate={validate.subCategory}
                     />
+                    {console.log(subCategories?.data)}
+                    {subCategories?.data?.length
+                        ? subCategories?.data?.map((subCat) => {
+                              return (
+                                  <div className='flex'>
+                              <span>{subCat.Name}</span>
+                              </div>
+                              );
+                          })
+                        : false}
                     <InputFile
                         register={register}
                         errors={errors}

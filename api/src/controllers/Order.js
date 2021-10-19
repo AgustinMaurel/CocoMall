@@ -9,13 +9,12 @@ class OrderModel extends ModelController {
     createOrder = async (req, res) => {
         const { userId, storeId, address, cords, amount, orderState } = req.body;
 
-        if (userId && storeId) {
+        if (userId && storeId && address && cords) {
             try {
                 const order = {
                     amount,
                     orderState,
                 };
-
                 // create Order
                 const newOrder = await this.model.create(order);
                 const orderId = newOrder.id;
@@ -23,11 +22,9 @@ class OrderModel extends ModelController {
                 const user = await User.findByPk(userId);
                 await user.addOrder(orderId);
 
-                // PROBAAAAR
-
-
-                // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
-                // const userNew = await User.update(obj, {where: {id: userId}})
+                // - WORKING -
+                let obj = {OrdersHistory: [...user.OrdersHistory, orderId]}
+                const userNew = await User.update(obj, {where: {id: userId}})
 
 
                 // add Store to order

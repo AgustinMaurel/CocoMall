@@ -11,6 +11,7 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import Address from '../Cards/Address';
 import InputMaps from '../Inputs/InputMaps';
 import ReactModal from 'react-modal';
+import { clearCart } from '../../Redux/actions/shoppingActions';
 
 const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -44,7 +45,7 @@ const OrderProduct = () => {
 
     let objectToCheckout = {
         title: 'Cart Products',
-        total: total,
+        total: total || 1,
         quantity: 1,
     };
 
@@ -119,6 +120,7 @@ const OrderProduct = () => {
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
         postOrder();
+        dispatch(clearCart(uid));
     };
 
     const postOrder = () => {
@@ -139,7 +141,7 @@ const OrderProduct = () => {
     };
 
     return (
-        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0 bg-gray-100 '>
+        <div className='w-full flex flex-col m-auto px-10 lg:px-24 xl:p-0  bg-gray-100 '>
             <div className='sticky bg-white shadow top-0 z-20'>
                 <NavBar />
             </div>

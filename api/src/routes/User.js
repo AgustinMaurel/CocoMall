@@ -28,7 +28,7 @@ router.post('/create', createUser);
 router.post('/bulkCreate', bulkCreateUser);
 
 //PUT's
-router.put('/update/:id', updateData);
+router.put('/update/:di', updateData);
 
 router.put('/update/street', putUser)
 

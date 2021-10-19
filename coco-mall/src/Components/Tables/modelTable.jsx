@@ -15,8 +15,9 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
 
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(getAllProducts())
        idStore && dispatch(getProductsStorePanel(idStore));
-        
+       idStore && dispatch(getOrdersStore(idStore))
     }, [flag3]);
     
     return (

@@ -34,14 +34,12 @@ export const getAllProducts = ()=> {
 }
 
 export const getOrdersStore = (id) => {
-    try{
+    
     return async (dispatch) => {
         const response = await axios.get(`/order/${id}`);
         dispatch({type: ORDERS_STORE, payload: response.data })
     }
-}catch(err){
-    console.log(err)
-} 
+
 }
 export const filterStores = (payload) => {
     const obj = {

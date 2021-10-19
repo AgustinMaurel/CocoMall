@@ -78,6 +78,7 @@ export default function StorePanel() {
             const aux = stores.allStores.find((store) => store.storeName === e.target.value);
             dispatch(getProductsStorePanel(aux.id));
             setIdActual(aux.id);
+            setFlag2(!flag2)
         }
         return false;
     }

@@ -5,6 +5,7 @@ import HeroCard from '../Cards/HeroCard';
 
 const SliderHero = () => {
     const settingsHero = {
+        arrows: false,
         dots: true,
         infinite: true,
         slidesToShow: 1,

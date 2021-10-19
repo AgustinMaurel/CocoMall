@@ -62,7 +62,7 @@ const EditUser = () => {
                                 xl:flex xl: xl:h-16 xl:w-16'
             ></div>
             {/* CONTENT */}
-            <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
+            <div className='flex flex-col z-1 items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
                 <div className='flex-col text-2xl text-left  font-bold z-10'>
                     <h1>Profile Edit</h1>
                 </div>

@@ -39,7 +39,7 @@ router.post('/mercadopago', async (req, res) => {
         ],
 
         back_urls: {
-            success: 'http://localhost:3000/home',
+            success: 'http://localhost:3000/order/success',
             failure: 'http://localhost:3000/create/order',
             pending: 'http://localhost:3000/home',
         },

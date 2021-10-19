@@ -19,14 +19,14 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
 
     const que = '+';
     const cant = 1;
-
+    
     return (
         <div className='flex flex-wrap'>
-            {productSubCat.map((cat) => {
+            {productSubCat.length ? productSubCat?.map((cat) => {
                 if (cat.id === parseInt(SubCatName)) {
                     return <h3 className='w-24 mt-4 ml-4 font-semibold leading-tight text-cocoMall-300'>{cat.Name}</h3>;
                 }
-            })}
+            }): false}
             {Products?.map((product) => {
                 return (
                     <div onClick={() => modalFuncion(product.id)} className='bk-red'>

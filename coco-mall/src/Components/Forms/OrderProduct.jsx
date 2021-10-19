@@ -11,7 +11,6 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import Address from '../Cards/Address';
 import InputMaps from '../Inputs/InputMaps';
 import ReactModal from 'react-modal';
-import { clearCart } from '../../Redux/actions/shoppingActions';
 
 const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -43,9 +42,13 @@ const OrderProduct = () => {
         userCart.length > 0 &&
         Object.values(userCart).reduce((previous, key) => previous + key.price * key.quantity, 0);
 
+    let items = userCart.length > 0 && userCart.map((el) => el.productName);
+
+    console.log(items);
+
     let objectToCheckout = {
-        title: 'Cart Products',
-        total: total || 1,
+        title: (items && items.join(', ')) || 'cart products',
+        total: (total && total) || 1,
         quantity: 1,
     };
 
@@ -108,6 +111,7 @@ const OrderProduct = () => {
             }
         }
     };
+
     //tengo que tener 2 useEffect porque sino rompe
     useEffect(() => {
         userAddressFunc();
@@ -119,10 +123,6 @@ const OrderProduct = () => {
     }, [uid, modalIsOpen, userCart.length, userAddress?.length]);
 
     //uid, userInfoDB.length, modalIsOpen
-    const handleSubmitOrder = () => {
-        postOrder();
-        dispatch(clearCart(uid));
-    };
 
     const postOrder = () => {
         for (let storeId of storeOrders) {
@@ -135,7 +135,6 @@ const OrderProduct = () => {
                     quantity: product.quantity,
                 };
             });
-            console.log(storeProducts);
             const obj = {
                 userId: uid,
                 storeId: storeId,
@@ -145,9 +144,14 @@ const OrderProduct = () => {
                 orderState: 'Success',
                 arrayIdProducts: storeProducts,
             };
-            console.log(obj);
+            console.log(obj, 'obj al back');
             axios.post('/order/create', obj);
         }
+    };
+
+    const handleSubmitOrder = () => {
+        console.log('click');
+        postOrder();
     };
 
     return (

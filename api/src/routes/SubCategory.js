@@ -9,7 +9,9 @@ const {
 //all routes start with /subCategory
 router.get('/', getAllData);
 
-router.get('/:word', getSubCategoriesFiltered);
+router.get('/match/', getSubCategoriesFiltered);
+
+router.get('/match/:word', getSubCategoriesFiltered);
 
 router.post('/filter', filterSubCategories)
 

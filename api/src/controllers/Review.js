@@ -75,16 +75,23 @@ class ReviewModel extends ModelController {
     }
 
     getStoreReview = async (req,res) => {
-        const { id } = req.body
+
+        const { id } = req.params
+        
         if(id){
             try {
-                const 
+
+                const reviews = await this.model.findAll({where: {StoreId: id}})
+                if(reviews) res.send(reviews)
+                else res.send("No reviews")
+
             } catch (e) {
                 res.json({error: e})
             }
         }else{
             res.json({error: "No Store id provided"})
         }
+        
     }
 }
 

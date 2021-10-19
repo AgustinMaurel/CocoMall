@@ -5,32 +5,14 @@ class AddressModel extends ModelController {
   constructor(model) {
     super(model);
   }
-  //Specific Functions for this model
-  createAddress = async (req, res) => {
-    const { id, directions, cords } = req.body;
-    if (id) {
-      try {
-        //id of User
-        const address = {
-          directions,
-          cords: cords
-        };
-        //Create the Address
-        const newAddress = await this.model.create(address);
-        const addressId = newAddress.id;
-        //Search the User and attach the Address
-        const user = await User.findByPk(id);
-        await user.addAddress(addressId);
+    deleteAddress = async (req,res) => {
 
-        const finalAddress = await this.model.findByPk(addressId)
-
-        res.send(finalAddress);
-      } catch (e) {
-        res.send(e);
-      }
-    } else {
-      res.status(400).send({ message: 'Wrong parameters' });
     }
+    
+    getAllData = async (req,res) => {
+      
+    }
+
     //Specific Functions for this model
     createAddress = async (req, res) => {
         const { id, directions, cords } = req.body;
@@ -58,6 +40,7 @@ class AddressModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
+
     getIdData = async (req, res) => {
         //lo hice al pedo creo
         const {id} = req.params
@@ -72,14 +55,8 @@ class AddressModel extends ModelController {
         } else {
           res.send('Oops, something went wrong');
         }
-      } catch (e) {
-        res.send(e);
       }
-    } else {
-      res.json({ error: 'No id in params' });
-    }
-  };
-}
+} 
 
 const AddressController = new AddressModel(Address);
 

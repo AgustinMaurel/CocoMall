@@ -10,7 +10,8 @@ const {
     putUser,
     updateCart2,
     clearCart2,
-    deleteUser
+    deleteUser,
+    banUser
 } = require('../controllers/User.js');
 
 //all routes start with /user
@@ -37,5 +38,7 @@ router.post('/update/cart2', updateCart2);
 router.post('/update/clearCart2', clearCart2)
 
 router.delete('/delete/:id', deleteUser)
+
+router.put('/banUser/',banUser)
 
 module.exports = router;

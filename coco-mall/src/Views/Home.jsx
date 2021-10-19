@@ -64,11 +64,11 @@ function Home() {
                 )
                 .then((res) => res.data)
                 .then((city) => {
-                    setCity(city.results[0].formatted_address.split(',')[0]);
+                    setCity(city.results[0].formatted_address?.split(',').slice(-2,-1)[0].trim());
                     //pasarle la ciudad al filtro para que renderice
                     console.log(
                         'ciudad encontrada: ',
-                        city.results[0].formatted_address.split(',')[0],
+                        city.results[0].formatted_address?.split(',').slice(-2,-1)[0].trim(),
                     );
                 });
         });

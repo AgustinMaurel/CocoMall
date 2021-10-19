@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { /*addToCart*/ addToCartSomo } from '../../Redux/actions/shoppingActions';
 import ReactModal from 'react-modal';
 import {Redirect } from 'react-router-dom'
-
 import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');

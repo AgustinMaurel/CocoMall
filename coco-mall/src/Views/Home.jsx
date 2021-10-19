@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
@@ -22,8 +22,8 @@ function Home() {
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
     const { state } = useSelector((state) => state.auth);
 
+    const [filterByState, setFilterByState] = useState([]);
     const [city, setCity] = useState('');
-
     const [typeSearch, setTypeSearch] = useState(false);
     const [checkType, setCheckType] = useState([]);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
@@ -65,14 +65,23 @@ function Home() {
                 .then((res) => res.data)
                 .then((city) => {
                     setCity(city.results[0].formatted_address?.split(',').slice(-2,-1)[0].trim());
-                    //pasarle la ciudad al filtro para que renderice
-                    console.log(
-                        'ciudad encontrada: ',
-                        city.results[0].formatted_address?.split(',').slice(-2,-1)[0].trim(),
-                    );
                 });
         });
     };
+
+    //filter by state
+    let stateStores;
+    const stateStoresFilter = async () => {
+        const obj = {
+            state: city,
+        };
+            stateStores = (await axios.post('/store/filter', obj)).data;
+            setFilterByState(stateStores);
+    };
+    
+    useEffect(()=>{
+        stateStoresFilter()
+    }, [city])
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
@@ -120,8 +129,8 @@ function Home() {
                     {allStores === storesFilters ? (
                         <div className='2xl:mt-6'>
                             <h3 className='inline-block text-xl 2xl:text-2xl font-bold text-cocoMall-800'>
-                                {state || city ? (
-                                    `Stores in ${state || city}`
+                                {city ? (
+                                    `Stores in ${city}`
                                 ) : (
                                     <div className='flex gap-2'>
                                         <span>Stores in your city</span>
@@ -134,8 +143,8 @@ function Home() {
                                     </div>
                                 )}
                             </h3>
-
-                            <SlidersCards allStores={allStores} storeDetail={storeDetail} />
+                            {console.log("SOY STATEE STORES", stateStores)}
+                            <SlidersCards allStores={allStores} storeDetail={storeDetail} stateStores={filterByState} />
                         </div>
                     ) : (
                         <button

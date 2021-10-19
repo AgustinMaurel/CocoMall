@@ -5,10 +5,16 @@ import { Link } from 'react-router-dom';
 import StoreState from '../Cards/StoreState';
 import coco from '../../Assets/icons/coco.png';
 
-const SlidersCards = ({ allStores, storeDetail }) => {
+const SlidersCards = ({ allStores, storeDetail, stateStores }) => {
 
+    console.log('tiendas filtradas: ', allStores);
+    console.log('tiendas filtradas doss: ', stateStores);
+    let renderStores = allStores
+    if (stateStores?.length && stateStores !== undefined){
+        renderStores = stateStores
+    }
     const settingsCards = {
-        slidesToShow: allStores.length < 4 ? allStores.length : 4,
+        slidesToShow: renderStores?.length < 4 ? renderStores?.length : 4,
         slidesToScroll: 2,
         dots: true,
         responsive: [
@@ -31,7 +37,7 @@ const SlidersCards = ({ allStores, storeDetail }) => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: allStores.length < 2 ? allStores.length : 2,
+                    slidesToShow: renderStores?.length < 2 ? renderStores?.length : 2,
                     slidesToScroll: 2,
                     arrows: false
                 },
@@ -39,14 +45,14 @@ const SlidersCards = ({ allStores, storeDetail }) => {
             {
                 breakpoint: 1280,
                 settings: {
-                    slidesToShow: allStores.length < 3 ? allStores.length : 3,
+                    slidesToShow: renderStores?.length < 3 ? renderStores?.length : 3,
                     slidesToScroll: 3,
                 },
             },
             {
                 breakpoint: 1440,
                 settings: {
-                    slidesToShow: allStores.length < 4 ? allStores.length : 4,
+                    slidesToShow: renderStores?.length < 4 ? renderStores?.length : 4,
                     slidesToScroll: 4,
                 },
             },
@@ -54,9 +60,9 @@ const SlidersCards = ({ allStores, storeDetail }) => {
     };
 
     return (
-        <div className={allStores.length < 3 ? 'max-w-2xl' : allStores.length < 4 ? 'max-w-4xl' : ''}>
+        <div className={renderStores?.length < 3 ? 'max-w-2xl' : renderStores?.length < 4 ? 'max-w-4xl' : ''}>
             <Slider {...settingsCards}>
-            {allStores?.map((e) => (
+            {renderStores?.map((e) => (
                 <Link
                     to={`/home/store/${e.id}`}
                     onClick={() => storeDetail(e.id)}

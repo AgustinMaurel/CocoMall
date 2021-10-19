@@ -114,6 +114,10 @@ export default function StoreDetail() {
         handleTypes(e)
     }
 
+    const handleSub = (e) => {
+        
+    }
+
     let keysTypes;
     if (storeProductsFilter?.Products) {
         keysTypes = Object.keys(storeProductsFilter.Products);
@@ -156,6 +160,29 @@ export default function StoreDetail() {
 
                             {productTypes.length && storeProducts.allCurrentTypes?.length ?
                             productTypes?.map((type, i) => {
+                                if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                    return (
+                                        <option key={type.id} value={type.id}>
+                                            {type.Name}
+                                        </option>
+                                    );
+                                }
+                            }): false}
+                        </select>
+                    </div>
+
+                    <div className=''>
+                        <select
+                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                            name='category'
+                            id='category'
+                            onChange={handleSub}
+                            defaultValue='All'
+                        >
+                            <option value='All'>All categories</option>
+
+                            {filters.type.length ?
+                            storeProducts.Products?.map((type, i) => {
                                 if (storeProducts.allCurrentTypes.includes(type.id)) {
                                     return (
                                         <option key={type.id} value={type.id}>

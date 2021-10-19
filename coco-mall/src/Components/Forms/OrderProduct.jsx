@@ -17,6 +17,7 @@ const OrderProduct = () => {
     const [placeSelected, setPlaceSelected] = useState({});
     const { userCart, uid, userInfoDB } = useSelector((state) => state.auth);
     const { allStores } = useSelector((state) => state.stores);
+    const [link, setLink] = useState('');
 
     const [addressSelect, setAddressSelect] = useState({
         address: '',
@@ -47,16 +48,14 @@ const OrderProduct = () => {
         quantity: 1,
     };
 
-    function handleCheckout() {
-        return userCart.length > 0
-            ? axios
-                  .post('/checkout/mercadopago', objectToCheckout)
-                  .then((order) => {
-                      history.push(`/checkout/${order.data.response}`);
-                  })
-                  .catch((err) => console.log(err))
-            : false;
-    }
+    useEffect(() => {
+        axios
+            .post('/checkout/mercadopago', objectToCheckout)
+            .then((order) => {
+                setLink(order.data.init_points);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
     const storeOrders = userCart.reduce((accArr, value) => {
         if (accArr.indexOf(value.StoreId) < 0) {
@@ -323,12 +322,13 @@ const OrderProduct = () => {
                             </span>
                         </div>
                         <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
-                            <button
-                                onClick={() => handleSubmitOrder()}
+                            <a
+                                href={link}
+                                target='_blank'
                                 className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
                             >
                                 Go To Checkout
-                            </button>
+                            </a>
                         </div>
                         <div className=' flex items-center justify-center '>
                             <button

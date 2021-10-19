@@ -119,7 +119,6 @@ const OrderProduct = () => {
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
         postOrder();
-        console.log('click');
     };
 
     const postOrder = () => {

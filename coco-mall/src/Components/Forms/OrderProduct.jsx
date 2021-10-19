@@ -119,7 +119,7 @@ const OrderProduct = () => {
     //uid, userInfoDB.length, modalIsOpen
     const handleSubmitOrder = () => {
         postOrder();
-        handleCheckout();
+        console.log('click');
     };
 
     const postOrder = () => {
@@ -325,6 +325,7 @@ const OrderProduct = () => {
                             <a
                                 href={link}
                                 target='_blank'
+                                onClick={() => handleSubmitOrder()}
                                 className=' focus:outline-none text-center text-lg font-bold w-full h-full       sm:text-xlxl:text-primary xl:text-xl'
                             >
                                 Go To Checkout

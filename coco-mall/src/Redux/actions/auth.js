@@ -60,8 +60,8 @@ export const startGoogleLogin = (remember) => {
                     Remember: remember
                 };
                 axios.post(CREATE_USER_URL, aux);
-                dispatch(login(user.uid, user.displayName));
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
+                dispatch(userInfo(user.uid));
             })
             .catch((err) =>
                 Swal.fire({

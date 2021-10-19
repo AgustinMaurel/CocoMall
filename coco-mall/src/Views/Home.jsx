@@ -20,7 +20,7 @@ import { GOOGLE_MAPS_API_KEY } from '../Scripts/constants';
 function Home() {
     const dispatch = useDispatch();
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
-    const { state } = useSelector((state) => state.auth);
+    //const { userInfoDB } = useSelector((state) => state.auth);
 
     const [filterByState, setFilterByState] = useState([]);
     const [city, setCity] = useState('');
@@ -64,24 +64,23 @@ function Home() {
                 )
                 .then((res) => res.data)
                 .then((city) => {
-                    setCity(city.results[0].formatted_address?.split(',').slice(-2,-1)[0].trim());
+                    let currentCity = city.results[0].formatted_address
+                        ?.split(',')
+                        .slice(-2, -1)[0]
+                        .trim();
+                    setCity(currentCity);
+
+                    axios
+                    .post('/store/filter', { state: currentCity })
+                    .then((res) => res.data)
+                    .then((stateStores) => {
+                        setFilterByState(stateStores);
+                    });
                 });
         });
     };
 
-    //filter by state
-    let stateStores;
-    const stateStoresFilter = async () => {
-        const obj = {
-            state: city,
-        };
-            stateStores = (await axios.post('/store/filter', obj)).data;
-            setFilterByState(stateStores);
-    };
-    
-    useEffect(()=>{
-        stateStoresFilter()
-    }, [city])
+    !city && onCurrentPosition();
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
@@ -143,8 +142,8 @@ function Home() {
                                     </div>
                                 )}
                             </h3>
-                            {console.log("SOY STATEE STORES", stateStores)}
-                            <SlidersCards allStores={allStores} storeDetail={storeDetail} stateStores={filterByState} />
+
+                            <SlidersCards filterByState={filterByState} storeDetail={storeDetail} />
                         </div>
                     ) : (
                         <button

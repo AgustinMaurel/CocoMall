@@ -19,7 +19,7 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
        idStore && dispatch(getProductsStorePanel(idStore));
        idStore && dispatch(getOrdersStore(idStore))
     }, [flag3]);
-    
+    console.log(info)
     return (
         <div className='items-center text-center justify-center  w-full'>
             <div >
@@ -41,7 +41,7 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                         <div key={el.id} className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
-                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
+                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2, el.SuperAdmin );
                                                     setProduct && setProduct(el);
                                                     console.log(el)
                                                 }}
@@ -49,6 +49,7 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                            
                                         </div>
                                     </td>
+                                    {el.SuperAdmin === false || el.SuperAdmin === true ? <td className='border-b  border-gray-400 py-2'>{el.SuperAdmin === true ? "Admin" : "User"}</td>: false}
                                     <td className='border-b  border-gray-400 py-2'>
                                         {el.productName || el.orderState || el.Name || el.storeName}
                                     </td>

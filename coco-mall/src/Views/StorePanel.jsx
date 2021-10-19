@@ -356,7 +356,7 @@ export default function StorePanel() {
                         {render === "All Users" &&
                             <ModelTable
                                 info={allUsers}
-                                column_title={['Action', 'Name', 'Mail', 'Id', 'Location']}
+                                column_title={['Action', 'Role', 'Name', 'Mail', 'Id', 'Location']}
                                 flag2={flag2}
                                 setFlag2={setFlag2}
                                 swalFunction={userOptions}

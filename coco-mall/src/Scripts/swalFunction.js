@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { DELETE_PRODUCT, DELETE_STORE, DELETE_ORDER, DELETE_USER } from './constants';
+import { DELETE_PRODUCT, DELETE_STORE, DELETE_ORDER, DELETE_USER, UPDATE_USER } from './constants';
 
 
 export async function productOptions(id, setEditState, setFlag, flag) {
@@ -130,12 +130,12 @@ export async function ordersOptions(id, setEditState, setFlag3, flag3, setFlag2,
     }
 }
 
-export async function userOptions(id, setEditState, setFlag3, flag3, setFlag2, flag2) {
+export async function userOptions(id, setEditState, setFlag3, flag3, setFlag2, flag2, SuperAdmin) {
 console.log(id)
     const inputOptions = new Promise((resolve) => {
         setTimeout(() => {
             resolve({
-                edit: 'Edit user',
+                edit: 'Change role',
                 delete: 'Delete user',           
             });
         }, 500);
@@ -153,7 +153,38 @@ console.log(id)
     });
 
     if (action === 'edit') {
-        setEditState(false);
+        const { value: accept } = await Swal.fire({
+            input: 'checkbox',
+            icon: 'warning',
+            inputValue: 1,
+            inputPlaceholder: 'Are you sure you want to change role',
+            confirmButtonText: 'Send',
+            inputValidator: (result) => {
+                return !result && 'You need to agree';
+            },
+        });
+
+        if (accept) {
+            let aux= {
+                SuperAdmin : !SuperAdmin
+            }
+            axios
+                .put(`${UPDATE_USER}/${id}`,{...aux})
+                .then(() => {
+                    setFlag2(!flag2);
+                    setFlag3(!flag3);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully updated',
+                    });
+                })
+                .catch((err) =>{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'error',
+                    })},
+                );
+        }
     }
 
     if (action === 'delete') {

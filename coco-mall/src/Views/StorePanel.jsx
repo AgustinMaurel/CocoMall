@@ -16,10 +16,13 @@ import { BiEditAlt, BiStore } from "react-icons/bi";
 import { GrUserSettings } from "react-icons/gr"
 import { swalDelete } from '../Scripts/swalDelete.js';
 import { RiDeleteBin7Line } from "react-icons/ri";
-
+import { useHistory } from 'react-router';
+import EditUser from '../Components/Forms/EditUser.jsx';
 export default function StorePanel() {
 
     const dispatch = useDispatch();
+
+    const history = useHistory()
 
     const stores = useSelector((state) => state.stores);
 
@@ -127,7 +130,7 @@ export default function StorePanel() {
                                 selected='SelectStore'
                                 value='SelectStore'
                             >
-                            {selectStore}
+                                {selectStore}
                             </option>
                             {storesUser?.map((e) => {
                                 return (
@@ -151,14 +154,17 @@ export default function StorePanel() {
                         </div>
                         {selectStore !== "SelectStore" &&
 
-                        <div className="flex w-full text-start items-start justify-start text-lg pt-1">
-                            <RiDeleteBin7Line className="mt-1 ml-1"/>
-                            <button className="ml-1" onClick={()=>{
-                                swalDelete(idActual, setFlag2, flag2)
-                                setSelectStore('SelectStore')
-                                setFlag2(!flag2)
+                            <div className="flex w-full text-start items-start justify-start text-lg pt-1">
+                                <RiDeleteBin7Line className="mt-1 ml-1" />
+                                <button className="ml-1" onClick={() => {
+                                    swalDelete(idActual, setFlag2, flag2)
+                                        .then(() => {
+                                            setSelectStore('SelectStore')
+                                            history.push('/create/shop')
+                                        })
+
                                 }} >Delete store</button>
-                        </div>
+                            </div>
                         }
                     </div>}
 
@@ -193,10 +199,10 @@ export default function StorePanel() {
                         </div>}
 
                     <div className="flex w-full flex-col text-start items-start justify-start">
-                        <h2 className='text-primary text-xl  font-bold'> User Panel</h2>
+                        <h2 className='text-primary text-xl font-bold'> User Panel</h2>
                         <div className="flex text-lg pt-1">
                             <GrUserSettings className="mt-1 ml-1" />
-                            <button className='ml-1'>Edit Profile</button>
+                            <button className='ml-1' value='Edit profile' onClick={handleRender}>Edit Profile</button>
                         </div>
                     </div>
                     {userAdmin ?
@@ -228,8 +234,13 @@ export default function StorePanel() {
 
             {editState ? (
                 <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
-                    <IoArrowBack />
 
+                    {render === 'Products' || render === 'All Products' ?
+                        <IoArrowBack onClick={() => {
+                            setRender('')
+                            setEditState(true)
+
+                        }} /> : false}
                     <div className='text-center justify-center items-center'>
                         {selectStore === 'SelectStore' && render === '' ? (
                             <Link to="/create/shop">
@@ -282,7 +293,8 @@ export default function StorePanel() {
                                 </div>
                             </div>
                         )}
-
+                        {render === 'Edit profile' &&
+                            <EditUser />}
                         {render === 'Products' &&
                             selectStore !== 'Select Store' &&
                             renderSec === false ? (
@@ -315,7 +327,7 @@ export default function StorePanel() {
                             <ModelTable
                                 info={ordersStore}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
-                                flag2={flag2}                                
+                                flag2={flag2}
                                 setFlag2={setFlag2}
                                 swalFunction={ordersOptions}
                                 idStore={idActual}
@@ -367,10 +379,7 @@ export default function StorePanel() {
                 </div>
             ) : (
                 <div>
-                    <IoArrowBack onClick={() => {
-                        setRender('')
-                        setEditState(true)
-                    }} />
+
                     <ProductsCreate idStore={idActual} product={product} />
                 </div>
             )}

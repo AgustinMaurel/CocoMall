@@ -39,6 +39,13 @@ const SlidersCards = ({ allStores, storeDetail }) => {
             {
                 breakpoint: 1280,
                 settings: {
+                    slidesToShow: allStores.length < 3 ? allStores.length : 3,
+                    slidesToScroll: 3,
+                },
+            },
+            {
+                breakpoint: 1440,
+                settings: {
                     slidesToShow: allStores.length < 4 ? allStores.length : 4,
                     slidesToScroll: 4,
                 },

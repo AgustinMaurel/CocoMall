@@ -185,11 +185,11 @@ const ProductsCreate = ({ idStore, product }) => {
                         validate={validate.subCategory}
                     />
                     {console.log(subCategories?.data)}
-                    <div className='flex flex-row justify-start'>
+                    <div className='flex flex-row justify-center items-center text-base text-cocoMall-300 mb-8'>
                     {subCategories?.data?.length
                         ? subCategories?.data?.map((subCat) => {
                               return (
-                              <span className='mb-8'>{subCat.Name}</span>
+                              <span className='ml-4'>{subCat.Name}</span>
                               );
                             })
                             : false}

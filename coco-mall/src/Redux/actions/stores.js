@@ -89,6 +89,7 @@ export const filterProducts = (id, payload) => {
         min: payload.min,
         max: payload.max,
         discount: payload.discount,
+        subCategory: payload.subCategory
     };
     return async (dispatch) => {
         const response = await axios.post(`/product/filter/${id}`, obj);
@@ -118,9 +119,12 @@ export const getProductTypes = () => {
     };
 };
 
-export const getProductSubCat = () => {
+export const getProductSubCat = (payload) => {
+    const obj = {
+        allSub: payload
+    }
     return async (dispatch) => {
-        const subCategorys = await axios.get('/SubCategory')
+        const subCategorys = await axios.post('/SubCategory/filter', obj)
         await dispatch({ type: GET_PRODUCT_SUBCATEGORY, payload: subCategorys.data})
     }
 }

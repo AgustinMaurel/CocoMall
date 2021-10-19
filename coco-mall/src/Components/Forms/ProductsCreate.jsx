@@ -60,9 +60,8 @@ const ProductsCreate = ({ idStore, product }) => {
             storeId: idStore,
             idImage: [image],
             typeId: types,
-            SubCategoryId: data.subCategory ? data.subCategory : "Others"
+            SubCat: data.subCategory ? data.subCategory : "Others"
         };
-        console.log(dataProductClean);
         if (product) {
             axios
                 .put(`/product/update/${product.id}`, dataProductClean)

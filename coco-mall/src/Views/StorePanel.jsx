@@ -14,6 +14,9 @@ import { FiUsers } from "react-icons/fi";
 import { BsBox, BsCardList } from "react-icons/bs";
 import { BiEditAlt, BiStore } from "react-icons/bi";
 import { GrUserSettings } from "react-icons/gr"
+import { swalDelete } from '../Scripts/swalDelete.js';
+import { RiDeleteBin7Line } from "react-icons/ri";
+
 export default function StorePanel() {
 
     const dispatch = useDispatch();
@@ -46,8 +49,6 @@ export default function StorePanel() {
     const [allUsers, setAllUsers] = useState()
     const [allStores, setAllStores] = useState()
 
-    console.log(idActual)
-
     useEffect(() => {
         dispatch(getStores());
         axios.get(`/user/`)
@@ -73,7 +74,7 @@ export default function StorePanel() {
     }, []);
 
     function handleStore(e) {
-        if (e.target.value !== 'All') {
+        if (e.target.value !== 'SelectStore') {
             setSelectStore(e.target.value);
             const aux = stores.allStores.find((store) => store.storeName === e.target.value);
             dispatch(getProductsStorePanel(aux.id));
@@ -124,10 +125,9 @@ export default function StorePanel() {
                             <option
                                 defaultValue='SelectStore'
                                 selected='SelectStore'
-                                disabled={true}
-                                value='Select Store'
+                                value='SelectStore'
                             >
-                                Select Store
+                            {selectStore}
                             </option>
                             {storesUser?.map((e) => {
                                 return (
@@ -149,6 +149,17 @@ export default function StorePanel() {
                             />
 
                         </div>
+                        {selectStore !== "SelectStore" &&
+
+                        <div className="flex w-full text-start items-start justify-start text-lg pt-1">
+                            <RiDeleteBin7Line className="mt-1 ml-1"/>
+                            <button className="ml-1" onClick={()=>{
+                                swalDelete(idActual, setFlag2, flag2)
+                                setSelectStore('SelectStore')
+                                setFlag2(!flag2)
+                                }} >Delete store</button>
+                        </div>
+                        }
                     </div>}
 
                     {selectStore !== "SelectStore" &&

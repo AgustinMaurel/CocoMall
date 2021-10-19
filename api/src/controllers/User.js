@@ -265,6 +265,7 @@ banUser =async(req,res,next)=>{
     let resultado=await  admin.auth().updateUser(id,{disabled:boolean})
     res.json(resultado);
 }
+
 updatePassworEmail=async(req,res,next)=>{
     try{
         const {act,id} =req.body;
@@ -281,11 +282,10 @@ updatePassworEmail=async(req,res,next)=>{
         
         res.json({
             msg:"se modifico con exito",
-            updatedData
         })
 
     }catch(e){
-        error
+        res.send(e)
     }
 }
 

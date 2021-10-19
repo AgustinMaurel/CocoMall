@@ -9,11 +9,13 @@ import validate from '../../Scripts/validate';
 import InputPassword from '../../Components/Inputs/InputPassword';
 import InputConfirm from '../../Components/Inputs/InputConfirm';
 import InputLocation from '../Inputs/InputLocation';
+import { UPDATE_USER, UPDATE_FIREBASE} from '../../Scripts/constants'
 
 const EditUser = () => {
     const dispatch = useDispatch();
     const { uid, userInfoDB } = useSelector((state) => state.auth);
     const [placeSelected, setPlaceSelected] = useState({});
+    const [flag, setFlag] = useState(false)
 
     const {
         handleSubmit,
@@ -25,17 +27,21 @@ const EditUser = () => {
 
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [dispatch, uid]);
+    }, [dispatch, uid, flag]);
 
     const handleUpdate = (data) => {
-       let dataUpdateUser = {
-           Name: data.name,
-           LastName : data.lastName,
-           Mail: data.email,
-           Country : placeSelected?.country,
-           State : placeSelected?.state
-       }
-    axios.put()
+        let dataUpdateUser = {
+            Name: data.name,
+            LastName: data.lastName,
+            Mail: data.email,
+            Country: placeSelected?.country,
+            State: placeSelected?.state
+        }
+        console.log(dataUpdateUser)
+        axios.put(`${UPDATE_USER}/${uid}`, {...dataUpdateUser})
+        axios.put(UPDATE_FIREBASE, {id:uid, act:{password:data.password, email:data.email}})
+        .then(()=> setFlag(!flag))
+
         setValue('name', '');
         setValue('lastName', '');
         setValue('email', '');
@@ -56,7 +62,7 @@ const EditUser = () => {
             ></div>
             {/* CONTENT */}
             <div className='flex flex-col  z-1  items-center md:mt-28 sm:w-9/12 lg:w-8/12 xl:w-8/12'>
-                
+
 
                 <form
                     className='grid grid-col-1 m-5 z-10 w-9/12 sm:w-9/12 lg:w-6/12 xl:w-3/12'

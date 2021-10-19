@@ -113,7 +113,6 @@ export const startRegisterWithEmailPasswordName = (
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
             await auth.currentUser.updateProfile({ displayName: name });
-            console.log(rememberForm)
             let userF = {
                 id: aux.user.uid,
                 Name: name,

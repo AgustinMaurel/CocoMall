@@ -26,6 +26,7 @@ class OrderModel extends ModelController {
                     e.totalPurchase = quantity[i] * e.price
                     stock.push(e.stock)
                 })
+                console.log(products,'<----- id Products')
                // create order
                 const order = {
                     amount,
@@ -47,7 +48,7 @@ class OrderModel extends ModelController {
                 
                 // create Order
                 const newOrder = await this.model.create(order);
-               
+               console.log(newOrder,' new order')
                 const orderId = newOrder.id;
                 // add User to order
                 const user = await User.findByPk(userId);
@@ -56,7 +57,7 @@ class OrderModel extends ModelController {
                 // PROBAAAAR
 
 
-                 let obj = {OrdersHistory: [...user.OrdersHistory, orderId]}
+                 let obj = {OrdersHistory: [...user.OrdersHistory, {order: orderId,address:address}]}
                  const userNew = await User.update(obj, {where: {id: userId}})
 
 

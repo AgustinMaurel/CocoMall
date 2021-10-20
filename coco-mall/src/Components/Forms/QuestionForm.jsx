@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 
-export default function Question(productId) {
+export default function Question({productId}) {
     const [Question, setQuestion] = useState("")
     const { uid } = useSelector(state => state.auth)
 
@@ -18,8 +18,9 @@ export default function Question(productId) {
         const body = {
             userId: uid,
             productId: productId,
-            question: Question
+            bodyQuestion: Question
         }
+
         const response = await axios.post('/question/create', body)
         alert(response)
     }

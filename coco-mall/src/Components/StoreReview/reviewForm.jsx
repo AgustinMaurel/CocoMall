@@ -3,10 +3,13 @@ import ReactModal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
+import ReviewCard from '../Cards/ReviewCard';
 
 
 const ReviewForm = () => {
+    
     const { id } = useParams()
+
     const [allStoreReviews, setAllStoreReviews] = useState([])
 
     const [review, setReview] = useState({
@@ -27,13 +30,18 @@ const ReviewForm = () => {
     }
 
     useEffect(() => {
-        axios.get(`http:localhost:3001/review/${id}`).then(response => setAllStoreReviews([...allStoreReviews, ...response.data]))
-
+        axios.get(`/review/f2c78acf-f084-4870-8a5b-e29ef805fb4a`).then(response => setAllStoreReviews(response.data))
     }, [])
+
 
     return (
         <>
             <div className="container">
+
+                <div>
+                    {allStoreReviews?.map(rev => <ReviewCard username={rev.User.Name} qualification={rev.qualification} description={rev.description} />)}
+                </div>
+
                 <form key="1" onSubmit={handleSubmit}>
                     {review.qualification==="1" ? <span>🥥</span> : review.qualification === "2" ? <span>🥥 🥥</span> : review.qualification === "3" ? <span>🥥 🥥 🥥</span> : review.qualification === "4" ? <span>🥥 🥥 🥥 🥥</span> : review.qualification === "5" ? <span>🥥 🥥 🥥 🥥 🥥</span> : false} 
                     <p></p>

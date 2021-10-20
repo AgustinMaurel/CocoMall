@@ -6,7 +6,9 @@ import {useParams} from 'react-router-dom'
 
 
 const ReviewForm = () => {
+    
     const { id } = useParams()
+
     const [allStoreReviews, setAllStoreReviews] = useState([])
 
     const [review, setReview] = useState({
@@ -27,9 +29,10 @@ const ReviewForm = () => {
     }
 
     useEffect(() => {
-        axios.get(`http:localhost:3001/review/${id}`).then(response => setAllStoreReviews([...allStoreReviews, ...response.data]))
-
+        axios.get(`/review/f2c78acf-f084-4870-8a5b-e29ef805fb4a`).then(response => setAllStoreReviews(response.data))
     }, [])
+
+    console.log("aaaaaaaaaaaaaa", allStoreReviews)
 
     return (
         <>

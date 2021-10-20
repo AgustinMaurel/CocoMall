@@ -20,7 +20,6 @@ function Landing() {
 
     return <>
             {width < breakpoint ? <LandingMobile /> : <LandingDesktop />}
-            <ReviewCard username="Hernan" qualification="4" description="es una tienda muy buena la verdad tiene varias cositas jejejeej"/>
         </>;
 }
 

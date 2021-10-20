@@ -11,7 +11,6 @@ export const startLoginEmailPassword = (email, password, rememberForm) => {
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
                 /* Read more about isConfirmed, isDenied below */
-                console.log(rememberForm);
                 if (rememberForm) {
                     axios.put(`http://localhost:3001/user/update/${user.uid}`, {
                         Remember: rememberForm,
@@ -60,6 +59,15 @@ export const startGoogleLogin = (remember) => {
                     Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
+                if (remember) {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                } else {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                }
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
                 dispatch(userInfo(user.uid));
             })
@@ -87,6 +95,15 @@ export const startFacebookLogin = (remember) => {
                     Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
+                if (remember) {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                } else {
+                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                }
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -113,7 +130,6 @@ export const startRegisterWithEmailPasswordName = (
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
             await auth.currentUser.updateProfile({ displayName: name });
-            console.log(rememberForm);
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -135,7 +151,6 @@ export const startRegisterWithEmailPasswordName = (
                             userCreated.Country,
                         ),
                     );
-                    console.log('user creado en DB: ', userCreated);
                 });
             await aux.user.sendEmailVerification();
             dispatch(userInfo(userF.id));

@@ -83,6 +83,7 @@ function App() {
     }, [dispatch, uid]);
 
     useEffect(() => {
+        dispatch(login())
         dispatch(getStores());
         dispatch(getProductTypes());
     }, [dispatch]);

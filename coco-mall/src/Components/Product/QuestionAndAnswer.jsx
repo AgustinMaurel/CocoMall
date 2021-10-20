@@ -8,9 +8,8 @@ export default function QuestionAndAnswer({ productId }) {
     const [question, setQuestion] = useState([])
 
     useEffect(async () => {
-        axios.get(`/question/${productId}`).then(response => {
-            setQuestion(response.data)
-        })
+        const response = await axios.get(`/question/${productId}`)
+        setQuestion(response.data)
     }, [])
 
     return (

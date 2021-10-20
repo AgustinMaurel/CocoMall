@@ -9,12 +9,9 @@ import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
 
 function OrderSuccess() {
-    console.log(auth.currentUser, 'auth');
     let queries = useQueryParams();
     const dispatch = useDispatch();
     const { uid, userInfoDB, userCart } = useSelector((state) => state.auth);
-
-    const [userId, setUserId] = useState();
 
     const items = userCart.map((el) => el.productName).join(', ');
     const itemsFromLocalStorage = userInfoDB?.Cart?.map((el) => el.productName).join(', ');
@@ -30,13 +27,9 @@ function OrderSuccess() {
             0,
         );
 
-    console.log('total', itemsFromLocalStorageTotal);
-    React.useEffect(() => {
-        const data = localStorage.getItem('uid');
-        if (data) {
-            setUserId(JSON.parse(data));
-        }
-    }, []);
+    // useEffect(() => {
+    //     dispatch(userInfo(uid));
+    // }, [uid]);
 
     const userMail = userInfoDB?.Mail;
 
@@ -45,35 +38,11 @@ function OrderSuccess() {
     queries = {
         address: dataAddress,
         payment_id: queries.payment_id,
-        mail: 'matutin97@live.com.ar',
+        mail: userMail,
         items: items ? items : itemsFromLocalStorage,
         total: total ? total : itemsFromLocalStorageTotal,
         status: queries.status,
     };
-    console.log(queries);
-
-    useEffect(() => {
-        if (uid) {
-            dispatch(userInfo(uid));
-        } else {
-            dispatch(userInfo(userId));
-        }
-
-        return () => {
-            dispatch(clearCart(uid));
-        };
-    }, [userId, uid]);
-
-    if (
-        queries.payment_id !== undefined &&
-        queries.address !== undefined &&
-        queries.total !== undefined &&
-        queries.mail !== undefined &&
-        queries.items !== undefined &&
-        queries.status !== undefined
-    ) {
-        axios.post('http://localhost:3001/checkout/feedback', queries);
-    }
 
     return (
         //HACER UN SET TIMEOUT QUE REDIRIJA A HOME ASI SE DESMONTA EL COMPONENTE

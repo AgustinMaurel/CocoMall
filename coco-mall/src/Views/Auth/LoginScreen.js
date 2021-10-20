@@ -198,7 +198,7 @@ const LoginScreen = () => {
                                 </p>
                                 <div className='relative inline-block w-8 align-middle select-none'>
                                     <input
-                                        {...register('rememberForm')}
+                                        // {...register('rememberForm')}
                                         autoComplete='off'
                                         className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
                                         type='checkbox'

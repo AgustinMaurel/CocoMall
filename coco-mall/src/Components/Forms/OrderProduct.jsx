@@ -85,9 +85,9 @@ const OrderProduct = () => {
             directions: placeSelected.name,
             cords: placeSelected.coord,
         };
-        axios.post(`/address/create`, obj).then(()=> {
+        axios.post(`/address/create`, obj).then(() => {
             dispatch(userInfo(uid));
-        })
+        });
     };
     const onSubmit = () => {
         postAddressCreate();
@@ -158,6 +158,10 @@ const OrderProduct = () => {
 
     const handleSubmitOrder = () => {
         postOrder();
+        let aux = {
+            Remember: true,
+        };
+        axios.put(`/user/update/${uid}`, { ...aux }).then(() => console.log('se cambio'));
     };
 
     return (

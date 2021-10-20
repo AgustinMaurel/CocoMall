@@ -11,7 +11,7 @@ export const startLoginEmailPassword = (email, password, rememberForm) => {
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
                 /* Read more about isConfirmed, isDenied below */
-                console.log(rememberForm)
+                console.log(rememberForm);
                 if (rememberForm) {
                     axios.put(`http://localhost:3001/user/update/${user.uid}`, {
                         Remember: rememberForm,
@@ -57,11 +57,11 @@ export const startGoogleLogin = (remember) => {
                     Mail: user.email,
                     State: '',
                     Country: '',
-                    Remember: remember
+                    Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
-                dispatch(login(user.uid, user.displayName));
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
+                dispatch(userInfo(user.uid));
             })
             .catch((err) =>
                 Swal.fire({
@@ -84,7 +84,7 @@ export const startFacebookLogin = (remember) => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
-                    Remember: remember
+                    Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
                 dispatch(login(user.uid, user.displayName));
@@ -113,7 +113,7 @@ export const startRegisterWithEmailPasswordName = (
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
             await auth.currentUser.updateProfile({ displayName: name });
-            console.log(rememberForm)
+            console.log(rememberForm);
             let userF = {
                 id: aux.user.uid,
                 Name: name,
@@ -121,7 +121,7 @@ export const startRegisterWithEmailPasswordName = (
                 Mail: email,
                 State: state,
                 Country: country,
-                Remember: rememberForm
+                Remember: rememberForm,
             };
             axios
                 .post(CREATE_USER_URL, userF)

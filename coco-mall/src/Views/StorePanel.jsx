@@ -63,6 +63,7 @@ export default function StorePanel() {
 
     useEffect(() => {
         dispatch(getAllProducts())
+        dispatch(getStores())
         dispatch(getOrdersStore(idActual))
         axios.get('/order')
             .then(res => setAllOrders(res.data))

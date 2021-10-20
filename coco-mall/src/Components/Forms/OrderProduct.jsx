@@ -390,6 +390,7 @@ const OrderProduct = () => {
                                 </div>
                                 <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
                                     <a
+                                        target="_blank"
                                         href={link}
                                         onClick={() => handleSubmitOrder()}
                                         className=' focus:outline-none max-h-full flex iltems-center justify-center content-center   text-lg font-bold w-full       sm:text-xl xl:text-primary xl:text-xl'

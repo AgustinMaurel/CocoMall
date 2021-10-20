@@ -81,8 +81,11 @@ class ReviewModel extends ModelController {
         if(id){
             try {
 
-                const reviews = await this.model.findAll({where: {StoreId: id}})
+                const reviews = await this.model.findAll({where: {StoreId: id}, include: [{model: User, attributes: ['Name']}]})
                 if(reviews) res.send(reviews)
+
+
+
                 else res.send("No reviews")
 
             } catch (e) {

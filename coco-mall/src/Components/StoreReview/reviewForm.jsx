@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import ReactModal from 'react-modal';
+import { useForm } from 'react-hook-form';
+import axios from 'axios'
+import {useParams} from 'react-router-dom'
 
 
 const ReviewForm = () => {
-
+    const { id } = useParams()
     const [allStoreReviews, setAllStoreReviews] = useState([])
 
     const [review, setReview] = useState({
@@ -24,6 +27,7 @@ const ReviewForm = () => {
     }
 
     useEffect(() => {
+        axios.get(`http:localhost:3001/review/${id}`).then(response => setAllStoreReviews([...allStoreReviews, ...response.data]))
 
     }, [])
 

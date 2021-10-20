@@ -24,6 +24,7 @@ import {
     handleOnTypes,
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';
+import Info from '../Components/StoreInfo/Info';
 
 ReactModal.setAppElement('#root');
 
@@ -142,6 +143,7 @@ export default function StoreDetail() {
                     {storeDetail?.storeName?.toUpperCase()}
                 </h3>
                 <p>{storeDetail?.description}</p>
+                <Info info={storeDetail} infoModal={infoModal} setInfoModal={setInfoModal} />
             </div>
             {userCart.length ? (
                 <div

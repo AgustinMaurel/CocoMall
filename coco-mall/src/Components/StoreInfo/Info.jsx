@@ -9,7 +9,7 @@ import InputMaps from '../Inputs/InputMaps';
 ReactModal.setAppElement('#root');
 const Info = ({ info, infoModal, setInfoModal }) => {
     return (
-        <div className='text-white flex items-center justify-center absolute top-7 right-10'>
+        <div className='text-white flex items-center justify-center'>
             <button onClick={() => setInfoModal(true)}>
                 <IoMdInformationCircle className='w-6 h-6' />
             </button>

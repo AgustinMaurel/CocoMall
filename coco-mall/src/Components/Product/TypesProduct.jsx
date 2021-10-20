@@ -8,7 +8,7 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
     let keysNum = keysSubCat.filter((key) => parseInt(key));
 
     return (
-        <div className='mt-5'>
+        <div className='mt-5 border border-red-500'>
             {productTypes.map((type) => {
                 if (type.id === parseInt(typeName)) {
                     return (
@@ -18,18 +18,20 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
                     );
                 }
             })}
-            {keysNum.length
-                ? keysNum.map((k) => {
-                      return (
-                          <SubCat
-                              SubCatName={k}
-                              Products={SubCategories[k]}
-                              modalIsOpen={modalIsOpen}
-                              setModalIsOpen={setModalIsOpen}
-                          />
-                      );
-                  })
-                : null}
+            <div className='border bg-yellow-300'>
+                {keysNum.length
+                    ? keysNum.map((k) => {
+                        return (
+                            <SubCat
+                                SubCatName={k}
+                                Products={SubCategories[k]}
+                                modalIsOpen={modalIsOpen}
+                                setModalIsOpen={setModalIsOpen}
+                            />
+                        );
+                    })
+                    : null}
+            </div>
         </div>
     );
 }

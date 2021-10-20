@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userInfo } from '../Redux/actions/auth';
+import { userInfo, login } from '../Redux/actions/auth';
 import { clearCart } from '../Redux/actions/shoppingActions';
 import { useQueryParams } from '../Scripts/useQueryParams';
 import { Link } from 'react-router-dom';
 import NavBar from '../Components/NavBar/NavBar';
 import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
+import firebase from 'firebase/compat/app';
+import {
+    getAuth
+} from 'firebase/auth';
 
 function OrderSuccess() {
+    const auth = getAuth();
     let queries = useQueryParams();
     const dispatch = useDispatch();
     const { uid, userInfoDB, userCart } = useSelector((state) => state.auth);
@@ -27,9 +32,19 @@ function OrderSuccess() {
             0,
         );
 
-    // useEffect(() => {
-    //     dispatch(userInfo(uid));
-    // }, [uid]);
+    useEffect(() => {
+        firebase
+        .auth()
+            auth.onAuthStateChanged((user) => {
+                if (user?.uid) {
+                    axios
+                        .get(`/user/${user.uid}`)
+                        .catch((err) => console.log(err));
+                    dispatch(login(user.uid, user.displayName));
+                }
+            });
+       
+    }, [uid]);
 
     const userMail = userInfoDB?.Mail;
 

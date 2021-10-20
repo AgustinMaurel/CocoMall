@@ -11,7 +11,6 @@ class AddressModel extends ModelController {
         if (id) {
             try {
                 //id of User
-
                 //Create the Address
                 const [newAddress, created] = await this.model.findOrCreate({
                     where: {

@@ -12,7 +12,6 @@ function Address({
     userAddressFunc,
     setAddressSelect,
 }) {
-    const [adrress, setAdrress] = useState({});
     const {
         register,
         handleSubmit,
@@ -27,7 +26,7 @@ function Address({
     return (
         <div className='w-full h-full m-auto'>
             <form className='w-2/5 h-2/5 flex flex-col 2xl:w-2/5'>
-                <h3>Elegi tu direccion</h3>
+                <h3>Select your address</h3>
                 <fieldset>
                     {address.map((direc, i) => {
                         return (
@@ -45,7 +44,7 @@ function Address({
                 </fieldset>
                 <button onClick={(e) => handleChangeI(e)}></button>
             </form>
-            <h3>Agregar direccion</h3>
+            <h3>New address</h3>
             <form
                 className='w-3/5 h-3/5 flex flex-col 2xl:w-3/5'
                 onSubmit={handleSubmit(onSubmit)}
@@ -84,7 +83,7 @@ function Address({
                         placeholder='Eg: Av. Belgrano 3200'
                     />
                 </div>
-                <button type='submit'>Agregar</button>
+                <button type='submit'>Add address</button>
                 <div className='h-36 mb-8'>
                     <InputMaps coord={placeSelected.coord} />
                 </div>

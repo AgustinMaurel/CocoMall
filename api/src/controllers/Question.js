@@ -13,7 +13,6 @@ class QuestionModel extends ModelController {
                 const question = {
                     question: bodyQuestion,
                 };
-                console.log(question)
                 //Create the Question
                 const newQuestion = await this.model.create(question);
                 const questionId = newQuestion.id;
@@ -75,10 +74,9 @@ class QuestionModel extends ModelController {
 
     getQuestionByProduct = async (req, res) => {
         const id = req.params.id
-        console.log(id)
         if (id) {
             try {
-                const questions = this.model.findAll({
+                const questions = await this.model.findAll({
                     where: {
                         ProductId: id
                     }

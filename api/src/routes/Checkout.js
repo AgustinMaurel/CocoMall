@@ -105,6 +105,26 @@ router.post('/feedback', async function (req, res) {
         });
     }
 
+    if (status === 'pending') {
+        let email = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'coco.mallsb@gmail.com',
+                pass: 'cvgabzzweorejiny',
+            },
+        });
+
+        let mailOption = await email.sendMail({
+            from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
+            to: mail, // list of receivers
+            subject: 'We have a issue with your payment ⚠️⚠️', // Subject line
+            text: 'Hello world?', // plain text body
+            html: templateFailure(), // html body
+        });
+    }
+
     res.json({
         Payment: req.query.payment_id,
         Status: req.query.status,

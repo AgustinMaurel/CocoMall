@@ -145,6 +145,7 @@ export default function StoreDetail() {
                 <p>{storeDetail?.description}</p>
                 <Info info={storeDetail} infoModal={infoModal} setInfoModal={setInfoModal} />
             </div>
+            
             {userCart.length ? (
                 <div
                     className='fixed flex w-screen justify-evenly bottom-5 z-20  '

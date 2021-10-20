@@ -4,6 +4,7 @@ import { IoMdInformationCircle } from 'react-icons/io';
 
 import bannerFlower from '../../Assets/images/banners/bannerFlower.png';
 import InputMaps from '../Inputs/InputMaps';
+import ReviewForm from '../StoreReview/reviewForm';
 //import logo from '../../Assets/images/logoDefault.png';
 
 ReactModal.setAppElement('#root');
@@ -11,7 +12,7 @@ const Info = ({ info, infoModal, setInfoModal }) => {
     return (
         <div className='text-white flex items-center justify-center'>
             <button onClick={() => setInfoModal(true)}>
-                <IoMdInformationCircle className='w-6 h-6' />
+                <IoMdInformationCircle className='w-8 h-8' />
             </button>
 
             <ReactModal
@@ -24,16 +25,9 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                 onRequestClose={() => setInfoModal(false)}
                 className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
             >
-                <div className='w-full h-full flex bg-cocoMall-200'>
-                    <div className='w-1/2 h-full bg-cocoMall-50 text-center'>
-                        <div className='w-2/3 bg-cocoMall-100 p-8 flex'>
-                            <img
-                                className='h-full w-full object-cover'
-                                src={bannerFlower}
-                                alt='banner flower'
-                            />
-                        </div>
-                        <div className='h-2/3 w-full bg-cocoMall-200'>
+                <div className='w-full h-full flex flex-col bg-cocoMall-200'>
+                    <div className='h-1/3 w-full flex bg-cocoMall-50 text-center'>
+                        <div className='w-2/3 h-full bg-cocoMall-200'>
                             <h3 className='text-3xl font-bold text-cocoMall-800'>
                                 {info?.storeName}
                             </h3>
@@ -41,12 +35,15 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                             <p>{info?.address}</p>
                             <p>{info?.country}</p>
                             <p>{info?.cp}</p>
-                            <p>STATE{info?.state}</p>
+                            <p>{info?.state}</p>
+                        </div>
+                        <div className='w-1/3 h-full bg-cocoMall-200'>
+                            <InputMaps coord={info?.coord} />
                         </div>
                     </div>
 
-                    <div className='h-full w-1/2 bg-cocoMall-50'>
-                        <InputMaps coord={info?.coord} />
+                    <div className='w-full h-2/3 bg-cocoMall-50 p-4'>
+                        <ReviewForm />
                     </div>
                 </div>
             </ReactModal>

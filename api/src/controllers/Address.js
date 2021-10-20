@@ -11,12 +11,13 @@ class AddressModel extends ModelController {
         if (id) {
             try {
                 //id of User
-                const address = {
-                    directions,
-                    cords,
-                };
                 //Create the Address
-                const newAddress = await this.model.create(address);
+                const [newAddress, created] = await this.model.findOrCreate({
+                    where: {
+                        directions: directions,
+                        cords: cords
+                    }
+                });
                 const addressId = newAddress.id;
                 //Search the User and attach the Address
                 const user = await User.findByPk(id);

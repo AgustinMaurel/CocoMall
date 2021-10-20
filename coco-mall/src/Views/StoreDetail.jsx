@@ -12,7 +12,7 @@ import {
     getProductDetail,
     getStoreDetail,
     getProductSubCat,
-    clearProducts
+    clearProducts,
 } from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
@@ -33,6 +33,7 @@ import {
     handleOnSubmit,
     handleOnDiscount,
     handleOnTypes,
+    handleOnCategories
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';
 
@@ -52,9 +53,10 @@ export default function StoreDetail() {
         productTypes,
         storeProducts,
         storeDetail,
+        productSubCat,
     } = useSelector((state) => state.stores);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    
+
     const [infoModal, setInfoModal] = useState(false);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
@@ -95,7 +97,6 @@ export default function StoreDetail() {
     //by Chris
 
     useEffect(() => {
-        dispatch(getProductSubCat());
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
@@ -103,15 +104,28 @@ export default function StoreDetail() {
         };
     }, [id]);
 
+    useEffect(() => {
+        if(storeProducts.allsubCat?.length){
+            dispatch(getProductSubCat(storeProducts.allsubCat));
+        }
+    },[id, storeProducts.allsubCat?.length])
+
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, filters.type, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
+    const handleCategories = handleOnCategories(dispatch, id, filters);
 
-    const handleDouble = (e) =>{
-        handleChange(e)
-        handleTypes(e)
+
+    const handleDouble = (e) => {
+        handleChange(e);
+        handleTypes(e);
+    };
+
+    const handleDoubleCat = (e) => {
+        handleChange(e);
+        handleCategories(e)
     }
 
     let keysTypes;
@@ -122,6 +136,14 @@ export default function StoreDetail() {
     if (storeProducts.Products) {
         keysTypesSinFilter = Object.keys(storeProducts.Products);
     }
+
+    let keysSubCats;
+    if(filters.type.length){
+        if(storeProducts?.Products[filters.type]){
+            keysSubCats = Object.keys(storeProducts?.Products[filters.type]).map((key)=> parseInt(key)).filter((key) => parseInt(key))
+            }
+        }
+
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
             <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
@@ -154,19 +176,43 @@ export default function StoreDetail() {
                         >
                             <option value='All'>All products</option>
 
-                            {productTypes.length && storeProducts.allCurrentTypes?.length ?
-                            productTypes?.map((type, i) => {
-                                if (storeProducts.allCurrentTypes.includes(type.id)) {
-                                    return (
-                                        <option key={type.id} value={type.id}>
-                                            {type.Name}
-                                        </option>
-                                    );
-                                }
-                            }): false}
+                            {productTypes.length && storeProducts.allCurrentTypes?.length
+                                ? productTypes?.map((type, i) => {
+                                      if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                          return (
+                                              <option key={type.id} value={type.id}>
+                                                  {type.Name}
+                                              </option>
+                                          );
+                                      }
+                                  })
+                                : false}
                         </select>
                     </div>
-
+                    -
+                    <div className=''>
+                        <select
+                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                            name='subcategory'
+                            id='subcategory'
+                            onChange={handleDoubleCat}
+                            defaultValue='All'
+                        >
+                            <option value='All' disabled={!filters.type.length ? true: false}>{!filters.type.length ? "Choose a Type": "All Categories"}</option>
+                            {filters.type.length && keysSubCats?.length
+                                ? productSubCat.map((subCat, i) => {
+                                    if (keysSubCats?.includes(subCat.id)) {
+                                        return (
+                                            <option key={subCat.id} value={subCat.id}>
+                                                {subCat.Name}
+                                            </option>
+                                        );
+                                    }
+                                })
+                                :false
+                                }
+                        </select>
+                    </div>
                     <div className='flex'>
                         <form onSubmit={(e) => handleSubmit(e)} className='flex items-center gap-1'>
                             <input
@@ -200,7 +246,6 @@ export default function StoreDetail() {
                             <AiOutlinePercentage />
                         </button>
                     </div>
-
                     {/* --- ORDERS --- */}
                     <div>
                         <select
@@ -224,8 +269,7 @@ export default function StoreDetail() {
                         <></>
                     )}
                 </div>
-                <div className='flex flex-col'>
-                </div>
+                <div className='flex flex-col'></div>
                 <div>
                     {storeProductsFilter?.Products
                         ? keysTypes.map((k) => {
@@ -244,5 +288,3 @@ export default function StoreDetail() {
         </div>
     );
 }
-
-

@@ -12,11 +12,11 @@ export const startLoginEmailPassword = (email, password, rememberForm) => {
                 dispatch(login(user.uid, user.displayName));
                 /* Read more about isConfirmed, isDenied below */
                 if (rememberForm) {
-                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                    axios.put(`/user/update/${user.uid}`, {
                         Remember: rememberForm,
                     });
                 } else {
-                    axios.put(`http://localhost:3001/user/update/${user.uid}`, {
+                    axios.put(`/user/update/${user.uid}`, {
                         Remember: rememberForm,
                     });
                 }
@@ -56,9 +56,18 @@ export const startGoogleLogin = (remember) => {
                     Mail: user.email,
                     State: '',
                     Country: '',
-                    Remember: remember
+                    Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
+                if (remember) {
+                    axios.put(`/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                } else {
+                    axios.put(`/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                }
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
                 dispatch(userInfo(user.uid));
             })
@@ -83,9 +92,18 @@ export const startFacebookLogin = (remember) => {
                     Name: user.displayName,
                     id: user.uid,
                     Mail: user.email,
-                    Remember: remember
+                    Remember: remember,
                 };
                 axios.post(CREATE_USER_URL, aux);
+                if (remember) {
+                    axios.put(`/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                } else {
+                    axios.put(`/user/update/${user.uid}`, {
+                        Remember: remember,
+                    });
+                }
                 dispatch(login(user.uid, user.displayName));
             })
             .catch((err) =>
@@ -119,7 +137,7 @@ export const startRegisterWithEmailPasswordName = (
                 Mail: email,
                 State: state,
                 Country: country,
-                Remember: rememberForm
+                Remember: rememberForm,
             };
             axios
                 .post(CREATE_USER_URL, userF)
@@ -133,7 +151,6 @@ export const startRegisterWithEmailPasswordName = (
                             userCreated.Country,
                         ),
                     );
-                    console.log('user creado en DB: ', userCreated);
                 });
             await aux.user.sendEmailVerification();
             dispatch(userInfo(userF.id));

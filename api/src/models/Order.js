@@ -23,6 +23,9 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 /* defaultValue: 'Pending', */
             },
+            arrayIdProducts: {
+                type:DataTypes.ARRAY(DataTypes.JSON)
+            }
         },
         {
             timestamps: false,

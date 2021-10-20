@@ -3,7 +3,7 @@ import { Image } from 'cloudinary-react';
 
 const StoreState = ({ storeName, description, cloudImage, id }) => {
     return (
-        <article className='flex h-36 max-w-xs shadow-lg m-4 rounded-md bg-white'>
+        <article className='flex h-36 max-w-xs shadow hover:shadow-lg transition-shadow m-4 rounded-md bg-white'>
             <div className='flex items-center w-1/4 bg-cocoMall-600 rounded-md relative'>
                 <picture className='flex m-auto h-16 w-16 bg-white rounded-full overflow-hidden shadow-lg absolute -right-6'>
                     <Image

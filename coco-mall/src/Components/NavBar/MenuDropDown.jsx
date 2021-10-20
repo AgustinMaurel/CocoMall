@@ -73,7 +73,8 @@ export default function MenuDropDown() {
                         <>
                             <div className='px-1 py-1'>
                                 <Menu.Item>
-                                    <button onClick={() => history.push('/storePanel')}
+                                    <button
+                                        onClick={() => history.push('/storePanel')}
                                         className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                     >
                                         <UserIcon
@@ -87,19 +88,12 @@ export default function MenuDropDown() {
 
                             <div className='px-1 py-1'>
                                 <Menu.Item>
-                                    <button onClick={() => history.push('/cart')}
+                                    <button
+                                        onClick={() => history.push('/cart')}
                                         className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                     >
                                         <WishListIcon className='w-5 h-5 mr-2' aria-hidden='true' />
                                         My Cart
-                                    </button>
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <button
-                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                    >
-                                        <MyShopIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                        My Shop
                                     </button>
                                 </Menu.Item>
                             </div>
@@ -192,11 +186,13 @@ function WishListIcon(props) {
             viewBox='0 0 24 24'
             xmlns='http://www.w3.org/2000/svg'
         >
-
-            <path  stroke='#38A3A5' strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            <path
+                stroke='#38A3A5'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
+            />
         </svg>
-
-
     );
 }
 

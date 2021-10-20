@@ -50,7 +50,7 @@ function NavBar() {
     return (
         <>
             {width < breakpoint ? (
-                <div className='p-5 bg-gray-100 border-gray-100 shadow'>
+                <div className='p-5 sticky top-0 bg-gray-100 border-gray-100 shadow '>
                     <nav className='flex  justify-between'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>

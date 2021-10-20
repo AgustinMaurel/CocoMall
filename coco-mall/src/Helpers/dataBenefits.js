@@ -7,26 +7,23 @@ const dataBenefits = () => [
     {
         icon: icon01,
         title: 'Manage everything easily',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis etsed nam sem tellus',
+        description: 'Create your store and sell your products in a quick and easy way.',
     },
     {
         icon: icon04,
         title: 'Integrated payment methods',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis etsed nam sem tellus',
+            'All our sales are made with Mercado Pago, keeping all your money safe and within your reach.',
     },
     {
         icon: icon06,
         title: 'Offer simplicity for your customers',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis etsed nam sem tellus',
+        description: ` Our user interface is really simple and straightforward. Create your account, buy what you want.`,
     },
     {
         icon: icon07,
         title: 'Other benefits',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis etsed nam sem tellus',
+        description: 'Access all your sales/purchase history and manage them easily.',
     },
 ];
 

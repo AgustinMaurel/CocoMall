@@ -38,7 +38,6 @@ class AddressModel extends ModelController {
     if (id) {
       try {
         let data = await this.model.findByPk(id);
-        console.log(data)
         res.send(data);
       } catch (error) {
         res.send(error);

@@ -35,7 +35,7 @@ class QuestionModel extends ModelController {
     };
 
     updateQuestion = async (req, res) => {
-        const { id, answer } = req.body.id
+        const { id, answer } = req.body
         if (id) {
             try {
                 const finalQuestion = await this.model.update(
@@ -72,6 +72,24 @@ class QuestionModel extends ModelController {
             res.json({ error: 'No id in params' });
         }
     };
+
+    getQuestionByProduct = async (req,res) => {
+        const id = req.params.id
+        if(id){
+            try {               
+                const questions = this.model.findAll({
+                    where: {
+                        ProductId: id
+                    }
+                })
+                res.send(questions)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send("Wrong params")
+        }
+    }
 }
 
 const QuestionController = new QuestionModel(Question);

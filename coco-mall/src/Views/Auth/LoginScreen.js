@@ -5,7 +5,7 @@ import {
     startLoginEmailPassword,
     startGoogleLogin,
     startFacebookLogin,
-    rememberAction,
+    // rememberAction,
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -21,13 +21,14 @@ const LoginScreen = () => {
         register,
         formState: { errors },
         setValue,
-        
-    } = useForm({defaultValues: {
-        rememberForm: false,
-    }});
+    } = useForm({
+        defaultValues: {
+            rememberForm: false,
+        },
+    });
 
     const [viewPass, setViewPass] = useState('password');
-    const [remember, setRemember] = useState(false)
+    const [remember, setRemember] = useState(false);
     const renderCond = useSelector((state) => state.auth);
 
     const history = useHistory();
@@ -51,16 +52,18 @@ const LoginScreen = () => {
     };
 
     const handleChecked = () => {
-        setRemember(!remember)
-        setValue('rememberForm', !remember)
-    }
+        setRemember(!remember);
+        setValue('rememberForm', !remember);
+    };
 
     return (
-        <div className='h-screen overflow-hidden '>
-            <NavBar />
-            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
+        <div className='h-screen overflow-hidden flex flex-col gap-10 '>
+            <div className='z-10'>
+                <NavBar />
+            </div>
+            <div className='z-0 absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
+                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
+                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
             <div
                 className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
@@ -72,7 +75,7 @@ const LoginScreen = () => {
             ></div>
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col gap-10 mt-10 sm:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                <div className='flex flex-col  justify-center md:w-2/3 xl:w-8/12 items-center z-10 '>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
@@ -192,11 +195,13 @@ const LoginScreen = () => {
                             </div>
                             {/* TOOGLE BUTTON SESSION ACTIVE*/}
                             <div className='flex items-center justify-between m-2'>
-                                <p className='text-cocoMall-400 text-sm'>Do you want to stay logged in?</p>                   
+                                <p className='text-cocoMall-400 text-sm'>
+                                    Do you want to stay logged in?
+                                </p>
                                 <div className='relative inline-block w-8 align-middle select-none'>
                                     <input
-                                     {...register('rememberForm')}
-                                    autoComplete='off'
+                                        // {...register('rememberForm')}
+                                        autoComplete='off'
                                         className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
                                         type='checkbox'
                                         name='remember'
@@ -207,7 +212,6 @@ const LoginScreen = () => {
                                 </div>
                             </div>
                         </div>
-
 
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className='ml-1 font-medium'>Not a member ? </label>

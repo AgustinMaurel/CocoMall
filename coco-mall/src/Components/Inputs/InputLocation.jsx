@@ -12,6 +12,7 @@ const InputLocation = ({ setPlaceSelected, defaultValue }) => {
                     className={'outline-none text-xs z-10 p-2 w-full'}
                     apiKey={GOOGLE_MAPS_API_KEY}
                     onPlaceSelected={(place) => {
+                        console.log(place, "sgkhjsejgkheg")
                         setPlaceSelected({
                             state: place.address_components[0]?.long_name,
                             country:

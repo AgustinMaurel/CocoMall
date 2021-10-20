@@ -117,7 +117,7 @@ class ProductModel extends ModelController {
                             discount: {
                                 [Op.gte]: discountToFil,
                             },
-                            subCategory: {
+                            SubCategoryId: {
                                 [Op.or]: subCategToFil
                             }
                         },
@@ -204,7 +204,7 @@ class ProductModel extends ModelController {
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
         
-        if (storeId !== undefined && storeId) {
+        if (storeId) {
             try {
                 let allProductOfStore = await this.model.findAll({
                     where: {

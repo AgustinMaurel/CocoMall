@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 import StoreState from '../Cards/StoreState';
 import coco from '../../Assets/icons/coco.png';
 
-const SlidersCards = ({ allStores, storeDetail }) => {
-
+const SlidersCards = ({ filterByState, storeDetail }) => {
     const settingsCards = {
-        slidesToShow: allStores.length < 4 ? allStores.length : 4,
+        slidesToShow: filterByState?.length < 4 ? filterByState?.length : 4,
         slidesToScroll: 2,
         dots: true,
         responsive: [
@@ -31,7 +30,7 @@ const SlidersCards = ({ allStores, storeDetail }) => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: allStores.length < 2 ? allStores.length : 2,
+                    slidesToShow: filterByState?.length < 2 ? filterByState?.length : 2,
                     slidesToScroll: 2,
                     arrows: false
                 },
@@ -39,7 +38,14 @@ const SlidersCards = ({ allStores, storeDetail }) => {
             {
                 breakpoint: 1280,
                 settings: {
-                    slidesToShow: allStores.length < 4 ? allStores.length : 4,
+                    slidesToShow: filterByState?.length < 3 ? filterByState?.length : 3,
+                    slidesToScroll: 3,
+                },
+            },
+            {
+                breakpoint: 1440,
+                settings: {
+                    slidesToShow: filterByState?.length < 4 ? filterByState?.length : 4,
                     slidesToScroll: 4,
                 },
             },
@@ -47,9 +53,9 @@ const SlidersCards = ({ allStores, storeDetail }) => {
     };
 
     return (
-        <div className={allStores.length < 3 ? 'max-w-2xl' : allStores.length < 4 ? 'max-w-4xl' : ''}>
+        <div className={filterByState?.length < 3 ? 'max-w-2xl' : filterByState?.length < 4 ? 'max-w-4xl' : ''}>
             <Slider {...settingsCards}>
-            {allStores?.map((e) => (
+            {filterByState?.map((e) => (
                 <Link
                     to={`/home/store/${e.id}`}
                     onClick={() => storeDetail(e.id)}

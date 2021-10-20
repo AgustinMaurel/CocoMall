@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import Arrow from '../Slides/Arrow';
 import FilterTypeProduct from '../FilterTypeProduct/FilterTypeProduct';
 
-const SliderTypes = ({ productTypes, handleChecked, check }) => {
+const SliderTypes = ({ productTypes, handleChecked, check, checkType }) => {
     const settingsTypes = {
         infinite: true,
         slidesToShow: 8,
@@ -55,6 +55,7 @@ const SliderTypes = ({ productTypes, handleChecked, check }) => {
                         index={index}
                         handleChecked={handleChecked}
                         check={check}
+                        checkType={checkType}
                     />
                 );
             })}

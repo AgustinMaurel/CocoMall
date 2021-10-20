@@ -51,13 +51,13 @@ class ModelController {
     updateData = async (req, res) => {
         if (typeof req.body === 'object') {
             try {
-                let { id, ...data } = req.body;
-                let id2 = req.params.id;
+                let {...data } = req.body;
+                let id = req.params.id;
                 const updatedData = await this.model.update(
                     { ...data },
                     {
                         where: {
-                            id: id2,
+                            id: id,
                         },
                     }
                 );

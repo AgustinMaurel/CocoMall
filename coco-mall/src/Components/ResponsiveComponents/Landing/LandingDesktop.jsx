@@ -10,6 +10,7 @@ import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
 import SectionModelStores from '../../Sections/SectionModelStores';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function LandingDesktop() {
     const userStore = useSelector((state) => state.stores);
@@ -19,10 +20,10 @@ function LandingDesktop() {
         <>
             <div>
                 <NavBar className='z-10 ' />
-                <section className=' flex  justify-between items-center gap-5 pr-8 z-1  '>
+                <section className=' flex justify-between items-center gap-5 pr-8 z-1  '>
                     <div
                         data-aos='fade-in'
-                        className=' overflow-hidden flex flex-col pl-12 2xl:pl-32 gap-y-16 relative w-max   '
+                        className='overflow-hidden flex flex-col pl-12 2xl:pl-32 gap-y-16 relative w-max   '
                     >
                         <div>
                             <TitleAndDescription />
@@ -62,6 +63,20 @@ function LandingDesktop() {
 
                     <section data-aos='fade-right' className=' col-span-1'>
                         <SectionModelStores />
+                    </section>
+
+                    <section className='flex flex-col gap-52 items-center justify-center '>
+                        <h2 className='text-8xl font-bold'>Get started</h2>
+                        <div className='shadow  flex items-center justify-center bg-primary w-72 h-20     '>
+                            <Link
+                                className='relative w-full h-full flex items-center align-center justify-center'
+                                to='/auth/register'
+                            >
+                                <button className='w-full focus:outline-none text-white text-center text-base md:text-lg  xl:text-3xl'>
+                                    Create account
+                                </button>
+                            </Link>
+                        </div>
                     </section>
                 </div>
             </div>

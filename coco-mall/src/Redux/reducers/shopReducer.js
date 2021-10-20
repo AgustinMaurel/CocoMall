@@ -13,7 +13,8 @@ import {
     GET_PRODUCT_SUBCATEGORY,
     GET_PRODUCT_STORE_TYPES,
     GET_PRODUCT_STORE_SUBCATEGORY,
-    CLEAR_PRODUCTS
+    CLEAR_PRODUCTS,
+    ORDERS_STORE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -26,11 +27,18 @@ const initialState = {
     productTypes: [],
     productSubCat: [],
     storeCreated: {},
-    allProducts:[] // considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
+    allProducts:[] ,// considerar pasarlo a estado local ya que es un post y se utiliza en un solo componente
+    orderStore : []
 };
 
 export const storeReducer = (state = initialState, { type, payload }) => {
     switch (type) {
+        
+        case ORDERS_STORE: 
+        return {
+            ...state, 
+            orderStore: payload
+        }
         case GET_STORES:
             return {
                 ...state,
@@ -38,7 +46,6 @@ export const storeReducer = (state = initialState, { type, payload }) => {
                 storesFilters: payload,
             };
             case ALL_PRODUCTS : 
-            console.log(payload)
             return {
                 ...state,
                 allProducts: payload
@@ -99,18 +106,22 @@ export const storeReducer = (state = initialState, { type, payload }) => {
         //usar .slice() para actualiar el estado en los order
         case ORDER_PRODUCTS:
             if (payload === 'Barato') {
-                let copy = state.storeProductsFilter
+                // roto pasarlo al back
+                let copy = state.storeProductsFilter.Products.map((types, i) => {
+                    types[i]
                     .sort(function (a, b) {
                         return a.price - b.price;
                     })
                     .slice();
+                })
                 return {
                     ...state,
                     storeProductsFilter: copy,
                 };
             }
             if (payload === 'Caro') {
-                let copy = state.storeProductsFilter
+                //roto ahcerlo desde el back
+                let copy = state.storeProductsFilter.Products
                     .sort(function (a, b) {
                         return b.price - a.price;
                     })

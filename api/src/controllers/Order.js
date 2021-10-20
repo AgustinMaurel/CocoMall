@@ -1,4 +1,5 @@
-const { Order, User, Store, Address } = require('../models/index');
+const e = require('express');
+const { Order, User, Store, Address, Product } = require('../models/index');
 const ModelController = require('./index');
 
 class OrderModel extends ModelController {
@@ -7,14 +8,42 @@ class OrderModel extends ModelController {
     }
     //Specific Functions for this model
     createOrder = async (req, res) => {
-        const { userId, storeId, address, cords, amount, orderState } = req.body;
-
-        if (userId && storeId && address && cords) {
+        const { userId, storeId, address, cords, amount, orderState, arrayIdProducts } = req.body;
+        if (userId && storeId && address && cords && arrayIdProducts) {
             try {
+                let stock = [];
+                const idProducts = arrayIdProducts.map((e) => e.id);
+                const quantity = arrayIdProducts.map((e) => e.quantity);
+                let products = await Product.findAll({
+                    where: {
+                        id: idProducts,
+                    },
+                });
+                products = products.map((e) => e.dataValues);
+                // add quantity, total purchase
+                products.map((e, i) => {
+                    e.quantity = quantity[i];
+                    e.totalPurchase = quantity[i] * e.price;
+                    stock.push(e.stock);
+                });
+                // create order
                 const order = {
                     amount,
                     orderState,
+                    arrayIdProducts: products,
                 };
+                // rest quantity in the stock
+                let stockUpdate = stock.map((e, i) => {
+                    let rest = e - quantity[i];
+                    return rest;
+                });
+                // search the product and asign the new stock
+                for (let i = 0; i < idProducts.length; i++) {
+                    let modificado = await Product.update(
+                        { stock: stockUpdate[i] },
+                        { where: { id: idProducts[i] } },
+                    );
+                }
 
                 // create Order
                 const newOrder = await this.model.create(order);
@@ -25,23 +54,22 @@ class OrderModel extends ModelController {
 
                 // PROBAAAAR
 
-
-                // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
-                // const userNew = await User.update(obj, {where: {id: userId}})
-
+                let obj = {
+                    OrdersHistory: [{ order: orderId, address: address }, ...user.OrdersHistory],
+                };
+                const userNew = await User.update(obj, { where: { id: userId } });
 
                 // add Store to order
                 const store = await Store.findByPk(storeId);
                 await store.addOrder(orderId);
                 //add Address to order
-                const [shipmentAdress, created] = await Address.findOrCreate({
+                const [shipmentAdress] = await Address.findOrCreate({
                     where: {
-                        address,
+                        directions: address,
                         cords,
                         UserId: userId,
                     },
                 });
-
                 await shipmentAdress.addOrder(orderId);
                 res.send(newOrder);
             } catch (err) {
@@ -52,19 +80,37 @@ class OrderModel extends ModelController {
         }
     };
 
+    findOrderId = async (req, res) => {
+        const id = req.params.id;
+        if (id) {
+            const orderId = await this.model.findAll({
+                where:{
+                    StoreId: id
+                },
+                // include: {
+                //     model: Order,
+                //     attributes: ['id', 'amount', 'orderState', "UserId", "AddressId"],
+                // },
+            });
+            res.send(orderId);
+        } else {
+            res.status(400).send('Wrong params');
+        }
+    };
+
     deleteOrder = async (req, res) => {
-        const id = req.params.id
-        if(id){
+        const id = req.params.id;
+        if (id) {
             await this.model.destroy({
                 where: {
-                    id: id
-                }
-            })
-            res.send("Order Deleted")
+                    id: id,
+                },
+            });
+            res.send('Order Deleted');
         } else {
-            res.status(400).send("Wrong params")
+            res.status(400).send('Wrong params');
         }
-    }
+    };
 }
 
 const OrderController = new OrderModel(Order);

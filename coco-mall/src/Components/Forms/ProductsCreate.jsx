@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
 import InputFile from '../Inputs/InputFile';
@@ -14,12 +14,9 @@ const ProductsCreate = ({ idStore, product }) => {
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [types, setTypes] = useState('');
-
+    const [types, setTypes] = useState(product ? product.ProductTypeId : '');
     //--HOOKS--
-    const dispatch = useDispatch();
-
-    const allTypes = useSelector((state) => state.stores.productTypes);
+    const [subCategories, setSubCategories] = useState([]);
 
     const {
         register,
@@ -27,6 +24,18 @@ const ProductsCreate = ({ idStore, product }) => {
         watch,
         formState: { errors },
     } = useForm({ defaultValues: product });
+
+    useEffect(async () => {
+        let subCategory = await axios.get(`/subCategory/match/${watch('subCategory')}`);
+        if (subCategory?.data) {
+            setSubCategories(subCategory);
+        }
+    }, [watch('subCategory')]);
+
+    //--HOOKS--
+    const dispatch = useDispatch();
+
+    const allTypes = useSelector((state) => state.stores.productTypes);
 
     //LOAD IMAGE
     const handleImageChange = (e) => {
@@ -42,7 +51,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const handleTypes = (e) => {
         setTypes(e.target.value);
     };
-
+    console.log(product)
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
@@ -52,21 +61,24 @@ const ProductsCreate = ({ idStore, product }) => {
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
+            ProductTypeId: Number(types),
+            cloudImage: [image],
         };
         let dataProductClean = {
             product: dataRawProduct,
             storeId: idStore,
             idImage: [image],
             typeId: types,
-            subCat: data.subCategory ? data.subCategory : "Others"
+            subCat: data.subCategory
+                ? data.subCategory.charAt(0).toUpperCase() + data.subCategory.slice(1).toLowerCase()
+                : 'Others',
         };
-        console.log(dataProductClean);
         if (product) {
             axios
                 .put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
                     setTypes('');
-                    dispatch(getAllProducts())
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -87,7 +99,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .post('/product/create', dataProductClean)
                 .then(() => {
                     dispatch(getStores());
-                    dispatch(getAllProducts())
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Created!',
@@ -174,6 +186,16 @@ const ProductsCreate = ({ idStore, product }) => {
                         type='text'
                         validate={validate.subCategory}
                     />
+                    {console.log(subCategories?.data)}
+                    <div className='flex flex-row justify-center items-center text-base text-cocoMall-300 mb-8'>
+                    {subCategories?.data?.length
+                        ? subCategories?.data?.map((subCat) => {
+                              return (
+                              <span className='ml-4'>{subCat.Name}</span>
+                              );
+                            })
+                            : false}
+                            </div>
                     <InputFile
                         register={register}
                         errors={errors}

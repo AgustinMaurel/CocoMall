@@ -1,46 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
-import Product from '../Components/Product/Product';
 import TypesProduct from '../Components/Product/TypesProduct';
 import Search from '../Components/Inputs/Search';
-import { SHOPPING_CART } from '../Scripts/constants';
 import {
     getProductsStore,
     getProductDetail,
     getStoreDetail,
     getProductSubCat,
-    clearProducts
+    clearProducts,
 } from '../Redux/actions/stores';
 import ReactModal from 'react-modal';
+import { useHistory } from 'react-router-dom';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import { AiOutlinePercentage } from 'react-icons/ai';
-import {
-    // addToCart,
-    deleteFromCart,
-    deleteAllFromCart,
-    clearCart,
-    addToCartSomo,
-} from '../Redux/actions/shoppingActions';
-import CartItem from '../Components/ShoppingCart/CartItem';
-import ProductDetail from '../Components/Product/ProductDetail';
 import {
     handleOnChange,
     handleOnOrder,
     handleOnSubmit,
     handleOnDiscount,
     handleOnTypes,
+    handleOnCategories
 } from '../Scripts/handles';
 import Arrow from '../Components/Slides/Arrow';
+import Info from '../Components/StoreInfo/Info';
 
 ReactModal.setAppElement('#root');
 
 export default function StoreDetail() {
     const { uid, userCart } = useSelector((state) => state.auth);
     //HOOKS
+    const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -52,9 +44,10 @@ export default function StoreDetail() {
         productTypes,
         storeProducts,
         storeDetail,
+        productSubCat,
     } = useSelector((state) => state.stores);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [checkType, setCheckType] = useState([]);
+
     const [infoModal, setInfoModal] = useState(false);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
     const [filters, setFilters] = useState({
@@ -94,20 +87,58 @@ export default function StoreDetail() {
     };
     //by Chris
 
+    //agregar el pedido de user infoDb para actualizar el carrito se va a tener que cambiar por le de userInfo
     useEffect(() => {
-        dispatch(getProductSubCat());
         dispatch(getStoreDetail(id));
         dispatch(getProductsStore(id));
         return () => {
             dispatch(clearProducts());
         };
     }, [id]);
+    //agregar el userCart.length
+
+    useEffect(() => {
+        if(storeProducts.allsubCat?.length){
+            dispatch(getProductSubCat(storeProducts.allsubCat));
+        }
+    },[id, storeProducts.allsubCat?.length])
 
     const handleChange = handleOnChange(setFilters);
-    const handleSubmit = handleOnSubmit(filters, checkType, dispatch, id);
+    const handleSubmit = handleOnSubmit(filters, filters.type, dispatch, id);
     const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
+    const handleCategories = handleOnCategories(dispatch, id, filters);
+
+
+
+    const handleDoubleCat = (e) => {
+        handleChange(e);
+        handleCategories(e)
+    }
+    const handleDouble = (e) => {
+        handleChange(e);
+        handleTypes(e);
+    };
+
+    let itemsCart;
+    if (userCart.length) {
+        let itemsQuantity = userCart?.map((item) => item.quantity);
+        itemsCart = itemsQuantity.reduce((a, b) => a + b);
+    } else {
+        itemsCart = 0;
+    }
+
+    let total;
+    if (userCart.length) {
+        let totalprice = Object.values(userCart).reduce(
+            (previous, key) => previous + key.price * key.quantity,
+            0,
+        );
+        total = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    } else {
+        total = 0;
+    }
 
     let keysTypes;
     if (storeProductsFilter?.Products) {
@@ -117,9 +148,17 @@ export default function StoreDetail() {
     if (storeProducts.Products) {
         keysTypesSinFilter = Object.keys(storeProducts.Products);
     }
+
+    let keysSubCats;
+    if(filters.type.length){
+        if(storeProducts?.Products[filters.type]){
+            keysSubCats = Object.keys(storeProducts?.Products[filters.type]).map((key)=> parseInt(key)).filter((key) => parseInt(key))
+            }
+        }
+
     return (
         <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
-            <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow '>
+            <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
             {/* --- BANNER PRODUCTS --- */}
@@ -128,8 +167,21 @@ export default function StoreDetail() {
                     {storeDetail?.storeName?.toUpperCase()}
                 </h3>
                 <p>{storeDetail?.description}</p>
+                <Info info={storeDetail} infoModal={infoModal} setInfoModal={setInfoModal} />
             </div>
-
+            
+            {userCart.length ? (
+                <div
+                    className='fixed flex w-screen justify-evenly bottom-5 z-20  '
+                    onClick={() => history.push('/cart')}
+                >
+                    <span className='bg-primary-light rounded-lg border border-primary-light p-1.5 cursor-pointer text-white font-semibold'>
+                    Your cart {itemsCart} items ${total}
+                    </span>
+                </div>
+            ) : (
+                false
+            )}
             {/* --- FILTERS & SEARCH --- */}
             <div className='col-span-12 w-3/4 row-span-2 m-auto'>
                 <Search
@@ -144,24 +196,48 @@ export default function StoreDetail() {
                             className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                             name='category'
                             id='category'
-                            onChange={handleTypes}
+                            onChange={handleDouble}
                             defaultValue='All'
                         >
                             <option value='All'>All products</option>
 
-                            {productTypes.length && storeProducts.allCurrentTypes?.length ?
-                            productTypes?.map((type, i) => {
-                                if (storeProducts.allCurrentTypes.includes(type.id)) {
-                                    return (
-                                        <option key={type.id} value={type.id}>
-                                            {type.Name}
-                                        </option>
-                                    );
-                                }
-                            }): false}
+                            {productTypes.length && storeProducts.allCurrentTypes?.length
+                                ? productTypes?.map((type, i) => {
+                                      if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                          return (
+                                              <option key={type.id} value={type.id}>
+                                                  {type.Name}
+                                              </option>
+                                          );
+                                      }
+                                  })
+                                : false}
                         </select>
                     </div>
-
+                    -
+                    <div className=''>
+                        <select
+                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                            name='subcategory'
+                            id='subcategory'
+                            onChange={handleDoubleCat}
+                            defaultValue='All'
+                        >
+                            <option value='All' disabled={!filters.type.length ? true: false}>{!filters.type.length ? "Choose a Type": "All Categories"}</option>
+                            {filters.type.length && keysSubCats?.length
+                                ? productSubCat.map((subCat, i) => {
+                                    if (keysSubCats?.includes(subCat.id)) {
+                                        return (
+                                            <option key={subCat.id} value={subCat.id}>
+                                                {subCat.Name}
+                                            </option>
+                                        );
+                                    }
+                                })
+                                :false
+                                }
+                        </select>
+                    </div>
                     <div className='flex'>
                         <form onSubmit={(e) => handleSubmit(e)} className='flex items-center gap-1'>
                             <input
@@ -195,7 +271,6 @@ export default function StoreDetail() {
                             <AiOutlinePercentage />
                         </button>
                     </div>
-
                     {/* --- ORDERS --- */}
                     <div>
                         <select
@@ -219,8 +294,7 @@ export default function StoreDetail() {
                         <></>
                     )}
                 </div>
-                <div className='flex flex-col'>
-                </div>
+                <div className='flex flex-col'></div>
                 <div>
                     {storeProductsFilter?.Products
                         ? keysTypes.map((k) => {
@@ -239,5 +313,3 @@ export default function StoreDetail() {
         </div>
     );
 }
-
-

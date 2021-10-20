@@ -2,6 +2,9 @@ const { User, Store, Address, Product } = require('../models/index');
 const { Op } = require('sequelize');
 const ModelController = require('./index');
 
+const admin =require('../utils/firebase-admin/admin')
+
+
 class UserModel extends ModelController {
     constructor(model) {
         super(model);
@@ -202,6 +205,7 @@ class UserModel extends ModelController {
 
     deleteUser = async (req, res) => {
         const id = req.params.id
+            await admin.auth().deleteUser(id);
         const DbUser = await this.model.findOne({
             where: {
                 id: id
@@ -255,6 +259,38 @@ class UserModel extends ModelController {
         })
         res.send("deleted")
     }
+    
+banUser =async(req,res,next)=>{
+    let {id,boolean}=req.body;
+    let resultado=await  admin.auth().updateUser(id,{disabled:boolean})
+    res.json(resultado);
+}
+
+updatePassworEmail=async(req,res,next)=>{
+    try{
+        const {act,id} =req.body;
+        await admin.auth().updateUser(id,{...act});
+        act.email!==null?await this.model.update(
+            { Mail:act.email
+            },
+            {
+                where: {
+                    id,
+                },
+            }
+        ):null;
+        
+        res.json({
+            msg:"se modifico con exito",
+        })
+
+    }catch(e){
+        res.send(e)
+    }
+}
+
+
+
 }
 
 const UserController = new UserModel(User);

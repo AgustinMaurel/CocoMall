@@ -4,10 +4,7 @@ const { stripe } = require('../models/index');
 const mercadopago = require('mercadopago');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const {
-    templateSuccess,
-    templateFailure,
-} = require('../utils/Templates/emailTemplates');
+const { templateSuccess, templateFailure } = require('../utils/Templates/emailTemplates');
 
 //all this routes strart with checkout
 router.post('/stripe', async (req, res) => {
@@ -29,8 +26,7 @@ router.post('/stripe', async (req, res) => {
 router.post('/mercadopago', async (req, res) => {
     const { title, total } = req.body;
     mercadopago.configure({
-        access_token:
-            'TEST-4584026682195569-100518-6865fd891a74a50438b28e4a07dae8f4-835549336',
+        access_token: 'TEST-4584026682195569-100518-6865fd891a74a50438b28e4a07dae8f4-835549336',
     });
 
     let preference = {
@@ -43,9 +39,9 @@ router.post('/mercadopago', async (req, res) => {
         ],
 
         back_urls: {
-            success: 'http://localhost:3001/checkout/feedback',
-            failure: 'http://localhost:3001/checkout/feedback',
-            pending: 'http://localhost:3001/checkout/feedback',
+            success: 'http://localhost:3000/order/success',
+            failure: 'http://localhost:3000/create/order',
+            pending: 'http://localhost:3000/order/success',
         },
         auto_return: 'approved',
     };
@@ -56,13 +52,20 @@ router.post('/mercadopago', async (req, res) => {
     res.json({ response: response, init_points: init_points });
 });
 
-router.get('/feedback', async function (req, res) {
+router.post('/feedback', async function (req, res) {
     // correo para enviar el comprobante
     //Se necesita recibir para enviar el correo orderId, productos, precio, total, direccion de envio
 
-    const { payment_id, status, merchant_order_id } = req.query;
+    const { payment_id, address, mail, items, total, status } = req.body;
 
-    if (status === 'success') {
+    console.log(mail, 'mail');
+    console.log(payment_id, 'payment_id');
+    console.log(address, 'address');
+    console.log(items, 'items');
+    console.log(total, 'total');
+    console.log(status, 'status');
+
+    if (status === 'approved') {
         let email = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
@@ -75,16 +78,10 @@ router.get('/feedback', async function (req, res) {
 
         let mailOption = await email.sendMail({
             from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
-            to: 'daniel.zapata.grajales@gmail.com', // list of receivers
+            to: mail, // list of receivers
             subject: 'Thanks for your order ✅✅', // Subject line
             text: 'Hello world?', // plain text body
-            html: templateSuccess(
-                0001,
-                'Remera, condones, tennis',
-                1000,
-                1000,
-                'Avenida Siempre Viva 123'
-            ), // html body
+            html: templateSuccess(payment_id, items, total, total, address), // html body
         });
     }
 
@@ -101,7 +98,27 @@ router.get('/feedback', async function (req, res) {
 
         let mailOption = await email.sendMail({
             from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
-            to: 'daniel.zapata.grajales@gmail.com', // list of receivers
+            to: mail, // list of receivers
+            subject: 'We have a issue with your payment ⚠️⚠️', // Subject line
+            text: 'Hello world?', // plain text body
+            html: templateFailure(), // html body
+        });
+    }
+
+    if (status === 'pending') {
+        let email = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'coco.mallsb@gmail.com',
+                pass: 'cvgabzzweorejiny',
+            },
+        });
+
+        let mailOption = await email.sendMail({
+            from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
+            to: mail, // list of receivers
             subject: 'We have a issue with your payment ⚠️⚠️', // Subject line
             text: 'Hello world?', // plain text body
             html: templateFailure(), // html body

@@ -34,3 +34,7 @@ export const UPDATE_PRODUCT = '/product/update';
 export const DELETE_USER = '/user/delete'
 
 export const DELETE_ORDER = '/order/delete'
+
+export const UPDATE_USER = '/user/update'
+
+export const UPDATE_FIREBASE = '/user/updatePassworEmail'

@@ -5,6 +5,8 @@ import ReactModal from 'react-modal';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { Image } from 'cloudinary-react';
+import Question from '../Forms/QuestionForm'
+import QuestionAndAnswer from './QuestionAndAnswer'
 
 ReactModal.setAppElement('#root');
 export default function ProductDetail(props) {
@@ -57,6 +59,9 @@ export default function ProductDetail(props) {
                     >
                         Add Cart
                     </button>
+
+                    <Question productId={product.id} />
+                    <QuestionAndAnswer productId={product.id} />
                 </div>
             </div>
         </>

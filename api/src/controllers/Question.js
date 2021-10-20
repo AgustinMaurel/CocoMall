@@ -7,23 +7,23 @@ class QuestionModel extends ModelController {
     }
     //Specific Functions for this model
     createQuestion = async (req, res) => {
-        const { productId, userId } = req.body
+        const { productId, userId, bodyQuestion } = req.body
         if (productId) {
             try {
                 const question = {
-                    question: req.body.question,
-                    answer: "nully"
+                    question: bodyQuestion,
                 };
+                console.log(question)
                 //Create the Question
                 const newQuestion = await this.model.create(question);
                 const questionId = newQuestion.id;
-                //Search the product and attach the Question
+                // //Search the product and attach the Question
                 const product = await Product.findByPk(productId);
                 await product.addQuestion(questionId);
-                //Search the User and attach the Question
+                // //Search the User and attach the Question
                 const user = await User.findByPk(userId)
                 await user.addQuestion(questionId)
-                //Final Question
+                // //Final Question
                 const finalQuestion = await this.model.findByPk(questionId);
                 res.send(finalQuestion);
             } catch (e) {
@@ -75,6 +75,7 @@ class QuestionModel extends ModelController {
 
     getQuestionByProduct = async (req, res) => {
         const id = req.params.id
+        console.log(id)
         if (id) {
             try {
                 const questions = this.model.findAll({

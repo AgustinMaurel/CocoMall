@@ -8,7 +8,7 @@ export default function QuestionCard(question, answer) {
                 <h3>{question}</h3>
             </div>
             <div>
-                <h3>{answer}</h3>
+                {answer === "nully" ? null : <h3>{answer}</h3>}
             </div>
         </div>
     )

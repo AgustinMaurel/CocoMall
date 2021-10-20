@@ -116,7 +116,7 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {userName.Name && userName.Name.split(' ')[0]}
+                                                {userName.Name ? userName.Name.split(' ')[0] : user.name.split(' ')[0] }
                                             </button>
                                         </Link>
                                     </div>

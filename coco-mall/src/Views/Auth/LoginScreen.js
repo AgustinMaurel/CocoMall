@@ -5,7 +5,7 @@ import {
     startLoginEmailPassword,
     startGoogleLogin,
     startFacebookLogin,
-    rememberAction,
+    // rememberAction,
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -57,11 +57,13 @@ const LoginScreen = () => {
     };
 
     return (
-        <div className='h-screen overflow-hidden '>
-            <NavBar />
-            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
+        <div className='h-screen overflow-hidden flex flex-col gap-10 '>
+            <div className='z-10'>
+                <NavBar />
+            </div>
+            <div className='z-0 absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
+                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
+                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
             </div>
             <div
                 className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
@@ -73,7 +75,7 @@ const LoginScreen = () => {
             ></div>
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col gap-10 mt-10 sm:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                <div className='flex flex-col  justify-center md:w-2/3 xl:w-8/12 items-center z-10 '>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>

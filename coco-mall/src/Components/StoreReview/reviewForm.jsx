@@ -32,7 +32,6 @@ const ReviewForm = () => {
         axios.get(`/review/f2c78acf-f084-4870-8a5b-e29ef805fb4a`).then(response => setAllStoreReviews(response.data))
     }, [])
 
-    console.log("aaaaaaaaaaaaaa", allStoreReviews)
 
     return (
         <>

@@ -73,10 +73,10 @@ class QuestionModel extends ModelController {
         }
     };
 
-    getQuestionByProduct = async (req,res) => {
+    getQuestionByProduct = async (req, res) => {
         const id = req.params.id
-        if(id){
-            try {               
+        if (id) {
+            try {
                 const questions = this.model.findAll({
                     where: {
                         ProductId: id

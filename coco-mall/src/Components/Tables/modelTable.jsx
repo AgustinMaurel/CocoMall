@@ -19,7 +19,6 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
        idStore && dispatch(getProductsStorePanel(idStore));
        idStore && dispatch(getOrdersStore(idStore))
     }, [flag3]);
-    console.log(info)
     return (
         <div className='items-center text-center justify-center  w-full'>
             <div >

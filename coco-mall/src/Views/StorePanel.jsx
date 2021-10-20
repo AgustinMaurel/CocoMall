@@ -110,7 +110,7 @@ export default function StorePanel() {
 
 
     const filtersNow =
-        render === 'Products'  ? filterProduct : [];
+        render === 'Products' ? filterProduct : [];
 
     return (
         <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
@@ -204,6 +204,10 @@ export default function StorePanel() {
                             <GrUserSettings className="mt-1 ml-1" />
                             <button className='ml-1' value='Edit profile' onClick={handleRender}>Edit Profile</button>
                         </div>
+                        <div className="flex text-lg pt-1">
+                            <BsCardList className="mt-1" />
+                            <button className="ml-1" value="My Orders" onClick={handleRender} >My Orders</button>
+                        </div>
                     </div>
                     {userAdmin ?
                         <div className="flex w-full flex-col text-start items-start justify-start">
@@ -235,7 +239,7 @@ export default function StorePanel() {
             {editState ? (
                 <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
 
-                   
+
                     <div className='text-center justify-center items-center'>
                         {selectStore === 'SelectStore' && render === '' ? (
                             <Link to="/create/shop">
@@ -258,6 +262,16 @@ export default function StorePanel() {
                                             {el}
                                         </label>
                                     ))}
+                                    {render === 'My Orders' && selectStore !== 'All' && (
+                                        <ModelTable
+                                            info={[]}
+                                            column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
+                                            flag2={flag2}
+                                            setFlag2={setFlag2}
+                                            swalFunction={ordersOptions}
+                                            idStore={idActual}
+                                        />
+                                    )}
                                     {render === 'Products' && (
                                         <>
                                             <select
@@ -374,7 +388,7 @@ export default function StorePanel() {
                 </div>
             ) : (
                 <div>
- {render === 'Products' || render === 'All Products' ?
+                    {render === 'Products' || render === 'All Products' ?
                         <IoArrowBack onClick={() => {
                             setRender('')
                             setEditState(true)

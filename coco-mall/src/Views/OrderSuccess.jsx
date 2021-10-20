@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userInfo, login } from '../Redux/actions/auth';
 import { clearCart } from '../Redux/actions/shoppingActions';
 import { useQueryParams } from '../Scripts/useQueryParams';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import NavBar from '../Components/NavBar/NavBar';
 import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
@@ -16,6 +16,24 @@ function OrderSuccess() {
     const dispatch = useDispatch();
 
     const { uid, userInfoDB, userCart } = useSelector((state) => state.auth);
+
+    const [counter, setCounter] = useState(5);
+    const [active, setActive] = useState(true);
+
+    useEffect(() => {
+        let intervalo = null;
+        if (active) {
+            intervalo = setInterval(() => {
+                setCounter((counter) => counter - 1);
+            }, 1000);
+        }
+
+        if (counter === 0) {
+            setActive(false);
+        }
+
+        return () => clearInterval(intervalo);
+    }, [active, counter]);
 
     const [userData, setUserData] = useState({
         address: '',
@@ -85,22 +103,28 @@ function OrderSuccess() {
         });
     }, [uid]);
 
-    console.log(userData, 'user data');
-
     return (
-        //HACER UN SET TIMEOUT QUE REDIRIJA A HOME ASI SE DESMONTA EL COMPONENTE
-        <div>
-            <NavBar />
-            <div>
-                Su compra fue realizada con exito, toda la información fue enviada a su casilla de
-                correo.{' '}
-            </div>
-            <div>
-                <Link to='/home'>
-                    <button>Go back to home</button>
-                </Link>
-            </div>
-        </div>
+        <>
+            {active ? (
+                <div>
+                    <NavBar />
+                    <div className='flex flex-col justify-center items-center'>
+                        <div>
+                            Your purchase was successful, all the information was sent to your
+                            mailbox. You will be redirected to the home page in 5 seconds.
+                        </div>
+                        <div>{counter}</div>
+                        <div>
+                            <Link to='/home'>
+                                <button>Go back to home</button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <Redirect to='/home' />
+            )}
+        </>
     );
 }
 

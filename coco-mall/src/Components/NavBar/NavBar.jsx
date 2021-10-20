@@ -75,9 +75,6 @@ function NavBar() {
                             <Link to='/home'>
                                 <p>Home</p>
                             </Link>
-                            <Link to='/create/order'>
-                                <p>Order</p>
-                            </Link>
                         </div>
                         <div className='flex gap-x-5 items-center'>
                             {user.uid ? (

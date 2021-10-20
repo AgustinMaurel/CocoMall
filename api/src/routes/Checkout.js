@@ -98,7 +98,7 @@ router.post('/feedback', async function (req, res) {
 
         let mailOption = await email.sendMail({
             from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
-            to: 'daniel.zapata.grajales@gmail.com', // list of receivers
+            to: mail, // list of receivers
             subject: 'We have a issue with your payment ⚠️⚠️', // Subject line
             text: 'Hello world?', // plain text body
             html: templateFailure(), // html body

@@ -6,7 +6,7 @@ const Benefits = ({ icon, title, description }) => {
             <img src={icon} alt='icon' className='xl:object-cover xl:w-16' />
             <div className=''>
                 <h4 className='text-base font-semibold xl:text-3xl'>{title}</h4>
-                <p className='text-xs xl:text-xl'>{description}</p>
+                <p className='text-sm xl:text-xl'>{description}</p>
             </div>
         </div>
     );

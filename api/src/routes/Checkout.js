@@ -52,13 +52,20 @@ router.post('/mercadopago', async (req, res) => {
     res.json({ response: response, init_points: init_points });
 });
 
-router.get('/feedback', async function (req, res) {
+router.post('/feedback', async function (req, res) {
     // correo para enviar el comprobante
     //Se necesita recibir para enviar el correo orderId, productos, precio, total, direccion de envio
 
-    const { payment_id, status, merchant_order_id } = req.query;
+    const { payment_id, address, mail, items, total, status } = req.body;
 
-    if (status === 'success') {
+    console.log(mail, 'mail');
+    console.log(payment_id, 'payment_id');
+    console.log(address, 'address');
+    console.log(items, 'items');
+    console.log(total, 'total');
+    console.log(status, 'status');
+
+    if (status === 'approved') {
         let email = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
@@ -71,16 +78,10 @@ router.get('/feedback', async function (req, res) {
 
         let mailOption = await email.sendMail({
             from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
-            to: 'daniel.zapata.grajales@gmail.com', // list of receivers
+            to: mail, // list of receivers
             subject: 'Thanks for your order ✅✅', // Subject line
             text: 'Hello world?', // plain text body
-            html: templateSuccess(
-                0001,
-                'Remera, condones, tennis',
-                1000,
-                1000,
-                'Avenida Siempre Viva 123',
-            ), // html body
+            html: templateSuccess(payment_id, items, total, total, address), // html body
         });
     }
 

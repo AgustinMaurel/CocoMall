@@ -53,6 +53,12 @@ const OrderProduct = () => {
         quantity: 1,
     };
 
+    //SET TO LOCAL STORAGE
+
+    React.useEffect(() => {
+        localStorage.setItem('uid', JSON.stringify(uid));
+    });
+
     useEffect(() => {
         axios
             .post('/checkout/mercadopago', objectToCheckout)
@@ -146,7 +152,7 @@ const OrderProduct = () => {
                 orderState: 'Success',
                 arrayIdProducts: storeProducts,
             };
-            console.log(obj, 'obj al back');
+            console.log(obj, 'order al back');
             axios.post('/order/create', obj);
         }
     };

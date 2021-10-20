@@ -21,13 +21,14 @@ const LoginScreen = () => {
         register,
         formState: { errors },
         setValue,
-        
-    } = useForm({defaultValues: {
-        rememberForm: false,
-    }});
+    } = useForm({
+        defaultValues: {
+            rememberForm: false,
+        },
+    });
 
     const [viewPass, setViewPass] = useState('password');
-    const [remember, setRemember] = useState(false)
+    const [remember, setRemember] = useState(false);
     const renderCond = useSelector((state) => state.auth);
 
     const history = useHistory();
@@ -51,9 +52,9 @@ const LoginScreen = () => {
     };
 
     const handleChecked = () => {
-        setRemember(!remember)
-        setValue('rememberForm', !remember)
-    }
+        setRemember(!remember);
+        setValue('rememberForm', !remember);
+    };
 
     return (
         <div className='h-screen overflow-hidden '>
@@ -192,11 +193,13 @@ const LoginScreen = () => {
                             </div>
                             {/* TOOGLE BUTTON SESSION ACTIVE*/}
                             <div className='flex items-center justify-between m-2'>
-                                <p className='text-cocoMall-400 text-sm'>Do you want to stay logged in?</p>                   
+                                <p className='text-cocoMall-400 text-sm'>
+                                    Do you want to stay logged in?
+                                </p>
                                 <div className='relative inline-block w-8 align-middle select-none'>
                                     <input
-                                     {...register('rememberForm')}
-                                    autoComplete='off'
+                                        {...register('rememberForm')}
+                                        autoComplete='off'
                                         className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
                                         type='checkbox'
                                         name='remember'
@@ -207,7 +210,6 @@ const LoginScreen = () => {
                                 </div>
                             </div>
                         </div>
-
 
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className='ml-1 font-medium'>Not a member ? </label>

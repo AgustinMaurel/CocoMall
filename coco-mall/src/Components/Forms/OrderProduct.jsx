@@ -45,8 +45,6 @@ const OrderProduct = () => {
 
     let items = userCart.length > 0 && userCart.map((el) => el.productName);
 
-    console.log(items);
-
     let objectToCheckout = {
         title: (items && items.join(', ')) || 'cart products',
         total: (total && total) || 1,
@@ -81,11 +79,12 @@ const OrderProduct = () => {
             directions: placeSelected.name,
             cords: placeSelected.coord,
         };
-        axios.post(`/address/create`, obj);
+        axios.post(`/address/create`, obj).then(()=> {
+            dispatch(userInfo(uid));
+        })
     };
     const onSubmit = () => {
         postAddressCreate();
-        setModalIsOpen(false);
     };
 
     const userAddress = userInfoDB?.Addresses;
@@ -122,7 +121,7 @@ const OrderProduct = () => {
     //revisar useEffect porque rompio
     useEffect(() => {
         dispatch(userInfo(uid));
-    }, [uid, modalIsOpen, userCart.length, addressStatus]);
+    }, [uid, userCart.length, addressStatus]);
 
     //uid, userInfoDB.length, modalIsOpen
 
@@ -152,7 +151,6 @@ const OrderProduct = () => {
     };
 
     const handleSubmitOrder = () => {
-        console.log('click');
         postOrder();
     };
 
@@ -249,7 +247,7 @@ const OrderProduct = () => {
                                 )}
                                 <div>
                                     <button
-                                        className=' focus:outline-none text-center text-xs font-bold w-full h-full text-gray-400 
+                                        className=' focus:outline-none text-center text-xs font-bold text-gray-400 
                                         sm:text-sm        
                                         xl:text-md'
                                         onClick={() => setModalIsOpen(true)}

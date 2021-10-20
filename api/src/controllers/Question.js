@@ -13,7 +13,6 @@ class QuestionModel extends ModelController {
                 const question = {
                     question: bodyQuestion,
                 };
-                console.log(question)
                 //Create the Question
                 const newQuestion = await this.model.create(question);
                 const questionId = newQuestion.id;

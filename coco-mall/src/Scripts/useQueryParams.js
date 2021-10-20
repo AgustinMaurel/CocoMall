@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 export function useQueryParams() {
     const [queries, setQueries] = useState({});
     const { search } = useLocation();
-
     const onDecodeParams = useCallback((params) => {
         const replaceFirstChar = params.replace('?', '');
         const splitString = replaceFirstChar.split('&');

@@ -8,18 +8,39 @@ import NavBar from '../Components/NavBar/NavBar';
 import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
 import firebase from 'firebase/compat/app';
-import {
-    getAuth
-} from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 function OrderSuccess() {
     const auth = getAuth();
     let queries = useQueryParams();
     const dispatch = useDispatch();
+
     const { uid, userInfoDB, userCart } = useSelector((state) => state.auth);
 
+    const [userData, setUserData] = useState({
+        address: '',
+        payment_id: undefined,
+        mail: '',
+        items: [],
+        total: 0,
+        status: '',
+    });
+
+    useEffect(() => {
+        if (
+            userData.address !== undefined &&
+            userData.payment_id !== undefined &&
+            userData.mail !== undefined &&
+            userData.items !== undefined &&
+            userData.total !== undefined &&
+            userData.status !== undefined
+        ) {
+            axios.post('http://localhost:3001/checkout/feedback', userData);
+        }
+    }, [userData]);
+
     const items = userCart.map((el) => el.productName).join(', ');
-    const itemsFromLocalStorage = userInfoDB?.Cart?.map((el) => el.productName).join(', ');
+    // const itemsFromLocalStorage = userInfoDB
 
     const total =
         userCart.length > 0 &&
@@ -32,32 +53,39 @@ function OrderSuccess() {
             0,
         );
 
-    useEffect(() => {
-        firebase
-        .auth()
-            auth.onAuthStateChanged((user) => {
-                if (user?.uid) {
-                    axios
-                        .get(`/user/${user.uid}`)
-                        .catch((err) => console.log(err));
-                    dispatch(login(user.uid, user.displayName));
-                }
-            });
-       
-    }, [uid]);
-
     const userMail = userInfoDB?.Mail;
 
     let dataAddress = userInfoDB?.OrdersHistory?.map((el) => el)[0].address;
 
-    queries = {
-        address: dataAddress,
-        payment_id: queries.payment_id,
-        mail: userMail,
-        items: items ? items : itemsFromLocalStorage,
-        total: total ? total : itemsFromLocalStorageTotal,
-        status: queries.status,
-    };
+    useEffect(() => {
+        firebase.auth();
+        auth.onAuthStateChanged((user) => {
+            if (user?.uid) {
+                axios
+                    .get(`/user/${user.uid}`)
+                    .then((res) => {
+                        dispatch(login(user.uid, user.displayName));
+                        dispatch(userInfo(uid));
+                        setUserData({
+                            address: res.data.Addresses[0].directions,
+                            payment_id: queries.payment_id,
+                            mail: res.data.Mail,
+                            items: res.data.Cart?.map((el) => el.productName).join(', '),
+                            total:
+                                res.data.Cart &&
+                                Object.values(res.data.Cart).reduce(
+                                    (previous, key) => previous + key.price * key.quantity,
+                                    0,
+                                ),
+                            status: queries.status,
+                        });
+                    })
+                    .catch((err) => console.log(err));
+            }
+        });
+    }, [uid]);
+
+    console.log(userData, 'user data');
 
     return (
         //HACER UN SET TIMEOUT QUE REDIRIJA A HOME ASI SE DESMONTA EL COMPONENTE

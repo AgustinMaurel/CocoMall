@@ -7,10 +7,10 @@ import QuestionCard from '../Cards/QuestionCard'
 export default function QuestionAndAnswer({ productId }) {
     const [question, setQuestion] = useState([])
 
-    useEffect(() => {
-        const allQuestion = axios.get(`/question/${productId}`)
-        setQuestion(allQuestion)
-        return setQuestion([])
+    useEffect(async () => {
+        axios.get(`/question/${productId}`).then(response => {
+            setQuestion(response.data)
+        })
     }, [])
 
     return (

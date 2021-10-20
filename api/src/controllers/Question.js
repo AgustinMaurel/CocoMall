@@ -1,4 +1,4 @@
-const { Question, Product } = require('../models/index');
+const { Question, Product, User } = require('../models/index');
 const ModelController = require('./index');
 
 class QuestionModel extends ModelController {
@@ -7,20 +7,22 @@ class QuestionModel extends ModelController {
     }
     //Specific Functions for this model
     createQuestion = async (req, res) => {
-        if (req.body.id) {
+        const { productId, userId, bodyQuestion } = req.body
+        if (productId) {
             try {
-                //id of Product
-                const id = req.body.id;
                 const question = {
-                    question: req.body.question,
+                    question: bodyQuestion,
                 };
-                //Create the review
+                //Create the Question
                 const newQuestion = await this.model.create(question);
                 const questionId = newQuestion.id;
-                //Search the order and attach the Review
-                const product = await Product.findByPk(id);
-                await product.addReview(questionId);
-                //final question
+                // //Search the product and attach the Question
+                const product = await Product.findByPk(productId);
+                await product.addQuestion(questionId);
+                // //Search the User and attach the Question
+                const user = await User.findByPk(userId)
+                await user.addQuestion(questionId)
+                // //Final Question
                 const finalQuestion = await this.model.findByPk(questionId);
                 res.send(finalQuestion);
             } catch (e) {
@@ -30,24 +32,63 @@ class QuestionModel extends ModelController {
             res.status(400).send({ message: 'Wrong parameters' });
         }
     };
-    UpdateQuestion = async (req, res) => {
-        if (req.body.id) {
+
+    updateQuestion = async (req, res) => {
+        const { id, answer } = req.body
+        if (id) {
             try {
-                const finalQuestion = this.model.update(
-                    { answer: req.body.answer },
+                const finalQuestion = await this.model.update(
+                    { answer: answer },
                     {
                         where: {
-                            id: req.body.id,
+                            id: id
                         },
                     }
                 );
+                res.send("Question updated successfully")
             } catch (e) {
-                res.send(`error producido:${e}`);
+                res.send(e);
             }
         } else {
-            res.send('error falta de argumentos');
+            res.send('No id provided');
         }
     };
+
+    deleteQuestion = async (req, res) => {
+        const { id } = req.params;
+        if (id) {
+            try {
+                const deleted = await this.model.destroy({ where: { id: id } });
+                if (deleted === 1) {
+                    res.send('Question deleted');
+                } else {
+                    res.send('Oops, something went wrong');
+                }
+            } catch (e) {
+                res.send(e);
+            }
+        } else {
+            res.json({ error: 'No id in params' });
+        }
+    };
+
+    getQuestionByProduct = async (req, res) => {
+        const id = req.params.id
+        if (id) {
+            try {
+                const questions = await this.model.findAll({
+                    where: {
+                        ProductId: id
+                    }
+                })
+                res.send(questions)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send("Wrong params")
+        }
+    }
 }
 
 const QuestionController = new QuestionModel(Question);

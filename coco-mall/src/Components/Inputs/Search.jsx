@@ -20,7 +20,7 @@ const Search = ({
                 {typeSearch !== undefined && !typeSearch ? (
                     <>
                         <input
-                            className='rounded-l-full w-full py-3 px-4 xl:py-4 xl:px-6 text-gray-700 focus:outline-none'
+                            className='rounded-l-full w-full py-3 px-4 xl:py-4 xl:px-6 text-gray-700 outline-none '
                             type='text'
                             name='searchStore'
                             placeholder='Search stores..'

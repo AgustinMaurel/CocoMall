@@ -147,48 +147,6 @@ class StoreModel extends ModelController {
         res.send(searchedStore)
     }
 
-    // getAllFilteredProductsOfStore = (req, res) => {
-    //     const id = req.params.id
-    //     const { types, name, min, max, discount, subCategory } = req.body
-    //     const allTypes = types || [];
-    //     const nameToFilter = name || '';
-    //     const minToFil = min || 0;
-    //     const maxToFil = max || Math.pow(99, 99);
-    //     const discountToFil = discount || 0;
-    //     const subCategToFil = subCategory || []
-    //     const searchedStore = this.model.findOne({
-    //         where: {
-    //             id: id
-    //         },
-    //         include: {
-    //             model: Product,
-    //             where: {
-    //                 [Op.and]: {
-    //                     ProductTypeId: {
-    //                         [Op.or]: allTypes,
-    //                     },
-    //                     productName: {
-    //                         [Op.iLike]: `%${nameToFilter}%`,
-    //                     },
-    //                     price: {
-    //                         [Op.and]: {
-    //                             [Op.gte]: minToFil,
-    //                             [Op.lte]: maxToFil,
-    //                         },
-    //                     },
-    //                     discount: {
-    //                         [Op.gte]: discountToFil,
-    //                     },
-    //                     subCategory: {
-    //                         [Op.or]: subCategToFil
-    //                     }
-    //                 },
-    //             },
-    //         }
-    //     })
-    //     res.send(searchedStore)
-    // }
-
     deleteDeep = async (req, res) => {
         let id = req.params.id;
         if (id) {

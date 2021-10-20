@@ -40,6 +40,7 @@ function ShopCreate({ setIsTrue }) {
             setIsUploaded(true);
         };
     };
+    console.log('place seleccionado', placeSelected);
 
     //POST DATA STORE & ID USER
     const handleRegister = (data) => {
@@ -53,6 +54,8 @@ function ShopCreate({ setIsTrue }) {
             coord: placeSelected.coord,
         };
         let storeCreated = { store: store, idUser: userId, idImage: image };
+        console.log('data enviada: ', storeCreated);
+        console.log('place seleccionado', placeSelected);
         setIsTrue(false);
 
         //configurar a medida
@@ -95,13 +98,13 @@ function ShopCreate({ setIsTrue }) {
                         }
                         apiKey={GOOGLE_MAPS_API_KEY}
                         onPlaceSelected={(place) => {
+                            console.log('place: ', place);
                             setPlaceSelected({
                                 place: place,
                                 name: place.name,
                                 address: place.formatted_address,
-                                state: place.address_components[4]?.long_name,
-                                country: place.address_components[5]?.long_name,
-                                cp: place.address_components[6]?.long_name || 'C3100',
+                                state: place.formatted_address?.split(',').slice(-2,-1)[0].trim(),
+                                country: place.formatted_address?.split(',').slice(-1)[0].trim(),
                                 coord: {
                                     lat: place.geometry.location.lat(),
                                     lng: place.geometry.location.lng(),

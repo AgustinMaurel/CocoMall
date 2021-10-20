@@ -20,10 +20,10 @@ import { GOOGLE_MAPS_API_KEY } from '../Scripts/constants';
 function Home() {
     const dispatch = useDispatch();
     const { productTypes, storesFilters, allStores } = useSelector((state) => state.stores);
-    const { state } = useSelector((state) => state.auth);
+    //const { userInfoDB } = useSelector((state) => state.auth);
 
+    const [filterByState, setFilterByState] = useState([]);
     const [city, setCity] = useState('');
-
     const [typeSearch, setTypeSearch] = useState(false);
     const [checkType, setCheckType] = useState([]);
     const [check, setCheck] = useState(new Array(productTypes.length).fill(false));
@@ -33,6 +33,8 @@ function Home() {
         type: [],
         searchState: '',
     });
+
+    console.log('check type: ', checkType.length);
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -64,23 +66,32 @@ function Home() {
                 )
                 .then((res) => res.data)
                 .then((city) => {
-                    setCity(city.results[0].formatted_address.split(',')[0]);
-                    console.log(
-                        'ciudad encontrada: ',
-                        city.results[0].formatted_address.split(',')[0],
-                    );
+                    let currentCity = city.results[0].formatted_address
+                        ?.split(',')
+                        .slice(-2, -1)[0]
+                        .trim();
+                    setCity(currentCity);
+
+                    axios
+                    .post('/store/filter', { state: currentCity })
+                    .then((res) => res.data)
+                    .then((stateStores) => {
+                        setFilterByState(stateStores);
+                    });
                 });
         });
     };
 
+    !city && onCurrentPosition();
+
     return (
-        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200 bg-opacity-80'>
+        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
             <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
 
             {/* CARDS */}
-            <div className='w-full col-span-6 row-span-full p-6 overflow-y-scroll'>
+            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-y-scroll'>
                 {/* --- ADS --- */}
                 <div className='m-auto 2xl:w-3/4'>
                     <SliderHero />
@@ -102,6 +113,7 @@ function Home() {
                             productTypes={productTypes}
                             handleChecked={handleChecked}
                             check={check}
+                            checkType={checkType}
                         />
                     </div>
                     <div className='hidden'>Ordenamientos</div>
@@ -119,8 +131,8 @@ function Home() {
                     {allStores === storesFilters ? (
                         <div className='2xl:mt-6'>
                             <h3 className='inline-block text-xl 2xl:text-2xl font-bold text-cocoMall-800'>
-                                {state || city ? (
-                                    `Stores in ${state || city}`
+                                {city ? (
+                                    `Stores in ${city}`
                                 ) : (
                                     <div className='flex gap-2'>
                                         <span>Stores in your city</span>
@@ -134,7 +146,7 @@ function Home() {
                                 )}
                             </h3>
 
-                            <SlidersCards allStores={allStores} storeDetail={storeDetail} />
+                            <SlidersCards filterByState={filterByState} storeDetail={storeDetail} />
                         </div>
                     ) : (
                         <button
@@ -156,7 +168,7 @@ function Home() {
                     )}
 
                     {/* --- ALL STORES ---- */}
-                    <div className='mt-6'>
+                    <div className='mt-6 '>
                         {/* agregar cantidad de resultados y mostrar el texto que buscó */}
                         <h3 className='text-2xl font-bold text-cocoMall-800'>
                             {allStores !== storesFilters ? filters.searchStore : 'All Stores'}

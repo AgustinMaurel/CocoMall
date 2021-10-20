@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { userInfo, login } from '../Redux/actions/auth';
-import { clearCart } from '../Redux/actions/shoppingActions';
 import { useQueryParams } from '../Scripts/useQueryParams';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import NavBar from '../Components/NavBar/NavBar';
 import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
@@ -15,9 +14,9 @@ function OrderSuccess() {
     let queries = useQueryParams();
     const dispatch = useDispatch();
 
-    const { uid, userInfoDB, userCart } = useSelector((state) => state.auth);
+    const { uid } = useSelector((state) => state.auth);
 
-    const [counter, setCounter] = useState(5);
+    const [counter, setCounter] = useState(7);
     const [active, setActive] = useState(true);
 
     useEffect(() => {
@@ -57,24 +56,6 @@ function OrderSuccess() {
         }
     }, [userData]);
 
-    const items = userCart.map((el) => el.productName).join(', ');
-    // const itemsFromLocalStorage = userInfoDB
-
-    const total =
-        userCart.length > 0 &&
-        Object.values(userCart).reduce((previous, key) => previous + key.price * key.quantity, 0);
-
-    const itemsFromLocalStorageTotal =
-        userInfoDB?.Cart?.length &&
-        Object.values(userInfoDB?.Cart).reduce(
-            (previous, key) => previous + key.price * key.quantity,
-            0,
-        );
-
-    const userMail = userInfoDB?.Mail;
-
-    let dataAddress = userInfoDB?.OrdersHistory?.map((el) => el)[0].address;
-
     useEffect(() => {
         firebase.auth();
         auth.onAuthStateChanged((user) => {
@@ -105,25 +86,40 @@ function OrderSuccess() {
 
     return (
         <>
-            {active ? (
-                <div>
+            {/* {active ? ( */}
+            <div className=' overflow-hidden'>
+                <div className='z-10 shadow'>
                     <NavBar />
-                    <div className='flex flex-col justify-center items-center'>
-                        <div>
-                            Your purchase was successful, all the information was sent to your
-                            mailbox. You will be redirected to the home page in 5 seconds.
-                        </div>
-                        <div>{counter}</div>
-                        <div>
-                            <Link to='/home'>
-                                <button>Go back to home</button>
-                            </Link>
-                        </div>
+                </div>
+
+                <div className='overflow-hidden z-0 absolute top-0 right-0 left-0 bottom-0 mx-auto flex flex-col justify-center items-center px-5 '>
+                    <div className='text-2xl z-0 flex flex-col gap-10'>
+                        <div
+                            className=' z-0
+                absolute w-64 h-64 bg-primary-light rounded-full -bottom-20 -left-20 
+'
+                        ></div>
+                        <div
+                            className=' z-0
+                absolute w-64 h-64 bg-primary-light rounded-full top-20 -right-20 
+                xl:top-0  xl:-right-20
+'
+                        ></div>
+                        <p className='z-10'>
+                            {' '}
+                            <span className='font-bold text-cocoMall  '>Your</span> purchase was
+                            successfully done, all the information was sent to your mailbox.
+                        </p>
+                        <p className='text-xl z-10'>
+                            You will be redirected to the home page in{' '}
+                            <span className='text-cocoMall text-3xl font-bold'>{counter} </span>
+                        </p>
                     </div>
                 </div>
-            ) : (
+            </div>
+            {/* ) : (
                 <Redirect to='/home' />
-            )}
+            )} */}
         </>
     );
 }

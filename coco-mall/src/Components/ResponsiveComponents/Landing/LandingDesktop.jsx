@@ -10,6 +10,7 @@ import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
 import SectionModelStores from '../../Sections/SectionModelStores';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function LandingDesktop() {
     const userStore = useSelector((state) => state.stores);
@@ -62,6 +63,20 @@ function LandingDesktop() {
 
                     <section data-aos='fade-right' className=' col-span-1'>
                         <SectionModelStores />
+                    </section>
+
+                    <section className='flex flex-col gap-20 items-center justify-center '>
+                        <h2 className='text-4xl font-bold'>Get started</h2>
+                        <div className='shadow  flex items-center justify-center bg-primary w-44 h-12  xl:h-12 xl:w-44    '>
+                            <Link
+                                className='relative w-full h-full flex items-center align-center justify-center'
+                                to='/auth/register'
+                            >
+                                <button className='w-full focus:outline-none text-white text-center text-base md:text-lg  xl:text-xl'>
+                                    Create account
+                                </button>
+                            </Link>
+                        </div>
                     </section>
                 </div>
             </div>

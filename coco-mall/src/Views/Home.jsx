@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
@@ -33,6 +33,8 @@ function Home() {
         type: [],
         searchState: '',
     });
+
+    console.log('check type: ', checkType.length);
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -89,7 +91,7 @@ function Home() {
             </div>
 
             {/* CARDS */}
-            <div className='w-full col-span-6 row-span-full p-6 md:px-12 xl:px-24 overflow-y-scroll'>
+            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-y-scroll'>
                 {/* --- ADS --- */}
                 <div className='m-auto 2xl:w-3/4'>
                     <SliderHero />
@@ -111,6 +113,7 @@ function Home() {
                             productTypes={productTypes}
                             handleChecked={handleChecked}
                             check={check}
+                            checkType={checkType}
                         />
                     </div>
                     <div className='hidden'>Ordenamientos</div>

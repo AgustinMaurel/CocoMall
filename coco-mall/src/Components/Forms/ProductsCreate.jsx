@@ -14,8 +14,7 @@ const ProductsCreate = ({ idStore, product }) => {
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [types, setTypes] = useState('');
-
+    const [types, setTypes] = useState(product ? product.ProductTypeId : '');
     //--HOOKS--
     const dispatch = useDispatch();
 
@@ -42,7 +41,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const handleTypes = (e) => {
         setTypes(e.target.value);
     };
-
+    console.log(product)
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
@@ -52,15 +51,16 @@ const ProductsCreate = ({ idStore, product }) => {
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
+            ProductTypeId: Number(types),
+            cloudImage: [image],
         };
         let dataProductClean = {
             product: dataRawProduct,
             storeId: idStore,
             idImage: [image],
             typeId: types,
-            subCat: data.subCategory ? data.subCategory : "Others"
+            SubCat: data.subCategory ? data.subCategory : "Others"
         };
-        console.log(dataProductClean);
         if (product) {
             axios
                 .put(`/product/update/${product.id}`, dataProductClean)

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from "cloudinary-react"
 import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel } from '../Redux/actions/stores';
+import { filterProducts, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel, getOrdersStore } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
@@ -14,9 +14,15 @@ import { FiUsers } from "react-icons/fi";
 import { BsBox, BsCardList } from "react-icons/bs";
 import { BiEditAlt, BiStore } from "react-icons/bi";
 import { GrUserSettings } from "react-icons/gr"
+import { swalDelete } from '../Scripts/swalDelete.js';
+import { RiDeleteBin7Line } from "react-icons/ri";
+import { useHistory } from 'react-router';
+import EditUser from '../Components/Forms/EditUser.jsx';
 export default function StorePanel() {
 
     const dispatch = useDispatch();
+
+    const history = useHistory()
 
     const stores = useSelector((state) => state.stores);
 
@@ -30,6 +36,8 @@ export default function StorePanel() {
 
     const allProducts = useSelector(state => state.stores.allProducts)
 
+    const ordersStore = useSelector(state => state.stores.orderStore)
+
     const [flag, setFlag] = useState(false);
     const [flag2, setFlag2] = useState(false);
     const [idActual, setIdActual] = useState('');
@@ -40,7 +48,6 @@ export default function StorePanel() {
     const [renderSec, setRenderSec] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false)
 
-    const [ordersStore, setOrdersStore] = useState()
     const [allOrders, setAllOrders] = useState()
     const [allUsers, setAllUsers] = useState()
     const [allStores, setAllStores] = useState()
@@ -54,15 +61,13 @@ export default function StorePanel() {
             })
     }, [user]);
 
-
     useEffect(() => {
         dispatch(getAllProducts())
+        dispatch(getOrdersStore(idActual))
         axios.get('/order')
             .then(res => setAllOrders(res.data))
         axios.get('/store')
             .then(res => setAllStores(res.data))
-        axios.get(`/order/${idActual}`)
-            .then(res => setOrdersStore(res.data))
         axios.get('/user')
             .then(res => setAllUsers(res.data))
     }, [flag2])
@@ -72,11 +77,12 @@ export default function StorePanel() {
     }, []);
 
     function handleStore(e) {
-        if (e.target.value !== 'All') {
+        if (e.target.value !== 'SelectStore') {
             setSelectStore(e.target.value);
             const aux = stores.allStores.find((store) => store.storeName === e.target.value);
             dispatch(getProductsStorePanel(aux.id));
             setIdActual(aux.id);
+            setFlag2(!flag2)
         }
         return false;
     }
@@ -104,7 +110,7 @@ export default function StorePanel() {
 
 
     const filtersNow =
-        render === 'Products' || render === "All Products" ? filterProduct : render === 'Orders' || render === 'All Orders' ? filterOrders : [];
+        render === 'Products' ? filterProduct : [];
 
     return (
         <div className='grid grid-col-6   grid-rows-8  overflow-y-scroll '>
@@ -122,10 +128,9 @@ export default function StorePanel() {
                             <option
                                 defaultValue='SelectStore'
                                 selected='SelectStore'
-                                disabled={true}
-                                value='Select Store'
+                                value='SelectStore'
                             >
-                                Select Store
+                                {selectStore}
                             </option>
                             {storesUser?.map((e) => {
                                 return (
@@ -147,6 +152,20 @@ export default function StorePanel() {
                             />
 
                         </div>
+                        {selectStore !== "SelectStore" &&
+
+                            <div className="flex w-full text-start items-start justify-start text-lg pt-1">
+                                <RiDeleteBin7Line className="mt-1 ml-1" />
+                                <button className="ml-1" onClick={() => {
+                                    swalDelete(idActual, setFlag2, flag2)
+                                        .then(() => {
+                                            setSelectStore('SelectStore')
+                                            history.push('/create/shop')
+                                        })
+
+                                }} >Delete store</button>
+                            </div>
+                        }
                     </div>}
 
                     {selectStore !== "SelectStore" &&
@@ -180,10 +199,14 @@ export default function StorePanel() {
                         </div>}
 
                     <div className="flex w-full flex-col text-start items-start justify-start">
-                        <h2 className='text-primary text-xl  font-bold'> User Panel</h2>
+                        <h2 className='text-primary text-xl font-bold'> User Panel</h2>
                         <div className="flex text-lg pt-1">
                             <GrUserSettings className="mt-1 ml-1" />
-                            <button className='ml-1'>Edit Profile</button>
+                            <button className='ml-1' value='Edit profile' onClick={handleRender}>Edit Profile</button>
+                        </div>
+                        <div className="flex text-lg pt-1">
+                            <BsCardList className="mt-1" />
+                            <button className="ml-1" value="My Orders" onClick={handleRender} >My Orders</button>
                         </div>
                     </div>
                     {userAdmin ?
@@ -215,7 +238,7 @@ export default function StorePanel() {
 
             {editState ? (
                 <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
-                    <IoArrowBack />
+
 
                     <div className='text-center justify-center items-center'>
                         {selectStore === 'SelectStore' && render === '' ? (
@@ -239,6 +262,16 @@ export default function StorePanel() {
                                             {el}
                                         </label>
                                     ))}
+                                    {render === 'My Orders' && selectStore !== 'All' && (
+                                        <ModelTable
+                                            info={[]}
+                                            column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
+                                            flag2={flag2}
+                                            setFlag2={setFlag2}
+                                            swalFunction={ordersOptions}
+                                            idStore={idActual}
+                                        />
+                                    )}
                                     {render === 'Products' && (
                                         <>
                                             <select
@@ -269,7 +302,8 @@ export default function StorePanel() {
                                 </div>
                             </div>
                         )}
-
+                        {render === 'Edit profile' &&
+                            <EditUser />}
                         {render === 'Products' &&
                             selectStore !== 'Select Store' &&
                             renderSec === false ? (
@@ -303,9 +337,9 @@ export default function StorePanel() {
                                 info={ordersStore}
                                 column_title={['Action', 'State', 'Payment', 'Id', 'Description']}
                                 flag2={flag2}
-                                idStore={idActual}
                                 setFlag2={setFlag2}
                                 swalFunction={ordersOptions}
+                                idStore={idActual}
                             />
                         )}
                         {render === 'All Products' &&
@@ -336,7 +370,7 @@ export default function StorePanel() {
                         {render === "All Users" &&
                             <ModelTable
                                 info={allUsers}
-                                column_title={['Action', 'Name', 'Mail', 'Id', 'Location']}
+                                column_title={['Action', 'Role', 'Name', 'Mail', 'Id', 'Location']}
                                 flag2={flag2}
                                 setFlag2={setFlag2}
                                 swalFunction={userOptions}
@@ -354,10 +388,12 @@ export default function StorePanel() {
                 </div>
             ) : (
                 <div>
-                    <IoArrowBack onClick={() => {
-                        setRender('')
-                        setEditState(true)
-                    }} />
+                    {render === 'Products' || render === 'All Products' ?
+                        <IoArrowBack onClick={() => {
+                            setRender('')
+                            setEditState(true)
+
+                        }} /> : false}
                     <ProductsCreate idStore={idActual} product={product} />
                 </div>
             )}

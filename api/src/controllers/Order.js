@@ -25,10 +25,8 @@ class OrderModel extends ModelController {
 
                 // PROBAAAAR
 
-
                 // let obj = {OrdersHistory: [...user.OrdersHistory, ...orderId]}
                 // const userNew = await User.update(obj, {where: {id: userId}})
-
 
                 // add Store to order
                 const store = await Store.findByPk(storeId);
@@ -52,19 +50,37 @@ class OrderModel extends ModelController {
         }
     };
 
+    findOrderId = async (req, res) => {
+        const id = req.params.id;
+        if (id) {
+            const orderId = await this.model.findAll({
+                where:{
+                    StoreId: id
+                },
+                // include: {
+                //     model: Order,
+                //     attributes: ['id', 'amount', 'orderState', "UserId", "AddressId"],
+                // },
+            });
+            res.send(orderId);
+        } else {
+            res.status(400).send('Wrong params');
+        }
+    };
+
     deleteOrder = async (req, res) => {
-        const id = req.params.id
-        if(id){
+        const id = req.params.id;
+        if (id) {
             await this.model.destroy({
                 where: {
-                    id: id
-                }
-            })
-            res.send("Order Deleted")
+                    id: id,
+                },
+            });
+            res.send('Order Deleted');
         } else {
-            res.status(400).send("Wrong params")
+            res.status(400).send('Wrong params');
         }
-    }
+    };
 }
 
 const OrderController = new OrderModel(Order);

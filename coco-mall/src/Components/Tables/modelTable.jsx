@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductsStorePanel } from '../../Redux/actions/stores';
-import axios from 'axios';
+import { getProductsStorePanel, getAllProducts, getOrdersStore} from '../../Redux/actions/stores';
+
 
 export default function ModelTable ( { info, column_title, types, idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
 
@@ -15,9 +15,10 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getProductsStorePanel(idStore));
+        dispatch(getAllProducts())
+       idStore && dispatch(getProductsStorePanel(idStore));
+       idStore && dispatch(getOrdersStore(idStore))
     }, [flag3]);
-    
     return (
         <div className='items-center text-center justify-center  w-full'>
             <div >
@@ -39,20 +40,22 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                         <div key={el.id} className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
-                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2 );
-                                                    setProduct && setProduct(el) ;
+                                                    swalFunction(el.id, setEditState, setFlag3, flag3, setFlag2, flag2, el.SuperAdmin );
+                                                    setProduct && setProduct(el);
+                                                    console.log(el)
                                                 }}
                                             />
                                            
                                         </div>
                                     </td>
+                                    {el.SuperAdmin === false || el.SuperAdmin === true ? <td className='border-b  border-gray-400 py-2'>{el.SuperAdmin === true ? "Admin" : "User"}</td>: false}
                                     <td className='border-b  border-gray-400 py-2'>
                                         {el.productName || el.orderState || el.Name || el.storeName}
                                     </td>
-                                    <td className=' border-b  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.country +"/"+ el.state }</td>
+                                    <td className=' border-b  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.state }</td>
                                     <td className='border-b  border-gray-400 py-2'>{el.id }</td>
 
-                                    {el.Country ? <td className='border  border-gray-400 py-2'>{el.Country +"/"+ el.State }</td> : false}
+                                    {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> : false}
 
                                     { el.cloudImage ? <td className='border-b flex justify-center  border-gray-400 py-2'>
                                         <Image

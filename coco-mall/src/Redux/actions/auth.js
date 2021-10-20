@@ -11,7 +11,6 @@ export const startLoginEmailPassword = (email, password, rememberForm) => {
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
                 /* Read more about isConfirmed, isDenied below */
-                console.log(rememberForm)
                 if (rememberForm) {
                     axios.put(`http://localhost:3001/user/update/${user.uid}`, {
                         Remember: rememberForm,
@@ -60,8 +59,8 @@ export const startGoogleLogin = (remember) => {
                     Remember: remember
                 };
                 axios.post(CREATE_USER_URL, aux);
-                dispatch(login(user.uid, user.displayName));
                 dispatch(login(user.uid, user.displayName, aux.State, aux.Country));
+                dispatch(userInfo(user.uid));
             })
             .catch((err) =>
                 Swal.fire({
@@ -113,7 +112,6 @@ export const startRegisterWithEmailPasswordName = (
         try {
             let aux = await auth.createUserWithEmailAndPassword(email, password);
             await auth.currentUser.updateProfile({ displayName: name });
-            console.log(rememberForm)
             let userF = {
                 id: aux.user.uid,
                 Name: name,

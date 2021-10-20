@@ -14,6 +14,9 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
+    
+    const userName = useSelector(state=> state.auth.userInfoDB)
+
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
@@ -113,7 +116,7 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name && user.name.split(' ')[0]}
+                                                {userName.Name ? userName.Name.split(' ')[0] : user.name.split(' ')[0] }
                                             </button>
                                         </Link>
                                     </div>

@@ -15,6 +15,22 @@ const validate = {
         },
     },
 
+    cbu : {
+        required: { value: true, message: 'CBU/CVU is required' },
+        minLength: {
+            value: 22,
+            message: 'CBU must contain 22 numbers ',
+        },
+        maxLength: {
+            value: 22,
+            message: 'CBU must contain 22 numbers ',
+        },
+        pattern: {
+            value: /^\d{22}$/,
+            message: 'CBU can only be numbers',
+        },
+    },
+
     lastname: {
         required: { value: true, message: 'lastName is required' },
         minLength: {

@@ -430,7 +430,7 @@ export default function StorePanel() {
                         {render === 'All Stores' && (
                             <ModelTable
                                 info={allStores}
-                                column_title={['Action', 'Name', 'Location', 'Id', 'Logo']}
+                                column_title={['Action', 'Name', 'Location', 'Cbu', 'Logo']}
                                 swalFunction={storeOptions}
                                 flag2={flag2}
                                 setFlag2={setFlag2}

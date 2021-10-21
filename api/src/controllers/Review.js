@@ -15,8 +15,8 @@ class ReviewModel extends ModelController {
         const newReview = await Review.create(review);
         const reviewId = newReview.id;
         //Search the order and attach the Review
-        const order = await Order.findByPk(orderId);
-        await order.setReview(reviewId);
+        // const order = await Order.findByPk(orderId);
+        // await order.setReview(reviewId);
         //Search the store and attach the Review
         const store = await Store.findByPk(storeId);
         await store.addReview(reviewId);

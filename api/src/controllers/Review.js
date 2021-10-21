@@ -42,7 +42,9 @@ class ReviewModel extends ModelController {
 
         const finalRev = await this.model.findByPk(reviewId);
 
-        res.send("Creada correctamente");
+        const revsss = await this.model.findAll({where: {StoreId : storeId}, include: [{model: User, attributes: ['Name']}]})
+
+        res.send(revsss);
       } catch (e) {
         res.send(e);
       }

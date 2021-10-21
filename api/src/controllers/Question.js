@@ -131,8 +131,6 @@ class QuestionModel extends ModelController {
             res.send("Wrong params")
         }
     }
-
-
 }
 
 const QuestionController = new QuestionModel(Question);

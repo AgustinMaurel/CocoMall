@@ -112,7 +112,7 @@ export default function Cart() {
                         }}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/4 lg:h-2/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
+                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/4 lg:h-2/6 xl:h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
                     >
                         <div className='absolute top-2 mx-auto'>
                             <svg
@@ -151,7 +151,7 @@ export default function Cart() {
                                     <>
                                         <div
                                             key={el.id}
-                                            className=' bg-white   mt-5 xl:mt-10  w-full flex flex-col shadow   h-56 xl:h-60 justify-around xl:flex-none relative  '
+                                            className=' bg-white   mt-5 xl:mt-10  w-full flex flex-col shadow   h-56 xl:h-60 xl:pt-10 justify-around xl:flex-none relative  '
                                         >
                                             <div className='flex flex-row h-full items-center xl:flex-none relative w-full px-5 gap-10  py-5'>
                                                 <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>
@@ -167,16 +167,23 @@ export default function Cart() {
                                                         />
                                                     </Image>
                                                 </div>
-                                                <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
-                                                    <h2 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
-                                                        {el.productName}
-                                                    </h2>
+                                                <div className=' flex flex-col gap-2 flex-none  h-full  w-4/6 pr-2 '>
+                                                    <div>
+                                                        <h2 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                            {el.productName}
+                                                        </h2>
+                                                    </div>
 
-                                                    <div className=' h-full  w-full flex-col items-between justify-between'>
-                                                        <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                            {el.description}
-                                                        </p>
-                                                        <div className='h-1/6 flex items-center justify-start  content-center'>
+                                                    <div className='relative h-full  w-full flex-col items-between justify-between'>
+                                                        <div>
+                                                            <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                {el.description}
+                                                            </p>
+                                                            <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
+                                                                Stock left: {el.stock}
+                                                            </p>
+                                                        </div>
+                                                        <div className='absolute bottom-0 h-1/6 flex items-center justify-start  content-center'>
                                                             <svg
                                                                 xmlns='http://www.w3.org/2000/svg'
                                                                 className='h-3 w-3'

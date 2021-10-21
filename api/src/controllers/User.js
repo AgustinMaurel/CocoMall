@@ -85,7 +85,7 @@ class UserModel extends ModelController {
     updateCart2 = async (req, res) => {
         let Cart;
         try {
-            const { id, item, que, cant } = req.body;
+            const { id, idProduct, que, cant } = req.body;
 
             let result = await this.model.findOne({ where: { id } });
 
@@ -93,13 +93,13 @@ class UserModel extends ModelController {
                 Cart = result.Cart;
             }
             if (Cart.length > 0) {
-                const result = Cart.find((el) => el.id === item.idProduct);
+                const result = Cart.find((el) => el.id === idProduct);
                 if (!result) {
-                    const producto = await Product.findOne({ where: { id: item.idProduct } });
-                    Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+                    const producto = await Product.findOne({ where: { id: idProduct } });
+                    Cart.push({ ...producto.dataValues, quantity: Number(cant) });
                 } else {
                     Cart = Cart.map((el) => {
-                        if (el.id === item.idProduct) {
+                        if (el.id === idProduct) {
                             if (que === '+') {
                                 return {
                                     ...el,

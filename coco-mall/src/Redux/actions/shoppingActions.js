@@ -7,10 +7,7 @@ export const addToCartSomo = (uid, idItem, que, cant) => {
         axios
             .post(SHOPPING_CART.RUTA_SOMO, {
                 id: uid,
-                item: {
-                    idProduct: idItem,
-                    quantity: 1,
-                },
+                idProduct: idItem,
                 que,
                 cant,
             })

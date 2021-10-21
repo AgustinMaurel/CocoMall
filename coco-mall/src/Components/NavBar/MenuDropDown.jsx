@@ -62,7 +62,7 @@ export default function MenuDropDown() {
                             <Menu.Item>
                                 <button
                                     onClick={() => history.push('/auth/register')}
-                                    className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                    className={`${'text-gray-900'} z-50 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 >
                                     <SignUpIcon className='w-5 h-5 mr-2' aria-hidden='true' />
                                     Sign Up

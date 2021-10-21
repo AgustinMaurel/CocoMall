@@ -20,8 +20,6 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
 
     const que = '+';
     const cant = 1;
-
-    console.log('productos length: ', Products?.length);
     
     return (
         <div className='flex flex-col'>

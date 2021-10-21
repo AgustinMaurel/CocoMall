@@ -72,11 +72,11 @@ function Home() {
                     setCity(currentCity);
 
                     axios
-                    .post('/store/filter', { state: currentCity })
-                    .then((res) => res.data)
-                    .then((stateStores) => {
-                        setFilterByState(stateStores);
-                    });
+                        .post('/store/filter', { state: currentCity })
+                        .then((res) => res.data)
+                        .then((stateStores) => {
+                            setFilterByState(stateStores);
+                        });
                 });
         });
     };
@@ -85,14 +85,14 @@ function Home() {
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
-            <div className='col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
+            <div className='z-10 col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
 
             {/* CARDS */}
             <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-y-scroll'>
                 {/* --- ADS --- */}
-                <div className='m-auto 2xl:w-3/4'>
+                <div className='m-auto 2xl:w-3/4 z-0'>
                     <SliderHero />
                 </div>
 

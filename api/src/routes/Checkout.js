@@ -4,7 +4,7 @@ const { stripe } = require('../models/index');
 const mercadopago = require('mercadopago');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const { templateSuccess, templateFailure } = require('../utils/Templates/emailTemplates');
+const { templateSuccess, templateFailure, templatePending } = require('../utils/Templates/emailTemplates');
 
 //all this routes strart with checkout
 router.post('/stripe', async (req, res) => {
@@ -119,9 +119,9 @@ router.post('/feedback', async function (req, res) {
         let mailOption = await email.sendMail({
             from: '"Coco Mall 🥥🥥" <coco.mallsb@gmail.com>', // sender address
             to: mail, // list of receivers
-            subject: 'We have a issue with your payment ⚠️⚠️', // Subject line
+            subject: 'We are working but first...', // Subject line
             text: 'Hello world?', // plain text body
-            html: templateFailure(), // html body
+            html: templatePending(), // html body
         });
     }
 

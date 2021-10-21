@@ -50,7 +50,7 @@ export default function ModelTable({
                                     className='font-semibold text-gray-700 text-sm lg:text-base'
                                     key={el.id}
                                 >
-                                    <td
+                                   {column_title[0] === 'Action' && <td
                                         key={el.id}
                                         className='  border-b text-center justify-center items-center border-gray-400 py-2'
                                     >
@@ -74,7 +74,7 @@ export default function ModelTable({
                                                 }}
                                             />
                                         </div>
-                                    </td>
+                                    </td>}
                                     {el.SuperAdmin === false || el.SuperAdmin === true ? (
                                         <td className='border-b  border-gray-400 py-2'>
                                             {el.SuperAdmin === true ? 'Admin' : 'User'}
@@ -89,7 +89,9 @@ export default function ModelTable({
                                         {el.price || el.amount || el.Mail || el.state}
                                     </td>
                                     <td className='border-b  border-gray-400 py-2'>{el.id}</td>
-
+                                    {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> 
+                                    : el.arrayIdProducts ?
+                                     <td className='border-b  border-gray-400 py-2'> <div className="flex flex-col justify-start items-start"> {el.arrayIdProducts.map(el => <span>{el.productName} ({el.quantity})</span>)}</div> </td> : false}
                                     {el.Country ? (
                                         <td className='border-b  border-gray-400 py-2'>
                                             {el.State + '/' + el.Country}

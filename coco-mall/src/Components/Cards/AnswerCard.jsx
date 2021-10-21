@@ -15,7 +15,7 @@ export default function AnswerCard({ storeId }) {
 
     return (
         <div className="flex flex-wrap gap-5 justify-center  h-full w-full">
-            {questions.length ? questions.map(q => {
+            {questions.length > 0 ? questions.map(q => {
                 return (<>
                     <div className="flex border text-left border-gray-200 rounded-md">
                         <div className="p-2">

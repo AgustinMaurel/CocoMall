@@ -89,18 +89,6 @@ export default function MenuDropDown() {
                             <div className='px-1 py-1'>
                                 <Menu.Item>
                                     <button
-                                        onClick={() => history.push('/cart')}
-                                        className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                    >
-                                        <WishListIcon className='w-5 h-5 mr-2' aria-hidden='true' />
-                                        My Cart
-                                    </button>
-                                </Menu.Item>
-                            </div>
-
-                            <div className='px-1 py-1'>
-                                <Menu.Item>
-                                    <button
                                         onClick={handleLogout}
                                         className={`${'text-gray-900'} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                     >

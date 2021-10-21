@@ -135,13 +135,7 @@ const ProductsCreate = ({ idStore, product }) => {
                         placeholder='Eg: T-Shirt'
                         validate={validate.product}
                     />
-                    {/* <InputDefault
-                        register={register}
-                        errors={errors}
-                        name='description'
-                        placeholder='Eg: Description of T-Shirt'
-                        validate={validate.description}
-                    /> */}
+
                     <Textarea
                         register={register}
                         errors={errors}
@@ -196,11 +190,15 @@ const ProductsCreate = ({ idStore, product }) => {
                         validate={validate.subCategory}
                     />
                     {console.log(subCategories?.data)}
-                    <div className='flex flex-row justify-center items-center text-base text-cocoMall-300 mb-8'>
+                    <div className='flex flex-row justify-center items-center text-base  mb-8'>
                         {subCategories?.data?.length
-                            ? subCategories?.data?.map((subCat) => {
-                                  return <span className='ml-4'>{subCat.Name}</span>;
-                              })
+                            ?
+                            <>
+                            <span className='text-cocoMall-700'>Suggestions:</span>
+                            {subCategories?.data?.map((subCat) => {
+                                  return <span className='ml-4 text-cocoMall-300'>{subCat.Name}</span>;
+                              })}
+                              </>
                             : false}
                     </div>
                     <InputFile

@@ -27,6 +27,8 @@ import EditUser from './Components/Forms/EditUser';
 import Error404 from './Views/Error404';
 import OrderSuccess from './Views/OrderSuccess';
 
+import Prueba from './prueba'
+
 function App() {
     const dispatch = useDispatch();
     const { uid } = useSelector((state) => state.auth);
@@ -115,7 +117,9 @@ function App() {
                 <Route path='/profile' exact component={EditUser}>
                     {isLoggedIn ? <EditUser /> : <Redirect to='/auth/login' />}
                 </Route>
+                <Route exact path='/prueba' component={Prueba}></Route>
                 <Route path='*' component={Error404}></Route>
+
             </Switch>
         </>
     );

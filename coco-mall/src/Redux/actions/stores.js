@@ -117,7 +117,7 @@ export const filterProductsPanel = (id, payload) => {
         subCategory: payload.subCategory
     };
     return async (dispatch) => {
-        const response = await axios.post(`/panel/filter/${id}`, obj);
+        const response = await axios.post(`/product/panel/filter/${id}`, obj);
         await dispatch({ type: FILTER_PRODUCTS, payload: response.data });
     };
 };

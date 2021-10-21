@@ -12,7 +12,7 @@ import { getProductsStorePanel, getAllProducts, getOrdersStore} from '../../Redu
 export default function ModelTable ( { info, column_title, types, idStore, setEditState, setProduct, flag2, setFlag2, swalFunction} ) {
 
     const [flag3, setFlag3] = useState(false);
-
+    console.log(info)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllProducts())
@@ -36,7 +36,7 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                         {info.length > 0 &&
                             info?.map((el) => (
                                 <tr className="font-semibold text-gray-700" key={el.id}>
-                                    <td key={el.id} className='  border-b text-center justify-center items-center border-gray-400 py-2'>
+                                    {column_title[0] === 'Action' && <td key={el.id} className='  border-b text-center justify-center items-center border-gray-400 py-2'>
                                         <div key={el.id} className='flex justify-evenly cursor-pointer'>
                                             <FiSettings
                                                 onClick={() => {
@@ -47,7 +47,7 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                             />
                                            
                                         </div>
-                                    </td>
+                                    </td>}
                                     {el.SuperAdmin === false || el.SuperAdmin === true ? <td className='border-b  border-gray-400 py-2'>{el.SuperAdmin === true ? "Admin" : "User"}</td>: false}
                                     <td className='border-b  border-gray-400 py-2'>
                                         {el.productName || el.orderState || el.Name || el.storeName}
@@ -55,7 +55,9 @@ export default function ModelTable ( { info, column_title, types, idStore, setEd
                                     <td className=' border-b  border-gray-400 py-2'>{el.price||el.amount ||el.Mail || el.state }</td>
                                     <td className='border-b  border-gray-400 py-2'>{el.id }</td>
 
-                                    {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> : false}
+                                    {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> 
+                                    : el.arrayIdProducts ?
+                                     <td className='border-b  border-gray-400 py-2'> <div className="flex flex-col justify-start items-start"> {el.arrayIdProducts.map(el => <span>{el.productName} ({el.quantity})</span>)}</div> </td> : false}
 
                                     { el.cloudImage ? <td className='border-b flex justify-center  border-gray-400 py-2'>
                                         <Image

@@ -30,7 +30,7 @@ export const cartDeleteSomo = (uid, idItem) => {
                     quantity: '1',
                 },
                 que: '-',
-                cant: '1',
+                cant: cant,
             })
             .then((res) => {
                 console.log(res.data);

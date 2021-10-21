@@ -44,45 +44,50 @@ export default function ProductDetail(props) {
 
     return (
         <>
-            <div className='flex  justify-start content-center items-center place-content-center place-items-center justify-items-center w-full h-full m-auto'>
-                <div className='flex flex-col w-3/5 h-full p-5 bg-gray-100 rounded'>
-                    <h4 className='text-5xl mb-5 font-semibold bg-white relative'>
-                        {product.productName.toUpperCase()}
-                    </h4>
-                    <div className='flex flex-col w-80 h-72 relative'>
-                        <Image
-                            key={product.id}
-                            cloudName='cocomalls'
-                            publicId={product.cloudImage[0]}
-                            width='400'
-                            crop='scale'
-                        />
+            <div className=' flex  justify-start content-center items-center place-content-center place-items-center justify-items-center w-full h-full m-auto p-5 gap-3'>
+                <div className='flex flex-col w-3/5 h-full rounded pt-3 gap-20 shadow'>
+                    <div className='relative justify-self-start items-center'>
+                        <h4 className='text-4xl mb-5 font-bold bg-white relative justify-self-start text-center'>
+                            {product.productName.toUpperCase()}
+                        </h4>
                     </div>
-                    <span className='text-lg font-semibold  md:text-lg text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl relative'>
-                        Price ${product.price}
-                    </span>
+                    <div className='flex flex-col gap-3'>
+                        <div className='flex flex-col min-h-max min-w-max relative'>
+                            <Image
+                                key={product.id}
+                                cloudName='cocomalls'
+                                publicId={product.cloudImage[0]}
+                                width='400'
+                                crop='scale'
+                            />
+                        </div>
+                        <div>
+                            <p className='text-lg font-semibold  md:text-lg text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl relative'>
+                                Price ${product.price}
+                            </p>
+                            <p className='text-base md:text-lg   text-justify xl:whitespace-nowrap w-5/6'>
+                                Stock left: {product.stock}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div className='w-full  flex flex-col justify-start content-center items-center place-content-center place-items-center h-full overflow-y-auto m-auto'>
-                    <div className='flex flex-col justify-center w-full h-full'>
-                        <span className='text-3xl font-semibold'>Details</span>
-                        <p className='text-base md:text-lg   text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl'>
+                <div className=' w-full  flex flex-col justify-start items-start h-full m-auto gap-5'>
+                    <p className='text-3xl font-semibold inline-block'>Details</p>
+                    <div className='flex flex-col justify-start w-full h-full items-start overflow-y-scroll'>
+                        <p className='text-base md:text-lg  text-justify p-2 '>
                             {product.description}
                         </p>
-                        <span className='text-base md:text-lg   text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl'>
-                            Current quantity: {product.stock} unidades
-                        </span>
-
                         {product.discount > 0 ? <span>{product.discount}%</span> : false}
                     </div>
-                    <div className='bg-red-400 p-2 w-full h-1/4'>
-                        <Question productId={product.id} />
-                    </div>
-                    <div className='flex flex-col bg-green-400 w-full h-full p-2'>
-                        <h3>Q&A</h3>
+                    <h3 className='text-primary font-bold text-xl '>Q&A</h3>
+                    <div className='flex flex-col w-full h-full overflow-y-auto m-auto'>
                         <QuestionAndAnswer productId={product.id} />
                     </div>
+                    <div className=' w-full h-1/4'>
+                        <Question productId={product.id} />
+                    </div>
 
-                    <div className='flex flex-col w-4/5 z-20 justify-center content-end h-full'>
+                    <div className='flex flex-col w-4/5 z-20 justify-end h-full'>
                         <div className='flex flex-row h-12 shadow-inner  items-center w-full content-center justify-around py-1 bg-secondary'>
                             <div className='flex flex-none flex-row items-center content-center justify-center gap-4'>
                                 <button

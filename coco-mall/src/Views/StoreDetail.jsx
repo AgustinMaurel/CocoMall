@@ -57,6 +57,7 @@ export default function StoreDetail() {
         max: '',
         discount: 0,
         subCategory: [],
+        order: ""
     });
 
     // const [Cart, setCart] = useState();
@@ -275,11 +276,11 @@ export default function StoreDetail() {
                     <div>
                         <select
                             className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                            onChange={handleOrder}
+                            onChange={handleChange}
                         >
-                            <option value='Mas relevantes'>Most Relevant</option>
-                            <option value='Barato'>High Price</option>
-                            <option value='Caro'>Low Price</option>
+                            <option name="" value=''>Most Relevant</option>
+                            <option name= "ASC" value='ASC'>High Price</option>
+                            <option name="DESC" value='DESC'>Low Price</option>
                         </select>
                     </div>
                 </div>

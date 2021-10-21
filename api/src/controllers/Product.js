@@ -212,6 +212,7 @@ class ProductModel extends ModelController {
                     where: {
                         StoreId: storeId,
                     },
+                    order: [['productName', 'ASC']]
                 });
                 let allCurrentTypes = []
                 let allsubCat = []

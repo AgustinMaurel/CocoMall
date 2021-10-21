@@ -73,16 +73,18 @@ export default function Cart() {
                         <p>Take a look at our stores and search for what you need!</p>
 
                         <div
-                            className='shadow-lg flex items-center absolute bottom-0 bg-white  border border-primary  text-primary w-40 rounded h-8 z-20 
+                            className='shadow-lg flex items-center justify-center absolute bottom-0 bg-white  border border-primary  text-primary w-40 rounded h-8 z-20 
                          xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
                         >
-                            <Link
-                                to='/home'
-                                className=' focus:outline-none text-center text-base w-full h-full
+                            <Link to='/home'>
+                                <button
+                                    className=' focus:outline-none  text-base w-full h-full
+                           flex justify-start  items-center       
                      md:text-lg
                    xl:text-primary xl:text-xl'
-                            >
-                                Go to Home
+                                >
+                                    Go to Home
+                                </button>
                             </Link>
                         </div>
                     </div>
@@ -176,11 +178,14 @@ export default function Cart() {
 
                                                     <div className='relative h-full  w-full flex-col items-between justify-between'>
                                                         <div>
-                                                            <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
+                                                            <p className='h-5/6 mb-3 w-full text-sm md:text-base text-gray-500 font-light '>
                                                                 {el.description}
                                                             </p>
                                                             <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
                                                                 Stock left: {el.stock}
+                                                            </p>
+                                                            <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
+                                                                Unit price: ${el.price}
                                                             </p>
                                                         </div>
                                                         <div className='absolute bottom-0 h-1/6 flex items-center justify-start  content-center'>

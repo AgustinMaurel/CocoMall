@@ -16,6 +16,7 @@ const InputDefault = ({ register, errors, name, placeholder, type, validate }) =
                 }
                 type={type}
                 placeholder={placeholder}
+                min="0"
                 {...register(name, validate)}
             />
 

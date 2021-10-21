@@ -81,7 +81,7 @@ const LoginScreen = () => {
             {/* LOGIN */}
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col z-10 m-auto px-4 h-full max-w-md justify-start sm:justify-center  items-center gap-20'>
+                <div className='flex flex-col z-10 m-auto h-full justify-start sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>

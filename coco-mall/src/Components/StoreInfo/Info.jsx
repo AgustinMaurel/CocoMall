@@ -12,7 +12,7 @@ const Info = ({ info, infoModal, setInfoModal }) => {
     return (
         <div>
             <div className='flex items-center gap-1 cursor-pointer' onClick={() => setInfoModal(true)}>
-                <p className=''>About us</p>
+                <p className='hidden xl:block'>About us</p>
                 <IoMdInformationCircle className='w-8 h-8' />
             </div>
 

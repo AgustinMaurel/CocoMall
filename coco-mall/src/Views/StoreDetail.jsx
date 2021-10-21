@@ -145,20 +145,20 @@ export default function StoreDetail() {
             </div>
             <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-y-scroll'>
                 {/* --- BANNER PRODUCTS --- */}
-                <div className='flex w-2/3 h-24 mx-auto bg-cocoMall-200 rounded-b-2xl'>
-                    <div className='flex gap-4 items-center justify-between w-full px-4'>
-                        <div className='flex items-center'>
-                            <picture className='flex h-full items-center'>
+                <div className='flex 2xl:w-2/3 h-24 mx-auto bg-cocoMall-200 rounded-b-2xl'>
+                    <div className='flex items-center justify-between w-full px-4'>
+                        <div className='flex items-center gap-2'>
+                            <picture className='flex h-full'>
                                 <Image
                                     key={storeDetail?.id}
                                     cloudName='cocomalls'
                                     publicId={storeDetail?.cloudImage}
                                     crop='scale'
-                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14 mx-4'
+                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14'
                                 />
                             </picture>
                             <div>
-                                <h3 className='text-lg lg:text-2xl font-extrabold text-white'>
+                                <h3 className='text-base md:text-lg lg:text-2xl font-extrabold text-white'>
                                     {storeDetail?.storeName?.toUpperCase()}
                                 </h3>
                                 <p className='hidden text-white text-sm lg:text-lg'>
@@ -166,15 +166,15 @@ export default function StoreDetail() {
                                 </p>
                             </div>
                         </div>
-                        <div className='flex'>
-                            <div className='text-white flex items-center justify-center px-4 py-1 rounded mx-2 bg-cocoMall-100'>
+                        <div className='flex gap-1'>
+                            <div className='text-white flex items-center justify-center p-1 xl:px-4 xl:py-1 rounded xl:mx-2 bg-cocoMall-100'>
                                 <Info
                                     info={storeDetail}
                                     infoModal={infoModal}
                                     setInfoModal={setInfoModal}
                                 />
                             </div>
-                            <div className='text-white flex items-center justify-center px-4 py-1 rounded mx-2 bg-cocoMall-100'>
+                            <div className='text-white flex items-center justify-center p-1 xl:px-4 xl:py-1 rounded xl:mx-2 bg-cocoMall-100'>
                                 <Share />
                             </div>
                         </div>

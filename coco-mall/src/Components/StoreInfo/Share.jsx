@@ -13,7 +13,7 @@ const Share = () => {
     return (
         <div>
             <div className='flex items-center gap-1 cursor-pointer'>
-                <p className=''>Share</p>
+                <p className='hidden xl:block'>Share</p>
                 <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
                     <button
                         onClick={() =>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 
 
-export default function Answer(questionId) {
+export default function Answer({questionId}) {
     const [answer, setAnswer] = useState("")
 
     const handleChange = (e) => {
@@ -18,7 +18,7 @@ export default function Answer(questionId) {
             id: questionId,
             answer: answer
         }
-        const response = await axios.post('/question/update', body)
+        const response = await axios.put('/question/update', body)
         alert(response)
     }
 

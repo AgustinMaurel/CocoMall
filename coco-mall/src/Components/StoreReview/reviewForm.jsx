@@ -38,6 +38,10 @@ const ReviewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('funciona');
+        axios.post(`/review/create`, review)
+        .then((response) => console.log('review creada en el back: ', response.data));
+
+        axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
     };
 
     useEffect(() => {

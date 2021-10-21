@@ -85,7 +85,6 @@ export function handleOnChange(setFilters) {
             if (state.discount) {
                 state.discount = 1;
             }
-            console.log('SOY STATE', state);
             return state;
         });
     };
@@ -127,6 +126,7 @@ export function handleOnCategories(dispatch, id, filters) {
     };
 }
 
+//no se usa
 export function handleOnChangeProduct(dispatch, id, filters) {
     return (e) => {
         if (e.target.value === 'ASC') {

@@ -81,7 +81,6 @@ function ShopCreate({ setIsTrue }) {
         >
             <form className='w-4/5 flex flex-col 2xl:w-3/5' onSubmit={handleSubmit(handleRegister)}>
                 <h3 className='sm:mb-10 text-2xl md:text-3xl'>Create your Store</h3>
-                <br />
 
                 <InputDefault
                     register={register}

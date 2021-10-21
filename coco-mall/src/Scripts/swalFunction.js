@@ -81,7 +81,7 @@ export async function storeOptions(id, setEditState, setFlag3, flag3, setFlag2, 
                     setFlag3(!flag3);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Successfully answer',
+                        title: 'Successfully deleted',
                     });
                 })
                 .catch((err) =>{

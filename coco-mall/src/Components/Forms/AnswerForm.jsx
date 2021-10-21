@@ -24,7 +24,7 @@ export default function Answer({questionId, setFlag, flag}) {
              setFlag(!flag)
              Swal.fire({
             icon: 'success',
-            title: 'Successfully deleted',
+            title: 'Successfully answer',
         })}
          )
     }

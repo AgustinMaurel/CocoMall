@@ -14,7 +14,6 @@ export default function Question({productId}) {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
         if(Question.length > 5){
           const body = {
             userId: uid,

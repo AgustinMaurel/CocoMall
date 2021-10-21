@@ -324,19 +324,18 @@ export default function StoreDetail() {
                         </select>
                     </div>
                 </div>
-
                                 <select
                                     className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                                     onChange={handleChange}
                                 >
-                                    <option name='' value=''>
+                                    <option name='ALL' value='ALL'>
                                         Most Relevant
-                                    </option>
-                                    <option name='ASC' value='ASC'>
-                                        High Price
                                     </option>
                                     <option name='DESC' value='DESC'>
                                         Low Price
+                                    </option>
+                                    <option name='ASC' value='ASC'>
+                                        High Price
                                     </option>
                                 </select>
                         </div>

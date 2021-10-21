@@ -185,7 +185,7 @@ export default function StoreDetail() {
                         className='fixed flex w-screen justify-evenly bottom-5 z-20  '
                         onClick={() => history.push('/cart')}
                     >
-                        <span className='bg-primary-light rounded-lg border border-primary-light p-1.5 cursor-pointer text-white font-semibold'>
+                        <span className='bg-primary rounded-lg border  p-1.5 cursor-pointer text-white font-semibold'>
                             Your cart {itemsCart} items ${total}
                         </span>
                     </div>
@@ -225,7 +225,7 @@ export default function StoreDetail() {
                                     : false}
                             </select>
                         </div>
-                        
+
                         <div className=''>
                             <select
                                 className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'

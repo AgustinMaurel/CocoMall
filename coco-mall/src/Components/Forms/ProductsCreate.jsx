@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
+import Textarea from '../Inputs/Textarea';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
@@ -51,7 +52,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const handleTypes = (e) => {
         setTypes(e.target.value);
     };
-    console.log(product)
+    console.log(product);
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
@@ -134,13 +135,21 @@ const ProductsCreate = ({ idStore, product }) => {
                         placeholder='Eg: T-Shirt'
                         validate={validate.product}
                     />
-                    <InputDefault
+                    {/* <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='description'
+                        placeholder='Eg: Description of T-Shirt'
+                        validate={validate.description}
+                    /> */}
+                    <Textarea
                         register={register}
                         errors={errors}
                         name='description'
                         placeholder='Eg: Description of T-Shirt'
                         validate={validate.description}
                     />
+
                     <InputDefault
                         register={register}
                         errors={errors}
@@ -188,14 +197,12 @@ const ProductsCreate = ({ idStore, product }) => {
                     />
                     {console.log(subCategories?.data)}
                     <div className='flex flex-row justify-center items-center text-base text-cocoMall-300 mb-8'>
-                    {subCategories?.data?.length
-                        ? subCategories?.data?.map((subCat) => {
-                              return (
-                              <span className='ml-4'>{subCat.Name}</span>
-                              );
-                            })
+                        {subCategories?.data?.length
+                            ? subCategories?.data?.map((subCat) => {
+                                  return <span className='ml-4'>{subCat.Name}</span>;
+                              })
                             : false}
-                            </div>
+                    </div>
                     <InputFile
                         register={register}
                         errors={errors}

@@ -29,7 +29,7 @@ export default function AnswerCard({ storeId }) {
                         <Image
                             cloudName='cocomalls'
                             publicId={q.Product.cloudImage[0]}
-                            width='150'
+                            width='200'
                             alt='not found'
                             crop='scale'
                         />
@@ -37,7 +37,7 @@ export default function AnswerCard({ storeId }) {
                     </div>
                     
                 </>)
-            }) : null
+            }) : <h2>this store has no questions</h2>
             }
         </div>
     )

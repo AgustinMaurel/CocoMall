@@ -16,7 +16,7 @@ export default function QuestionAndAnswer({ productId }) {
         <div>
             {
                 question.length ? question.map(q => {
-                    return <QuestionCard question={q.question} answer={q.answer} />
+                    return <QuestionCard question={q.question} answer={q.answer} userName={q.User.Name}/>
                 }) : null
             }
         </div>

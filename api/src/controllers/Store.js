@@ -90,17 +90,19 @@ class StoreModel extends ModelController {
   };
 
     filterStoresByProductTypes = async (req, res) => {
-        const stateStore = req.body.state || '';
+        let stateStore = req.body.state || '';
         const typesId = req.body.types || [];
         const productToFilter = req.body.name || '';
         const storeToFilter = req.body.nameStore || '';
         const min = req.body.min || 0;
         const max = req.body.max || 99 ^ 9999;
+        stateStore.split(" ").length > 2 ? stateStore = stateStore.split(" ").slice(0,2).join(" ") : false
         try {
             const filteredStores = await this.model.findAll({
                 //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
                 where: {
                     state: {
+                        //Esta puesto asi porque hay algunos state que rompen
                         [Op.iLike]: `%${stateStore}%`,
                     },
                     //Estoy filtrando por el nombre de la tienda

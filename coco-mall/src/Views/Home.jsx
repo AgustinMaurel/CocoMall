@@ -34,6 +34,7 @@ function Home() {
         searchState: '',
     });
 
+    
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));
@@ -80,6 +81,8 @@ function Home() {
                 });
         });
     };
+
+    console.log(filterByState)
 
     !city && onCurrentPosition();
 

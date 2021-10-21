@@ -37,7 +37,7 @@ export default function AnswerCard({ storeId }) {
                     </div>
                     
                 </>)
-            }) : <h2>this store has no questions</h2>
+            }) : <h2>This store has no questions</h2>
             }
         </div>
     )

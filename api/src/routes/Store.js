@@ -8,7 +8,6 @@ const {
     deleteDeep,
     updateDataStore,
     getAllProductsOfStore,
-    getAllFilteredProductsOfStore
 } = require('../controllers/Store.js');
 
 //all routes start with /store

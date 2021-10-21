@@ -5,6 +5,12 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReviewCard from '../Cards/ReviewCard';
 
+import Slider from 'react-slick';
+import Arrow from '../Slides/Arrow';
+import CocoIcon from './CocoIcon';
+import ReviewExample from '../Cards/ReviewExample';
+import reviewImg from '../../Assets/images/review.svg';
+
 const ReviewForm = () => {
     const { id } = useParams();
     const [allStoreReviews, setAllStoreReviews] = useState([]);
@@ -12,6 +18,15 @@ const ReviewForm = () => {
         description: '',
         qualification: '1',
     });
+
+    //slider config
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+    };
 
     const handleChange = (e) => {
         setReview({
@@ -26,24 +41,49 @@ const ReviewForm = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(`/review/f2c78acf-f084-4870-8a5b-e29ef805fb4a`)
-            .then((response) => setAllStoreReviews(response.data));
+        axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
     }, []);
+
+    console.log('review envidada: ', review);
+    console.log('reviews de la tienda actual: ', allStoreReviews);
 
     return (
         <>
-            <div className='flex gap-4 h-1/2'>
-                <div className='w-1/3 bg-white shadow'></div>
-                <div className='w-1/3 bg-white shadow'></div>
-                <div className='w-1/3 bg-white shadow'></div>
-                {/* {allStoreReviews?.map((rev) => (
+            <div className='h-1/2 w-full'>
+                {allStoreReviews.length < 1 ? (
+                    <div className='flex h-full gap-2'>
+                        <div className='bg-white h-full w-2/3'>
+                            <div className='bg-white h-full shadow flex gap-20 p-10 justify-between'>
+                                <div className='flex flex-col justify-between'>
+                                    <p className='text-cocoMall-800 font-medium text-2xl'>
+                                        The store does not have any reviews at the moment.
+                                    </p>
+                                    <p>Be the first! you can see the example.</p>
+                                </div>
+                                <img className='h-full' src={reviewImg} alt='review' />
+                            </div>
+                        </div>
+                        <div className='w-1/3 h-full bg-white'>
+                            <ReviewExample />
+                        </div>
+                    </div>
+                ) : (
+                    <Slider {...settings}>
+                        {/* simulación de la ReviewCard */}
+                        <ReviewExample />
+                        <ReviewExample />
+                        <ReviewExample />
+                        <ReviewExample />
+
+                        {/* {allStoreReviews?.map((rev) => (
                         <ReviewCard
                             username={rev.User.Name}
                             qualification={rev.qualification}
                             description={rev.description}
                         />
                     ))} */}
+                    </Slider>
+                )}
             </div>
 
             <form className='h-1/2 w-full flex items-center gap-4' key='1' onSubmit={handleSubmit}>

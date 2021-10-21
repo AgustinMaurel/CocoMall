@@ -46,7 +46,7 @@ const RegisterScreen = () => {
                 data.lastName,
                 placeSelected.state,
                 placeSelected.country,
-                data.rememberForm
+                data.rememberForm,
             ),
         );
         //Antes de pusherlo a la home le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
@@ -75,8 +75,10 @@ const RegisterScreen = () => {
     };
 
     return (
-        <div className='overflow-hidden h-screen'>
-            <NavBar />
+        <div className='h-screen  flex flex-col md:flex-none '>
+            <div className='z-50'>
+                <NavBar />
+            </div>
             {/* BACKGROUND */}
             <div>
                 <div className='absolute right-0 -top-72 z-0'>
@@ -94,7 +96,7 @@ const RegisterScreen = () => {
             </div>
 
             {/* CONTENT */}
-            <div className='flex flex-col z-10 m-auto px-4 h-full max-w-md justify-start sm:justify-center items-center'>
+            <div className='  flex flex-col z-10 m-auto h-full justify-start sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
                 <div className='hidden sm:flex md:mb-4 text-2xl font-bold z-10'>
                     <h1>Register</h1>
                 </div>

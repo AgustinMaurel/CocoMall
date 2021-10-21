@@ -16,14 +16,15 @@ import {
     userOptions,
 } from '../Scripts/swalFunction.js';
 import { FiUsers } from 'react-icons/fi';
-import { BsBox, BsCardList } from 'react-icons/bs';
-import { BiEditAlt, BiStore } from 'react-icons/bi';
+import { BsBox, BsCardList, BsPatchQuestion } from 'react-icons/bs';
+import { BiStore } from 'react-icons/bi';
 import { GrUserSettings } from 'react-icons/gr';
 import { swalDelete } from '../Scripts/swalDelete.js';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { useHistory } from 'react-router';
 import EditUser from '../Components/Forms/EditUser.jsx';
 import { userInfo } from '../Redux/actions/auth.js';
+import AnswerCard from '../Components/Cards/AnswerCard.jsx';
 export default function StorePanel() {
     const dispatch = useDispatch();
 
@@ -211,6 +212,17 @@ export default function StorePanel() {
                                     Orders
                                 </button>
                             </div>
+                            <div className='flex text-lg pt-1'>
+                                <BsPatchQuestion className='mt-1 ml-1' />
+                                <button
+                                    name='Questions'
+                                    value='Questions'
+                                    onClick={handleRender}
+                                    className='ml-1'
+                                >
+                                    Questions
+                                </button>
+                            </div>
                         </div>
                     )}
 
@@ -390,6 +402,10 @@ export default function StorePanel() {
                                 swalFunction={productOptions}
                             />
                         }
+
+                        {render === 'Questions' && 
+                        <AnswerCard storeId={idActual} />}
+
 
                         {render === 'All Orders' && (
                             <ModelTable

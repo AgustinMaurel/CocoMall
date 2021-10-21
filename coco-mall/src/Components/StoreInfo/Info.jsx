@@ -10,10 +10,11 @@ import ReviewForm from '../StoreReview/reviewForm';
 ReactModal.setAppElement('#root');
 const Info = ({ info, infoModal, setInfoModal }) => {
     return (
-        <div className='text-white flex items-center justify-center'>
-            <button onClick={() => setInfoModal(true)}>
+        <div>
+            <div className='flex items-center gap-1 cursor-pointer' onClick={() => setInfoModal(true)}>
+                <p className=''>About us</p>
                 <IoMdInformationCircle className='w-8 h-8' />
-            </button>
+            </div>
 
             <ReactModal
                 style={{

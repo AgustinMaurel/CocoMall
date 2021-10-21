@@ -22,10 +22,11 @@ import {
     handleOnSubmit,
     handleOnDiscount,
     handleOnTypes,
-    handleOnCategories
+    handleOnCategories,
 } from '../Scripts/handles';
-import Arrow from '../Components/Slides/Arrow';
 import Info from '../Components/StoreInfo/Info';
+import { Image } from 'cloudinary-react';
+import Share from '../Components/StoreInfo/Share';
 
 ReactModal.setAppElement('#root');
 
@@ -68,26 +69,6 @@ export default function StoreDetail() {
         cart: [],
     };
 
-    //SLIDER HERO configuraciones
-    const settingsHero = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        pauseOnHover: true,
-    };
-
-    const settingsTypes = {
-        infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        nextArrow: <Arrow />,
-        prevArrow: <Arrow />,
-    };
-    //by Chris
-
     //agregar el pedido de user infoDb para actualizar el carrito se va a tener que cambiar por le de userInfo
     useEffect(() => {
         dispatch(getStoreDetail(id));
@@ -99,10 +80,10 @@ export default function StoreDetail() {
     //agregar el userCart.length
 
     useEffect(() => {
-        if(storeProducts.allsubCat?.length){
+        if (storeProducts.allsubCat?.length) {
             dispatch(getProductSubCat(storeProducts.allsubCat));
         }
-    },[id, storeProducts.allsubCat?.length])
+    }, [id, storeProducts.allsubCat?.length]);
 
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, filters.type, dispatch, id);
@@ -111,12 +92,10 @@ export default function StoreDetail() {
     const handleTypes = handleOnTypes(dispatch, id, filters);
     const handleCategories = handleOnCategories(dispatch, id, filters);
 
-
-
     const handleDoubleCat = (e) => {
         handleChange(e);
-        handleCategories(e)
-    }
+        handleCategories(e);
+    };
     const handleDouble = (e) => {
         handleChange(e);
         handleTypes(e);
@@ -136,7 +115,7 @@ export default function StoreDetail() {
             (previous, key) => previous + key.price * key.quantity,
             0,
         );
-        total = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        total = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     } else {
         total = 0;
     }
@@ -151,118 +130,154 @@ export default function StoreDetail() {
     }
 
     let keysSubCats;
-    if(filters.type.length){
-        if(storeProducts?.Products[filters.type]){
-            keysSubCats = Object.keys(storeProducts?.Products[filters.type]).map((key)=> parseInt(key)).filter((key) => parseInt(key))
-            }
+    if (filters.type.length) {
+        if (storeProducts?.Products[filters.type]) {
+            keysSubCats = Object.keys(storeProducts?.Products[filters.type])
+                .map((key) => parseInt(key))
+                .filter((key) => parseInt(key));
         }
+    }
 
     return (
-        <div className='grid grid-cols-12 w-screen grid-rows-8 h-screen overflow-x-hidden bg-gray-50'>
-            <div className='col-span-12 row-span-1 row-end-1 bg-gray-200 shadow'>
+        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
+            <div className='z-10 col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
-            {/* --- BANNER PRODUCTS --- */}
-            <div className='col-span-12 flex flex-col items-center text-white justify-center content-center mx-auto w-full bg-cocoMall-200 gap-2'>
-                <h3 className='text-5xl font-extrabold text-white'>
-                    {storeDetail?.storeName?.toUpperCase()}
-                </h3>
-                <p>{storeDetail?.description}</p>
-                <Info info={storeDetail} infoModal={infoModal} setInfoModal={setInfoModal} />
-            </div>
-            {/* --- CART OVERVIEW --- */}
-            {userCart.length ? (
-                <div
-                    className='fixed flex w-screen justify-evenly bottom-5 z-20  '
-                    onClick={() => history.push('/cart')}
-                >
-                    <span className='bg-primary-light rounded-lg border border-primary-light p-1.5 cursor-pointer text-white font-semibold'>
-                    Your cart {itemsCart} items ${total}
-                    </span>
+            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-y-scroll'>
+                {/* --- BANNER PRODUCTS --- */}
+                <div className='flex w-2/3 h-24 mx-auto bg-cocoMall-200 rounded-b-2xl'>
+                    <div className='flex gap-4 items-center justify-between w-full px-4'>
+                        <div className='flex items-center'>
+                            <picture className='flex h-full items-center'>
+                                <Image
+                                    key={storeDetail?.id}
+                                    cloudName='cocomalls'
+                                    publicId={storeDetail?.cloudImage}
+                                    crop='scale'
+                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14 mx-4'
+                                />
+                            </picture>
+                            <div>
+                                <h3 className='text-lg lg:text-2xl font-extrabold text-white'>
+                                    {storeDetail?.storeName?.toUpperCase()}
+                                </h3>
+                                <p className='hidden text-white text-sm lg:text-lg'>
+                                    {storeDetail?.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div className='flex'>
+                            <div className='text-white flex items-center justify-center px-4 py-1 rounded mx-2 bg-cocoMall-100'>
+                                <Info
+                                    info={storeDetail}
+                                    infoModal={infoModal}
+                                    setInfoModal={setInfoModal}
+                                />
+                            </div>
+                            <div className='text-white flex items-center justify-center px-4 py-1 rounded mx-2 bg-cocoMall-100'>
+                                <Share />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            ) : (
-                false
-            )}
-            {/* --- FILTERS & SEARCH --- */}
-            <div className='col-span-12 w-3/4 row-span-2 m-auto'>
-                <Search
-                    searchProduct={filters.searchProduct}
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                />
-                {/* --- FILTERS --- */}
-                <div className='flex w-3/4 m-auto items-center justify-between'>
-                    <div className=''>
-                        <select
-                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                            name='category'
-                            id='category'
-                            onChange={handleDouble}
-                            defaultValue='All'
-                        >
-                            <option value='All'>All products</option>
 
-                            {productTypes.length && storeProducts.allCurrentTypes?.length
-                                ? productTypes?.map((type, i) => {
-                                      if (storeProducts.allCurrentTypes.includes(type.id)) {
-                                          return (
-                                              <option key={type.id} value={type.id}>
-                                                  {type.Name}
-                                              </option>
-                                          );
-                                      }
-                                  })
-                                : false}
-                        </select>
+                {userCart.length ? (
+                    <div
+                        className='fixed flex w-screen justify-evenly bottom-5 z-20  '
+                        onClick={() => history.push('/cart')}
+                    >
+                        <span className='bg-primary rounded-lg   p-1.5 cursor-pointer text-white font-semibold'>
+                            Your cart {itemsCart} items ${total}
+                        </span>
                     </div>
-                    -
-                    <div className=''>
-                        <select
-                            className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                            name='subcategory'
-                            id='subcategory'
-                            onChange={handleDoubleCat}
-                            defaultValue='All'
-                        >
-                            <option value='All' disabled={!filters.type.length ? true: false}>{!filters.type.length ? "Choose a Type": "All Categories"}</option>
-                            {filters.type.length && keysSubCats?.length
-                                ? productSubCat.map((subCat, i) => {
-                                    if (keysSubCats?.includes(subCat.id)) {
-                                        return (
-                                            <option key={subCat.id} value={subCat.id}>
-                                                {subCat.Name}
-                                            </option>
-                                        );
-                                    }
-                                })
-                                :false
-                                }
-                        </select>
-                    </div>
-                    <div className='flex'>
-                        <form onSubmit={(e) => handleSubmit(e)} className='flex items-center gap-1'>
-                            <input
-                                type='number'
-                                placeholder='minimum'
-                                name='min'
-                                className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
+                ) : (
+                    false
+                )}
+
+                {/* --- FILTERS & SEARCH --- */}
+                <div className='m-auto mt-6 2xl:w-3/4 2xl:mt-16'>
+                    <Search
+                        searchProduct={filters.searchProduct}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
+                    {/* --- FILTERS --- */}
+                    <div className='flex w-3/4 m-auto items-center justify-between'>
+                        <div className=''>
+                            <select
+                                className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                                name='category'
+                                id='category'
+                                onChange={handleDouble}
+                                defaultValue='All'
+                            >
+                                <option value='All'>All products</option>
+
+                                {productTypes.length && storeProducts.allCurrentTypes?.length
+                                    ? productTypes?.map((type, i) => {
+                                          if (storeProducts.allCurrentTypes.includes(type.id)) {
+                                              return (
+                                                  <option key={type.id} value={type.id}>
+                                                      {type.Name}
+                                                  </option>
+                                              );
+                                          }
+                                      })
+                                    : false}
+                            </select>
+                        </div>
+
+                        <div className=''>
+                            <select
+                                className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                                name='subcategory'
+                                id='subcategory'
+                                onChange={handleDoubleCat}
+                                defaultValue='All'
+                            >
+                                <option value='All' disabled={!filters.type.length ? true : false}>
+                                    {!filters.type.length ? 'Choose a Type' : 'All Categories'}
+                                </option>
+                                {filters.type.length && keysSubCats?.length
+                                    ? productSubCat.map((subCat, i) => {
+                                          if (keysSubCats?.includes(subCat.id)) {
+                                              return (
+                                                  <option key={subCat.id} value={subCat.id}>
+                                                      {subCat.Name}
+                                                  </option>
+                                              );
+                                          }
+                                      })
+                                    : false}
+                            </select>
+                        </div>
+                        <div className='flex'>
+                            <form
+                                onSubmit={(e) => handleSubmit(e)}
+                                className='flex items-center gap-1'
+                            >
+                                <input
+                                    type='number'
+                                    placeholder='minimum'
+                                    name='min'
+                                    className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
                                             focus:outline-none focus:bg-white focus:border-cocoMall-100 '
-                                value={filters.min}
-                                onChange={handleChange}
-                            ></input>
-                            <AiOutlineLine className='text-cocoMall-400' />
-                            <input
-                                type='number'
-                                placeholder='maximum'
-                                name='max'
-                                className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
+                                    value={filters.min}
+                                    onChange={handleChange}
+                                ></input>
+                                <AiOutlineLine className='text-cocoMall-400' />
+                                <input
+                                    type='number'
+                                    placeholder='maximum'
+                                    name='max'
+                                    className=' appearance-none border border-gray-50 rounded shadow-sm py-1 px-3 w-36
                                             focus:outline-none focus:bg-white focus:border-cocoMall-100 '
-                                value={filters.max}
-                                onChange={handleChange}
-                            ></input>
-                            <button className='flex text-cocoMall-300 h-6' type='submit'>
-                                <BsFillArrowRightCircleFill className='h-full w-full' />
-                            </button>
+                                    value={filters.max}
+                                    onChange={handleChange}
+                                ></input>
+                                <button className='flex text-cocoMall-300 h-6' type='submit'>
+                                    <BsFillArrowRightCircleFill className='h-full w-full' />
+                                </button>
                         </form>
                         <button
                             className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
@@ -284,31 +299,33 @@ export default function StoreDetail() {
                         </select>
                     </div>
                 </div>
-            </div>
 
-            {/* CARDS */}
-            <div className='col-span-12 w-2/3 m-auto'>
-                <div>
-                    {keysTypesSinFilter?.length <= keysTypes?.length ? (
-                        <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
-                    ) : (
-                        <></>
-                    )}
-                </div>
-                <div className='flex flex-col'></div>
-                <div>
-                    {storeProductsFilter?.Products
-                        ? keysTypes.map((k) => {
-                              return (
-                                  <TypesProduct
-                                      typeName={k}
-                                      SubCategories={storeProductsFilter.Products[k]}
-                                      modalIsOpen={modalIsOpen}
-                                      setModalIsOpen={setModalIsOpen}
-                                  />
-                              );
-                          })
-                        : null}
+                {/* CARDS */}
+                <div className='col-span-12 w-2/3 m-auto'>
+                    <div>
+                        {keysTypesSinFilter?.length <= keysTypes?.length ? (
+                            <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>
+                                Alls Products
+                            </h3>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
+                    <div className='flex flex-col'></div>
+                    <div>
+                        {storeProductsFilter?.Products
+                            ? keysTypes.map((k) => {
+                                  return (
+                                      <TypesProduct
+                                          typeName={k}
+                                          SubCategories={storeProductsFilter.Products[k]}
+                                          modalIsOpen={modalIsOpen}
+                                          setModalIsOpen={setModalIsOpen}
+                                      />
+                                  );
+                              })
+                            : null}
+                    </div>
                 </div>
             </div>
         </div>

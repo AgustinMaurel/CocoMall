@@ -51,7 +51,6 @@ const RegisterScreen = () => {
         );
         //Antes de pusherlo a la home le tiro un Salert preguntando si quiere que se quede en remember en la cuenta
         history.push('/home');
-
         setValue('name', '');
         setValue('lastName', '');
         setValue('email', '');
@@ -61,11 +60,13 @@ const RegisterScreen = () => {
     };
 
     const handleGoogleLogin = () => {
-        dispatch(startGoogleLogin(placeSelected.state, placeSelected.country, remember));
+        dispatch(startGoogleLogin(remember));
+        setValue('rememberForm', false);
     };
 
     const handleFacebookLogin = () => {
         dispatch(startFacebookLogin(remember));
+        setValue('rememberForm', false);
     };
 
     const handleChecked = () => {

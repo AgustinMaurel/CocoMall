@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const { all } = require('sequelize/types/lib/operators');
 
 module.exports = (sequelize) => {
     return sequelize.define(
@@ -41,6 +42,7 @@ module.exports = (sequelize) => {
             // payment_account: {
             //PENDING
             // }
+            
         },
         {
             timestamps: false,

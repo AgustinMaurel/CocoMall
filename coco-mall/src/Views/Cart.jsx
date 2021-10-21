@@ -66,6 +66,7 @@ export default function Cart() {
                 <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
             </div>
 
+
             {!userCart.length && (
                 <div className='h-3/5     px-5'>
                     <div className=' flex flex-col gap-4 items-center justify-center relative h-full w-full '>
@@ -91,8 +92,13 @@ export default function Cart() {
                 </div>
             )}
 
+
+                {/* MAIN CONTENT */}
             <div className='flex  justify-center   bg-gray-100   2xl:px-20  '>
+                
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
+                    
+                    
                     {/* CLEAR CART BUTTON */}
                     {userCart.length > 0 && !modalIsOpen && (
                         <>
@@ -146,6 +152,7 @@ export default function Cart() {
                     </ReactModal>
 
                     <div className='flex 0 xl:pb-28   md:w-4/5 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
+                        
                         <div className='xl:w-4/6 xl:flex      xl:flex-col xl:items-center xl:justify-center   '>
                             {/* CARDS */}
                             {userCart?.length > 0 &&
@@ -290,14 +297,20 @@ export default function Cart() {
                                     </>
                                 ))}
                         </div>
+
+                        {/* ORDER RESUME */}
                         {userCart.length > 0 && (
                             <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
+                               
                                 <div className='flex flex-col gap-5 px-2'>
                                     <div className='flex flex-col  gap-1'>
+                                       
                                         <h2 className='text-gray-600 font-bold text-lg'>
                                             My order
                                         </h2>
+                                        
                                         <hr className='border-1 border-gray-300' />
+                                    
                                     </div>
                                     <div className='flex justify-between items-center px-2'>
                                         <h2 className='text-gray-600 font-bold text-sm'>Total</h2>
@@ -309,10 +322,10 @@ export default function Cart() {
                                 </div>
 
                                 <div
-                                    className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary w-2/2  h-12
+                                    className='shadow-lg flex items-center relative justify-center bg-white   border-primary  text-primary w-2/2  h-12
                                             xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10   '
                                 >
-                                    <Link to='create/order'>
+                                    <Link className='w-full h-full' to='create/order'>
                                         <button
                                             className=' focus:outline-none text-center text-lg font-bold w-full h-full      
                                                 sm:text-xl

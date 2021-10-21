@@ -27,6 +27,7 @@ export default function Answer({questionId, setFlag, flag}) {
             title: 'Successfully answer',
         })}
          )
+         setAnswer("")
     }
 
     return (

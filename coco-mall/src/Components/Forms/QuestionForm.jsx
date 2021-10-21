@@ -14,7 +14,7 @@ export default function Question({productId}) {
     }
 
     const handleSubmit = async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         if(Question.length > 5){
           const body = {
             userId: uid,
@@ -27,7 +27,7 @@ export default function Question({productId}) {
             toast: true,
             position: 'center',
             showConfirmButton: false,
-            timer: 3000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
               toast.addEventListener('mouseenter', Swal.stopTimer)

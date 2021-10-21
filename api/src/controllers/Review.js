@@ -42,7 +42,7 @@ class ReviewModel extends ModelController {
 
         const finalRev = await this.model.findByPk(reviewId);
 
-        res.send(finalRev);
+        res.send("Creada correctamente");
       } catch (e) {
         res.send(e);
       }

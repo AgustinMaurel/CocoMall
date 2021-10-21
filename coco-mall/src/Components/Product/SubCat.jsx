@@ -37,7 +37,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                 })}
             </div>
 
-            <div className='flex overflow-x-auto'>
+            <div className='flex overflow-hidden hover:overflow-x-auto'>
                 {Products?.map((product) => (
                     <div onClick={() => modalFuncion(product.id)}>
                         <Product product={product} />

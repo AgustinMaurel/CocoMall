@@ -1,4 +1,5 @@
 const { Question, Product, User } = require('../models/index');
+const { Op } = require('sequelize');
 const ModelController = require('./index');
 
 class QuestionModel extends ModelController {
@@ -89,6 +90,49 @@ class QuestionModel extends ModelController {
             res.send("Wrong params")
         }
     }
+
+    getQuestionToResponse = async (req, res) => {
+        //id de la tienda
+        const id = req.params.id
+        if (id) {
+            try {
+                const stores = await Product.findAll({
+                    where: {
+                        StoreId: id
+                    }
+                })
+                let productIds = []
+                for (const store of stores) {
+                    productIds = [...productIds, store.dataValues.id]
+                }
+                const questions = await this.model.findAll({
+                    where: {
+                        ProductId: {
+                            [Op.or]: productIds
+                        },
+                        answer: "null"
+                    },
+                    include: [
+                        {
+                            model: User,
+                            attributes: ["Name"]
+                        },
+                        {
+                            model: Product,
+                            attributes: ["productName", "cloudImage"]
+                        }
+                    ]
+                })
+                res.send(questions)
+            } catch (error) {
+                res.send(error)
+            }
+        } else {
+            res.send("Wrong params")
+        }
+    }
+
+
 }
 
 const QuestionController = new QuestionModel(Question);

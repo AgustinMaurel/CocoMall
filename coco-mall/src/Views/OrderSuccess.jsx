@@ -8,6 +8,7 @@ import axios from 'axios';
 import { auth } from '../firebase/firebaseConfig';
 import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth';
+import { clearCart } from '../Redux/actions/shoppingActions';
 
 function OrderSuccess() {
     const auth = getAuth();
@@ -44,6 +45,10 @@ function OrderSuccess() {
     });
 
     useEffect(() => {
+        dispatch(clearCart(uid));
+    }, []);
+
+    useEffect(() => {
         if (
             userData.address !== undefined &&
             userData.payment_id !== undefined &&
@@ -55,7 +60,7 @@ function OrderSuccess() {
             axios.post('http://localhost:3001/checkout/feedback', userData);
         }
     }, [userData]);
-
+    console.log(userData);
     useEffect(() => {
         firebase.auth();
         auth.onAuthStateChanged((user) => {
@@ -63,6 +68,7 @@ function OrderSuccess() {
                 axios
                     .get(`/user/${user.uid}`)
                     .then((res) => {
+                        console.log(res.data);
                         dispatch(login(user.uid, user.displayName));
                         dispatch(userInfo(uid));
                         setUserData({
@@ -86,40 +92,40 @@ function OrderSuccess() {
 
     return (
         <>
-            {active ? (
-                <div className=' overflow-hidden'>
-                    <div className='z-10 shadow'>
-                        <NavBar />
-                    </div>
+            {/* {active ? ( */}
+            <div className=' overflow-hidden'>
+                <div className='z-10 shadow'>
+                    <NavBar />
+                </div>
 
-                    <div className='overflow-hidden z-0 absolute top-0 right-0 left-0 bottom-0 mx-auto flex flex-col justify-center items-center px-5 '>
-                        <div className='text-2xl z-0 flex flex-col gap-10'>
-                            <div
-                                className=' z-0
+                <div className='overflow-hidden z-0 absolute top-0 right-0 left-0 bottom-0 mx-auto flex flex-col justify-center items-center px-5 '>
+                    <div className='text-2xl z-0 flex flex-col gap-10'>
+                        <div
+                            className=' z-0
                 absolute w-64 h-64 bg-primary-light rounded-full -bottom-20 -left-20 
 '
-                            ></div>
-                            <div
-                                className=' z-0
+                        ></div>
+                        <div
+                            className=' z-0
                 absolute w-64 h-64 bg-primary-light rounded-full top-20 -right-20 
                 xl:top-0  xl:-right-20
 '
-                            ></div>
-                            <p className='z-10'>
-                                {' '}
-                                <span className='font-bold text-cocoMall  '>Your</span> purchase was
-                                successfully done, all the information was sent to your mailbox.
-                            </p>
-                            <p className='text-xl z-10'>
-                                You will be redirected to the home page in{' '}
-                                <span className='text-cocoMall text-3xl font-bold'>{counter} </span>
-                            </p>
-                        </div>
+                        ></div>
+                        <p className='z-10'>
+                            {' '}
+                            <span className='font-bold text-cocoMall  '>Your</span> purchase was
+                            successfully done, all the information was sent to your mailbox.
+                        </p>
+                        <p className='text-xl z-10'>
+                            You will be redirected to the home page in{' '}
+                            <span className='text-cocoMall text-3xl font-bold'>{counter} </span>
+                        </p>
                     </div>
                 </div>
-            ) : (
+            </div>
+            {/* ) : (
                 <Redirect to='/home' />
-            )}
+            )} */}
         </>
     );
 }

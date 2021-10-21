@@ -80,7 +80,13 @@ class QuestionModel extends ModelController {
                 const questions = await this.model.findAll({
                     where: {
                         ProductId: id
-                    }
+                    },
+                    include: [
+                        {
+                            model: User,
+                            attributes: ["Name"]
+                        }
+                    ]
                 })
                 res.send(questions)
             } catch (error) {

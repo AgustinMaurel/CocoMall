@@ -152,7 +152,6 @@ const OrderProduct = () => {
                 orderState: 'Success',
                 arrayIdProducts: storeProducts,
             };
-            console.log(obj, 'order al back');
             axios.post('/order/create', obj);
         }
     };

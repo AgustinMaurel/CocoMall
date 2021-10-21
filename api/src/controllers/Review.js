@@ -20,15 +20,18 @@ class ReviewModel extends ModelController {
         //Search the store and attach the Review
         const store = await Store.findByPk(storeId);
         await store.addReview(reviewId);
-
+        
         //Store update, prop: rating
         const totalSumQual = await this.model.findAll();
-        const posibleQualifications = totalSumQual.length * 5;
+        const posibleQualifications = totalSumQual.length;
         let count = 0
         totalSumQual.forEach(elem => {
             count += Number(elem.qualification)
         });
-        let result = (count / posibleQualifications) * 100;
+        let result = count / posibleQualifications
+        result = result.toString()
+        if(result.length>4) result = result.slice(0,3)
+        result = Number(result)
         // 6 ---- 30 ---- 100
         // 6 ---- 21 ----  X
         // x = 21 / 30 * 100 = 72 %

@@ -43,6 +43,7 @@ function ShopCreate({ setIsTrue }) {
 
     //POST DATA STORE & ID USER
     const handleRegister = (data) => {
+        console.log(data)
         let store = {
             storeName: data.storeName,
             description: data.description,
@@ -51,6 +52,8 @@ function ShopCreate({ setIsTrue }) {
             cp: placeSelected.cp,
             state: placeSelected.state,
             coord: placeSelected.coord,
+            paymentAccount: data.CBU
+           
         };
         let storeCreated = { store: store, idUser: userId, idImage: image };
         setIsTrue(false);
@@ -78,7 +81,6 @@ function ShopCreate({ setIsTrue }) {
         >
             <form className='w-4/5 flex flex-col 2xl:w-3/5' onSubmit={handleSubmit(handleRegister)}>
                 <h3 className='sm:mb-10 text-2xl md:text-3xl'>Create your Store</h3>
-                <br />
 
                 <InputDefault
                     register={register}
@@ -130,6 +132,14 @@ function ShopCreate({ setIsTrue }) {
                 <div className='h-36 mb-8'>
                     <InputMaps coord={placeSelected.coord} />
                 </div>
+
+                <InputDefault
+                    register={register}
+                    errors={errors}
+                    name='CBU'
+                    placeholder='Eg: 01702046600000087865'
+                    validate={validate.cbu}
+                />
 
                 <Textarea
                     register={register}

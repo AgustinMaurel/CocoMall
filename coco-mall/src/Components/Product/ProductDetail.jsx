@@ -14,7 +14,7 @@ import QuestionAndAnswer from './QuestionAndAnswer';
 
 ReactModal.setAppElement('#root');
 export default function ProductDetail(props) {
-    let [productCant, setProductCant] = useState(0);
+    let [productCant, setProductCant] = useState(1);
     const dispatch = useDispatch();
     const history = useHistory();
     const { product } = props;
@@ -37,7 +37,7 @@ export default function ProductDetail(props) {
     };
 
     const handleDeleteOne = () => {
-        if (productCant > 0) {
+        if (productCant > 1) {
             setProductCant(--productCant);
         }
     };

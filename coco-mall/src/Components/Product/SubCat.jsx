@@ -20,8 +20,6 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
 
     const que = '+';
     const cant = 1;
-
-    console.log('productos length: ', Products?.length);
     
     return (
         <div className='flex flex-col'>
@@ -37,7 +35,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                 })}
             </div>
 
-            <div className='flex overflow-x-auto'>
+            <div className='flex overflow-hidden hover:overflow-x-auto'>
                 {Products?.map((product) => (
                     <div onClick={() => modalFuncion(product.id)}>
                         <Product product={product} />

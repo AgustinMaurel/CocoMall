@@ -88,7 +88,9 @@ export default function ModelTable({
                                     <td className=' border-b  border-gray-400 py-2'>
                                         {el.price || el.amount || el.Mail || el.state}
                                     </td>
-                                    <td className='border-b  border-gray-400 py-2'>{el.id}</td>
+
+                                    <td className='border-b  border-gray-400 py-2'>{el.paymentAccount || el.id }</td>
+
                                     {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> 
                                     : el.arrayIdProducts ?
                                      <td className='border-b  border-gray-400 py-2'> <div className="flex flex-col justify-start items-start"> {el.arrayIdProducts.map(el => <span>{el.productName} ({el.quantity})</span>)}</div> </td> : false}

@@ -5,12 +5,12 @@ export default function QuestionCard({ question, answer, userName}) {
   
     return (
         <div className="">
-            <div>
-                <h3 className="text-lg">+{userName}</h3>
-                <h3 className="text-lg">+{question}</h3>
+            <div className="flex">
+                <h3 className="text-xl text-cocoMall-800">+{userName}: </h3>
+                <p className="text-lg text-gray-600 ml-2">{question}</p>
             </div>
             <div>
-                {answer !== "null" ? <h3>-{answer}</h3> : <p className="text-cocoMall-600">-This question has not been answered yet.</p>}
+                {answer !== "null" ? <p className="text-cocoMall-400">-{answer}</p> : <p className="text-cocoMall-600">-This question has not been answered yet.</p>}
             </div>
         </div>
     )

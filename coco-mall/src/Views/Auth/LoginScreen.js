@@ -57,34 +57,40 @@ const LoginScreen = () => {
     };
 
     return (
-        <div className='h-screen overflow-hidden flex flex-col gap-10 '>
-            <div className='z-10'>
+        <div className='h-screen   flex flex-col md:flex-none gap-10 '>
+            <div className='z-50'>
                 <NavBar />
             </div>
-            <div className='z-0 absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
-                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
-                <div className='z-0 w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
+
+            {/* BGROUND */}
+            <div>
+                <div className='absolute right-0 -top-72 z-0'>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+                </div>
+                <div
+                    className='h-14 w-14 z-0 bg-primary-light rounded-full absolute -left-10 bottom-0
+                                                    xl:h-28 xl:w-28 xl:left-10 xl:top-32'
+                ></div>
+                <div
+                    className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/4 top-3/4
+                                    xl:flex xl: xl:h-16 xl:w-16'
+                ></div>
             </div>
-            <div
-                className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
-                        xl:flex xl: xl:h-16 xl:w-16'
-            ></div>
-            <div
-                className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
-                                        xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-            ></div>
+
+            {/* LOGIN */}
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col  justify-center md:w-2/3 xl:w-8/12 items-center z-10 '>
+                <div className='flex flex-col z-10 m-auto h-full justify-start sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
 
-                    <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
-                        <div className='flex flex-col text-left z-10'>
+                    <form className=' w-full' onSubmit={handleSubmit(handleLogin)}>
+                        <div className='flex flex-col text-left z-10 '>
                             <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 
-                            <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+                            <div className='flex m-1  border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
                                     className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('email', {

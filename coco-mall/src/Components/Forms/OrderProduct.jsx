@@ -11,7 +11,6 @@ import { GOOGLE_MAPS_API_KEY } from '../../Scripts/constants.js';
 import Address from '../Cards/Address';
 import InputMaps from '../Inputs/InputMaps';
 import ReactModal from 'react-modal';
-import { clearCart } from '../../Redux/actions/shoppingActions';
 
 const OrderProduct = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -162,7 +161,6 @@ const OrderProduct = () => {
             Remember: true,
         };
         axios.put(`/user/update/${uid}`, { ...aux }).then(() => console.log('se cambio'));
-        dispatch(clearCart(uid));
     };
 
     return (
@@ -350,9 +348,12 @@ const OrderProduct = () => {
                                                                                       </p>
                                                                                       <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
                                                                                           Price:{' '}
-                                                                                          {
-                                                                                              item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-                                                                                          }
+                                                                                          {item.price
+                                                                                              .toString()
+                                                                                              .replace(
+                                                                                                  /\B(?=(\d{3})+(?!\d))/g,
+                                                                                                  '.',
+                                                                                              )}
                                                                                       </p>
                                                                                   </div>
                                                                               </div>
@@ -381,15 +382,17 @@ const OrderProduct = () => {
                                         Products({itemsCart})
                                     </h4>
                                     <span className='text-gray-600 font-bold text-lg'>
-                                        Price: {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                        Price:{' '}
+                                        {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                     </span>
                                     <span className='text-gray-600 font-bold text-lg'>
-                                        Total price: {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                        Total price:{' '}
+                                        {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                     </span>
                                 </div>
                                 <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>
                                     <a
-                                        target="_blank"
+                                        target='_blank'
                                         href={link}
                                         onClick={() => handleSubmitOrder()}
                                         className=' focus:outline-none max-h-full flex iltems-center justify-center content-center   text-lg font-bold w-full       sm:text-xl xl:text-primary xl:text-xl'

@@ -93,6 +93,7 @@ module.exports = {
         extend: {
             backgroundColor: ['checked', 'odd'],
             borderColor: ['checked'],
+            overflow: ['hover'],
             
         },
     },

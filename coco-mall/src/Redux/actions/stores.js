@@ -93,13 +93,15 @@ export const getProductDetail = (id) => {
 };
 
 export const filterProducts = (id, payload) => {
+    console.log("SOY PAYLAOD", payload)
     const obj = {
         types: payload.type,
         name: payload.searchProduct,
         min: payload.min,
         max: payload.max,
         discount: payload.discount,
-        subCategory: payload.subCategory
+        subCategory: payload.subCategory,
+        order: payload.order ? payload.order : "ALL"
     };
     return async (dispatch) => {
         const response = await axios.post(`/product/filter/${id}`, obj);

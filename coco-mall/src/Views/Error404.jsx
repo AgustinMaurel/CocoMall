@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import NavBar from './../Components/NavBar/NavBar';
 
 function Error404() {
+    const history = useHistory();
     return (
         <div className='h-screen  overflow-hidden'>
             <NavBar />
@@ -21,6 +23,7 @@ function Error404() {
                         z-10 xl:border-none xl:shadow-none  xl:h-12 xl:mt-10   '
                     >
                         <button
+                            onClick={() => history.push('/home')}
                             className=' focus:outline-none text-center text-lg font-bold w-full h-full      
                                                 sm:text-xl
                                                xl:text-xl'

@@ -1,11 +1,12 @@
 import React from "react";
 
 
-export default function QuestionCard({ question, answer }) {
-    
+export default function QuestionCard({ question, answer, userName}) {
+  
     return (
         <div className="">
             <div>
+                <h3 className="text-lg">+{userName}</h3>
                 <h3 className="text-lg">+{question}</h3>
             </div>
             <div>

@@ -39,12 +39,13 @@ module.exports = (sequelize) => {
             coord: {
                 type: DataTypes.JSON,
             },
-            // payment_account: {
-            //PENDING
-            // }
+            paymentAccount: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
             rating: {
                 type: DataTypes.INTEGER,
-                // allowNull: false 
+                allowNull: false,
                 defaultValue: 0
             }
         },

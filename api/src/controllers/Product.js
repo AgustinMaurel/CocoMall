@@ -99,6 +99,7 @@ class ProductModel extends ModelController {
                 const discountToFil = discount || 0;
                 const subCategToFil = subCategory || []
                 const orderToApply = order 
+                console.log(order);
                 let filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
@@ -123,7 +124,7 @@ class ProductModel extends ModelController {
                             }
                         },
                     },
-                    order: [order ? ['price', orderToApply] : ['productName', 'ASC']]
+                    order: [order !== "ALL" ? ['price', orderToApply] : ['productName', 'ASC']]
                 });
                 let allCurrentTypes = []
                 let allsubCat = []
@@ -152,6 +153,7 @@ class ProductModel extends ModelController {
                     }
                 });
                 filteredProducts = { allCurrentTypes, allsubCat, Products: OrderedProducts }
+                console.log(filteredProducts);
                 res.json(filteredProducts);
             } catch (error) {
                 res.send(error);

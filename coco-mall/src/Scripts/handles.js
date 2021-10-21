@@ -51,7 +51,8 @@ export function handleOnSubmit(filters, types, dispatch, id) {
             filters.searchState ||
             types.length ||
             filters.min ||
-            filters.max
+            filters.max ||
+            filters.order
         ) {
             id && dispatch(filterProducts(id, filters));
             !id && dispatch(filterStores(filters));
@@ -65,7 +66,6 @@ export function handleOnSubmit(filters, types, dispatch, id) {
 export function handleOnChange(setFilters) {
     return (e) => {
         setFilters((prevData) => {
-            console.log(prevData)
             const state = {
                 ...prevData,
                 [e.target.name]: e.target.value,
@@ -85,6 +85,7 @@ export function handleOnChange(setFilters) {
             if (state.discount) {
                 state.discount = 1;
             }
+            console.log('SOY STATE', state);
             return state;
         });
     };
@@ -102,7 +103,7 @@ export function handleOnTypes(dispatch, id, filters) {
             dispatch(filterProducts(id, aux));
         } else {
             filters.type = [];
-            filters.subCategory = []
+            filters.subCategory = [];
             dispatch(filterProducts(id, aux));
         }
     };
@@ -113,15 +114,31 @@ export function handleOnCategories(dispatch, id, filters) {
         let val = parseInt(e.target.value);
         let aux = {
             type: [filters.type],
-            subCategory: []
-        }
-        if(e.target.value !== "All"){
+            subCategory: [],
+        };
+        if (e.target.value !== 'All') {
             aux.subCategory = [val];
             filters.subCategory = [val];
-            dispatch(filterProducts(id, aux))
-        }else{
+            dispatch(filterProducts(id, aux));
+        } else {
             filters.subCategory = [];
-            dispatch(filterProducts(id, aux))
+            dispatch(filterProducts(id, aux));
         }
-    }
+    };
+}
+
+export function handleOnChangeProduct(dispatch, id, filters) {
+    return (e) => {
+        if (e.target.value === 'ASC') {
+            filters.order = 'ASC'
+            dispatch(filterProducts(id, filters));
+        }
+        if (e.target.value === 'DESC') {
+            filters.order = 'DESC'
+            dispatch(filterProducts(id, filters));
+        } else {
+            filters.order = 'ALL';
+            dispatch(filterProducts(id, filters));
+        }
+    };
 }

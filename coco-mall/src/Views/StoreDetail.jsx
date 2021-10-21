@@ -23,6 +23,7 @@ import {
     handleOnDiscount,
     handleOnTypes,
     handleOnCategories,
+    handleOnChangeProduct
 } from '../Scripts/handles';
 import Info from '../Components/StoreInfo/Info';
 import { Image } from 'cloudinary-react';
@@ -87,10 +88,10 @@ export default function StoreDetail() {
 
     const handleChange = handleOnChange(setFilters);
     const handleSubmit = handleOnSubmit(filters, filters.type, dispatch, id);
-    const handleOrder = handleOnOrder(dispatch);
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
     const handleCategories = handleOnCategories(dispatch, id, filters);
+    const handleOrderPrice = handleOnChangeProduct(dispatch, id, filters)
 
     const handleDoubleCat = (e) => {
         handleChange(e);
@@ -100,6 +101,11 @@ export default function StoreDetail() {
         handleChange(e);
         handleTypes(e);
     };
+
+    const handleOrder = async (e) => {
+        handleChange(e)
+        handleSubmit(e)
+    }
 
     let itemsCart;
     if (userCart.length) {
@@ -290,12 +296,14 @@ export default function StoreDetail() {
                     {/* --- ORDERS --- */}
                     <div>
                         <select
+                            name="order"
                             className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                            onChange={handleChange}
+                            onChange={(e) =>handleOrder(e)}
+                            defaultValue={filters.order}
                         >
-                            <option name="" value=''>Most Relevant</option>
-                            <option name= "ASC" value='ASC'>High Price</option>
-                            <option name="DESC" value='DESC'>Low Price</option>
+                            <option value="ALL">Most Relevant</option>
+                            <option value='ASC'>High Price</option>
+                            <option value='DESC'>Low Price</option>
                         </select>
                     </div>
                 </div>

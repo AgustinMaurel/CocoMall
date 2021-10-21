@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetail } from '../../Redux/actions/stores';
 import ReactModal from 'react-modal';
 import { addToCartSomo, cartDeleteSomo } from '../../Redux/actions/shoppingActions';
-import Slider from 'react-slick';
 
 ReactModal.setAppElement('#root');
 
@@ -23,9 +22,9 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
     const cant = 1;
 
     console.log('productos length: ', Products?.length);
-
+    
     return (
-        <div className='flex flex-col border'>
+        <div className='flex flex-col'>
             <div>
                 {productSubCat.map((cat) => {
                     if (cat.id === parseInt(SubCatName)) {
@@ -38,7 +37,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                 })}
             </div>
 
-            <div className='flex border bg-blue-700 overflow-x-auto'>
+            <div className='flex overflow-x-auto'>
                 {Products?.map((product) => (
                     <div onClick={() => modalFuncion(product.id)}>
                         <Product product={product} />
@@ -53,10 +52,15 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                             overlay: {
                                 backgroundColor: 'rgba(0, 0, 0, 0.65)',
                             },
+                            content: {
+                                overflowY: "auto"
+                            }
                         }}
+                        contentLabel={"Product Detail"}
+                        preventScroll={false}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-2/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
+                        className='rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-3/5 h-4/5 top-20 bottom-0 right-0 left-0 m-auto'
                     >
                         <ProductDetail product={productDetail} setModalIsOpen={setModalIsOpen} />
                     </ReactModal>

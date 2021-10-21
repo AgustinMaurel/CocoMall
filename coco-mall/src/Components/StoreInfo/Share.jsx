@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { IoShareSocialSharp } from 'react-icons/io5';
+import { IoMdShareAlt } from 'react-icons/io';
 
 const Share = () => {
     const location = useLocation();
@@ -11,22 +11,25 @@ const Share = () => {
         copied: false,
     });
     return (
-        <div className='text-white flex items-center justify-center absolute bottom-7 right-10'>
-            <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
-                <button
-                    onClick={() =>
-                        Swal.fire({
-                            position: 'top-center',
-                            icon: 'success',
-                            title: 'Copied',
-                            showConfirmButton: false,
-                            timer: 1000,
-                        })
-                    }
-                >
-                    <IoShareSocialSharp className='w-6 h-6' style={{ pointerEvents: 'none' }} />
-                </button>
-            </CopyToClipboard>
+        <div>
+            <div className='flex items-center gap-1 cursor-pointer'>
+                <p className='hidden xl:block'>Share</p>
+                <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
+                    <button
+                        onClick={() =>
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: 'Copied',
+                                showConfirmButton: false,
+                                timer: 1000,
+                            })
+                        }
+                    >
+                        <IoMdShareAlt className='w-8 h-8' style={{ pointerEvents: 'none' }} />
+                    </button>
+                </CopyToClipboard>
+            </div>
         </div>
     );
 };

@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { IoMdInformationCircle } from 'react-icons/io';
+import { IoLocationSharp } from 'react-icons/io5';
 
-import bannerFlower from '../../Assets/images/banners/bannerFlower.png';
 import InputMaps from '../Inputs/InputMaps';
 import ReviewForm from '../StoreReview/reviewForm';
-//import logo from '../../Assets/images/logoDefault.png';
+import { Image } from 'cloudinary-react';
 
 ReactModal.setAppElement('#root');
 const Info = ({ info, infoModal, setInfoModal }) => {
     return (
-        <div className='text-white flex items-center justify-center'>
-            <button onClick={() => setInfoModal(true)}>
+        <div>
+            <div
+                className='flex items-center gap-1 cursor-pointer'
+                onClick={() => setInfoModal(true)}
+            >
+                <p className='hidden xl:block'>About us</p>
                 <IoMdInformationCircle className='w-8 h-8' />
-            </button>
+            </div>
 
             <ReactModal
                 style={{
@@ -23,26 +27,47 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                 }}
                 isOpen={infoModal}
                 onRequestClose={() => setInfoModal(false)}
-                className='rounded-sm focus:outline-none bg-white shadow-lg p-10 absolute w-4/6 h-4/6 top-0 bottom-0 right-0 left-0 m-auto'
+                className='rounded-sm focus:outline-none bg-gray-100 shadow-lg h-4/5 xl:p-10 xl:w-4/6 xl:h-4/6 top-0 bottom-0 absolute right-0 left-0 m-auto'
             >
-                <div className='w-full h-full flex flex-col bg-cocoMall-200'>
-                    <div className='h-1/3 w-full flex bg-cocoMall-50 text-center'>
-                        <div className='w-2/3 h-full bg-cocoMall-200'>
-                            <h3 className='text-3xl font-bold text-cocoMall-800'>
-                                {info?.storeName}
-                            </h3>
-                            <p>{info?.description}</p>
-                            <p>{info?.address}</p>
-                            <p>{info?.country}</p>
-                            <p>{info?.cp}</p>
-                            <p>{info?.state}</p>
+                <div className='w-full h-full flex flex-col'>
+                    <div className='h-1/3 w-full flex text-center'>
+                        <div className='flex flex-col justify-between w-full lg:w-2/3 h-full bg-cocoMall p-4'>
+                            <div className='flex items-center gap-2'>
+                                <Image
+                                    key={info?.id}
+                                    cloudName='cocomalls'
+                                    publicId={info?.cloudImage}
+                                    crop='scale'
+                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16'
+                                />
+
+                                <h3 className='text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl font-extrabold text-white'>
+                                    {info?.storeName?.toUpperCase()}
+                                </h3>
+                            </div>
+                            <div className='flex flex-col text-left text-white'>
+                                <p>
+                                    <IoMdInformationCircle className='inline-block' />
+                                    <span> {info?.description}</span>
+                                </p>
+                                <p>
+                                    <IoLocationSharp className='inline-block' />
+                                    <span>
+                                        {`
+                                    ${info?.address},
+                                    ${info?.state}
+                                    ${info?.country}
+                                    `}
+                                    </span>
+                                </p>
+                            </div>
                         </div>
-                        <div className='w-1/3 h-full bg-cocoMall-200'>
+                        <div className='hidden lg:block w-1/3 h-full'>
                             <InputMaps coord={info?.coord} />
                         </div>
                     </div>
 
-                    <div className='w-full h-2/3 bg-cocoMall-50 p-4'>
+                    <div className='w-full h-2/3 my-4'>
                         <ReviewForm />
                     </div>
                 </div>

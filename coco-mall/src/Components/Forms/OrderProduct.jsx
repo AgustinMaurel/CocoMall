@@ -352,7 +352,7 @@ const OrderProduct = () => {
                                                                                       <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
                                                                                           Price:{' '}
                                                                                           {
-                                                                                              item.price
+                                                                                              item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
                                                                                           }
                                                                                       </p>
                                                                                   </div>
@@ -382,10 +382,10 @@ const OrderProduct = () => {
                                         Products({itemsCart})
                                     </h4>
                                     <span className='text-gray-600 font-bold text-lg'>
-                                        Price: {total}
+                                        Price: {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                     </span>
                                     <span className='text-gray-600 font-bold text-lg'>
-                                        Total price: {total}
+                                        Total price: {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                     </span>
                                 </div>
                                 <div className='shadow-lg flex items-center justify-center bg-white   border-primary  text-primary  h-12 xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:mt-10 '>

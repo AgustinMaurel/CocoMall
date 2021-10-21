@@ -14,6 +14,8 @@ module.exports = (sequelize) => {
         },
         answer: {
             type: DataTypes.STRING,
+            defaultValue: "null",
+            allowNull:false
         },
     });
 };

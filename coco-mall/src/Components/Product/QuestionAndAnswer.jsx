@@ -10,7 +10,7 @@ export default function QuestionAndAnswer({ productId }) {
     useEffect(async () => {
         const response = await axios.get(`/question/${productId}`)
         setQuestion(response.data)
-    }, [])
+    }, [productId])
 
     return (
         <div>

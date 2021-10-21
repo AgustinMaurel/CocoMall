@@ -2,13 +2,14 @@ import React from "react";
 
 
 export default function QuestionCard({ question, answer }) {
+    
     return (
-        <div>
+        <div className="">
             <div>
-                <h3>{question}</h3>
+                <h3 className="text-lg">+{question}</h3>
             </div>
             <div>
-                {answer ? <h3>{answer}</h3> : null}
+                {answer !== "null" ? <h3>-{answer}</h3> : <p className="text-cocoMall-600">-This question has not been answered yet.</p>}
             </div>
         </div>
     )

@@ -116,6 +116,7 @@ function App() {
                     {isLoggedIn ? <EditUser /> : <Redirect to='/auth/login' />}
                 </Route>
                 <Route path='*' component={Error404}></Route>
+
             </Switch>
         </>
     );

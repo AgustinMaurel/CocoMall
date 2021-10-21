@@ -40,7 +40,6 @@ function ShopCreate({ setIsTrue }) {
             setIsUploaded(true);
         };
     };
-    console.log('place seleccionado', placeSelected);
 
     //POST DATA STORE & ID USER
     const handleRegister = (data) => {
@@ -54,8 +53,6 @@ function ShopCreate({ setIsTrue }) {
             coord: placeSelected.coord,
         };
         let storeCreated = { store: store, idUser: userId, idImage: image };
-        console.log('data enviada: ', storeCreated);
-        console.log('place seleccionado', placeSelected);
         setIsTrue(false);
 
         //configurar a medida
@@ -120,7 +117,6 @@ function ShopCreate({ setIsTrue }) {
                                 'geometry',
                             ],
                             types: ['address'],
-                            // componentRestrictions: { country: 'ar' },
                         }}
                         placeholder='Eg: Av. Belgrano 3200'
                     />

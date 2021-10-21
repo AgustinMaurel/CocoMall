@@ -4,9 +4,9 @@ const { Op } = require('sequelize');
 const ModelController = require('./index');
 
 class ProductModel extends ModelController {
-  constructor(model) {
-    super(model);
-  }
+    constructor(model) {
+        super(model);
+    }
     //Specific Functions for this model
     createProduct = async (req, res) => {
         //ID of Store
@@ -91,13 +91,14 @@ class ProductModel extends ModelController {
         if (storeId) {
             try {
                 //Array of the Types of products (on ID forms) that i need
-                const { types, name, min, max, discount, subCategory } = req.body
+                const { types, name, min, max, discount, subCategory, order } = req.body
                 const allTypes = types || [];
                 const nameToFilter = name || '';
                 const minToFil = min || 0;
                 const maxToFil = max || Math.pow(99, 99);
                 const discountToFil = discount || 0;
                 const subCategToFil = subCategory || []
+                const orderToApply = order 
                 let filteredProducts = await this.model.findAll({
                     where: {
                         StoreId: storeId,
@@ -122,6 +123,7 @@ class ProductModel extends ModelController {
                             }
                         },
                     },
+                    order: [order ? ['price', orderToApply] : ['productName', 'ASC']]
                 });
                 let allCurrentTypes = []
                 let allsubCat = []
@@ -163,53 +165,54 @@ class ProductModel extends ModelController {
         //Id of the store from which i need products
         const storeId = req.params.id;
         if (storeId) {
-        try {
-            //Array of the Types of products (on ID forms) that i need
-            const allTypes = req.body.types || [];
-            const nameToFilter = req.body.name || '';
-            const min = req.body.min || 0;
-            const max = req.body.max || Math.pow(99, 99);
-            const discount = req.body.discount || 0;
-            const filteredProducts = await this.model.findAll({
-            where: {
-                StoreId: storeId,
-                [Op.and]: {
-                ProductTypeId: {
-                    [Op.or]: allTypes,
-                },
-                productName: {
-                    [Op.iLike]: `%${nameToFilter}%`,
-                },
-                price: {
-                    [Op.and]: {
-                    [Op.gte]: min,
-                    [Op.lte]: max,
+            try {
+                //Array of the Types of products (on ID forms) that i need
+                const allTypes = req.body.types || [];
+                const nameToFilter = req.body.name || '';
+                const min = req.body.min || 0;
+                const max = req.body.max || Math.pow(99, 99);
+                const discount = req.body.discount || 0;
+                const filteredProducts = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                        [Op.and]: {
+                            ProductTypeId: {
+                                [Op.or]: allTypes,
+                            },
+                            productName: {
+                                [Op.iLike]: `%${nameToFilter}%`,
+                            },
+                            price: {
+                                [Op.and]: {
+                                    [Op.gte]: min,
+                                    [Op.lte]: max,
+                                },
+                            },
+                            discount: {
+                                [Op.gte]: discount,
+                            },
+                        },
                     },
-                },
-                discount: {
-                    [Op.gte]: discount,
-                },
-                },
-            },
-            });
-            res.send(filteredProducts);
-        } catch (error) {
-            res.send(error);
-        }
+                });
+                res.send(filteredProducts);
+            } catch (error) {
+                res.send(error);
+            }
         } else {
-        res.status(400).send({ message: 'Wrong parameters' });
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 
     findAllProductsOfStore = async (req, res) => {
         const storeId = req.params.id;
-        
+
         if (storeId) {
             try {
                 let allProductOfStore = await this.model.findAll({
                     where: {
                         StoreId: storeId,
                     },
+                    order: [['productName', 'ASC']]
                 });
                 let allCurrentTypes = []
                 let allsubCat = []
@@ -250,25 +253,25 @@ class ProductModel extends ModelController {
     findAllProductsOfStoreAgus = async (req, res) => {
         const storeId = req.params.id;
         if (storeId) {
-        try {
-            const allProductOfStore = await this.model.findAll({
-            where: {
-                StoreId: storeId,
-            },
-            });
-            res.send(allProductOfStore);
-        } catch (error) {
-            res.send(error);
-        }
+            try {
+                const allProductOfStore = await this.model.findAll({
+                    where: {
+                        StoreId: storeId,
+                    },
+                });
+                res.send(allProductOfStore);
+            } catch (error) {
+                res.send(error);
+            }
         } else {
-        res.status(400).send({ message: 'Wrong parameters' });
+            res.status(400).send({ message: 'Wrong parameters' });
         }
     };
 
     getOneProductById = async (req, res) => {
         const id = req.params.id
-        if(id){
-            try {          
+        if (id) {
+            try {
                 const product = await this.model.findByPk(id)
                 res.send(product)
             } catch (error) {

@@ -73,16 +73,18 @@ export default function Cart() {
                         <p>Take a look at our stores and search for what you need!</p>
 
                         <div
-                            className='shadow-lg flex items-center absolute bottom-0 bg-white  border border-primary  text-primary w-40 rounded h-8 z-20 
+                            className='shadow-lg flex items-center justify-center absolute bottom-0 bg-white  border border-primary  text-primary w-40 rounded h-8 z-20 
                          xl:border-none xl:shadow-none xl:bg-secondary-light xl:h-12 xl:w-44  '
                         >
-                            <Link
-                                to='/home'
-                                className=' focus:outline-none text-center text-base w-full h-full
+                            <Link to='/home'>
+                                <button
+                                    className=' focus:outline-none  text-base w-full h-full
+                           flex justify-start  items-center       
                      md:text-lg
                    xl:text-primary xl:text-xl'
-                            >
-                                Go to Home
+                                >
+                                    Go to Home
+                                </button>
                             </Link>
                         </div>
                     </div>
@@ -112,7 +114,7 @@ export default function Cart() {
                         }}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/4 lg:h-2/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
+                        className=' flex flex-col gap-5 justify-center items-center rounded-md focus:outline-none bg-white shadow-lg p-4 absolute w-4/6 xl:w-3/6 2xl:w-2/5 h-1/4 lg:h-2/6 xl:h-1/6 top-0 bottom-0 right-0 left-0 m-auto border-2  border-red-700'
                     >
                         <div className='absolute top-2 mx-auto'>
                             <svg
@@ -151,7 +153,7 @@ export default function Cart() {
                                     <>
                                         <div
                                             key={el.id}
-                                            className=' bg-white   mt-5 xl:mt-10  w-full flex flex-col shadow   h-56 xl:h-60 justify-around xl:flex-none relative  '
+                                            className=' bg-white   mt-5 xl:mt-10  w-full flex flex-col shadow   h-56 xl:h-60 xl:pt-10 justify-around xl:flex-none relative  '
                                         >
                                             <div className='flex flex-row h-full items-center xl:flex-none relative w-full px-5 gap-10  py-5'>
                                                 <div className=' flex  justify-self-start items-center flex-none w-1/4 h-full '>
@@ -167,16 +169,26 @@ export default function Cart() {
                                                         />
                                                     </Image>
                                                 </div>
-                                                <div className=' flex flex-col gap-2 flex-none   h-full  w-4/6 pr-2 '>
-                                                    <h2 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
-                                                        {el.productName}
-                                                    </h2>
+                                                <div className=' flex flex-col gap-2 flex-none  h-full  w-4/6 pr-2 '>
+                                                    <div>
+                                                        <h2 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                            {el.productName}
+                                                        </h2>
+                                                    </div>
 
-                                                    <div className=' h-full  w-full flex-col items-between justify-between'>
-                                                        <p className='h-5/6  w-full text-sm md:text-base text-gray-500 font-light '>
-                                                            {el.description}
-                                                        </p>
-                                                        <div className='h-1/6 flex items-center justify-start  content-center'>
+                                                    <div className='relative h-full  w-full flex-col items-between justify-between'>
+                                                        <div>
+                                                            <p className='h-5/6 mb-3 w-full text-sm md:text-base text-gray-500 font-light '>
+                                                                {el.description}
+                                                            </p>
+                                                            <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
+                                                                Stock left: {el.stock}
+                                                            </p>
+                                                            <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
+                                                                Unit price: ${el.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                                            </p>
+                                                        </div>
+                                                        <div className='absolute bottom-0 h-1/6 flex items-center justify-start  content-center'>
                                                             <svg
                                                                 xmlns='http://www.w3.org/2000/svg'
                                                                 className='h-3 w-3'
@@ -261,7 +273,7 @@ export default function Cart() {
                                                 </div>
                                                 <div className='min-w-max'>
                                                     <p className='text-2xl font-bold text-white'>
-                                                        $ {el.price * el.quantity}
+                                                        $ {(el.price * el.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -281,7 +293,7 @@ export default function Cart() {
                                     <div className='flex justify-between items-center px-2'>
                                         <h2 className='text-gray-600 font-bold text-sm'>Total</h2>
                                         <h2 className='text-cocoMall font-bold text-2xl'>
-                                            $ {total}
+                                            $ {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                         </h2>
                                     </div>
                                 </div>

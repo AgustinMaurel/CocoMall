@@ -14,8 +14,8 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
-    
-    const userName = useSelector(state=> state.auth.userInfoDB)
+
+    const userName = useSelector((state) => state.auth.userInfoDB);
 
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
@@ -51,13 +51,41 @@ function NavBar() {
         <>
             {width < breakpoint ? (
                 <div className='p-5 sticky top-0 bg-gray-100 border-gray-100 shadow '>
-                    <nav className='flex  justify-between'>
+                    <nav className='flex  justify-between relative'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
                                 <img className='w-20' src={coco} alt='logo' />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
+                            </Link>
+                        </div>
+                        <div className='absolute right-12 cursor-pointer'>
+                            <Link to='/cart'>
+                                {cartItems.length > 0 ? (
+                                    <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                        {ITEMS_IN_CART}
+                                    </div>
+                                ) : (
+                                    <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                        0
+                                    </div>
+                                )}
+
+                                <svg
+                                    className='w-6 h-6 pointer-events-none'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    viewBox='0 0 24 24'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
+                                        d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
+                                    ></path>
+                                </svg>
                             </Link>
                         </div>
                         <div onClick={handleDisplay} className='fixed right-5 top-4 z-20'>
@@ -74,9 +102,6 @@ function NavBar() {
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
-                            </Link>
-                            <Link to='/create/order'>
-                                <p>Order</p>
                             </Link>
                         </div>
                         <div className='flex gap-x-5 items-center'>
@@ -116,7 +141,9 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {userName.Name ? userName.Name.split(' ')[0] : user.name.split(' ')[0] }
+                                                {userName.Name
+                                                    ? userName.Name.split(' ')[0]
+                                                    : user.name.split(' ')[0]}
                                             </button>
                                         </Link>
                                     </div>

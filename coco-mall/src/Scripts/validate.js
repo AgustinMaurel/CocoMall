@@ -23,8 +23,7 @@ const validate = {
         },
         maxLength: {
             value: 15,
-            message:
-                'lastName must contain a maximum of 15 characters ',
+            message: 'lastName must contain a maximum of 15 characters ',
         },
         pattern: {
             value: /^[A-Za-z\s]+$/,
@@ -48,8 +47,7 @@ const validate = {
         },
         maxLength: {
             value: 16,
-            message:
-                'password must contain a maximum of 16 characters ',
+            message: 'password must contain a maximum of 16 characters ',
         },
         pattern: {
             value: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
@@ -103,8 +101,8 @@ const validate = {
             message: 'Store must contain at least 2 characters',
         },
         maxLength: {
-            value: 15,
-            message: 'Store must contain a maximum of 15 characters ',
+            value: 40,
+            message: 'Store must contain a maximum of 40 characters ',
         },
         pattern: {
             value: /^[\w\s]+([a-zA-ZÀ-ÿ\u00f1\u00d1](\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)[a-zA-ZÀ-ÿ\u00f1\u00d1])$/gm,

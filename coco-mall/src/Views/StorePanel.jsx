@@ -3,15 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from 'cloudinary-react';
 import ModelTable from '../Components/Tables/modelTable.jsx';
 import NavBar from '../Components/NavBar/NavBar';
-import {
-    filterProducts,
-    getAllProducts,
-    getProductsStore,
-    getStores,
-    ordersProduct,
-    getProductsStorePanel,
-    getOrdersStore,
-} from '../Redux/actions/stores';
+import { filterProductsPanel, getAllProducts, getProductsStore, getStores, ordersProduct, getProductsStorePanel, getOrdersStore } from '../Redux/actions/stores';
 import { IoArrowBack } from 'react-icons/io5';
 import ProductsCreate from '../Components/Forms/ProductsCreate';
 import { GrAdd } from 'react-icons/gr';
@@ -31,6 +23,7 @@ import { swalDelete } from '../Scripts/swalDelete.js';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { useHistory } from 'react-router';
 import EditUser from '../Components/Forms/EditUser.jsx';
+import { userInfo } from '../Redux/actions/auth.js';
 export default function StorePanel() {
     const dispatch = useDispatch();
 
@@ -60,26 +53,38 @@ export default function StorePanel() {
     const [renderSec, setRenderSec] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false);
 
-    const [allOrders, setAllOrders] = useState();
-    const [allUsers, setAllUsers] = useState();
-    const [allStores, setAllStores] = useState();
+    const [allOrders, setAllOrders] = useState()
+    const [allUsers, setAllUsers] = useState()
+    const [allStores, setAllStores] = useState()
+    const [userOrders, setUserOrders] = useState()
 
     useEffect(() => {
         dispatch(getStores());
-        axios.get(`/user/`).then((res) => {
-            let aux = res.data.find((el) => el.id === user.uid);
-            setUserAdmin(aux?.SuperAdmin);
-        });
+        axios.get(`/user`)
+            .then(res => {
+                let aux = res.data.find(el => el.id === user.uid)
+                setUserAdmin(aux?.SuperAdmin)
+            })
     }, [user]);
 
+
     useEffect(() => {
-        dispatch(getAllProducts());
-        dispatch(getStores());
-        dispatch(getOrdersStore(idActual));
-        axios.get('/order').then((res) => setAllOrders(res.data));
-        axios.get('/store').then((res) => setAllStores(res.data));
-        axios.get('/user').then((res) => setAllUsers(res.data));
-    }, [flag2]);
+        dispatch(getAllProducts())
+        dispatch(getStores())
+        dispatch(getOrdersStore(idActual))
+        axios.get('/order')
+            .then(res =>{
+                 setAllOrders(res.data)
+                 let aux = res.data.filter(el => el.UserId === user.uid )
+                 setUserOrders(aux)
+                })
+            
+        axios.get('/store')
+            .then(res => setAllStores(res.data))
+        axios.get('/user')
+            .then(res => setAllUsers(res.data))
+            
+    }, [flag2])
 
     useEffect(() => {
         dispatch(getProductsStorePanel(idActual));
@@ -108,9 +113,9 @@ export default function StorePanel() {
         };
         if (e.target.value !== 'All') {
             aux.type = [val];
-            dispatch(filterProducts(idActual, aux));
+            dispatch(filterProductsPanel(idActual, aux));
         } else {
-            dispatch(filterProducts(idActual, aux));
+            dispatch(filterProductsPanel(idActual, aux));
         }
     }
     const filterProduct = ['A-Z', 'Z-A', 'Price', 'Stock'];
@@ -285,22 +290,6 @@ export default function StorePanel() {
                                             {el}
                                         </label>
                                     ))}
-                                    {render === 'My Orders' && selectStore !== 'All' && (
-                                        <ModelTable
-                                            info={[]}
-                                            column_title={[
-                                                'Action',
-                                                'State',
-                                                'Payment',
-                                                'Id',
-                                                'Description',
-                                            ]}
-                                            flag2={flag2}
-                                            setFlag2={setFlag2}
-                                            swalFunction={ordersOptions}
-                                            idStore={idActual}
-                                        />
-                                    )}
                                     {render === 'Products' && (
                                         <>
                                             <select
@@ -370,7 +359,17 @@ export default function StorePanel() {
                                 idStore={idActual}
                             />
                         )}
-                        {render === 'All Products' && (
+                        {render === 'My Orders' && selectStore !== 'All' && (
+                                        <ModelTable
+                                            info={userOrders}
+                                            column_title={[ 'State', 'Payment', 'Id', 'Description']}
+                                            flag2={flag2}
+                                            setFlag2={setFlag2}
+                                            swalFunction={ordersOptions}
+                                            idStore={idActual}
+                                        />
+                                    )}
+                        {render === 'All Products' &&
                             <ModelTable
                                 info={allProducts}
                                 setProduct={setProduct}
@@ -390,7 +389,7 @@ export default function StorePanel() {
                                 setFlag2={setFlag2}
                                 swalFunction={productOptions}
                             />
-                        )}
+                        }
 
                         {render === 'All Orders' && (
                             <ModelTable

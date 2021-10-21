@@ -20,7 +20,7 @@ export default function ModelTable({
     swalFunction,
 }) {
     const [flag3, setFlag3] = useState(false);
-
+    console.log(info)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllProducts());

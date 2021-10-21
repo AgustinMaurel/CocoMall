@@ -34,7 +34,6 @@ function Home() {
         searchState: '',
     });
 
-    console.log('check type: ', checkType.length);
 
     const storeDetail = (id) => {
         dispatch(getStoreDetail(id));

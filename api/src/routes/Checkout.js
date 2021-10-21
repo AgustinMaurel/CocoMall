@@ -17,7 +17,7 @@ router.post('/stripe', async (req, res) => {
             payment_method: id,
             confirm: true,
         });
-        res.send('pagado papu');
+        res.send('pagado con éxito');
     } catch (error) {
         res.send(error.raw.message);
     }
@@ -133,3 +133,4 @@ router.post('/feedback', async function (req, res) {
 });
 
 module.exports = router;
+    

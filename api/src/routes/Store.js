@@ -18,8 +18,6 @@ router.get('/:id', getAllProductsOfStore);
 
 router.post('/filter', filterStoresByProductTypes);
 
-// router.post('/filter/:id', getAllFilteredProductsOfStore);
-
 //POST's
 router.post('/create', createStore);
 

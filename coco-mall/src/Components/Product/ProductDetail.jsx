@@ -44,52 +44,53 @@ export default function ProductDetail(props) {
 
     return (
         <>
-            <div className=' flex  justify-start content-center items-center place-content-center place-items-center justify-items-center w-full h-full m-auto p-5 gap-3'>
-                <div className='flex flex-col w-3/5 h-full rounded pt-3 gap-20 shadow'>
-                    <div className='relative justify-self-start items-center'>
-                        <h4 className='text-4xl mb-5 font-bold bg-white relative justify-self-start text-center'>
+            <div className='flex w-full h-full m-auto p-5 gap-4'>
+                <div className='p-6 bg-white rounded flex flex-col justify-between w-3/5 h-full gap-20 shadow'>
+                    <div className=''>
+                        <h4 className='text-4xl font-semibold bg-white'>
                             {product.productName.toUpperCase()}
                         </h4>
                     </div>
-                    <div className='flex flex-col gap-3'>
-                        <div className='flex flex-col min-h-max min-w-max relative'>
-                            <Image
-                                key={product.id}
-                                cloudName='cocomalls'
-                                publicId={product.cloudImage[0]}
-                                width='400'
-                                crop='scale'
-                            />
-                        </div>
-                        <div>
-                            <p className='text-lg font-semibold  md:text-lg text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl relative'>
-                                Price ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                            </p>
-                            <p className='text-base md:text-lg   text-justify xl:whitespace-nowrap w-5/6'>
-                                Stock left: {product.stock}
-                            </p>
+
+                    <div className='flex flex-col min-h-max min-w-max relative'>
+                        <Image
+                            key={product.id}
+                            cloudName='cocomalls'
+                            publicId={product.cloudImage[0]}
+                            width='400'
+                            crop='scale'
+                        />
+                    </div>
+                    <div>
+                        <p className='text-xs lg:text-lg text-cocoMall-600'>
+                            Stock left: {product.stock}
+                        </p>
+                        <div className='p-2 font-bold text-center text-xl lg:text-2xl text-white bg-cocoMall-300 rounded-md'>
+                            ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                         </div>
                     </div>
                 </div>
-                <div className=' w-full  flex flex-col justify-start items-start h-full m-auto gap-5'>
-                    <p className='text-3xl font-semibold inline-block'>Details</p>
-                    <div className='flex flex-col justify-start w-full h-full items-start overflow-y-scroll'>
-                        <p className='text-base md:text-lg  text-justify p-2 '>
-                            {product.description}
-                        </p>
-                        {product.discount > 0 ? <span>{product.discount}%</span> : false}
+                <div className='p-6 bg-white rounded w-full flex flex-col justify-start items-start h-full m-auto gap-5'>
+                    <p className='text-2xl text-cocoMall-400 font-semibold inline-block'>Details</p>
+                    <div className='flex w-full h-full overflow-hidden hover:overflow-y-auto border'>
+                        <p className='md:text-lg p-2'>{product.description}</p>
+                        {product.discount > 0 ? (
+                            <span className='border'>{product.discount}%</span>
+                        ) : (
+                            false
+                        )}
                     </div>
-                    <h3 className='text-primary font-bold text-xl '>Q&A</h3>
-                    <div className='flex flex-col w-full h-full overflow-y-auto m-auto'>
+                    <h3 className='text-2xl text-cocoMall-400 font-semibold inline-block'>Q&A</h3>
+                    <div className='flex flex-col w-full h-full overflow-y-auto m-auto border'>
                         <QuestionAndAnswer productId={product.id} />
                     </div>
-                    <div className=' w-full h-1/4'>
+                    <div className='w-full h-1/4 border'>
                         <Question productId={product.id} />
                     </div>
 
-                    <div className='flex flex-col w-4/5 z-20 justify-end h-full'>
-                        <div className='flex flex-row h-12 shadow-inner  items-center w-full content-center justify-around py-1 bg-secondary'>
-                            <div className='flex flex-none flex-row items-center content-center justify-center gap-4'>
+                    <div className='flex border w-full gap-6'>
+                        <div className='flex w-1/4 bg-secondary'>
+                            <div className='flex border'>
                                 <button
                                     id='btn-delete'
                                     onClick={() => handleDeleteOne()}
@@ -97,7 +98,7 @@ export default function ProductDetail(props) {
                                 >
                                     <svg
                                         xmlns='http://www.w3.org/2000/svg'
-                                        className='h-6 w-6 md:h-8 md:w-8'
+                                        className='h-6 w-6'
                                         fill='none'
                                         viewBox='0 0 24 24'
                                         stroke='#2ec5ce'
@@ -139,7 +140,7 @@ export default function ProductDetail(props) {
                             </div>
                         </div>
                         <button
-                            className='font-bold text-center text-xl text-white bg-cocoMall-300 py-4 sticky'
+                            className='w-3/4 font-bold text-center text-xl lg:text-2xl text-white bg-cocoMall-300 rounded-md'
                             onClick={() => handleButtonClick(product.id)}
                         >
                             Add Cart

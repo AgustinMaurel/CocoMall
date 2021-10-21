@@ -96,7 +96,7 @@ class UserModel extends ModelController {
                 const result = Cart.find((el) => el.id === item.idProduct);
                 if (!result) {
                     const producto = await Product.findOne({ where: { id: item.idProduct } });
-                    Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+                    Cart.push({ ...producto.dataValues, quantity: Number(cant) });
                 } else {
                     Cart = Cart.map((el) => {
                         if (el.id === item.idProduct) {
@@ -123,7 +123,7 @@ class UserModel extends ModelController {
                 res.json([...user.Cart]);
             } else {
                 const producto = await Product.findOne({ where: { id: item.idProduct } });
-                Cart.push({ ...producto.dataValues, quantity: Number(item.quantity) });
+                Cart.push({ ...producto.dataValues, quantity: Number(cant) });
 
                 await this.model.update({ Cart }, { where: { id } });
                 const user = await this.model.findOne({ where: { id } });

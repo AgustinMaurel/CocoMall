@@ -10,9 +10,12 @@ import Arrow from '../Slides/Arrow';
 import CocoIcon from './CocoIcon';
 import ReviewExample from '../Cards/ReviewExample';
 import reviewImg from '../../Assets/images/review.svg';
+import { useSelector } from 'react-redux';
 
 const ReviewForm = () => {
     const { id } = useParams();
+    const { uid } = useSelector((state) => state.auth);
+
     const [allStoreReviews, setAllStoreReviews] = useState([]);
     const [review, setReview] = useState({
         description: '',
@@ -38,18 +41,13 @@ const ReviewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('funciona');
-        axios.post(`/review/create`, review)
-        .then((response) => console.log('review creada en el back: ', response.data));
-
-        axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
+        axios.post(`/review/create`, { userId: id, storeId: uid, review: review })
+        .then((response) => console.log('review creada en el back todasss: ', response.data));
     };
 
     useEffect(() => {
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
     }, []);
-
-    console.log('review envidada: ', review);
-    console.log('reviews de la tienda actual: ', allStoreReviews);
 
     return (
         <>

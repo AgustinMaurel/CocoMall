@@ -29,7 +29,7 @@ export default function Product(props) {
             </div>
                 <p className='text-xs text-cocoMall-600'>{product.stock} unidades</p>
                 <div className='font-bold text-center text-xl text-white bg-cocoMall-300 rounded-md'>
-                    <span>${product.price}</span>
+                    <span>${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span>
                 </div>
         </div>
     );

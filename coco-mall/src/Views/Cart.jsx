@@ -185,7 +185,7 @@ export default function Cart() {
                                                                 Stock left: {el.stock}
                                                             </p>
                                                             <p className='w-full text-sm md:text-sm text-gray-500 font-light '>
-                                                                Unit price: ${el.price}
+                                                                Unit price: ${el.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                             </p>
                                                         </div>
                                                         <div className='absolute bottom-0 h-1/6 flex items-center justify-start  content-center'>
@@ -273,7 +273,7 @@ export default function Cart() {
                                                 </div>
                                                 <div className='min-w-max'>
                                                     <p className='text-2xl font-bold text-white'>
-                                                        $ {el.price * el.quantity}
+                                                        $ {(el.price * el.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -293,7 +293,7 @@ export default function Cart() {
                                     <div className='flex justify-between items-center px-2'>
                                         <h2 className='text-gray-600 font-bold text-sm'>Total</h2>
                                         <h2 className='text-cocoMall font-bold text-2xl'>
-                                            $ {total}
+                                            $ {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                         </h2>
                                     </div>
                                 </div>

@@ -63,7 +63,7 @@ export default function ProductDetail(props) {
                         </div>
                         <div>
                             <p className='text-lg font-semibold  md:text-lg text-justify xl:whitespace-nowrap w-5/6 2xl:text-3xl relative'>
-                                Price ${product.price}
+                                Price ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                             </p>
                             <p className='text-base md:text-lg   text-justify xl:whitespace-nowrap w-5/6'>
                                 Stock left: {product.stock}
@@ -114,7 +114,7 @@ export default function ProductDetail(props) {
                                 <button
                                     id='btn-add'
                                     onClick={() => handleAddButton()}
-                                    disabled={product.stock === product.quantity}
+                                    disabled={product.stock === productCant}
                                     className={
                                         product.stock !== product.quantity
                                             ? `h-6 w-6 md:h-8 md:w-8 flex items-center justify-center  bg-white rounded-full  font-bold text-xl cursor-pointer`

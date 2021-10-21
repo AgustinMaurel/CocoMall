@@ -329,5 +329,6 @@ export default function StoreDetail() {
                 </div>
             </div>
         </div>
+        </div>
     );
 }

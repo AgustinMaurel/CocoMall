@@ -8,7 +8,7 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
     let keysNum = keysSubCat.filter((key) => parseInt(key));
 
     return (
-        <div className='mt-5 border border-red-500'>
+        <div className='mt-5'>
             {productTypes.map((type) => {
                 if (type.id === parseInt(typeName)) {
                     return (
@@ -18,7 +18,7 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
                     );
                 }
             })}
-            <div className='border bg-yellow-300'>
+            <div className=''>
                 {keysNum.length
                     ? keysNum.map((k) => {
                         return (

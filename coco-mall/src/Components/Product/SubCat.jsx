@@ -25,7 +25,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
     console.log('productos length: ', Products?.length);
 
     return (
-        <div className='flex flex-col border'>
+        <div className='flex flex-col'>
             <div>
                 {productSubCat.map((cat) => {
                     if (cat.id === parseInt(SubCatName)) {
@@ -38,7 +38,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                 })}
             </div>
 
-            <div className='flex border bg-blue-700 overflow-x-auto'>
+            <div className='flex overflow-x-auto'>
                 {Products?.map((product) => (
                     <div onClick={() => modalFuncion(product.id)}>
                         <Product product={product} />

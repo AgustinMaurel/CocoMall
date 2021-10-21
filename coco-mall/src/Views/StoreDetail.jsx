@@ -202,7 +202,7 @@ export default function StoreDetail() {
                         handleSubmit={handleSubmit}
                     />
                     {/* --- FILTERS --- */}
-                    <div className='flex w-3/4 m-auto items-center justify-between'>
+                    <div className='flex 2xl:w-3/4 border m-auto mb-4 items-center justify-between'>
                         <div className=''>
                             <select
                                 className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
@@ -301,7 +301,7 @@ export default function StoreDetail() {
                 </div>
 
                 {/* CARDS */}
-                <div className='col-span-12 w-2/3 m-auto'>
+                <div className='border m-auto'>
                     <div>
                         {keysTypesSinFilter?.length <= keysTypes?.length ? (
                             <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>

@@ -33,10 +33,10 @@ const ReviewForm = () => {
 
     return (
         <>
-            <div className='flex gap-4 border h-1/2'>
-                <div className='w-1/3 bg-cocoMall-800'></div>
-                <div className='w-1/3 bg-cocoMall-800'></div>
-                <div className='w-1/3 bg-cocoMall-800'></div>
+            <div className='flex gap-4 h-1/2'>
+                <div className='w-1/3 bg-white shadow'></div>
+                <div className='w-1/3 bg-white shadow'></div>
+                <div className='w-1/3 bg-white shadow'></div>
                 {/* {allStoreReviews?.map((rev) => (
                         <ReviewCard
                             username={rev.User.Name}
@@ -46,48 +46,52 @@ const ReviewForm = () => {
                     ))} */}
             </div>
 
-            <form className='border h-1/2' key='1' onSubmit={handleSubmit}>
-                {review.qualification === '1' ? (
-                    <span>🥥</span>
-                ) : review.qualification === '2' ? (
-                    <span>🥥 🥥</span>
-                ) : review.qualification === '3' ? (
-                    <span>🥥 🥥 🥥</span>
-                ) : review.qualification === '4' ? (
-                    <span>🥥 🥥 🥥 🥥</span>
-                ) : review.qualification === '5' ? (
-                    <span>🥥 🥥 🥥 🥥 🥥</span>
-                ) : (
-                    false
-                )}
-                <p></p>
-                <input
-                    type='range'
-                    id='qualification'
-                    name='qualification'
-                    value={review.qualification}
-                    min='1'
-                    max='5'
-                    step='1'
-                    onChange={handleChange}
-                />
-                <p></p>
+            <form className='h-1/2 w-full flex items-center gap-4' key='1' onSubmit={handleSubmit}>
                 <textarea
                     placeholder='Describe your experience (optional)'
                     name='description'
                     rows='3'
                     cols='20'
                     onChange={handleChange}
+                    className='w-2/3 h-3/4 shadow outline-none rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent p-2'
                 ></textarea>
-                <button
-                    className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                    type='submit'
-                    disabled={!review.qualification ? true : false}
-                    onSubmit={handleSubmit}
-                    id='buttonC'
-                >
-                    SEND
-                </button>
+                <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-1'>
+                        {review.qualification === '1' ? (
+                            <span>🥥</span>
+                        ) : review.qualification === '2' ? (
+                            <span>🥥 🥥</span>
+                        ) : review.qualification === '3' ? (
+                            <span>🥥 🥥 🥥</span>
+                        ) : review.qualification === '4' ? (
+                            <span>🥥 🥥 🥥 🥥</span>
+                        ) : review.qualification === '5' ? (
+                            <span>🥥 🥥 🥥 🥥 🥥</span>
+                        ) : (
+                            false
+                        )}
+                        <input
+                            type='range'
+                            id='qualification'
+                            name='qualification'
+                            value={review.qualification}
+                            min='1'
+                            max='5'
+                            step='1'
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <button
+                        className='cursor-pointer p-2 rounded-md text-white bg-primary-light outline-none hover:bg-cocoMall-400 w-full'
+                        type='submit'
+                        disabled={!review.qualification ? true : false}
+                        onSubmit={handleSubmit}
+                        id='buttonC'
+                    >
+                        SEND
+                    </button>
+                </div>
             </form>
         </>
     );

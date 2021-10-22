@@ -335,7 +335,7 @@ export default function StoreDetail() {
                     <div>
                         {keysTypesSinFilter?.length <= keysTypes?.length ? (
                             <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>
-                                Alls Products
+                                All products
                             </h3>
                         ) : (
                             <></>

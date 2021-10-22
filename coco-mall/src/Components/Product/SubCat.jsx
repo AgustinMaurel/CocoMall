@@ -58,7 +58,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                         preventScroll={false}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-md focus:outline-none bg-gray-100 shadow-lg p-4 absolute w-3/5 h-4/5 top-20 bottom-0 right-0 left-0 m-auto'
+                        className='rounded-md focus:outline-none bg-gray-100 shadow-lg p-4 absolute w-4/5 h-4/5 top-20 bottom-0 right-0 left-0 m-auto'
                     >
                         <ProductDetail product={productDetail} setModalIsOpen={setModalIsOpen} />
                     </ReactModal>

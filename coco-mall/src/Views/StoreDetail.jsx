@@ -150,7 +150,7 @@ export default function StoreDetail() {
             <div className='z-10 col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
-            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-x-scroll'>
+            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-x-auto'>
                 {/* --- BANNER PRODUCTS --- */}
                 <div className='flex 2xl:w-2/3 h-24 mx-auto bg-cocoMall-200 rounded-b-2xl'>
                     <div className='flex items-center justify-between w-full px-4'>
@@ -309,61 +309,50 @@ export default function StoreDetail() {
                                 Promotions
                                 <AiOutlinePercentage />
                             </button>
-                        </div>
-                        {/* --- ORDERS --- */}
-                        <div>
                             <select
-                                name='order'
-                                className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                                onChange={(e) => handleOrder(e)}
-                                defaultValue={filters.order}
+                                className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                                onChange={handleChange}
                             >
-                                <option value='ALL'>Most Relevant</option>
-                                <option value='ASC'>High Price</option>
-                                <option value='DESC'>Low Price</option>
+                                <option name='ALL' value='ALL'>
+                                    Most Relevant
+                                </option>
+                                <option name='DESC' value='DESC'>
+                                    Low Price
+                                </option>
+                                <option name='ASC' value='ASC'>
+                                    High Price
+                                </option>
                             </select>
                         </div>
                     </div>
-                    <select
-                        className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                        onChange={handleChange}
-                    >
-                        <option name='ALL' value='ALL'>
-                            Most Relevant
-                        </option>
-                        <option name='DESC' value='DESC'>
-                            Low Price
-                        </option>
-                        <option name='ASC' value='ASC'>
-                            High Price
-                        </option>
-                    </select>
                 </div>
-            </div>
 
-            {/* CARDS */}
-            <div className='m-auto'>
-                <div>
-                    {keysTypesSinFilter?.length <= keysTypes?.length ? (
-                        <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>Alls Products</h3>
-                    ) : (
-                        <></>
-                    )}
-                </div>
-                <div className='flex flex-col'></div>
-                <div>
-                    {storeProductsFilter?.Products
-                        ? keysTypes.map((k) => {
-                              return (
-                                  <TypesProduct
-                                      typeName={k}
-                                      SubCategories={storeProductsFilter.Products[k]}
-                                      modalIsOpen={modalIsOpen}
-                                      setModalIsOpen={setModalIsOpen}
-                                  />
-                              );
-                          })
-                        : null}
+                {/* CARDS */}
+                <div className='m-auto'>
+                    <div>
+                        {keysTypesSinFilter?.length <= keysTypes?.length ? (
+                            <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>
+                                Alls Products
+                            </h3>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
+                    <div className='flex flex-col'></div>
+                    <div>
+                        {storeProductsFilter?.Products
+                            ? keysTypes.map((k) => {
+                                  return (
+                                      <TypesProduct
+                                          typeName={k}
+                                          SubCategories={storeProductsFilter.Products[k]}
+                                          modalIsOpen={modalIsOpen}
+                                          setModalIsOpen={setModalIsOpen}
+                                      />
+                                  );
+                              })
+                            : null}
+                    </div>
                 </div>
             </div>
         </div>

@@ -11,10 +11,12 @@ import CocoIcon from './CocoIcon';
 import ReviewExample from '../Cards/ReviewExample';
 import reviewImg from '../../Assets/images/review.svg';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-const ReviewForm = () => {
+const ReviewForm = ({setInfoModal}) => {
     const { id } = useParams();
     const { uid } = useSelector((state) => state.auth);
+    const history = useHistory();
 
     const [allStoreReviews, setAllStoreReviews] = useState([]);
     const [review, setReview] = useState({
@@ -41,13 +43,22 @@ const ReviewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('funciona');
-        axios.post(`/review/create`, { userId: id, storeId: uid, review: review })
-        .then((response) => console.log('review creada en el back todasss: ', response.data));
+        let obj = { userId: uid, storeId: id, review: review };
+        console.log(obj);
+        axios
+            .post('/review/create', obj)
+            .then((res) => res.data)
+            .then((stores) => console.log('review creada en el back todasss: ', stores));
+
+        axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
+        setInfoModal(false);
     };
 
     useEffect(() => {
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
     }, []);
+
+    console.log(allStoreReviews);
 
     return (
         <>
@@ -72,18 +83,18 @@ const ReviewForm = () => {
                 ) : (
                     <Slider {...settings}>
                         {/* simulación de la ReviewCard */}
+                        {/* <ReviewExample />
                         <ReviewExample />
                         <ReviewExample />
-                        <ReviewExample />
-                        <ReviewExample />
+                        <ReviewExample /> */}
 
-                        {/* {allStoreReviews?.map((rev) => (
+                        {allStoreReviews?.map((rev) => (
                         <ReviewCard
-                            username={rev.User.Name}
-                            qualification={rev.qualification}
-                            description={rev.description}
+                            username={rev?.User?.Name || ''}
+                            qualification={rev?.qualification || ''}
+                            description={rev?.description || ''}
                         />
-                    ))} */}
+                    ))}
                     </Slider>
                 )}
             </div>

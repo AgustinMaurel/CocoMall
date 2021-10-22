@@ -1,10 +1,8 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactModal from 'react-modal';
-import {  useHistory } from 'react-router-dom';
-import {
-    addToCartSomo,
-} from '../../Redux/actions/shoppingActions';
+import { useHistory } from 'react-router-dom';
+import { addToCartSomo } from '../../Redux/actions/shoppingActions';
 import { Image } from 'cloudinary-react';
 import Question from '../Forms/QuestionForm';
 import QuestionAndAnswer from './QuestionAndAnswer';
@@ -30,7 +28,6 @@ export default function ProductDetail(props) {
 
     const handleAddButton = () => {
         setProductCant(++productCant);
-        // dispatch(addToCartSomo(uid, id, que, cant));
     };
 
     const handleDeleteOne = () => {

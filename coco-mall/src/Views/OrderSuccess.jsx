@@ -5,7 +5,6 @@ import { useQueryParams } from '../Scripts/useQueryParams';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../Components/NavBar/NavBar';
 import axios from 'axios';
-import { auth } from '../firebase/firebaseConfig';
 import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth';
 import { clearCart } from '../Redux/actions/shoppingActions';
@@ -56,7 +55,7 @@ function OrderSuccess() {
             userData.total !== undefined &&
             userData.status !== undefined
         ) {
-            axios.post('http://localhost:3001/checkout/feedback', userData);
+            axios.post('/checkout/feedback', userData);
         }
     }, [userData]);
 

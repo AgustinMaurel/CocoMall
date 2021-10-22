@@ -28,7 +28,7 @@ function App() {
 
     useEffect(async () => {
         const auth = getAuth();
-        const userId = await axios.get(`http://localhost:3001/user/${uid}`);
+        const userId = await axios.get(`/user/${uid}`);
         let remember = userId?.data?.Remember;
         remember
             ? firebase

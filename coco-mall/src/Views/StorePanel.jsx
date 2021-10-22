@@ -176,7 +176,7 @@ export default function StorePanel() {
                                         onClick={() => {
                                             swalDelete(idActual, setFlag2, flag2).then(() => {
                                                 setSelectStore('SelectStore');
-                                                history.push('/create/shop');
+                                                history.push('/home');
                                             });
                                         }}
                                     >

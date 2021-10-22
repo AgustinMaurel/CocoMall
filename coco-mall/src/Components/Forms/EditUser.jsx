@@ -140,7 +140,7 @@ const EditUser = () => {
 
                     <div className='flex m-1 justify-center mt-5 cursor-pointer items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
                         <button className='text-sm font-semibold cursor-pointer' type='submit'>
-                            Upgrade
+                            Update
                         </button>
                     </div>
                 </form>

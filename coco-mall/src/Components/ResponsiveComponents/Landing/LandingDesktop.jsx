@@ -4,7 +4,7 @@ import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar/NavBar';
 import TitleAndDescription from '../../TitleAndDescription';
-import WebPreview from '../../../Assets/images/WebPreview.png';
+import imgLanding from '../../../Assets/images/img_transparente.png';
 import SectionHow from '../../Sections/SectionHow';
 import SectionBenefits from '../../Sections/SectionBenefits';
 import SectionStats from '../../Sections/SectionStats';
@@ -41,9 +41,9 @@ function LandingDesktop() {
                     <div className='  right-5 top-28 2xl:top-32  '>
                         <div className='relative custom 2xl:customXl rounded-full bg-primary-light'>
                             <img
-                                src={WebPreview}
+                                src={imgLanding}
                                 alt=''
-                                className='absolute right-0 2xl:right-20  overflow top-20 object-cover '
+                                className='absolute right-0 2xl:right-0  overflow top-10 object-cover '
                             />
                         </div>
                     </div>

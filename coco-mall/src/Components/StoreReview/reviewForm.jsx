@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReviewCard from '../Cards/ReviewCard';
-
+import Swal from 'sweetalert2';
 import Slider from 'react-slick';
 import Arrow from '../Slides/Arrow';
 import CocoIcon from './CocoIcon';
@@ -72,13 +72,15 @@ const ReviewForm = ({setInfoModal}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('funciona');
         let obj = { userId: uid, storeId: id, review: review };
         console.log(obj);
         axios
             .post('/review/create', obj)
             .then((res) => res.data)
-            .then((stores) => console.log(''));
+            .then((stores) => Swal.fire({
+                icon: 'success',
+                title: 'Question send successfully ',
+            }));
 
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
         setInfoModal(false);

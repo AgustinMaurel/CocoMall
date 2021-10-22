@@ -56,9 +56,9 @@
     }
 
     /* Handle on hover */
-    /* ::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
         background: #afdadb;
-    } */
+    }
 
     section {
         height: 100vh;

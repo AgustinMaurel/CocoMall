@@ -85,7 +85,7 @@ const ReviewForm = ({setInfoModal}) => {
 
     useEffect(() => {
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
-    }, []);
+    }, [handleSubmit]);
 
     console.log(allStoreReviews);
 
@@ -131,7 +131,7 @@ const ReviewForm = ({setInfoModal}) => {
                     rows='3'
                     cols='20'
                     onChange={handleChange}
-                    className='w-2/3 h-3/4 shadow outline-none rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent p-2'
+                    className='resize-none w-2/3 h-3/4 shadow outline-none rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent p-2'
                 ></textarea>
                 <div className='flex flex-col gap-2'>
                     <div className='flex flex-col gap-1'>

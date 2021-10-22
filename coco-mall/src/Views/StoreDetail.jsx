@@ -146,7 +146,7 @@ export default function StoreDetail() {
     }
 
     return (
-        <div className='grid grid-col-6 grid-rows-8 bg-gray-200'>
+        <div className='grid grid-col-6 grid-rows-8 bg-gray-200 h-screen'>
             <div className='z-10 col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
@@ -209,9 +209,9 @@ export default function StoreDetail() {
                         handleSubmit={handleSubmit}
                     />
                     {/* --- FILTERS --- */}
-                    <div className='flex mb-4 items-center justify-between gap-4'>
+                    <div className='flex mb-4 items-center justify-between gap-4 '>
                         {/* --- part1 --- */}
-                        <div className='flex gap-2 md:gap-4'>
+                        <div className=' flex gap-2 md:gap-4'>
                             <div className=''>
                                 <select
                                     className='cursor-pointer p-2 rounded-md text-white text-sm bg-gray-300 outline-none hover:bg-cocoMall-400'
@@ -274,7 +274,7 @@ export default function StoreDetail() {
                                 handleDiscount={handleDiscount}
                             />
                         </div>
-                        <div className='hidden xl:flex gap-4 text-sm  '>
+                        <div className='hidden xl:flex gap-4 text-sm '>
                             <form
                                 onSubmit={(e) => handleSubmit(e)}
                                 className='flex items-center gap-1'
@@ -302,13 +302,15 @@ export default function StoreDetail() {
                                     <BsFillArrowRightCircleFill className='h-full w-full' />
                                 </button>
                             </form>
+                        </div>
+                        <div className='hidden xl:flex gap-4 text-sm '>
                             <button
                                 className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
                                 onClick={handleDiscount}
                             >
-                                Promotions
                                 <AiOutlinePercentage />
                             </button>
+
                             <select
                                 className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
                                 onChange={handleChange}
@@ -328,7 +330,7 @@ export default function StoreDetail() {
                 </div>
 
                 {/* CARDS */}
-                <div className='m-auto'>
+                <div className='m-auto mt-6 2xl:w-3/4 2xl:mt-16'>
                     <div>
                         {keysTypesSinFilter?.length <= keysTypes?.length ? (
                             <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>

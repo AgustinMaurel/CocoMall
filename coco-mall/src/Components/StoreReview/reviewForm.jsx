@@ -11,12 +11,11 @@ import CocoIcon from './CocoIcon';
 import ReviewExample from '../Cards/ReviewExample';
 import reviewImg from '../../Assets/images/review.svg';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import Qualification from './Qualification';
 
 const ReviewForm = ({setInfoModal}) => {
     const { id } = useParams();
     const { uid } = useSelector((state) => state.auth);
-    const history = useHistory();
 
     const [allStoreReviews, setAllStoreReviews] = useState([]);
     const [review, setReview] = useState({
@@ -29,8 +28,8 @@ const ReviewForm = ({setInfoModal}) => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: allStoreReviews?.length < 3 ? allStoreReviews?.length : 3,
+        slidesToScroll: allStoreReviews?.length < 3 ? allStoreReviews?.length : 3,
     };
 
     const handleChange = (e) => {
@@ -82,12 +81,6 @@ const ReviewForm = ({setInfoModal}) => {
                     </div>
                 ) : (
                     <Slider {...settings}>
-                        {/* simulación de la ReviewCard */}
-                        {/* <ReviewExample />
-                        <ReviewExample />
-                        <ReviewExample />
-                        <ReviewExample /> */}
-
                         {allStoreReviews?.map((rev) => (
                         <ReviewCard
                             username={rev?.User?.Name || ''}
@@ -110,19 +103,7 @@ const ReviewForm = ({setInfoModal}) => {
                 ></textarea>
                 <div className='flex flex-col gap-2'>
                     <div className='flex flex-col gap-1'>
-                        {review.qualification === '1' ? (
-                            <span>🥥</span>
-                        ) : review.qualification === '2' ? (
-                            <span>🥥 🥥</span>
-                        ) : review.qualification === '3' ? (
-                            <span>🥥 🥥 🥥</span>
-                        ) : review.qualification === '4' ? (
-                            <span>🥥 🥥 🥥 🥥</span>
-                        ) : review.qualification === '5' ? (
-                            <span>🥥 🥥 🥥 🥥 🥥</span>
-                        ) : (
-                            false
-                        )}
+                        <Qualification qualification={review.qualification} />
                         <input
                             type='range'
                             id='qualification'

@@ -15,8 +15,14 @@ class UserModel extends ModelController {
         const user = req.body;
         if (typeof user === 'object') {
             try {
+                let all = await this.model.findAll()
+                if(all.length === 0){
+                user.SuperAdmin = true
+                }
+                
                 let newUser = await this.model.create(user);
                 res.send(newUser);
+                
             } catch (error) {
                 res.json(error);
             }

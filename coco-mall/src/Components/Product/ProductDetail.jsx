@@ -83,8 +83,8 @@ export default function ProductDetail(props) {
                     </div>
 
                     <div className='flex  w-full gap-6'>
-                        <div className='flex w-1/4 bg-secondary'>
-                            <div className='flex '>
+                        <div className='flex w-2/4 relative items-center '>
+                            <div className='flex w-full justify-between '>
                                 <button
                                     id='btn-delete'
                                     onClick={() => handleDeleteOne()}
@@ -105,7 +105,7 @@ export default function ProductDetail(props) {
                                         />
                                     </svg>
                                 </button>
-                                <p className='font-bolder text-white'>{productCant}</p>
+                                <p className='font-bolder text-black self-center'>{productCant}</p>
                                 <button
                                     id='btn-add'
                                     onClick={() => handleAddButton()}
@@ -134,7 +134,7 @@ export default function ProductDetail(props) {
                             </div>
                         </div>
                         <button
-                            className='w-3/4 font-bold text-center text-xl lg:text-2xl text-white bg-cocoMall-300 rounded-md'
+                            className='w-2/4 font-bold text-center text-lg text-white bg-cocoMall-300 rounded-md'
                             onClick={() => handleButtonClick(product.id)}
                         >
                             Add Cart

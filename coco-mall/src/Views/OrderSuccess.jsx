@@ -19,6 +19,7 @@ function OrderSuccess() {
 
     const [counter, setCounter] = useState(7);
     const [active, setActive] = useState(true);
+    const [flag, setFlag] = useState(false)
 
     useEffect(() => {
         let intervalo = null;
@@ -84,12 +85,16 @@ function OrderSuccess() {
                                 ),
                             status: queries.status,
                         });
-                    }).then(()=> dispatch(clearCart(uid)))
+                    }).then(()=>setFlag(!flag))
                     .catch((err) => console.log(err));
             }
         });
         
     }, [uid]);
+
+    useEffect(()=>{
+        dispatch(clearCart(uid))
+    },[flag])
 
     return (
         <>

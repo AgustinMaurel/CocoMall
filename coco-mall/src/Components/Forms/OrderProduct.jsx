@@ -201,7 +201,7 @@ const OrderProduct = () => {
                                                 <>
                                                     <div className='w-4/5 flex flex-col 2xl:w-3/5'>
                                                         <form onSubmit={handleSubmit(onSubmit)}>
-                                                            <div className='relative bg-yellow-200 my-4'>
+                                                            <div className='relative  my-4'>
                                                                 <Autocomplete
                                                                     className={
                                                                         'outline-none p-2 w-full rounded text-gray-500  text-sm border border-gray-200'
@@ -340,7 +340,7 @@ const OrderProduct = () => {
                                                                           return (
                                                                               <div
                                                                                   key={item.id}
-                                                                                  className=' bg-white border-l-8 border-secondary mt-5   flex flex-col shadow  xl:w-3/4 h-44 xl:h-44 xl:flex-none relative  '
+                                                                                  className=' bg-white border-l-8 border-secondary mt-5   flex flex-col shadow  xl:w-full h-44 xl:h-44 xl:flex-none relative  '
                                                                               >
                                                                                   <div className='flex flex-row  h-full items-center xl:flex-none relative  px-5 gap-10  py-5'>
                                                                                       

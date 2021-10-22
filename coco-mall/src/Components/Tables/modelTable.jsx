@@ -93,15 +93,11 @@ export default function ModelTable({
 
                                     {el.Country ? <td className='border-b  border-gray-400 py-2'>{el.State +"/"+ el.Country }</td> 
                                     : el.arrayIdProducts ?
-                                     <td className='border-b  border-gray-400 py-2'> <div className="flex flex-col justify-start items-start"> {el.arrayIdProducts.map(el => <span>{el.productName} ({el.quantity})</span>)}</div> </td> : false}
-                                    {el.Country ? (
-                                        <td className='border-b  border-gray-400 py-2'>
-                                            {el.State + '/' + el.Country}
-                                        </td>
-                                    ) : (
-                                        false
-                                    )}
-
+                                     <td className='border-b  border-gray-400 py-2'>
+                                          <div className="flex flex-col justify-start items-start">
+                                               {el.arrayIdProducts.map(el => <span>{el.productName} ({el.quantity})</span>)}</div>
+                                                </td> : false}
+                                    
                                     {el.cloudImage ? (
                                         <td className='border-b flex justify-center  border-gray-400 py-2'>
                                             <Image

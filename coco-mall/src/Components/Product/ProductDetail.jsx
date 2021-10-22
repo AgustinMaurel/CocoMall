@@ -72,7 +72,7 @@ export default function ProductDetail(props) {
                 </div>
                 <div className='p-6 bg-white rounded w-full flex flex-col justify-start items-start h-full m-auto gap-5'>
                     <p className='text-2xl text-cocoMall-400 font-semibold inline-block'>Details</p>
-                    <div className='flex w-full h-full overflow-hidden hover:overflow-y-auto border'>
+                    <div className='flex w-full h-full overflow-hidden hover:overflow-y-auto'>
                         <p className='md:text-lg p-2'>{product.description}</p>
                         {product.discount > 0 ? (
                             <span className='border'>{product.discount}%</span>
@@ -81,16 +81,16 @@ export default function ProductDetail(props) {
                         )}
                     </div>
                     <h3 className='text-2xl text-cocoMall-400 font-semibold inline-block'>Q&A</h3>
-                    <div className='flex flex-col w-full h-full overflow-y-auto m-auto border'>
+                    <div className='flex flex-col w-full h-full overflow-y-auto m-auto'>
                         <QuestionAndAnswer productId={product.id} />
                     </div>
-                    <div className='w-full h-1/4 border'>
+                    <div className='w-full h-1/4 '>
                         <Question productId={product.id} />
                     </div>
 
-                    <div className='flex border w-full gap-6'>
+                    <div className='flex  w-full gap-6'>
                         <div className='flex w-1/4 bg-secondary'>
-                            <div className='flex border'>
+                            <div className='flex '>
                                 <button
                                     id='btn-delete'
                                     onClick={() => handleDeleteOne()}

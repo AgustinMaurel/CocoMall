@@ -58,7 +58,9 @@ function OrderSuccess() {
             axios.post('http://localhost:3001/checkout/feedback', userData);
         }
     }, [userData]);
+
     console.log(userData);
+
     useEffect(() => {
         firebase.auth();
         auth.onAuthStateChanged((user) => {
@@ -82,11 +84,11 @@ function OrderSuccess() {
                                 ),
                             status: queries.status,
                         });
-                    })
+                    }).then(()=> dispatch(clearCart(uid)))
                     .catch((err) => console.log(err));
             }
         });
-        dispatch(clearCart(uid));
+        
     }, [uid]);
 
     return (

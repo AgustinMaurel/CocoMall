@@ -18,6 +18,7 @@ const ReviewForm = ({setInfoModal}) => {
     const { uid } = useSelector((state) => state.auth);
 
     const [allStoreReviews, setAllStoreReviews] = useState([]);
+    const [flag , setFlag] = useState(false)
     const [review, setReview] = useState({
         description: '',
         qualification: '1',
@@ -81,13 +82,13 @@ const ReviewForm = ({setInfoModal}) => {
 
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
         setInfoModal(false);
+        setFlag(!flag)
     };
 
     useEffect(() => {
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
-    }, [handleSubmit]);
+    }, [flag]);
 
-    console.log(allStoreReviews);
 
     return (
         <>

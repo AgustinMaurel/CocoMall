@@ -49,7 +49,7 @@ export default function ProductDetail(props) {
                         </h4>
                     </div>
 
-                    <div className='flex items-center h-4/6 overflow-hidden'>
+                    <div className='flex items-center justify-center h-4/6 overflow-hidden'>
                         <Image
                             key={product.id}
                             cloudName='cocomalls'

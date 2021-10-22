@@ -194,7 +194,7 @@ export default function StoreDetail() {
                         onClick={() => history.push('/cart')}
                     >
                         <span className='bg-primary rounded-lg   p-1.5 cursor-pointer text-white font-semibold'>
-                            Your cart {itemsCart} items ${total}
+                            Your cart has {itemsCart} items ${total}
                         </span>
                     </div>
                 ) : (

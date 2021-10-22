@@ -176,7 +176,7 @@ function Home() {
                             {allStores !== storesFilters ? filters.searchStore : 'All Stores'}
                         </h3>
                         <div className='cards'>
-                            {storesFilters?.map((e) => (
+                            {storesFilters.length ? storesFilters?.map((e) => (
                                 <Link to={`/home/store/${e.id}`} onClick={() => storeDetail(e.id)}>
                                     <HomeCard
                                         id={e.id}
@@ -186,7 +186,7 @@ function Home() {
                                         key={e.id}
                                     />
                                 </Link>
-                            ))}
+                            )): <span className='text-cocoMall-800 text-2xl font-extrabold whitespace-nowrap'>There are no stores matching your search.</span>}
                         </div>
                     </div>
                 </div>

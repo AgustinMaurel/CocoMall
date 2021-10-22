@@ -103,7 +103,7 @@ export default function StoreDetail() {
         handleTypes(e);
     };
 
-    const handleOrder = async (e) => {
+    const handleOrder = (e) => {
         handleChange(e);
         handleSubmit(e);
     };
@@ -304,16 +304,17 @@ export default function StoreDetail() {
                             </form>
                         </div>
                         <div className='hidden xl:flex gap-4 text-sm '>
-                            <button
+                            {/* <button
                                 className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
                                 onClick={handleDiscount}
                             >
                                 <AiOutlinePercentage />
-                            </button>
+                            </button> */}
 
                             <select
+                                name="order"
                                 className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                                onChange={handleChange}
+                                onChange={handleOrder}
                             >
                                 <option name='ALL' value='ALL'>
                                     Most Relevant

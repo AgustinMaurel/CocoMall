@@ -364,7 +364,7 @@ const OrderProduct = () => {
 
 
                                                                                       <div className=' flex flex-col gap-2 flex-none   h-full  pr-2 '>
-                                                                                          <h4 className='font-bold text-cocoMall-800 text-lg md:text-xl'>
+                                                                                          <h4 className='font-bold text-cocoMall-800 w-full text-lg md:text-xl'>
                                                                                               {
                                                                                                   item.productName
                                                                                               }

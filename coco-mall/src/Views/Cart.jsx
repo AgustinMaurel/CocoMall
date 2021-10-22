@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import NavBar from '../Components/NavBar/NavBar';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     addToCartSomo,
     cartDeleteSomo,
@@ -13,7 +12,6 @@ import { Image, Transformation } from 'cloudinary-react';
 import ReactModal from 'react-modal';
 
 export default function Cart() {
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -25,12 +23,6 @@ export default function Cart() {
     let total =
         userCart.length > 0 &&
         Object.values(userCart).reduce((previous, key) => previous + key.price * key.quantity, 0);
-
-    let objectToCheckout = {
-        title: 'Cart Products',
-        total: total,
-        quantity: 1,
-    };
 
     const handleDeleteOne = (id) => {
         dispatch(cartDeleteSomo(uid, id, (que = '-'), cant));
@@ -66,7 +58,6 @@ export default function Cart() {
                 <div className='absolute md:h-10 md:w-10  rounded-full bg-primary  md:left-96 z-0'></div>
             </div>
 
-
             {!userCart.length && (
                 <div className='h-3/5     px-5'>
                     <div className=' flex flex-col gap-4 items-center justify-center relative h-full w-full '>
@@ -92,13 +83,9 @@ export default function Cart() {
                 </div>
             )}
 
-
-                {/* MAIN CONTENT */}
+            {/* MAIN CONTENT */}
             <div className='flex  justify-center   bg-gray-100   2xl:px-20  '>
-                
                 <div className='flex flex-col  relative py-2  w-full h-full items-center align-center content-center justify-evenly rounded lg:gap-16   xl:pb-10 '>
-                    
-                    
                     {/* CLEAR CART BUTTON */}
                     {userCart.length > 0 && !modalIsOpen && (
                         <>
@@ -152,7 +139,6 @@ export default function Cart() {
                     </ReactModal>
 
                     <div className='flex 0 xl:pb-28   md:w-4/5 flex-col gap-8 xl:flex-row xl:w-full xl:gap-10 xl:px-5'>
-                        
                         <div className='xl:w-4/6 xl:flex      xl:flex-col xl:items-center xl:justify-center   '>
                             {/* CARDS */}
                             {userCart?.length > 0 &&
@@ -201,7 +187,7 @@ export default function Cart() {
                                                                     )}
                                                             </p>
                                                         </div>
-                                                        <div className='absolute bottom-0 h-1/6 flex items-center justify-start  content-center'>
+                                                        <div className='absolute bottom-0 right-0 h-1/6 flex items-center justify-start  content-center'>
                                                             <svg
                                                                 xmlns='http://www.w3.org/2000/svg'
                                                                 className='h-3 w-3'
@@ -301,16 +287,13 @@ export default function Cart() {
                         {/* ORDER RESUME */}
                         {userCart.length > 0 && (
                             <div className='w-full xl:w-2/6 xl:flex-none py-10 flex flex-col gap-5'>
-                               
                                 <div className='flex flex-col gap-5 px-2'>
                                     <div className='flex flex-col  gap-1'>
-                                       
                                         <h2 className='text-gray-600 font-bold text-lg'>
                                             My order
                                         </h2>
-                                        
+
                                         <hr className='border-1 border-gray-300' />
-                                    
                                     </div>
                                     <div className='flex justify-between items-center px-2'>
                                         <h2 className='text-gray-600 font-bold text-sm'>Total</h2>

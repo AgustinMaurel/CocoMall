@@ -1,19 +1,13 @@
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { getStores, getProductTypes } from './Redux/actions/stores';
-import StorePanel from './Views/StorePanel';
-import {
-    getAuth,
-    setPersistence,
-    signInWithEmailAndPassword,
-    browserSessionPersistence,
-    inMemoryPersistence,
-} from 'firebase/auth';
-import firebase from 'firebase/compat/app';
-import { login, rememberAction } from './Redux/actions/auth';
+import { getAuth, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import { login } from './Redux/actions/auth';
 import { setCart } from './Redux/actions/shoppingActions';
+import StorePanel from './Views/StorePanel';
+import firebase from 'firebase/compat/app';
 import Landing from './Views/Landing';
 import LoginScreen from './Views/Auth/LoginScreen';
 import RegisterScreen from './Views/Auth/RegisterScreen';
@@ -30,7 +24,6 @@ import OrderSuccess from './Views/OrderSuccess';
 function App() {
     const dispatch = useDispatch();
     const { uid } = useSelector((state) => state.auth);
-    const [, setChecking] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(async () => {
@@ -57,8 +50,8 @@ function App() {
                   })
                   .catch((error) => {
                       // Handle Errors here.
-                      const errorCode = error.code;
-                      const errorMessage = error.message;
+                    const errorCode =  error.code;
+                    const errorMessage =  error.message;
                   })
             : setPersistence(auth, browserSessionPersistence)
                   .then(() => {
@@ -109,14 +102,12 @@ function App() {
                     {isLoggedIn ? <Checkout /> : <Redirect to='/auth/login' />}
                 </Route>
                 <Route path='/create/order' exact component={OrderProduct}>
-                    {/* {isLoggedIn ? <OrderProduct /> : <Redirect to='/auth/login' />} */}
                 </Route>
                 <Route path='/order/:success' exact component={OrderSuccess} />
                 <Route path='/profile' exact component={EditUser}>
                     {isLoggedIn ? <EditUser /> : <Redirect to='/auth/login' />}
                 </Route>
                 <Route path='*' component={Error404}></Route>
-
             </Switch>
         </>
     );

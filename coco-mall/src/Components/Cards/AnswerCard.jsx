@@ -8,10 +8,13 @@ export default function AnswerCard({ storeId }) {
     const [questions, setQuestions] = useState([])
     const [flag, setFlag] = useState(false)
 
-    useEffect(async () => {
+
+    
+    useEffect(async () => { // eslint-disable-next-line
         const allQuestion = await axios.get(`/question/store/${storeId}`)
         setQuestions(allQuestion.data)
-    }, [flag])
+        
+    }, [flag]) // eslint-disable-next-line
 
     return (
         <div className="flex flex-wrap gap-5 justify-center  h-full w-full">

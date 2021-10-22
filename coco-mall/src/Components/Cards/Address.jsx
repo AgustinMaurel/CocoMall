@@ -12,13 +12,9 @@ function Address({
     setPlaceSelected,
     onSubmit,
     userAddressFunc,
-    setAddressSelect,
 }) {
     const {
-        register,
         handleSubmit,
-        watch,
-        formState: { errors },
     } = useForm({ mode: 'onTouched' });
     const [index, setIndex] = useState(0)
     const handleChangeI = (e) => {

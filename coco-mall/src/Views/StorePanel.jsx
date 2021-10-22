@@ -23,7 +23,6 @@ import { swalDelete } from '../Scripts/swalDelete.js';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { useHistory } from 'react-router';
 import EditUser from '../Components/Forms/EditUser.jsx';
-import { userInfo } from '../Redux/actions/auth.js';
 import AnswerCard from '../Components/Cards/AnswerCard.jsx';
 export default function StorePanel() {
     const dispatch = useDispatch();

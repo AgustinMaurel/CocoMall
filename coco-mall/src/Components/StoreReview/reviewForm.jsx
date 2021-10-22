@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ReactModal from 'react-modal';
-import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReviewCard from '../Cards/ReviewCard';
 import Swal from 'sweetalert2';
 import Slider from 'react-slick';
-import Arrow from '../Slides/Arrow';
-import CocoIcon from './CocoIcon';
 import ReviewExample from '../Cards/ReviewExample';
 import reviewImg from '../../Assets/images/review.svg';
 import { useSelector } from 'react-redux';

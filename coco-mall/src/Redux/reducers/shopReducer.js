@@ -9,10 +9,7 @@ import {
     ORDER_PRODUCTS,
     FILTER_STORE,
     ALL_PRODUCTS,
-    ORDER_STORE,
     GET_PRODUCT_SUBCATEGORY,
-    GET_PRODUCT_STORE_TYPES,
-    GET_PRODUCT_STORE_SUBCATEGORY,
     CLEAR_PRODUCTS,
     ORDERS_STORE
 } from '../actions/actionTypes';
@@ -105,32 +102,8 @@ export const storeReducer = (state = initialState, { type, payload }) => {
             }
         //usar .slice() para actualiar el estado en los order
         case ORDER_PRODUCTS:
-            if (payload === 'Barato') {
-                // roto pasarlo al back
-                let copy = state.storeProductsFilter.Products.map((types, i) => {
-                    types[i]
-                    .sort(function (a, b) {
-                        return a.price - b.price;
-                    })
-                    .slice();
-                })
-                return {
-                    ...state,
-                    storeProductsFilter: copy,
-                };
-            }
-            if (payload === 'Caro') {
-                //roto ahcerlo desde el back
-                let copy = state.storeProductsFilter.Products
-                    .sort(function (a, b) {
-                        return b.price - a.price;
-                    })
-                    .slice();
-                return {
-                    ...state,
-                    storeProductsFilter: copy,
-                };
-            }
+           
+            
             if (payload === 'A-Z') {
                 let copy = state.storeProducts.sort((a, b) => {
                     if (a.productName > b.productName) {

@@ -1,12 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactModal from 'react-modal';
-import { Redirect, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import {
     addToCartSomo,
-    cartDeleteSomo,
-    clearCart,
-    deleteAllItems,
 } from '../../Redux/actions/shoppingActions';
 import { Image } from 'cloudinary-react';
 import Question from '../Forms/QuestionForm';

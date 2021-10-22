@@ -17,6 +17,7 @@ function TypesProduct({ typeName, SubCategories, modalIsOpen, setModalIsOpen }) 
                         </span>
                     );
                 }
+                return false
             })}
             <div className=''>
                 {keysNum.length

@@ -85,6 +85,7 @@ export function handleOnChange(setFilters) {
             if (state.discount) {
                 state.discount = 1;
             }
+            console.log(state);
             return state;
         });
     };

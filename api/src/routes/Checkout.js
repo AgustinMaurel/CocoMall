@@ -39,9 +39,9 @@ router.post('/mercadopago', async (req, res) => {
         ],
 
         back_urls: {
-            success: 'http://localhost:3000/order/success',
-            failure: 'http://localhost:3000/create/order',
-            pending: 'http://localhost:3000/order/success',
+            success: '/order/success',
+            failure: '/create/order',
+            pending: '/order/success',
         },
         auto_return: 'approved',
     };
@@ -57,13 +57,6 @@ router.post('/feedback', async function (req, res) {
     //Se necesita recibir para enviar el correo orderId, productos, precio, total, direccion de envio
 
     const { payment_id, address, mail, items, total, status } = req.body;
-
-    console.log(mail, 'mail');
-    console.log(payment_id, 'payment_id');
-    console.log(address, 'address');
-    console.log(items, 'items');
-    console.log(total, 'total');
-    console.log(status, 'status');
 
     if (status === 'approved') {
         let email = nodemailer.createTransport({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreDetail, getProductsStore, getStores } from '../Redux/actions/stores';
 import { Link } from 'react-router-dom';
@@ -54,6 +54,11 @@ function Home() {
         setCheck,
     );
 
+
+    useEffect(() => {
+        onCurrentPosition();
+    }, [city])
+
     //current position
     const onCurrentPosition = () => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -81,10 +86,6 @@ function Home() {
                 });
         });
     };
-
-    console.log(filterByState)
-
-    !city && onCurrentPosition();
 
     return (
         <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>

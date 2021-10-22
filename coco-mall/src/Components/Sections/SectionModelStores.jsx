@@ -1,11 +1,12 @@
 import React from 'react';
-
+import {useSelector} from 'react-redux'
 import StoreModel from '../Cards/StoreModel';
 import dataStores from '../../Helpers/dataStores';
 
 const SectionModelStores = () => {
     const data = dataStores();
-
+    const {allStores} = useSelector((state) => state.stores);
+    
     return (
         <div className='h-screen flex flex-col justify-center items-center gap-10 '>
             {/* BACKGROUND */}
@@ -47,15 +48,16 @@ const SectionModelStores = () => {
                             
                             2xl:w-full 2xl:h-1/2 2xl:items-center'
             >
-                {data?.map((e, i) => (
+                {allStores?.slice(0,4).map((e, i) => (
                     <StoreModel
                         key={i}
                         banner={e.banner}
-                        logo={e.logo}
-                        title={e.title}
-                        mail={e.mail}
+                        logo={e.cloudImage}
+                        title={e.storeName}
+                        mail={e.country}
                         description={e.description}
-                    />
+                        storeId={e.id}
+                        />
                 ))}
             </div>
             {/* BACKGROUND */}

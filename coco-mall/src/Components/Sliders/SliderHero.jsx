@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-
+import bannerH from '../../Assets/images/banners/banner-halloween.jpg'
 import HeroCard from '../Cards/HeroCard';
 
 const SliderHero = () => {

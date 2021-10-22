@@ -41,17 +41,18 @@ export function handleOnChecked(checkType, setCheckType, filters, dispatch, id, 
     };
 }
 
-export function handleOnSubmit(filters, checkType, dispatch, id) {
+export function handleOnSubmit(filters, types, dispatch, id) {
     return (e) => {
         e.preventDefault();
-        filters.type = [...checkType];
+        filters.type = [...types];
         if (
             filters.searchProduct ||
             filters.searchStore ||
             filters.searchState ||
-            checkType.length ||
+            types.length ||
             filters.min ||
-            filters.max
+            filters.max ||
+            filters.order
         ) {
             id && dispatch(filterProducts(id, filters));
             !id && dispatch(filterStores(filters));
@@ -84,6 +85,7 @@ export function handleOnChange(setFilters) {
             if (state.discount) {
                 state.discount = 1;
             }
+            console.log(state);
             return state;
         });
     };
@@ -101,7 +103,43 @@ export function handleOnTypes(dispatch, id, filters) {
             dispatch(filterProducts(id, aux));
         } else {
             filters.type = [];
+            filters.subCategory = [];
             dispatch(filterProducts(id, aux));
+        }
+    };
+}
+
+export function handleOnCategories(dispatch, id, filters) {
+    return (e) => {
+        let val = parseInt(e.target.value);
+        let aux = {
+            type: [filters.type],
+            subCategory: [],
+        };
+        if (e.target.value !== 'All') {
+            aux.subCategory = [val];
+            filters.subCategory = [val];
+            dispatch(filterProducts(id, aux));
+        } else {
+            filters.subCategory = [];
+            dispatch(filterProducts(id, aux));
+        }
+    };
+}
+
+//no se usa
+export function handleOnChangeProduct(dispatch, id, filters) {
+    return (e) => {
+        if (e.target.value === 'ASC') {
+            filters.order = 'ASC'
+            dispatch(filterProducts(id, filters));
+        }
+        if (e.target.value === 'DESC') {
+            filters.order = 'DESC'
+            dispatch(filterProducts(id, filters));
+        } else {
+            filters.order = 'ALL';
+            dispatch(filterProducts(id, filters));
         }
     };
 }

@@ -1,11 +1,19 @@
 const { Router } = require('express');
 const router = Router();
-const { getAllData, createQuestion } = require('../controllers/Question.js');
+const { getAllData, createQuestion, updateQuestion , deleteQuestion, getQuestionByProduct, getQuestionToResponse} = require('../controllers/Question.js');
 
 //all routes start with /question
 
 router.get('/', getAllData);
 
-router.get('/create', createQuestion);
+router.get('/:id', getQuestionByProduct);
+
+router.get('/store/:id', getQuestionToResponse);
+
+router.post('/create', createQuestion);
+
+router.put('/update', updateQuestion)
+
+router.delete('/delete/:id', deleteQuestion)
 
 module.exports = router;

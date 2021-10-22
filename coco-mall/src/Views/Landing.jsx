@@ -3,6 +3,8 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import LandingMobile from '../Components/ResponsiveComponents/Landing/LandingMobile';
 import LandingDesktop from '../Components/ResponsiveComponents/Landing/LandingDesktop';
+import ReviewCard from '../Components/Cards/ReviewCard';
+
 
 function Landing() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -16,7 +18,9 @@ function Landing() {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
     }, []);
 
-    return <>{width < breakpoint ? <LandingMobile /> : <LandingDesktop />}</>;
+    return <>
+            {width < breakpoint ? <LandingMobile /> : <LandingDesktop />}
+        </>;
 }
 
 export default Landing;

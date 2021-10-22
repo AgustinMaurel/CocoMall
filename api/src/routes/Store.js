@@ -7,11 +7,14 @@ const {
     filterStoresByProductTypes,
     deleteDeep,
     updateDataStore,
+    getAllProductsOfStore,
 } = require('../controllers/Store.js');
 
 //all routes start with /store
 //GET's
 router.get('/', getAllData);
+
+router.get('/:id', getAllProductsOfStore);
 
 router.post('/filter', filterStoresByProductTypes);
 
@@ -19,9 +22,11 @@ router.post('/filter', filterStoresByProductTypes);
 router.post('/create', createStore);
 
 router.post('/bulkCreate', postBulkCreate);
-//delete store
+
+//DELETE's
 router.delete('/delete/:id', deleteDeep);
-//update store
+
+//UPDATE's
 router.put('/update/:id', updateDataStore);
 
 module.exports = router;

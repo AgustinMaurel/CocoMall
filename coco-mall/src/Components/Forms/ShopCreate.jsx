@@ -43,6 +43,7 @@ function ShopCreate({ setIsTrue }) {
 
     //POST DATA STORE & ID USER
     const handleRegister = (data) => {
+        console.log(data)
         let store = {
             storeName: data.storeName,
             description: data.description,
@@ -51,6 +52,8 @@ function ShopCreate({ setIsTrue }) {
             cp: placeSelected.cp,
             state: placeSelected.state,
             coord: placeSelected.coord,
+            paymentAccount: data.CBU
+           
         };
         let storeCreated = { store: store, idUser: userId, idImage: image };
         setIsTrue(false);
@@ -78,7 +81,6 @@ function ShopCreate({ setIsTrue }) {
         >
             <form className='w-4/5 flex flex-col 2xl:w-3/5' onSubmit={handleSubmit(handleRegister)}>
                 <h3 className='sm:mb-10 text-2xl md:text-3xl'>Create your Store</h3>
-                <br />
 
                 <InputDefault
                     register={register}
@@ -95,13 +97,13 @@ function ShopCreate({ setIsTrue }) {
                         }
                         apiKey={GOOGLE_MAPS_API_KEY}
                         onPlaceSelected={(place) => {
+                            console.log('place: ', place);
                             setPlaceSelected({
                                 place: place,
                                 name: place.name,
                                 address: place.formatted_address,
-                                state: place.address_components[4]?.long_name,
-                                country: place.address_components[5]?.long_name,
-                                cp: place.address_components[6]?.long_name || 'C3100',
+                                state: place.formatted_address?.split(',').slice(-2,-1)[0].trim(),
+                                country: place.formatted_address?.split(',').slice(-1)[0].trim(),
                                 coord: {
                                     lat: place.geometry.location.lat(),
                                     lng: place.geometry.location.lng(),
@@ -117,7 +119,6 @@ function ShopCreate({ setIsTrue }) {
                                 'geometry',
                             ],
                             types: ['address'],
-                            // componentRestrictions: { country: 'ar' },
                         }}
                         placeholder='Eg: Av. Belgrano 3200'
                     />
@@ -131,6 +132,14 @@ function ShopCreate({ setIsTrue }) {
                 <div className='h-36 mb-8'>
                     <InputMaps coord={placeSelected.coord} />
                 </div>
+
+                <InputDefault
+                    register={register}
+                    errors={errors}
+                    name='CBU'
+                    placeholder='Eg: 01702046600000087865'
+                    validate={validate.cbu}
+                />
 
                 <Textarea
                     register={register}

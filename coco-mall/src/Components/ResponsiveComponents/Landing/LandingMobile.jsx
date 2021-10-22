@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import MainButton from '../../Buttons/MainButton';
 import SecondaryButton from '../../Buttons/SecondaryButton';
 import NavBar from '../../NavBar/NavBar';
@@ -20,7 +21,7 @@ function LandingMobile() {
                 <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light  '></div>
             </div>
 
-            <div className=' col-span-1  z-20'>
+            <div className='sticky top-0 col-span-1  z-20'>
                 <NavBar />
             </div>
             <div className='fixed flex w-screen justify-evenly bottom-5 z-20  '>
@@ -60,6 +61,20 @@ function LandingMobile() {
 
                 <section data-aos='fade' className=' col-span-1'>
                     <SectionModelStores />
+                </section>
+
+                <section className='flex flex-col gap-20 items-center justify-center '>
+                    <h2 className='text-4xl font-bold'>Get started</h2>
+                    <div className='shadow  flex items-center justify-center bg-primary w-44 h-12  xl:h-12 xl:w-44    '>
+                        <Link
+                            className='relative w-full h-full flex items-center align-center justify-center'
+                            to='/auth/register'
+                        >
+                            <button className='w-full focus:outline-none text-white text-center text-base md:text-lg  xl:text-xl'>
+                                Create account
+                            </button>
+                        </Link>
+                    </div>
                 </section>
             </div>
         </div>

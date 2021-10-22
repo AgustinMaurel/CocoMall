@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function FilterTypeProduct({ type, index, handleChecked, check }) {
-    let style1 =
-        'bg-white relative my-4 mx-2 p-2 h-full rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:bg-cocoMall-50';
-    let style2 =
-        'relative my-4 mx-2 p-2 h-full rounded-lg shadow-md flex flex-col items-center cursor-pointer bg-cocoMall-50';
+function FilterTypeProduct({ type, index, handleChecked, check, checkType }) {
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
 
     return (
-        <label className='bg-white relative my-4 mx-2 p-2 h-full rounded-lg shadow-md flex flex-col items-center cursor-pointer'>
-            <div className='h-16 w-16'>
+        <label
+            className={
+                checkType.includes(type?.id)
+                    ? 'bg-white group border-4 border-cocoMall-200 relative my-4 mx-2 p-2 h-full rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg hover:border-cocoMall-200 transition-all'
+                    : 'bg-white group border border-transparent relative my-4 mx-2 p-2 h-full rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg hover:border-cocoMall-200 transition-all'
+            }
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            <div className='h-16 w-16 transition'>
                 <img className='p-2' src={`/category/${type?.Name}.png`} alt='category' />
             </div>
             <input
@@ -17,9 +28,15 @@ function FilterTypeProduct({ type, index, handleChecked, check }) {
                 value={type?.id}
                 onChange={(e) => handleChecked(e, index)}
                 checked={check[index]}
-                className='absolute top-2 right-2'
+                className='appearance-none absolute top-2 right-2'
             />
-            <label className='text-gray-600 text-sm'>{type?.Name.toUpperCase()}</label>
+            {isHovered ? (
+                <p className='text-gray-600 text-sm '>{type?.Name.toUpperCase()}</p>
+            ) : checkType.includes(type?.id) ? (
+                <p className='text-cocoMall-400 text-sm '>{type?.Name.toUpperCase()}</p>
+            ) : (
+                <></>
+            )}
         </label>
     );
 }

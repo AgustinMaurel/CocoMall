@@ -5,11 +5,13 @@ import {
     startLoginEmailPassword,
     startGoogleLogin,
     startFacebookLogin,
+    // rememberAction,
 } from '../../Redux/actions/auth';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import NavBar from '../../Components/NavBar/NavBar';
 import { useHistory } from 'react-router';
+import LoginGoogleFacebook from './LoginGoogleFacebook';
 
 const LoginScreen = () => {
     const dispatch = useDispatch();
@@ -19,56 +21,76 @@ const LoginScreen = () => {
         register,
         formState: { errors },
         setValue,
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            rememberForm: false,
+        },
+    });
 
     const [viewPass, setViewPass] = useState('password');
-
+    const [remember, setRemember] = useState(false);
     const renderCond = useSelector((state) => state.auth);
 
     const history = useHistory();
 
     const handleLogin = (data) => {
-        dispatch(startLoginEmailPassword(data.email, data.password));
+        dispatch(startLoginEmailPassword(data.email, data.password, data.rememberForm));
         history.push('/home');
         setValue('email', '');
         setValue('password', '');
+        setValue('rememberForm', false);
     };
 
     const handleGoogleLogin = () => {
-        dispatch(startGoogleLogin());
+        dispatch(startGoogleLogin(remember));
+        setValue('rememberForm', false);
     };
 
     const handleFacebookLogin = () => {
-        dispatch(startFacebookLogin());
+        dispatch(startFacebookLogin(remember));
+        setValue('rememberForm', false);
+    };
+
+    const handleChecked = () => {
+        setRemember(!remember);
+        setValue('rememberForm', !remember);
     };
 
     return (
-        <div className='h-screen overflow-hidden '>
-            <div className='absolute right-0 -top-72 md:-top-10 lg:top-28  overflow-hidden'>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light'></div>
-                <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light '></div>
+        <div className='h-screen   flex flex-col md:flex-none gap-10 '>
+            <div className='z-50'>
+                <NavBar />
             </div>
-            <NavBar />
+
+            {/* BGROUND */}
+            <div>
+                <div className='absolute right-0 -top-72 z-0'>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-tl-full border border-primary-light z-0 '></div>
+                    <div className='w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96  bg-primary-light rounded-bl-full border border-primary-light z-0 '></div>
+                </div>
+                <div
+                    className='h-14 w-14 z-0 bg-primary-light rounded-full absolute -left-10 bottom-0
+                                                    xl:h-28 xl:w-28 xl:left-10 xl:top-32'
+                ></div>
+                <div
+                    className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/4 top-3/4
+                                    xl:flex xl: xl:h-16 xl:w-16'
+                ></div>
+            </div>
+
+            {/* LOGIN */}
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col gap-10 z-1 md:mt-28 md:w-2/3 xl:w-8/12 items-center z-10 '>
+                <div className='flex flex-col z-10 m-auto h-full justify-start sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
                     <div className='flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
-                    <div
-                        className='h-10 w-10 hidden bg-primary-light rounded-full absolute z-0 left-1/3 top-3/4
-                                xl:flex xl: xl:h-16 xl:w-16'
-                    ></div>
-                    <div
-                        className='h-14 w-14 z-0 hi bg-primary-light rounded-full absolute left-20 bottom-9
-                                                xl:h-28 xl:w-28 xl:left-52 xl:top-32'
-                    ></div>
 
-                    <form className='grid grid-col-1 m-10' onSubmit={handleSubmit(handleLogin)}>
-                        <div className='flex flex-col text-left z-10'>
+                    <form className=' w-full' onSubmit={handleSubmit(handleLogin)}>
+                        <div className='flex flex-col text-left z-10 '>
                             <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 
-                            <div className='flex m-1 border bg-white border-gray-200 shadow-md rounded z-10'>
+                            <div className='flex m-1  border bg-white border-gray-200 shadow-md rounded z-10'>
                                 <input
                                     className='outline-none text-xs z-10 p-2 w-full'
                                     {...register('email', {
@@ -154,8 +176,22 @@ const LoginScreen = () => {
                             )}
                         </div>
 
-                        <div className='m-1 mt-10 z-10'>
-                            <div className='flex justify-center items-center content-center py-2 bg-secondary rounded text-white text-center z-10'>
+                        <div className='m-1 z-10'>
+                            {/* LOGIN GOOGLE & FACEBOOK */}
+                            <div>
+                                <div className='flex items-center justify-between text-center text-cocoMall-100 my-3'>
+                                    {/* <AiOutlineLine className='w-full object-fill'/><p> or </p><AiOutlineLine className='w-full'/> */}
+                                    <span className='border w-1/3 mx-2'></span>
+                                    <p className='text-cocoMall-400 w-full'>Or log in with</p>
+                                    <span className='border w-1/3 mx-2'></span>
+                                </div>
+                                <LoginGoogleFacebook
+                                    handleGoogleLogin={handleGoogleLogin}
+                                    handleFacebookLogin={handleFacebookLogin}
+                                />
+                            </div>
+                            {/* LOGIN */}
+                            <div className='flex justify-center items-center content-center py-2 mt-6 bg-secondary rounded text-white text-center z-10'>
                                 <button
                                     className='text-sm font-semibold cursor-pointer  relative w-full'
                                     type='submit'
@@ -163,38 +199,26 @@ const LoginScreen = () => {
                                     Log In
                                 </button>
                             </div>
-                            <div>
-                                <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
-                                    <div
-                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
-                                        onClick={handleGoogleLogin}
-                                    >
-                                        <img
-                                            className='w-12 h-6 justify-self-center mt-0.5 bg-white '
-                                            src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
-                                            alt='google button'
-                                        />
-                                        <label className='flex flex-col pointer-events-none justify-center bg-white p-3 mr-0.5'>
-                                            Log in with Google
-                                        </label>
-                                    </div>
-
-                                    <div
-                                        className='flex cursor-pointer text-sm text-center items-center border rounded shadow-sm border-gray-200 m-0.5 z-10'
-                                        onClick={handleFacebookLogin}
-                                    >
-                                        <img
-                                            className='w-12 h-6 justify-self-center mt-0.5'
-                                            src='https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
-                                            alt='facebook button'
-                                        />
-                                        <label className='flex flex-col pointer-events-none content-center justify-center p-3 mr-0.5'>
-                                            Log in with Facebook
-                                        </label>
-                                    </div>
+                            {/* TOOGLE BUTTON SESSION ACTIVE*/}
+                            <div className='flex items-center justify-between m-2'>
+                                <p className='text-cocoMall-400 text-sm'>
+                                    Do you want to stay logged in?
+                                </p>
+                                <div className='relative inline-block w-8 align-middle select-none'>
+                                    <input
+                                        // {...register('rememberForm')}
+                                        autoComplete='off'
+                                        className='toggle-checkbox absolute -top-1 block w-5 h-5 rounded-full bg-white border-2 border-gray-200 appearance-none cursor-pointer'
+                                        type='checkbox'
+                                        name='remember'
+                                        value={remember}
+                                        onChange={handleChecked}
+                                    />
+                                    <label className='toggle-label block overflow-hidden h-3 rounded-full bg-gray-300 cursor-pointer'></label>
                                 </div>
                             </div>
                         </div>
+
                         <div className='flex mt-10 text-sm z-10 items-center text-center justify-center'>
                             <label className='ml-1 font-medium'>Not a member ? </label>
                             <Link className='text-secondary font-semibold ml-2' to='/auth/register'>

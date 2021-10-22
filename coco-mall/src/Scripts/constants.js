@@ -19,10 +19,22 @@ export const GOOGLE_MAPS_API_KEY = 'AIzaSyBFiLTvogLQJxloGNs-gSm6f9kL4NKot_U';
 
 export const SHOPPING_CART = {
     ADD_TO_CART: `${USER_BASE_URL}/update/cart`,
+    RUTA_SOMO: `${USER_BASE_URL}/update/cart2`, // RECIBE: id(id usuario), item(itemid), que("+" o "-"), cant(cantidad de items que agrego o saco)
+    CLEAR_CART: `${USER_BASE_URL}/update/clearCart2`,
 };
 
 export const DELETE_PRODUCT = '/product/delete';
 
+export const DELETE_STORE = '/store/delete';
+
 export const CREATE_USER_URL = '/user/create';
 
 export const UPDATE_PRODUCT = '/product/update';
+
+export const DELETE_USER = '/user/delete'
+
+export const DELETE_ORDER = '/order/delete'
+
+export const UPDATE_USER = '/user/update'
+
+export const UPDATE_FIREBASE = '/user/updatePassworEmail'

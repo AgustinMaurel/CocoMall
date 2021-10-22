@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startLogout } from '../../Redux/actions/auth';
 import { useHistory } from 'react-router';
 import MenuDropDown from './MenuDropDown';
-import coco from '../../Assets/icons/coco_png.png'
+import coco from '../../Assets/icons/coco_png.png';
 
 function NavBar() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -14,12 +14,19 @@ function NavBar() {
 
     const history = useHistory();
     const user = useSelector((state) => state.auth);
+
+    const userName = useSelector((state) => state.auth.userInfoDB);
+
     const cartItems = useSelector((state) => state.auth.userCart);
     const dispatch = useDispatch();
 
-    let ITEMS_IN_CART =
-        cartItems.length > 0 &&
-        cartItems?.map((el) => el.quantity).reduce((current, sum) => current + sum, 0);
+    let ITEMS_IN_CART;
+
+    if (cartItems && cartItems.length > 0) {
+        ITEMS_IN_CART = cartItems
+            ?.map((el) => el.quantity)
+            .reduce((current, sum) => current + sum, 0);
+    }
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -43,14 +50,42 @@ function NavBar() {
     return (
         <>
             {width < breakpoint ? (
-                <div className='p-5'>
-                    <nav className='flex  justify-between'>
+                <div className='p-5 sticky top-0 bg-gray-100 border-gray-100 shadow '>
+                    <nav className='flex  justify-between relative'>
                         <div className='flex align-center items-center gap-5'>
                             <Link to='/'>
-                            <img className="w-20" src={coco} alt="logo" />
+                                <img className='w-20' src={coco} alt='logo' />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
+                            </Link>
+                        </div>
+                        <div className='absolute right-12 cursor-pointer'>
+                            <Link to='/cart'>
+                                {cartItems.length > 0 ? (
+                                    <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                        {ITEMS_IN_CART}
+                                    </div>
+                                ) : (
+                                    <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                        0
+                                    </div>
+                                )}
+
+                                <svg
+                                    className='w-6 h-6 pointer-events-none'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    viewBox='0 0 24 24'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
+                                        d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
+                                    ></path>
+                                </svg>
                             </Link>
                         </div>
                         <div onClick={handleDisplay} className='fixed right-5 top-4 z-20'>
@@ -63,10 +98,7 @@ function NavBar() {
                     <nav className=' flex align-center items-center h-auto   justify-between  w-full'>
                         <div className='flex align-center items-center  gap-5'>
                             <Link to='/'>
-                            
-
-                                <img className="w-20" src={coco} alt="logo" />
-
+                                <img className='w-20' src={coco} alt='logo' />
                             </Link>
                             <Link to='/home'>
                                 <p>Home</p>
@@ -78,11 +110,11 @@ function NavBar() {
                                     <div className='relative cursor-pointer'>
                                         <Link to='/cart'>
                                             {cartItems.length > 0 ? (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     {ITEMS_IN_CART}
                                                 </div>
                                             ) : (
-                                                <div class='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
+                                                <div className='absolute flex items-center content-center justify-center top-0 right-0 mr-3 mt-3  bg-red-500 h-5 w-5 text-xs  text-white rounded-full '>
                                                     0
                                                 </div>
                                             )}
@@ -109,8 +141,9 @@ function NavBar() {
                                             to='/storePanel'
                                         >
                                             <button className='w-full focus:outline-none text-white text-center text-sm text-md'>
-                                                {user.name.split(' ')[0]}{' '}
-                                                {/* para ver solo nombre */}
+                                                {userName.Name
+                                                    ? userName.Name.split(' ')[0]
+                                                    : user.name.split(' ')[0]}
                                             </button>
                                         </Link>
                                     </div>

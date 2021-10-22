@@ -14,6 +14,7 @@
 @tailwind utilities;
 
 * {
+    font-family: 'Inter', sans-serif;
     /* border: 1px solid black; */
 }
 @layer components {
@@ -39,7 +40,7 @@
 
     /* width */
     ::-webkit-scrollbar {
-        width: 15px;
+        width: 10px;
         border-radius: 10px;
     }
 

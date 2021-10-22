@@ -21,7 +21,7 @@ class StoreModel extends ModelController {
                 );
                 let public_id = uploadedResponse.public_id;
 
-                //Our DataBase
+        //Our DataBase
 
                 const id = req.body.idUser;
                 const { store } = req.body;
@@ -49,48 +49,67 @@ class StoreModel extends ModelController {
         }
     };
 
-    getAllData = async (req, res, next) => {
-        try {
-            let data = await Store.findAll({
-                include: [{ model: Product }],
-            });
-            res.send(data);
-        } catch (e) {
-            next(e);
-        }
-    };
+  getAllData = async (req, res, next) => {
+    try {
+      //Cloudinary
+      // const {resources} = await cloudinary.search.expression('folder:dev_setups')
+      // .sort_by('public_id', 'desc').execute()
+      // // .max_results(...)
+      // const {publicIds} = resources.map(file => file.public_id) // array con todas las public ids
 
-    postBulkCreate = async (req, res) => {
-        const { store, ids } = req.body;
-        if (typeof store === 'object') {
-            try {
-                let stores = await this.model.bulkCreate(store);
-                stores.forEach(async (store, i) => {
-                    //Get the id of each store
-                    const storeId = store.id;
-                    //Attach the Store with the User ID
-                    const user = await User.findByPk(ids[i]);
-                    await user.addStore(storeId);
-                });
-                //lindo msj
-                res.send('Successfully Created');
-            } catch (error) {
-                res.send(error);
-            }
-        } else {
-            res.status(400).send({ message: 'Wrong parameters' });
-        }
-    };
+      // Our DataBase
+
+      let data = await Store.findAll();
+      res.send(data);
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  postBulkCreate = async (req, res) => {
+    const allStore = req.body.Store;
+    const allId = req.body.Ids;
+    if (typeof allStore === 'object') {
+      try {
+        let stores = await this.model.bulkCreate(allStore);
+        stores.forEach(async (store, i) => {
+          //Get the id of each store
+          const storeId = store.id;
+          //Attach the Store with the User ID
+          const user = await User.findByPk(allId[i]);
+          await user.addStore(storeId);
+        });
+        //lindo msj
+        res.send('Successfully Created');
+      } catch (error) {
+        res.send(error);
+      }
+    } else {
+      res.status(400).send({ message: 'Wrong parameters' });
+    }
+  };
 
     filterStoresByProductTypes = async (req, res) => {
-        const stateStore = req.body.state || '';
+        let stateStore = req.body.state || '';
         const typesId = req.body.types || [];
         const productToFilter = req.body.name || '';
         const storeToFilter = req.body.nameStore || '';
         const min = req.body.min || 0;
         const max = req.body.max || 99 ^ 9999;
+        stateStore.split(" ").length > 2 ? stateStore = stateStore.split(" ").slice(0,2).join(" ") : false
         try {
             const filteredStores = await this.model.findAll({
+                //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
+                where: {
+                    state: {
+                        //Esta puesto asi porque hay algunos state que rompen
+                        [Op.iLike]: `%${stateStore}%`,
+                    },
+                    //Estoy filtrando por el nombre de la tienda
+                    storeName: {
+                        [Op.iLike]: `%${storeToFilter}%`,
+                    },
+                },
                 include: {
                     model: Product,
                     attributes: ['ProductTypeId', 'productName', 'price'],
@@ -110,22 +129,25 @@ class StoreModel extends ModelController {
                         // },
                     },
                 },
-                //filtro por ciudad agregado (no funciona si la tienda tiene "state: null")
-                where: {
-                    state: {
-                        [Op.iLike]: `%${stateStore}%`,
-                    },
-                    //Estoy filtrando por el nombre de la tienda
-                    storeName: {
-                        [Op.iLike]: `%${storeToFilter}%`,
-                    },
-                },
             });
             res.send(filteredStores);
         } catch (error) {
             res.send(error);
         }
     };
+
+    getAllProductsOfStore = async (req, res) => {
+        const id = req.params.id
+        const searchedStore = await this.model.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: Product
+            }
+        })
+        res.send(searchedStore)
+    }
 
     deleteDeep = async (req, res) => {
         let id = req.params.id;

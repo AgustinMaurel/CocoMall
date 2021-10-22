@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import InputDefault from '../Inputs/InputDefault';
+import Textarea from '../Inputs/Textarea';
 import InputFile from '../Inputs/InputFile';
 import { IMG_DEFAULT } from '../../Scripts/constants';
 import validate from '../../Scripts/validate';
@@ -8,18 +9,15 @@ import { PRODUCT_CREATE_URL, UPDATE_PRODUCT } from '../../Scripts/constants';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStores } from '../../Redux/actions/stores';
+import { getAllProducts, getStores } from '../../Redux/actions/stores';
 
 const ProductsCreate = ({ idStore, product }) => {
     //STATES
     const [image, setImage] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [types, setTypes] = useState('');
-
+    const [types, setTypes] = useState(product ? product.ProductTypeId : '');
     //--HOOKS--
-    const dispatch = useDispatch();
-
-    const allTypes = useSelector((state) => state.stores.productTypes);
+    const [subCategories, setSubCategories] = useState([]);
 
     const {
         register,
@@ -27,6 +25,18 @@ const ProductsCreate = ({ idStore, product }) => {
         watch,
         formState: { errors },
     } = useForm({ defaultValues: product });
+
+    useEffect(async () => {
+        let subCategory = await axios.get(`/subCategory/match/${watch('subCategory')}`);
+        if (subCategory?.data) {
+            setSubCategories(subCategory);
+        }
+    }, [watch('subCategory')]);
+
+    //--HOOKS--
+    const dispatch = useDispatch();
+
+    const allTypes = useSelector((state) => state.stores.productTypes);
 
     //LOAD IMAGE
     const handleImageChange = (e) => {
@@ -42,7 +52,7 @@ const ProductsCreate = ({ idStore, product }) => {
     const handleTypes = (e) => {
         setTypes(e.target.value);
     };
-
+    console.log(product);
     //POST DATA PRODUCT & ID STORE
     const onSubmit = (data) => {
         let dataRawProduct = {
@@ -52,19 +62,24 @@ const ProductsCreate = ({ idStore, product }) => {
             price: Number(data.price),
             stock: Number(data.stock),
             sellBy: data.sellBy || 'Cuantity',
+            ProductTypeId: Number(types),
+            cloudImage: [image],
         };
         let dataProductClean = {
             product: dataRawProduct,
             storeId: idStore,
             idImage: [image],
             typeId: types,
+            subCat: data.subCategory
+                ? data.subCategory.charAt(0).toUpperCase() + data.subCategory.slice(1).toLowerCase()
+                : 'Others',
         };
-        console.log(dataProductClean);
         if (product) {
             axios
                 .put(`/product/update/${product.id}`, dataProductClean)
                 .then(() => {
                     setTypes('');
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Updated!',
@@ -85,6 +100,7 @@ const ProductsCreate = ({ idStore, product }) => {
                 .post('/product/create', dataProductClean)
                 .then(() => {
                     dispatch(getStores());
+                    dispatch(getAllProducts());
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Created!',
@@ -119,13 +135,15 @@ const ProductsCreate = ({ idStore, product }) => {
                         placeholder='Eg: T-Shirt'
                         validate={validate.product}
                     />
-                    <InputDefault
+
+                    <Textarea
                         register={register}
                         errors={errors}
                         name='description'
                         placeholder='Eg: Description of T-Shirt'
                         validate={validate.description}
                     />
+
                     <InputDefault
                         register={register}
                         errors={errors}
@@ -162,6 +180,26 @@ const ProductsCreate = ({ idStore, product }) => {
                                 );
                             })}
                         </select>
+                    </div>
+                    <InputDefault
+                        register={register}
+                        errors={errors}
+                        name='subCategory'
+                        placeholder='Eg: T-shirt'
+                        type='text'
+                        validate={validate.subCategory}
+                    />
+                    {console.log(subCategories?.data)}
+                    <div className='flex flex-row justify-center items-center text-base  mb-8'>
+                        {subCategories?.data?.length
+                            ?
+                            <>
+                            <span className='text-cocoMall-700'>Suggestions:</span>
+                            {subCategories?.data?.map((subCat) => {
+                                  return <span className='ml-4 text-cocoMall-300'>{subCat.Name}</span>;
+                              })}
+                              </>
+                            : false}
                     </div>
                     <InputFile
                         register={register}

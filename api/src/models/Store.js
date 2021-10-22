@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+// const { all } = require('sequelize/types/lib/operators');
 
 module.exports = (sequelize) => {
     return sequelize.define(
@@ -38,9 +39,15 @@ module.exports = (sequelize) => {
             coord: {
                 type: DataTypes.JSON,
             },
-            // payment_account: {
-            //PENDING
-            // }
+            paymentAccount: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            rating: {
+                type: DataTypes.DECIMAL,
+                allowNull: false,
+                defaultValue: 0
+            }
         },
         {
             timestamps: false,

@@ -278,12 +278,16 @@ export default function StorePanel() {
             </div>
             {editState ? (
                 <div className='overflow-y-hidden col-start-2 col-end-6 row-span-full text-center justify-center items-center p-4 '>
-                    <div className='text-center justify-center items-center'>
+                    <div className=' text-center justify-center items-center'>
                         {selectStore === 'SelectStore' && render === '' ? (
                             <Link to='/create/shop'>
-                                <button className='my-1 bg-primary rounded text-white p-1 cursor-pointer'>
+                                
+
+                                <button className='my-1 h-11 w-56 text-2xl font-semibold bg-primary rounded text-white p-1 cursor-pointer'>
                                     Create a Store
                                 </button>
+
+                              
                             </Link>
                         ) : (
                             <div>

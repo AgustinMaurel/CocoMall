@@ -27,10 +27,7 @@ const OrderProduct = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const {
-        register,
         handleSubmit,
-        watch,
-        formState: { errors },
     } = useForm({ mode: 'onTouched' });
 
     let itemsCart;

@@ -1,38 +1,40 @@
 import React from 'react';
+import { Image } from 'cloudinary-react';
+import {Link} from 'react-router-dom'
 
-const StoreModel = ({ banner, logo, title, mail, description }) => {
+const StoreModel = ({ banner, logo, title, mail, description, storeId }) => {
     return (
         <article
             className='w-2/5  bg-white shadow-xl
-                        sm:h-64
-                        md:h-72
-                        
-                        2xl:w-1/5 2xl:h-full'
+            xs:h-44
+            sm:h-52
+            md:h-72
+            lg:h-96
+            2xl:w-1/5'
         >
+            <Link to={`/home/store/${storeId}`}>
             {/* --banner-- */}
-            <div
-                className='overflow-hidden max-h-24
-                            2xl:max-h-36'
-            >
-                <img src={banner} alt='banner' />
-            </div>
+            <div className='bg-cocoMall-400 rounded-md h-20 lg:h-28 w-full'></div>
+
             {/* --logo-- */}
             <div className='flex justify-center px-5 -mt-6'>
-                <img
+                <Image
+                    // key={storeDetail?.id}
+                    crop='scale'
+                    cloudName='cocomalls'
                     className='h-14 w-14 bg-white rounded-full
                                 shadow
                                 sm:h-16 sm:w-16
                                 md:h-20 md:w-20
                                 xl:-mt-4
                                 2xl:h-24 2xl:w-24'
-                    src={logo}
-                    alt='logo'
+                    publicId={logo}
                 />
             </div>
             {/* --contain-- */}
             <div>
                 <div
-                    className='text-center px-0
+                    className='text-center px-0 mt-4
                                 md:px-6
                                 lg:px-10'
                 >
@@ -59,6 +61,7 @@ const StoreModel = ({ banner, logo, title, mail, description }) => {
                     </p>
                 </div>
             </div>
+        </Link>
         </article>
     );
 };

@@ -48,7 +48,7 @@ const SectionModelStores = () => {
                             
                             2xl:w-full 2xl:h-1/2 2xl:items-center'
             >
-                {allStores?.map((e, i) => (
+                {allStores?.slice(0,4).map((e, i) => (
                     <StoreModel
                         key={i}
                         banner={e.banner}

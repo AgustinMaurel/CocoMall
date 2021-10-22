@@ -6,6 +6,7 @@ import { addToCartSomo } from '../../Redux/actions/shoppingActions';
 import { Image } from 'cloudinary-react';
 import Question from '../Forms/QuestionForm';
 import QuestionAndAnswer from './QuestionAndAnswer';
+import Product from './Product';
 
 ReactModal.setAppElement('#root');
 export default function ProductDetail(props) {
@@ -39,23 +40,27 @@ export default function ProductDetail(props) {
     return (
         <>
             <div className='flex w-full h-full m-auto p-5 gap-4'>
-                <div className='p-6 bg-white rounded flex flex-col justify-between w-3/5 h-full gap-20 shadow'>
-                    <div className=''>
-                        <h4 className='text-4xl font-semibold bg-white'>
+                <div className='p-6 bg-white rounded flex flex-col justify-between w-3/5 h-full shadow'>
+
+
+                    <div className='h-1/6'>
+                        <h4 className='text-2xl font-semibold bg-white'>
                             {product.productName.toUpperCase()}
                         </h4>
                     </div>
 
-                    <div className='flex flex-col min-h-max min-w-max relative'>
+                    <div className='flex items-center justify-center h-4/6 overflow-hidden'>
                         <Image
                             key={product.id}
                             cloudName='cocomalls'
                             publicId={product.cloudImage[0]}
-                            width='400'
+                            width='320'
                             crop='scale'
                         />
                     </div>
-                    <div>
+
+
+                    <div className='h-1/6'>
                         <p className='text-xs lg:text-lg text-cocoMall-600'>
                             Stock left: {product.stock}
                         </p>
@@ -64,6 +69,46 @@ export default function ProductDetail(props) {
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+                {/* <div
+                    className='flex flex-col justify-between gap-2 p-4 w-3/5 bg-white m-4 rounded-md shadow-lg cursor-pointer hover:shadow-xl transition'
+                    key={product.id}
+                >
+                    <picture className='w-full h-2/3 rounded-md overflow-hidden'>
+                        <Image
+                            key={product.id}
+                            cloudName='cocomalls'
+                            publicId={product.cloudImage[0]}
+                            width='300'
+                            crop='scale'
+                            className='object-cover h-44'
+                        />
+                    </picture>
+
+                    <div className='w-full h-1/3 flex flex-col'>
+                        <h3 className='font-medium text-base leading-tight text-cocoMall-800'>
+                            {product.productName.toUpperCase()}
+                        </h3>
+                    </div>
+                    <p className='text-xs text-cocoMall-600'>{product.stock} unidades</p>
+                    <div className='font-bold text-center text-xl text-white bg-cocoMall-300 rounded-md'>
+                        <span>
+                            ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                        </span>
+                    </div>
+                </div> */}
+
+
+
+
+
+
+
+
                 <div className='p-6 bg-white rounded w-full flex flex-col justify-start items-start h-full m-auto gap-5'>
                     <p className='text-2xl text-cocoMall-400 font-semibold inline-block'>Details</p>
                     <div className='flex w-full h-full overflow-hidden hover:overflow-y-auto'>

@@ -7,7 +7,7 @@ import { IoMdShareAlt } from 'react-icons/io';
 const Share = () => {
     const location = useLocation();
     const [share, setShare] = useState({
-        value: 'http://localhost:3000' + location.pathname,
+        value: 'https://coco-mall.vercel.app' + location.pathname,
         copied: false,
     });
     return (

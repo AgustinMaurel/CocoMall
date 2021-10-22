@@ -41,7 +41,7 @@ router.post('/mercadopago', async (req, res) => {
         back_urls: {
             success: '/order/success',
             failure: '/create/order',
-            pending: '/order/success',
+            pending: 'https://coco-mall.vercel.app/order/success',
         },
         auto_return: 'approved',
     };

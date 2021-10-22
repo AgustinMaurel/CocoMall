@@ -126,7 +126,7 @@ const ProductsCreate = ({ idStore, product }) => {
             <div className='w-full flex justify-center items-center m-auto px-10 lg:px-24 xl:p-0'>
                 <form className='w-full xl:w-1/3 flex flex-col' onSubmit={handleSubmit(onSubmit)}>
                     <h3 className='mb-12 sm:mb-10 text-2xl md:text-3xl'>
-                        {product ? 'Edit your Product' : 'Create your Product'}
+                        {product ? 'Edit your product' : 'Create your product'}
                     </h3>
                     <InputDefault
                         register={register}

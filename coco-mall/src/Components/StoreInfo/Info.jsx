@@ -30,7 +30,7 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                 }}
                 isOpen={infoModal}
                 onRequestClose={() => setInfoModal(false)}
-                className='rounded-sm focus:outline-none bg-gray-100 shadow-lg h-4/5 xl:p-10 xl:w-4/6 xl:h-4/6 top-0 bottom-0 absolute right-0 left-0 m-auto'
+                className='rounded-sm focus:outline-none bg-gray-100 shadow-lg xl:p-8 xl:w-5/6 xl:h-5/6 top-0 bottom-0 absolute right-0 left-0 m-auto'
             >
                 <div className='w-full h-full flex flex-col'>
                     <div className='h-1/3 w-full flex text-center'>
@@ -41,10 +41,10 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                                     cloudName='cocomalls'
                                     publicId={info?.cloudImage}
                                     crop='scale'
-                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16'
+                                    className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-12 lg:w-12 2xl:h-14 2xl:w-14'
                                 />
                                 <div>
-                                    <h3 className='text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl font-extrabold text-white'>
+                                    <h3 className='text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-extrabold text-white'>
                                         {info?.storeName?.toUpperCase()}
                                     </h3>
                                     <div className='flex'>
@@ -55,7 +55,7 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex flex-col text-left text-white'>
+                            <div className='flex flex-col text-left text-white text-xs 2xl:text-sm'>
                                 <p>
                                     <IoMdInformationCircle className='inline-block' />
                                     <span> {info?.description}</span>

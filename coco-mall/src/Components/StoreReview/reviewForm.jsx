@@ -30,6 +30,36 @@ const ReviewForm = ({setInfoModal}) => {
         speed: 500,
         slidesToShow: allStoreReviews?.length < 3 ? allStoreReviews?.length : 3,
         slidesToScroll: allStoreReviews?.length < 3 ? allStoreReviews?.length : 3,
+        responsive: [
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: allStoreReviews?.length < 2 ? allStoreReviews?.length : 2,
+                    slidesToScroll: allStoreReviews?.length < 2 ? allStoreReviews?.length : 2,
+                },
+            },
+            {
+                breakpoint: 1420,
+                settings: {
+                    slidesToShow: allStoreReviews?.length < 2 ? allStoreReviews?.length : 2,
+                    slidesToScroll: allStoreReviews?.length < 2 ? allStoreReviews?.length : 2,
+                },
+            },
+        ],
     };
 
     const handleChange = (e) => {
@@ -47,7 +77,7 @@ const ReviewForm = ({setInfoModal}) => {
         axios
             .post('/review/create', obj)
             .then((res) => res.data)
-            .then((stores) => console.log('review creada en el back todasss: ', stores));
+            .then((stores) => console.log(''));
 
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
         setInfoModal(false);
@@ -80,15 +110,17 @@ const ReviewForm = ({setInfoModal}) => {
                         </div>
                     </div>
                 ) : (
-                    <Slider {...settings}>
-                        {allStoreReviews?.map((rev) => (
-                        <ReviewCard
-                            username={rev?.User?.Name || ''}
-                            qualification={rev?.qualification || ''}
-                            description={rev?.description || ''}
-                        />
-                    ))}
-                    </Slider>
+                    <div className='h-full'>
+                        <Slider {...settings}>
+                            {allStoreReviews?.map((rev) => (
+                            <ReviewCard
+                                username={rev?.User?.Name || ''}
+                                qualification={rev?.qualification || ''}
+                                description={rev?.description || ''}
+                            />
+                        ))}
+                        </Slider>
+                    </div>
                 )}
             </div>
 

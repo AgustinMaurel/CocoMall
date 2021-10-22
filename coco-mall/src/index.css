@@ -40,7 +40,7 @@
 
     /* width */
     ::-webkit-scrollbar {
-        width: 15px;
+        width: 10px;
         border-radius: 10px;
     }
 

@@ -12,10 +12,18 @@ const Share = () => {
     });
     return (
         <div>
-            <div className='flex items-center gap-1 cursor-pointer'>
-                <p className='hidden xl:block'>Share</p>
-                <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
-                    <button
+            <CopyToClipboard text={share.value} onCopy={() => setShare({ copied: true })}>
+                <div className='flex items-center gap-1 cursor-pointer'  onClick={() =>
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: 'Copied',
+                                showConfirmButton: false,
+                                timer: 1000,
+                            })}>
+                    <p className='hidden xl:block'>Share</p>
+                    {/* <button
+                    className='w-full h-full'
                         onClick={() =>
                             Swal.fire({
                                 position: 'top-center',
@@ -25,11 +33,11 @@ const Share = () => {
                                 timer: 1000,
                             })
                         }
-                    >
+                    > */}
                         <IoMdShareAlt className='w-8 h-8' style={{ pointerEvents: 'none' }} />
-                    </button>
-                </CopyToClipboard>
-            </div>
+                    {/* </button> */}
+                </div>
+            </CopyToClipboard>
         </div>
     );
 };

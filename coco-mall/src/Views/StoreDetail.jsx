@@ -23,7 +23,7 @@ import {
     handleOnDiscount,
     handleOnTypes,
     handleOnCategories,
-    handleOnChangeProduct
+    handleOnChangeProduct,
 } from '../Scripts/handles';
 import Info from '../Components/StoreInfo/Info';
 import { Image } from 'cloudinary-react';
@@ -92,7 +92,7 @@ export default function StoreDetail() {
     const handleDiscount = handleOnDiscount(filters, dispatch, id);
     const handleTypes = handleOnTypes(dispatch, id, filters);
     const handleCategories = handleOnCategories(dispatch, id, filters);
-    const handleOrderPrice = handleOnChangeProduct(dispatch, id, filters)
+    const handleOrderPrice = handleOnChangeProduct(dispatch, id, filters);
 
     const handleDoubleCat = (e) => {
         handleChange(e);
@@ -104,9 +104,9 @@ export default function StoreDetail() {
     };
 
     const handleOrder = async (e) => {
-        handleChange(e)
-        handleSubmit(e)
-    }
+        handleChange(e);
+        handleSubmit(e);
+    };
 
     let itemsCart;
     if (userCart.length) {
@@ -146,11 +146,11 @@ export default function StoreDetail() {
     }
 
     return (
-        <div className='grid grid-col-6 grid-rows-8 h-screen bg-gray-200'>
+        <div className='grid grid-col-6 grid-rows-8 bg-gray-200'>
             <div className='z-10 col-span-6 row-span-1 row-end-1 bg-gray-200 shadow'>
                 <NavBar />
             </div>
-            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-x-scroll'>
+            <div className='w-full col-span-6 row-span-full px-6 md:px-12 xl:px-24 overflow-x-auto'>
                 {/* --- BANNER PRODUCTS --- */}
                 <div className='flex 2xl:w-2/3 h-24 mx-auto bg-cocoMall-200 rounded-b-2xl'>
                     <div className='flex items-center justify-between w-full px-4'>
@@ -194,7 +194,7 @@ export default function StoreDetail() {
                         onClick={() => history.push('/cart')}
                     >
                         <span className='bg-primary rounded-lg   p-1.5 cursor-pointer text-white font-semibold'>
-                            Your cart {itemsCart} items ${total}
+                            Your cart has {itemsCart} items ${total}
                         </span>
                     </div>
                 ) : (
@@ -301,73 +301,60 @@ export default function StoreDetail() {
                                 <button className='flex text-cocoMall-300 h-6' type='submit'>
                                     <BsFillArrowRightCircleFill className='h-full w-full' />
                                 </button>
-                        </form>
-                        <button
-                            className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
-                            onClick={handleDiscount}
-                        >
-                            Promotions
-                            <AiOutlinePercentage />
-                        </button>
-                    </div>
-                    {/* --- ORDERS --- */}
-                    <div>
-                        <select
-                            name="order"
-                            className='border cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                            onChange={(e) =>handleOrder(e)}
-                            defaultValue={filters.order}
-                        >
-                            <option value="ALL">Most Relevant</option>
-                            <option value='ASC'>High Price</option>
-                            <option value='DESC'>Low Price</option>
-                        </select>
-                    </div>
-                </div>
-                                <select
-                                    className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
-                                    onChange={handleChange}
-                                >
-                                    <option name='ALL' value='ALL'>
-                                        Most Relevant
-                                    </option>
-                                    <option name='DESC' value='DESC'>
-                                        Low Price
-                                    </option>
-                                    <option name='ASC' value='ASC'>
-                                        High Price
-                                    </option>
-                                </select>
+                            </form>
+                            <button
+                                className='cursor-pointer flex items-center gap-2 bg-gray-300 text-gray-50 p-2 px-4 rounded-md ml-6 h-8'
+                                onClick={handleDiscount}
+                            >
+                                Promotions
+                                <AiOutlinePercentage />
+                            </button>
+                            <select
+                                className='cursor-pointer p-2 rounded-md text-white bg-gray-300 outline-none hover:bg-cocoMall-400'
+                                onChange={handleChange}
+                            >
+                                <option name='ALL' value='ALL'>
+                                    Most Relevant
+                                </option>
+                                <option name='DESC' value='DESC'>
+                                    Low Price
+                                </option>
+                                <option name='ASC' value='ASC'>
+                                    High Price
+                                </option>
+                            </select>
                         </div>
                     </div>
+                </div>
 
-                    {/* CARDS */}
-                    <div className='m-auto'>
-                        <div>
-                            {keysTypesSinFilter?.length <= keysTypes?.length ? (
-                                <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>
-                                    Alls Products
-                                </h3>
-                            ) : (
-                                <></>
-                            )}
-                        </div>
-                        <div className='flex flex-col'></div>
-                        <div>
-                            {storeProductsFilter?.Products
-                                ? keysTypes.map((k) => {
-                                      return (
-                                          <TypesProduct
-                                              typeName={k}
-                                              SubCategories={storeProductsFilter.Products[k]}
-                                              modalIsOpen={modalIsOpen}
-                                              setModalIsOpen={setModalIsOpen}
-                                          />
-                                      );
-                                  })
-                                : null}
-                        </div>
+                {/* CARDS */}
+                <div className='m-auto'>
+                    <div>
+                        {keysTypesSinFilter?.length <= keysTypes?.length ? (
+                            <h3 className='text-3xl font-bold text-cocoMall-800 ml-4'>
+                                Alls Products
+                            </h3>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
+                    <div className='flex flex-col'></div>
+                    <div>
+                        {storeProductsFilter?.Products
+                            ? keysTypes.map((k) => {
+                                  return (
+                                      <TypesProduct
+                                          typeName={k}
+                                          SubCategories={storeProductsFilter.Products[k]}
+                                          modalIsOpen={modalIsOpen}
+                                          setModalIsOpen={setModalIsOpen}
+                                      />
+                                  );
+                              })
+                            : null}
                     </div>
                 </div>
+            </div>
+        </div>
     );
 }

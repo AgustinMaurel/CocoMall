@@ -6,9 +6,12 @@ import { IoLocationSharp } from 'react-icons/io5';
 import InputMaps from '../Inputs/InputMaps';
 import ReviewForm from '../StoreReview/reviewForm';
 import { Image } from 'cloudinary-react';
+import { useSelector } from 'react-redux';
+import CocoIcon from '../StoreReview/CocoIcon';
 
 ReactModal.setAppElement('#root');
 const Info = ({ info, infoModal, setInfoModal }) => {
+    const { storeDetail } = useSelector(state => state.stores)
     return (
         <div>
             <div
@@ -40,10 +43,17 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                                     crop='scale'
                                     className='shadow object-cover rounded-full bg-white h-10 w-10 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16'
                                 />
-
-                                <h3 className='text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl font-extrabold text-white'>
-                                    {info?.storeName?.toUpperCase()}
-                                </h3>
+                                <div>
+                                    <h3 className='text-base md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl font-extrabold text-white'>
+                                        {info?.storeName?.toUpperCase()}
+                                    </h3>
+                                    <div className='flex'>
+                                        <span className='text-white'>Rating: {storeDetail?.rating}</span>
+                                        <span>
+                                            <CocoIcon color={'text-cocoMall-50'}/>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div className='flex flex-col text-left text-white'>
                                 <p>
@@ -68,7 +78,7 @@ const Info = ({ info, infoModal, setInfoModal }) => {
                     </div>
 
                     <div className='w-full h-2/3 my-4'>
-                        <ReviewForm />
+                        <ReviewForm setInfoModal={setInfoModal} />
                     </div>
                 </div>
             </ReactModal>

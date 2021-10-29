@@ -4,12 +4,12 @@
 .toggle-checkbox:checked {
     @apply: right-0 border-green-400;
     right: 0;
-    border-color: #4DC1C3;
+    border-color: #4dc1c3;
 }
 .toggle-checkbox:checked + .toggle-label {
     @apply: bg-green-400;
-    background-color: #38A3A5;
-  }
+    background-color: #38a3a5;
+}
 
 @tailwind utilities;
 
@@ -56,9 +56,9 @@
     }
 
     /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
+    /* ::-webkit-scrollbar-thumb:hover {
         background: #afdadb;
-    }
+    } */
 
     section {
         height: 100vh;
@@ -68,6 +68,6 @@
 
     .container {
         height: 100vh;
-        scroll-snap-type: y mandatory;        
+        scroll-snap-type: y mandatory;
     }
 }

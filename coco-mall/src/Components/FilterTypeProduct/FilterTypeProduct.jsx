@@ -31,9 +31,9 @@ function FilterTypeProduct({ type, index, handleChecked, check, checkType }) {
                 className='appearance-none absolute top-2 right-2'
             />
             {isHovered ? (
-                <p className='text-gray-600 text-sm '>{type?.Name.toUpperCase()}</p>
+                <p className='text-gray-600 text-xs lg:text-sm '>{type?.Name}</p>
             ) : checkType.includes(type?.id) ? (
-                <p className='text-cocoMall-400 text-sm '>{type?.Name.toUpperCase()}</p>
+                <p className='text-cocoMall-400 text-sm '>{type?.Name}</p>
             ) : (
                 <></>
             )}

@@ -57,7 +57,7 @@ const LoginScreen = () => {
     };
 
     return (
-        <div className='h-screen   flex flex-col md:flex-none gap-10 '>
+        <div className='h-screen   flex flex-col md:flex-none gap-10 sm:gap-0 '>
             <div className='z-50'>
                 <NavBar />
             </div>
@@ -81,12 +81,12 @@ const LoginScreen = () => {
             {/* LOGIN */}
 
             {!renderCond.uid && !renderCond.name ? (
-                <div className='flex flex-col z-10 m-auto h-full justify-start sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
-                    <div className='flex-col  text-left  font-bold z-1 relative'>
+                <div className='flex flex-col z-10 m-auto h-full sm:justify-center items-center w-full md:w-5/6 xl:w-3/6 2xl:w-2/6 px-10'>
+                    <div className='mb-20 focus-within:flex-col  text-left  font-bold z-1 relative'>
                         <h1 className='relative text-2xl'>Login in to your account</h1>
                     </div>
 
-                    <form className=' w-full' onSubmit={handleSubmit(handleLogin)}>
+                    <form className='w-full' onSubmit={handleSubmit(handleLogin)}>
                         <div className='flex flex-col text-left z-10 '>
                             <label className='text-gray-500 text-base ml-1 '>Email Address</label>
 

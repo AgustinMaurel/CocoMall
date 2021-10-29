@@ -75,7 +75,7 @@ const RegisterScreen = () => {
     };
 
     return (
-        <div className='h-screen  flex flex-col md:flex-none '>
+        <div className='h-screen  flex flex-col md:flex-none gap-4 sm:gap-0'>
             <div className='z-50'>
                 <NavBar />
             </div>

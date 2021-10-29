@@ -2,7 +2,7 @@ import React from 'react';
 
 const LoginGoogleFacebook = ({ handleGoogleLogin, handleFacebookLogin }) => {
     return (
-        <div>
+        <div className='pt-4 sm:p-0'>
             <div className='flex mt-1 z-10 justify-center content-center items-center bg-white'>
                 <div
                     className='flex cursor-pointer text-sm text-center items-center bg-white border rounded shadow-sm border-gray-200 m-0.5 z-10 w-1/2'

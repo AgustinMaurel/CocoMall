@@ -9,12 +9,12 @@ import reviewImg from '../../Assets/images/review.svg';
 import { useSelector } from 'react-redux';
 import Qualification from './Qualification';
 
-const ReviewForm = ({setInfoModal}) => {
+const ReviewForm = ({ setInfoModal }) => {
     const { id } = useParams();
     const { uid } = useSelector((state) => state.auth);
 
     const [allStoreReviews, setAllStoreReviews] = useState([]);
-    const [flag , setFlag] = useState(false)
+    const [flag, setFlag] = useState(false);
     const [review, setReview] = useState({
         description: '',
         qualification: '1',
@@ -73,38 +73,45 @@ const ReviewForm = ({setInfoModal}) => {
         axios
             .post('/review/create', obj)
             .then((res) => res.data)
-            .then((stores) => Swal.fire({
-                icon: 'success',
-                title: 'Question send successfully ',
-            }));
+            .then((stores) =>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Question send successfully ',
+                }),
+            );
 
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
         setInfoModal(false);
-        setFlag(!flag)
+        setFlag(!flag);
     };
 
     useEffect(() => {
         axios.get(`/review/${id}`).then((response) => setAllStoreReviews(response.data));
     }, [flag]);
 
-
     return (
         <>
             <div className='h-1/2 w-full'>
                 {allStoreReviews.length < 1 ? (
                     <div className='flex h-full gap-2'>
-                        <div className='bg-white h-full w-2/3'>
-                            <div className='bg-white h-full shadow flex gap-20 p-10 justify-between'>
+                        <div className='hidden lg:block bg-white h-full w-1/3 lg:w-2/3'>
+                            <div className='bg-white h-full shadow flex gap-20 lg:p-10 justify-between'>
                                 <div className='flex flex-col justify-between'>
-                                    <p className='text-cocoMall-800 font-medium text-2xl'>
+                                    <p className='text-cocoMall-800 font-medium text-base leading-5 lg:text-2xl'>
                                         The store does not have any reviews at the moment.
                                     </p>
-                                    <p>Be the first! you can see the example.</p>
+                                    <p className='text-xs lg:text-base'>
+                                        Be the first! you can see the example.
+                                    </p>
                                 </div>
-                                <img className='h-full' src={reviewImg} alt='review' />
+                                <img
+                                    className='h-full hidden lg:block'
+                                    src={reviewImg}
+                                    alt='review'
+                                />
                             </div>
                         </div>
-                        <div className='w-1/3 h-full bg-white'>
+                        <div className='w-full lg:w-1/3 h-full bg-white'>
                             <ReviewExample />
                         </div>
                     </div>
@@ -112,28 +119,32 @@ const ReviewForm = ({setInfoModal}) => {
                     <div className='h-full'>
                         <Slider {...settings}>
                             {allStoreReviews?.map((rev) => (
-                            <ReviewCard
-                                username={rev?.User?.Name || ''}
-                                qualification={rev?.qualification || ''}
-                                description={rev?.description || ''}
-                            />
-                        ))}
+                                <ReviewCard
+                                    username={rev?.User?.Name || ''}
+                                    qualification={rev?.qualification || ''}
+                                    description={rev?.description || ''}
+                                />
+                            ))}
                         </Slider>
                     </div>
                 )}
             </div>
 
-            <form className='h-1/2 w-full flex items-center gap-4' key='1' onSubmit={handleSubmit}>
+            <form
+                className='h-1/2 w-full flex flex-col lg:flex-row items-center gap-4'
+                key='1'
+                onSubmit={handleSubmit}
+            >
                 <textarea
                     placeholder='Describe your experience (optional)'
                     name='description'
                     rows='3'
                     cols='20'
                     onChange={handleChange}
-                    className='resize-none w-2/3 h-3/4 shadow outline-none rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent p-2'
+                    className='resize-none w-full mt-2 lg:mt-0 lg:w-2/3 h-3/4 shadow outline-none rounded focus:ring-1 focus:ring-cocoMall-300 focus:border-transparent p-2'
                 ></textarea>
-                <div className='flex flex-col gap-2'>
-                    <div className='flex flex-col gap-1'>
+                <div className='flex lg:flex-col gap-2 px-6 w-full lg:w-auto justify-between'>
+                    <div className='flex flex-col gap-1 w-40'>
                         <Qualification qualification={review.qualification} />
                         <input
                             type='range'
@@ -148,7 +159,7 @@ const ReviewForm = ({setInfoModal}) => {
                     </div>
 
                     <button
-                        className='cursor-pointer p-2 rounded-md text-white bg-primary-light outline-none hover:bg-cocoMall-400 w-full'
+                        className='cursor-pointer p-2 rounded-md text-white bg-primary-light outline-none hover:bg-cocoMall-400 w-40'
                         type='submit'
                         disabled={!review.qualification ? true : false}
                         onSubmit={handleSubmit}

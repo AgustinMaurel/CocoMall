@@ -20,7 +20,7 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
 
     const que = '+';
     const cant = 1;
-    
+
     return (
         <div className='flex flex-col'>
             <div>
@@ -51,14 +51,14 @@ function SubCat({ SubCatName, Products, modalIsOpen, setModalIsOpen }) {
                                 backgroundColor: 'rgba(0, 0, 0, 0.65)',
                             },
                             content: {
-                                overflowY: "auto"
-                            }
+                                overflowY: 'auto',
+                            },
                         }}
-                        contentLabel={"Product Detail"}
+                        contentLabel={'Product Detail'}
                         preventScroll={false}
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        className='rounded-md focus:outline-none bg-gray-100 shadow-lg p-4 absolute w-4/5 h-4/5 top-20 bottom-0 right-0 left-0 m-auto'
+                        className='rounded-md focus:outline-none bg-gray-100 shadow-lg p-4 absolute w-full h-full lg:w-4/5 lg:h-4/5 top-20 bottom-0 right-0 left-0 m-auto'
                     >
                         <ProductDetail product={productDetail} setModalIsOpen={setModalIsOpen} />
                     </ReactModal>

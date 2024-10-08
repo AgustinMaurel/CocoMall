@@ -1,1 +1,23 @@
-Abrazo
+Coco Mall is an online shopping, a marketplace where you can shop in different stores or create your own store to sell your products.
+
+✨Features✨
+-Possesses user profile, store profile and superadmin profile that controls the users of the page.
+
+-Login and registration with Google and Facebook thanks to Firebase.
+-It has an integrated shopping cart where you can add products from all the stores that the customer wants.
+
+-Payment gateway with Mercado Pago.
+
+-Filters by product type and subtype.
+-Filters by price and price range.
+-Filters by stores and/or products.
+-Filter by proximity of store location thanks to the connection with the google maps API.
+
+-Customers can ask questions on the products and these can be answered by the store.
+
+-Customers can leave reviews to the stores and rate them by ranking from 1 to 5 stars.
+
+-It has a user panel where you can see the history of your purchases.
+If it is a store user has a sales history, a list of products where you can delete/edit/create them.
+
+-The superadmin can edit users, delete stores with their products, delete orders, edit/delete products.
